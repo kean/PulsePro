@@ -19,11 +19,8 @@ struct ConsoleView: View {
             VStack {
                 SearchBar(title: "Search", text: $model.searchText)
                     .padding()
-                List {
-                    ForEach(model.messages, id: \.objectID) { messsage -> ConsoleMessageView in
-                        print("render \(messsage)")
-                        return ConsoleMessageView(model: .init(message: messsage))
-                    }
+                List(model.messages, id: \.objectID) { messsage -> ConsoleMessageView in
+                    ConsoleMessageView(model: .init(message: messsage))
                 }
             }
             .navigationBarTitle(Text("Console"))
@@ -41,11 +38,8 @@ struct ConsoleView: View {
         VStack {
             SearchBar(title: "Search", text: $model.searchText)
                 .padding()
-            List {
-                ForEach(model.messages, id: \.objectID) { messsage -> ConsoleMessageView in
-                    print("render \(messsage)")
-                    return ConsoleMessageView(model: .init(message: messsage))
-                }
+            List(model.messages, id: \.objectID) { messsage -> ConsoleMessageView in
+                ConsoleMessageView(model: .init(message: messsage))
             }
         }
     }

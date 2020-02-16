@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let store = mockMessagesStore
         let model = ConsoleMessagesListViewModel(context: store.viewContext)
         let contentView = ConsoleView(model: model)
+            .frame(minWidth: 320, minHeight: 480)
 
         // Create the window and set the content view. 
         window = NSWindow(
