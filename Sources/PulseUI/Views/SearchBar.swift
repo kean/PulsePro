@@ -11,20 +11,26 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
+            #if os(iOS)
             Image(systemName: "magnifyingglass").opacity(0.33)
+            #endif
             TextField(title, text: $text)
+            #if os(iOS)
             if !text.isEmpty { buttonClear }
+            #endif
         }
         .padding(8)
-        .background(Color(.secondarySystemBackground))
+        .background(Color.gray.opacity(0.25))
         .cornerRadius(8)
     }
 
+    #if os(iOS)
     private var buttonClear: some View {
         Button(action: { self.text = "" }) {
             Image(systemName: "xmark.circle.fill")
-        }.foregroundColor(Color(.systemGray3))
+        }.foregroundColor(Color.gray.opacity(0.25))
     }
+    #endif
 }
 
 struct SearchBar_Previews: PreviewProvider {

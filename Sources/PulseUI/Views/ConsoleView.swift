@@ -7,6 +7,7 @@ import CoreData
 import Pulse
 import Combine
 
+#if os(iOS)
 struct ConsoleView: View {
     @FetchRequest<MessageEntity>(sortDescriptors: [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)], predicate: nil)
     var messages: FetchedResults<MessageEntity>
@@ -16,7 +17,6 @@ struct ConsoleView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Hello ") + Text("World!").bold()
                 SearchBar(title: "Search", text: $model.searchText)
                     .padding()
                 List {
@@ -30,6 +30,27 @@ struct ConsoleView: View {
         }
     }
 }
+#else
+struct ConsoleView: View {
+    @FetchRequest<MessageEntity>(sortDescriptors: [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)], predicate: nil)
+    var messages: FetchedResults<MessageEntity>
+
+    @ObservedObject var model: ConsoleMessagesListViewModel
+
+    var body: some View {
+        VStack {
+            SearchBar(title: "Search", text: $model.searchText)
+                .padding()
+            List {
+                ForEach(model.messages, id: \.objectID) { messsage -> ConsoleMessageView in
+                    print("render \(messsage)")
+                    return ConsoleMessageView(model: .init(message: messsage))
+                }
+            }
+        }
+    }
+}
+#endif
 
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {

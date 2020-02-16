@@ -51,8 +51,6 @@ private func populateStore(_ container: NSPersistentContainer) {
         moc.insert(message)
     }
 
-    for _ in 0...80 {
-
     addMessage {
         $0.created = Date() - 0.11
         $0.level = .info
@@ -107,7 +105,6 @@ private func populateStore(_ container: NSPersistentContainer) {
         $0.text = "💥 0xDEADBEAF"
     }
 
-    }
 //    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
 //        populateStore(container)
 //    }

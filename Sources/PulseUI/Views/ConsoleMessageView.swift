@@ -66,27 +66,27 @@ struct ConsoleMessageStyle {
     }
 
     static let debug = ConsoleMessageStyle(
-        titleColor: Color(.secondaryLabel),
-        textColor: Color(.label),
-        backgroundColor: Color(.systemBackground)
+        titleColor: .secondary,
+        textColor: .primary,
+        backgroundColor: .clear
     )
 
     static let info = ConsoleMessageStyle(
-        titleColor: Color(.label),
-        textColor: Color(.label),
-        backgroundColor: Color(.systemBlue)
+        titleColor: .primary,
+        textColor: .primary,
+        backgroundColor: .blue
     )
 
     static let error = ConsoleMessageStyle(
-        titleColor: Color(.systemOrange),
-        textColor: Color(.systemOrange),
-        backgroundColor: Color(.systemOrange)
+        titleColor: .orange,
+        textColor: .orange,
+        backgroundColor: .orange
     )
 
     static let fatal = ConsoleMessageStyle(
-        titleColor: Color(.systemRed),
-        textColor: Color(.systemRed),
-        backgroundColor: Color(.systemRed)
+        titleColor: .red,
+        textColor: .red,
+        backgroundColor: .red
     )
 }
 
