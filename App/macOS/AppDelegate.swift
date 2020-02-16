@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Pulse
 import SwiftUI
 
 @NSApplicationMain
@@ -17,7 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+        let store = mockMessagesStore
+        let model = ConsoleMessagesListViewModel(context: store.viewContext)
+        let contentView = ConsoleView(model: model)
 
         // Create the window and set the content view. 
         window = NSWindow(
