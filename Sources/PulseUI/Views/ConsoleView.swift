@@ -39,23 +39,16 @@ struct ConsoleView: View {
         }
     }
 }
-#else
-struct ConsoleView: View {
-    @ObservedObject var model: ConsoleViewModel
-
-    var body: some View {
-        ConsoleMessageList(messages: model.messages)
-    }
-}
 #endif
 
-struct ConsoleMessageList: View {
-    var messages: ConsoleMessages
+#if os(macOS)
+struct ConsoleView: View {
+    @ObservedObject var model: ConsoleViewModel
 
     #warning("TODO: double tap to open details in a new window")
     var body: some View {
         NavigationView {
-            List(messages, id: \.objectID) { message in
+            List(model.messages, id: \.objectID) { message in
                 NavigationLink(destination:
                     ConsoleMessageDetailsView(model: .init(message: message))
                 ) {
@@ -67,6 +60,7 @@ struct ConsoleMessageList: View {
         }
     }
 }
+#endif
 
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {
