@@ -56,10 +56,19 @@ struct ConsoleView: View {
 struct ConsoleMessageList: View {
     var messages: ConsoleMessages
 
+    #warning("TODO: display number of messages in a title")
     #warning("TODO: add empty state")
     var body: some View {
-        List(messages, id: \.objectID) {
-            ConsoleMessageView(model: .init(message: $0))
+        NavigationView {
+            List(messages, id: \.objectID) { message in
+                NavigationLink(destination:
+                    ConsoleMessageDetailsView(model: .init(message: message))
+                ) {
+                    ConsoleMessageView(model: .init(message: message))
+                }
+            }
+            .frame(minWidth: 320, minHeight: 480)
+            .listStyle(SidebarListStyle())
         }
     }
 }

@@ -117,3 +117,37 @@ public struct TextView: UIViewRepresentable {
     }
 }
 #endif
+
+#if os(macOS)
+struct TextView: NSViewRepresentable {
+    @Binding var text: String
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeNSView(context: Context) -> NSTextView {
+        let textView = NSTextView()
+        textView.delegate = context.coordinator
+        return textView
+    }
+
+    func updateNSView(_ textView: NSTextView, context: Context) {
+        guard textView.string != text else { return }
+        textView.string = text
+    }
+
+    class Coordinator: NSObject, NSTextViewDelegate {
+        let parent: TextView
+
+        init(_ textView: TextView) {
+            self.parent = textView
+        }
+
+        func textDidChange(_ notification: Notification) {
+            guard let textView = notification.object as? NSTextView else { return }
+            self.parent.text = textView.string
+        }
+    }
+}
+#endif

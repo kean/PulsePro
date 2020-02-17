@@ -9,18 +9,34 @@ struct ConsoleMessageDetailsView: View {
     let model: ConsoleMessageDetailsViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
+    #if os(iOS)
     var body: some View {
         contents
             .navigationBarTitle("Message")
     }
+    #else
+    var body: some View {
+        contents
+    }
+    #endif
 
     private var contents: some View {
         VStack {
             tags
-            TextView(text: .constant(model.text), isEditing: .constant(false), isEditable: false, isScrollingEnabled: true)
-            .padding(8)
+            textView
         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
+
+    #if os(iOS)
+    private var textView: some View {
+        TextView(text: .constant(model.text), isEditing: .constant(false), isEditable: false, isScrollingEnabled: true)
+            .padding(8)
+    }
+    #else
+    private var textView: some View {
+        TextView(text: .constant(model.text))
+    }
+    #endif
 
     private var tags: some View {
         VStack(alignment: .leading) {

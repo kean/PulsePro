@@ -44,6 +44,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         dialog.allowsMultipleSelection = false
         dialog.allowedFileTypes = ["sqlite"];
 
+        #warning("TODO: open recent is not working")
+
         guard dialog.runModal() == NSApplication.ModalResponse.OK else {
             return // User cancelled the action
         }
@@ -55,14 +57,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
 
     func showConsole(model: ConsoleViewModel) {
         let contentView = ConsoleView(model: model)
-            .frame(minWidth: 320, minHeight: 480)
 
+        #warning("TODO: improve preferred window/panels size")
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 320, height: 480),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
         window.center()
-        window.setFrameAutosaveName("Main Window")
+        window.setFrameAutosaveName("Console Window")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
     }
