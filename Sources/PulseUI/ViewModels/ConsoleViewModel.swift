@@ -7,12 +7,19 @@ import Pulse
 import Combine
 
 struct ConsoleSearchCriteria {
-    let levels: ConsoleFilter<String> = .hide(items: [])
+    var levels: ConsoleFilter<Logger.Level> = .hide([])
 }
 
 enum ConsoleFilter<T: Hashable> {
-    case focus(item: T)
-    case hide(items: Set<T>)
+    case focus(_ item: T)
+    case hide(_ items: Set<T>)
+
+    func map<U>(_ transform: (T) -> U) -> ConsoleFilter<U> {
+        switch self {
+        case let .focus(item): return .focus(transform(item))
+        case let .hide(items): return .hide(Set(items.map(transform)))
+        }
+    }
 }
 
 final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
@@ -28,6 +35,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
 
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         request.fetchBatchSize = 40
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
 
         self.controller = NSFetchedResultsController<MessageEntity>(fetchRequest: request, managedObjectContext: container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
@@ -37,13 +45,13 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
         controller.delegate = self
         try? controller.performFetch()
 
-        Publishers.CombineLatest($searchText, $searchCriteria).sink { [unowned self] _ in
-            self.refresh()
+        Publishers.CombineLatest($searchText, $searchCriteria).sink { [unowned self] searchText, criteria in
+            self.refresh(searchText: searchText, criteria: criteria)
         }.store(in: &bag)
     }
 
-    private func refresh() {
-        update(request: controller.fetchRequest, searchText: searchText, criteria: searchCriteria)
+    private func refresh(searchText: String, criteria: ConsoleSearchCriteria) {
+        update(request: controller.fetchRequest, searchText: searchText, criteria: criteria)
         try? controller.performFetch()
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
@@ -64,6 +72,7 @@ import AppKit
 
 private extension NSToolbarItem.Identifier {
     static let searchField: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.search_field")
+    static let levelSegmentedControl: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.levels_segmented_control")
 }
 
 /// This isn't great, but hey, I want this macOS thing to work and I don't have time to think.
@@ -73,6 +82,13 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
 
         switch itemIdentifier {
+        case .levelSegmentedControl:
+            let segmentedControl = NSSegmentedControl(labels: ["All Messages", "Only Errors"], trackingMode: .selectOne, target: self, action: #selector(segmentedControlValueChanges(_:)))
+            segmentedControl.selectedSegment = 0
+
+            let item = NSToolbarItem(itemIdentifier: .searchField)
+            item.view = segmentedControl
+            return item
         case .searchField:
             let searchField = NSSearchField(string: searchText)
             searchField.placeholderString = "Search"
@@ -86,11 +102,11 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.flexibleSpace, .searchField]
+        [.levelSegmentedControl, .flexibleSpace, .searchField]
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.searchField, .space, .flexibleSpace, .print]
+        [.levelSegmentedControl, .searchField, .space, .flexibleSpace, .print]
     }
 
     func toolbarSelectableItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
@@ -103,43 +119,15 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
         let textField = notification.object as! NSTextField
         searchText = textField.stringValue
     }
-}
-#endif
 
-struct ConsoleMessages: RandomAccessCollection {
-    private let messages: [MessageEntity]
+    // MARK: - NSSegmentedControl
 
-    init(messages: [MessageEntity]) {
-        self.messages = messages
-    }
-
-    typealias Index = Int
-
-    var startIndex: Index { return messages.startIndex }
-    var endIndex: Index { return messages.endIndex }
-    func index(after i: Index) -> Index { i + 1 }
-
-    subscript(index: Index) -> MessageEntity {
-        return messages[index]
-    }
-}
-
-private func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria) {
-    var predicates = [NSPredicate]()
-    if searchText.count > 1 {
-        predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
-    }
-    func apply<T: CVarArg>(filter: ConsoleFilter<T>, field: String) {
-        switch filter {
-        case let .focus(item):
-            predicates.append(NSPredicate(format: "\(field) == %@", item))
-        case let .hide(items):
-            guard !items.isEmpty else { return }
-            predicates.append(NSPredicate(format: "\(field) IN %@", items))
+    @objc private func segmentedControlValueChanges(_ sender: NSSegmentedControl) {
+        switch sender.selectedSegment {
+        case 0: searchCriteria.levels = .hide([])
+        case 1: searchCriteria.levels = .hide([.debug, .info])
+        default: fatalError("Invalid selected segment: \(sender.selectedSegment)")
         }
     }
-    apply(filter: criteria.levels, field: "level")
-
-    request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-    request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
 }
+#endif

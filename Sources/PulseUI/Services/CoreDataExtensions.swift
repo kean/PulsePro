@@ -59,3 +59,26 @@ extension NSPersistentStoreCoordinator {
         try backupCoordinator.migratePersistentStore(intermediateStore, to: url, options: backupStoreOptions, withType: NSSQLiteStoreType)
     }
 }
+
+func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria) {
+    var predicates = [NSPredicate]()
+
+    if searchText.count > 1 {
+        predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
+    }
+
+    func apply<T: CVarArg>(filter: ConsoleFilter<T>, field: String) {
+        switch filter {
+        case let .focus(item):
+            predicates.append(NSPredicate(format: "\(field) == %@", item))
+        case let .hide(items):
+            guard !items.isEmpty else { return }
+            predicates.append(NSPredicate(format: "NOT (\(field) IN %@)", items))
+        }
+    }
+
+    apply(filter: criteria.levels.map { $0.rawValue }, field: "level")
+
+    request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+    request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
+}
