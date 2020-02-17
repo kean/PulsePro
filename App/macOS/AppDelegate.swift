@@ -12,9 +12,6 @@ import SwiftUI
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
-
-    var window: NSWindow!
-
     let model = AppViewModel()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -56,15 +53,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     }
 
     func showConsole(model: ConsoleViewModel) {
-        let contentView = ConsoleView(model: model)
-
         #warning("TODO: improve preferred window/panels size")
-        window = NSWindow(
+        let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 320, height: 480),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
         window.center()
         window.setFrameAutosaveName(consoleWindowAutosaveName)
+
+        let contentView = ConsoleView(model: model)
         window.contentView = NSHostingView(rootView: contentView)
 
         let toolbar = NSToolbar(identifier: "console.toolbar")
@@ -102,6 +99,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     }
 
     func showWelcomeView() {
+        #warning("TODO: open window not on top of the existing one")
+        #warning("TODO: show a welcome when closing all of the windows")
+        #warning("TODO: add title to each window")
+        #warning("TODO: add support for tabs instead of windows")
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 320, height: 300),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            backing: .buffered, defer: false)
+        window.center()
+        window.setFrameAutosaveName(welcomeWindowAutosaveName)
+
         let contentView = AppWelcomeView(buttonOpenDocumentTapped: { [weak self] in
             self?.openDocument()
         })
@@ -111,16 +119,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
                 return true
             }
 
-        #warning("TODO: open window not on top of the existing one")
-        #warning("TODO: show a welcome when closing all of the windows")
-        #warning("TODO: add title to each window")
-        #warning("TODO: add support for tabs instead of windows")
-        window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 320, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            backing: .buffered, defer: false)
-        window.center()
-        window.setFrameAutosaveName(welcomeWindowAutosaveName)
         window.contentView = NSHostingView(rootView: contentView)
 
         window.makeKeyAndOrderFront(nil)
