@@ -71,6 +71,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         toolbar.delegate = model
         window.toolbar = toolbar
 
+        model.$messages
+            .map { "Console (\($0.count) messages)" }
+            .assign(to: \.title, on: window)
+            .store(in: &bag)
+
         window.makeKeyAndOrderFront(nil)
     }
 

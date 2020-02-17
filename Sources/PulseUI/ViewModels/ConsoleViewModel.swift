@@ -14,7 +14,6 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     private let container: NSPersistentContainer
     private let controller: NSFetchedResultsController<MessageEntity>
     #warning("TODO: cleanup")
-    private var bag: AnyCancellable?
 
     @Published var searchText: String = ""
     @Published private(set) var messages: ConsoleMessages
@@ -34,9 +33,9 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
         controller.delegate = self
         try? controller.performFetch()
 
-        bag = $searchText.sink { [unowned self] in
+        $searchText.sink { [unowned self] in
             self.setParameters(.init(searchText: $0))
-        }
+        }.store(in: &bag)
     }
 
     private func setParameters(_ parameters: ConsoleMessagesRequestParameters) {

@@ -52,8 +52,6 @@ struct ConsoleView: View {
 struct ConsoleMessageList: View {
     var messages: ConsoleMessages
 
-    #warning("TODO: display number of messages in a title")
-    #warning("TODO: add empty state")
     #warning("TODO: double tap to open details in a new window")
     var body: some View {
         NavigationView {
