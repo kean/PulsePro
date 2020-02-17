@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
         window.center()
-        window.setFrameAutosaveName("Console Window")
+        window.setFrameAutosaveName(consoleWindowAutosaveName)
         window.contentView = NSHostingView(rootView: contentView)
 
         let toolbar = NSToolbar(identifier: "console.toolbar")
@@ -77,6 +77,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
             .store(in: &bag)
 
         window.makeKeyAndOrderFront(nil)
+
+        NSApplication.shared.windows
+            .filter { $0.frameAutosaveName == welcomeWindowAutosaveName }
+            .forEach {
+                $0.orderOut(nil)
+            }
     }
 
     func showWelcomeView() {
@@ -85,7 +91,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         }).frame(minWidth: 320, minHeight: 320)
 
         #warning("TODO: open window not on top of the existing one")
-        #warning("TODO: close welcome screen when opening a console")
         #warning("TODO: show a welcome when closing all of the windows")
         #warning("TODO: add title to each window")
         #warning("TODO: add support for tabs instead of windows")
@@ -94,9 +99,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
         window.center()
-        window.setFrameAutosaveName("Main Window")
+        window.setFrameAutosaveName(welcomeWindowAutosaveName)
         window.contentView = NSHostingView(rootView: contentView)
 
         window.makeKeyAndOrderFront(nil)
     }
 }
+
+private let consoleWindowAutosaveName = "Console Window"
+private let welcomeWindowAutosaveName = "Welcome Window"
