@@ -66,6 +66,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         window.center()
         window.setFrameAutosaveName("Console Window")
         window.contentView = NSHostingView(rootView: contentView)
+
+        let toolbar = NSToolbar(identifier: "console.toolbar")
+        toolbar.delegate = model
+        window.toolbar = toolbar
+
         window.makeKeyAndOrderFront(nil)
     }
 
@@ -86,6 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         window.center()
         window.setFrameAutosaveName("Main Window")
         window.contentView = NSHostingView(rootView: contentView)
+
         window.makeKeyAndOrderFront(nil)
     }
 }

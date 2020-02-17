@@ -44,11 +44,7 @@ struct ConsoleView: View {
     @ObservedObject var model: ConsoleViewModel
 
     var body: some View {
-        VStack {
-            SearchBar(title: "Search", text: $model.searchText)
-                .padding()
-            ConsoleMessageList(messages: model.messages)
-        }
+        ConsoleMessageList(messages: model.messages)
     }
 }
 #endif
@@ -58,6 +54,7 @@ struct ConsoleMessageList: View {
 
     #warning("TODO: display number of messages in a title")
     #warning("TODO: add empty state")
+    #warning("TODO: double tap to open details in a new window")
     var body: some View {
         NavigationView {
             List(messages, id: \.objectID) { message in

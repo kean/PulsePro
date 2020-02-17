@@ -56,6 +56,53 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     }
 }
 
+#if os(macOS)
+import AppKit
+
+private extension NSToolbarItem.Identifier {
+    static let searchField: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.search_field")
+}
+
+/// This isn't great, but hey, I want this macOS thing to work and I don't have time to think.
+extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
+    // MARK: - NSToolbarDelegate
+
+    func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
+
+        switch itemIdentifier {
+        case .searchField:
+            let searchField = NSSearchField(string: searchText)
+            searchField.placeholderString = "Search"
+            searchField.delegate = self
+            let item = NSToolbarItem(itemIdentifier: .searchField)
+            item.view = searchField
+            return item
+        default:
+            return nil
+        }
+    }
+
+    func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        [.flexibleSpace, .searchField]
+    }
+
+    func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        [.searchField, .space, .flexibleSpace, .print]
+    }
+
+    func toolbarSelectableItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        toolbarAllowedItemIdentifiers(toolbar)
+    }
+
+    // MARK: - NSTextFieldDelegate
+
+    func controlTextDidChange(_ notification: Notification) {
+        let textField = notification.object as! NSTextField
+        searchText = textField.stringValue
+    }
+}
+#endif
+
 struct ConsoleMessages: RandomAccessCollection {
     private let messages: [MessageEntity]
 
