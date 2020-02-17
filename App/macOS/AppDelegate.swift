@@ -11,29 +11,16 @@ import Pulse
 import SwiftUI
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
 
     var window: NSWindow!
 
     let model = AppViewModel()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Create the SwiftUI view that provides the window contents.
-//        let store = mockMessagesStore
-//        let model = ConsoleViewModel(container: store)
+        model.delegate = self
 
-        let contentView = AppView(model: model)
-            .frame(minWidth: 320, minHeight: 480)
-
-        // Create the window and set the content view. 
-        window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            backing: .buffered, defer: false)
-        window.center()
-        window.setFrameAutosaveName("Main Window")
-        window.contentView = NSHostingView(rootView: contentView)
-        window.makeKeyAndOrderFront(nil)
+        showWelcomeView()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -43,6 +30,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - App Menu
 
     @IBAction func openDocument(_ sender: Any) {
+        self.openDocument()
+    }
+
+    func openDocument() {
         let dialog = NSOpenPanel()
 
         dialog.title = "Choose a .sqlite file with logs"
@@ -53,15 +44,46 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         dialog.allowsMultipleSelection = false
         dialog.allowedFileTypes = ["sqlite"];
 
-        if dialog.runModal() == NSApplication.ModalResponse.OK {
-            if let selectedUrl = dialog.url {
-                model.openDatabase(url: selectedUrl)
-            }
-        } else {
-            print("cancelled")
-            // User clicked on "Cancel"
-            return
+        guard dialog.runModal() == NSApplication.ModalResponse.OK else {
+            return // User cancelled the action
         }
 
+        if let selectedUrl = dialog.url {
+            model.openDatabase(url: selectedUrl)
+        }
+    }
+
+    func showConsole(model: ConsoleViewModel) {
+        let contentView = ConsoleView(model: model)
+            .frame(minWidth: 320, minHeight: 480)
+
+        window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 320, height: 480),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            backing: .buffered, defer: false)
+        window.center()
+        window.setFrameAutosaveName("Main Window")
+        window.contentView = NSHostingView(rootView: contentView)
+        window.makeKeyAndOrderFront(nil)
+    }
+
+    func showWelcomeView() {
+        let contentView = AppWelcomeView(buttonOpenDocumentTapped: { [weak self] in
+            self?.openDocument()
+        }).frame(minWidth: 320, minHeight: 320)
+
+        #warning("TODO: open window not on top of the existing one")
+        #warning("TODO: close welcome screen when opening a console")
+        #warning("TODO: show a welcome when closing all of the windows")
+        #warning("TODO: add title to each window")
+        #warning("TODO: add support for tabs instead of windows")
+        window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 320, height: 300),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            backing: .buffered, defer: false)
+        window.center()
+        window.setFrameAutosaveName("Main Window")
+        window.contentView = NSHostingView(rootView: contentView)
+        window.makeKeyAndOrderFront(nil)
     }
 }

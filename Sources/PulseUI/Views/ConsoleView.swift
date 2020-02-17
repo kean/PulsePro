@@ -51,8 +51,11 @@ struct ConsoleMessageList: View {
 
     var body: some View {
         List(messages, id: \.objectID) {
-             ConsoleMessageView(model: .init(message: $0))
-         }
+            #warning("TODO: add a context menu on iOS")
+            #warning("TODO: add a more menu on iOS")
+            #warning("TODO: add share/more options on iOS")
+            ConsoleMessageView(model: .init(message: $0))
+        }
     }
 }
 

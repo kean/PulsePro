@@ -2,9 +2,14 @@ import Foundation
 import SwiftUI
 import Pulse
 
+#if os(macOS)
+protocol AppViewModelDelegate: class {
+    func openDocument()
+    func showConsole(model: ConsoleViewModel)
+}
+
 final class AppViewModel: ObservableObject {
-    #if os(macOS)
-    @Published var state: AppState = .empty
+    weak var delegate: AppViewModelDelegate?
 
     func openDatabase(url: URL) {
         let container = NSPersistentContainer(name: "LoggerStore", managedObjectModel: LoggerStorage.coreDataModel)
@@ -16,13 +21,13 @@ final class AppViewModel: ObservableObject {
         #warning("TODO: handle errors")
         container.loadPersistentStores { _, error in
             guard error == nil else { return }
-            self.state = .console(model: ConsoleViewModel(container: container))
+            let model = ConsoleViewModel(container: container)
+            self.delegate?.showConsole(model: model)
         }
     }
-    #endif
-}
 
-enum AppState {
-    case empty
-    case console(model: ConsoleViewModel)
+    func buttonOpenDocumentTapped() {
+        delegate?.openDocument()
+    }
 }
+#endif

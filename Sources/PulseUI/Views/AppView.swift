@@ -8,15 +8,20 @@ import Pulse
 import Combine
 
 #if os(macOS)
-struct AppView: View {
-    @ObservedObject var model: AppViewModel
+struct AppWelcomeView: View {
+    let buttonOpenDocumentTapped: () -> Void
 
     var body: some View {
-        switch model.state {
-        case .empty:
-            return AnyView(Text("Please select a database"))
-        case let .console(model):
-            return AnyView(ConsoleView(model: model))
+        VStack(spacing: 32) {
+            Text("Pulse")
+                .font(.largeTitle)
+
+            VStack {
+                Text("Please select a Pulse database (.sqlite file)")
+                Button(action: buttonOpenDocumentTapped) {
+                    Text("Open document")
+                }
+            }
         }
     }
 }
