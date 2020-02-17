@@ -116,8 +116,6 @@ struct ConsoleMessages: RandomAccessCollection {
     func index(after i: Index) -> Index { i + 1 }
 
     subscript(index: Index) -> MessageEntity {
-//        print("entity at \(index)")
-        #warning("TODO: fix this")
         return messages[index]
     }
 }

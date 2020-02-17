@@ -24,8 +24,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         // Insert code here to tear down your application
     }
 
-    // MARK: - App Menu
-
     @IBAction func openDocument(_ sender: Any) {
         self.openDocument()
     }
