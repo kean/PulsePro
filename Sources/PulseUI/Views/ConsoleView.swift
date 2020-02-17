@@ -46,6 +46,7 @@ struct ConsoleView: View {
     @ObservedObject var model: ConsoleViewModel
 
     #warning("TODO: double tap to open details in a new window")
+    #warning("TODO: add an option to hide details panel")
     var body: some View {
         NavigationView {
             List(model.messages, id: \.objectID) { message in
