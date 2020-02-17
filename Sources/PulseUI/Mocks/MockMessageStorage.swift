@@ -13,7 +13,7 @@ let mockMessagesStore: NSPersistentContainer = {
 }()
 
 func makeMockMessagesStore() -> NSPersistentContainer {
-    let container = NSPersistentContainer(name: "MockMessagesStore", managedObjectModel: coreDataModel)
+    let container = NSPersistentContainer(name: "MockMessagesStore", managedObjectModel: LoggerStorage.coreDataModel)
 
     let store = NSPersistentStoreDescription()
     store.type = NSInMemoryStoreType

@@ -9,6 +9,7 @@ struct ConsoleMessageView: View {
     let model: ConsoleMessageViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
+    #warning("TODO: fix an issue with listRowBackground")
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(model.title)

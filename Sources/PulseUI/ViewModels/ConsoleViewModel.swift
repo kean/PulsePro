@@ -11,20 +11,23 @@ struct ConsoleMessagesRequestParameters {
 }
 
 final class ConsoleMessagesListViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
+    private let container: NSPersistentContainer
     private let controller: NSFetchedResultsController<MessageEntity>
     #warning("TODO: cleanup")
     private var bag: AnyCancellable?
 
     @Published var searchText: String = ""
-    @Published private(set) var messages: ConsoleMessagesList
+    @Published private(set) var messages: ConsoleMessages
 
-    init(context: NSManagedObjectContext, parameters: ConsoleMessagesRequestParameters = .init(searchText: "")) {
+    init(container: NSPersistentContainer, parameters: ConsoleMessagesRequestParameters = .init(searchText: "")) {
+        self.container = container
+
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         request.fetchBatchSize = 40
         parameters.apply(to: request)
 
-        self.controller = NSFetchedResultsController<MessageEntity>(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        self.messages = ConsoleMessagesList(messages: self.controller.fetchedObjects ?? [])
+        self.controller = NSFetchedResultsController<MessageEntity>(fetchRequest: request, managedObjectContext: container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
 
         super.init()
 
@@ -39,17 +42,21 @@ final class ConsoleMessagesListViewModel: NSObject, NSFetchedResultsControllerDe
     private func setParameters(_ parameters: ConsoleMessagesRequestParameters) {
         parameters.apply(to: controller.fetchRequest)
         try? controller.performFetch()
-        self.messages = ConsoleMessagesList(messages: self.controller.fetchedObjects ?? [])
+        self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
+    }
+
+    func prepareForSharing() throws -> URL {
+        try ConsoleShareService(container: container).prepareForSharing()
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.messages = ConsoleMessagesList(messages: self.controller.fetchedObjects ?? [])
+        self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
 }
 
-struct ConsoleMessagesList: RandomAccessCollection {
+struct ConsoleMessages: RandomAccessCollection {
     private let messages: [MessageEntity]
 
     init(messages: [MessageEntity]) {

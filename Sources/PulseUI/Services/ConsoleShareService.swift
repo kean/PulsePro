@@ -47,12 +47,16 @@ public struct ConsoleShareService {
         let sharedDirUrl = tempDir.appendingPathComponent("logs-\(date)")
         try FileManager.default.createDirectory(at: sharedDirUrl, withIntermediateDirectories: true, attributes: nil)
 
+        for url in [allLogsUrl, coreDataUrl, userDefaultsContentsUrl] {
+            try FileManager.default.moveItem(at: url, to: sharedDirUrl.appendingPathComponent(url.lastPathComponent))
+        }
+
         return sharedDirUrl
     }
 
     private func fetchAllMessages() throws -> [MessageEntity] {
         let request = NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: true)]
         return try context.fetch(request)
     }
 

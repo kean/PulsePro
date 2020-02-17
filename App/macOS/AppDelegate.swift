@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
         let store = mockMessagesStore
-        let model = ConsoleMessagesListViewModel(context: store.viewContext)
+        let model = ConsoleMessagesListViewModel(container: store)
         let contentView = ConsoleView(model: model)
             .frame(minWidth: 320, minHeight: 480)
 
