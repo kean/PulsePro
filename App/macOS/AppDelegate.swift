@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         dialog.canChooseDirectories = false
         dialog.canCreateDirectories = false
         dialog.allowsMultipleSelection = false
-        dialog.allowedFileTypes = ["sqlite"];
+        dialog.allowedFileTypes = ["sqlite"]
 
         #warning("TODO: open recent is not working")
 

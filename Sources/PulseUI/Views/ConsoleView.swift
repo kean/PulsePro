@@ -48,17 +48,24 @@ struct ConsoleView: View {
     #warning("TODO: double tap to open details in a new window")
     #warning("TODO: add an option to hide details panel")
     var body: some View {
-        NavigationView {
-            List(model.messages, id: \.objectID) { message in
-                NavigationLink(destination:
-                    ConsoleMessageDetailsView(model: .init(message: message))
-                ) {
-                    ConsoleMessageView(model: .init(message: message))
+        VStack {
+            ConsoleSearchOptionsView(searchCriteria: $model.searchCriteria)
+            HSplitView {
+                NavigationView {
+                    List(model.messages, id: \.objectID) { message in
+                        NavigationLink(destination: self.detailsView(message: message)) {
+                            ConsoleMessageView(model: .init(message: message))
+                        }
+                    }
+                    .frame(minWidth: 320, minHeight: 480)
                 }
             }
-            .frame(minWidth: 320, minHeight: 480)
-            .listStyle(SidebarListStyle())
         }
+    }
+
+    private func detailsView(message: MessageEntity) -> some View {
+        ConsoleMessageDetailsView(model: .init(message: message))
+            .frame(minWidth: 320, minHeight: 480)
     }
 }
 #endif

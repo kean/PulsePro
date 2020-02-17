@@ -25,4 +25,10 @@ struct AppWelcomeView: View {
         }
     }
 }
+
+struct AppWelcomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        AppWelcomeView(buttonOpenDocumentTapped: {})
+    }
+}
 #endif

@@ -5,6 +5,7 @@
 import CoreData
 import Pulse
 import Combine
+import SwiftUI
 
 struct ConsoleSearchCriteria {
     var levels: ConsoleFilter<Logger.Level> = .hide([])
@@ -28,6 +29,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
 
     @Published var searchText: String = ""
     @Published var searchCriteria: ConsoleSearchCriteria = .init()
+    @Published private(set) var isShowingFilters = false
     @Published private(set) var messages: ConsoleMessages
 
     init(container: NSPersistentContainer) {
@@ -71,6 +73,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
 import AppKit
 
 private extension NSToolbarItem.Identifier {
+    static let searchFilters: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.filters")
     static let searchField: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.search_field")
     static let levelSegmentedControl: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.levels_segmented_control")
 }
@@ -96,13 +99,20 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
             let item = NSToolbarItem(itemIdentifier: .searchField)
             item.view = searchField
             return item
+        case .searchFilters:
+            let item = NSToolbarItem(itemIdentifier: .searchFilters)
+            let button = NSButton(image: NSImage(named: NSImage.actionTemplateName)!, target: self, action: #selector(buttonShowFiltersTapped))
+            button.bezelStyle = .texturedRounded
+            item.view = button
+            item.label = "Filters"
+            return item
         default:
             return nil
         }
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.levelSegmentedControl, .flexibleSpace, .searchField]
+        [.searchField, .searchFilters, .flexibleSpace, .levelSegmentedControl]
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
@@ -128,6 +138,12 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
         case 1: searchCriteria.levels = .hide([.debug, .info])
         default: fatalError("Invalid selected segment: \(sender.selectedSegment)")
         }
+    }
+
+    // MARK - Buttons
+
+    @objc private func buttonShowFiltersTapped() {
+        isShowingFilters.toggle()
     }
 }
 #endif
