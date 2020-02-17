@@ -10,6 +10,7 @@ struct ConsoleMessageView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     #warning("TODO: fix an issue with listRowBackground")
+    #if os(iOS)
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(model.title)
@@ -21,6 +22,21 @@ struct ConsoleMessageView: View {
                 .lineLimit(4)
         }.listRowBackground(model.style.backgroundColor.opacity(colorScheme == .dark ? 0.1 : 0.05))
     }
+    #endif
+
+    #if os(macOS)
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(model.title)
+                .font(.system(size: 10))
+                .foregroundColor(model.style.titleColor)
+            Text(model.text)
+                .font(.system(size: 12))
+                .foregroundColor(model.style.textColor)
+                .lineLimit(4)
+        }.padding(.vertical, 6)
+    }
+    #endif
 }
 
 struct ConsoleMessageStyle {
