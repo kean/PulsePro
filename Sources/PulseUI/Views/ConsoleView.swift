@@ -13,12 +13,19 @@ struct ConsoleView: View {
 
     @State private var isShowingShareSheet = false
 
+    #warning("TODO: add a context menu")
+    #warning("TODO: add a more menu")
+    #warning("TODO: add share/more options")
     var body: some View {
         NavigationView {
             VStack {
                 SearchBar(title: "Search", text: $model.searchText)
                     .padding()
-                ConsoleMessageList(messages: model.messages)
+                List(model.messages, id: \.objectID) { message in
+                    NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
+                        ConsoleMessageView(model: .init(message: message))
+                    }
+                }
             }
             .navigationBarTitle(Text("Console"))
             .navigationBarItems(trailing:
@@ -51,9 +58,6 @@ struct ConsoleMessageList: View {
 
     var body: some View {
         List(messages, id: \.objectID) {
-            #warning("TODO: add a context menu on iOS")
-            #warning("TODO: add a more menu on iOS")
-            #warning("TODO: add share/more options on iOS")
             ConsoleMessageView(model: .init(message: $0))
         }
     }
