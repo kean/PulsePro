@@ -56,6 +56,7 @@ struct ConsoleView: View {
 struct ConsoleMessageList: View {
     var messages: ConsoleMessages
 
+    #warning("TODO: add empty state")
     var body: some View {
         List(messages, id: \.objectID) {
             ConsoleMessageView(model: .init(message: $0))

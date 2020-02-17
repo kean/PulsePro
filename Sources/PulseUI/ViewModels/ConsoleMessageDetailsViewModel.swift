@@ -20,6 +20,12 @@ final class ConsoleMessageDetailsViewModel {
         return formatter
     }()
 
+    init(tags: [ConsoleMessageTagViewModel], text: String, style: ConsoleMessageStyle) {
+        self.tags = tags
+        self.text = text
+        self.style = style
+    }
+
     init(message: MessageEntity) {
         self.tags = [
             ConsoleMessageTagViewModel(
