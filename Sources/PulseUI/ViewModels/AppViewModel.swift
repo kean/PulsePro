@@ -12,17 +12,13 @@ final class AppViewModel: ObservableObject {
     weak var delegate: AppViewModelDelegate?
 
     func openDatabase(url: URL) {
-        let container = NSPersistentContainer(name: "LoggerStore", managedObjectModel: LoggerStorage.coreDataModel)
-
-        let store = NSPersistentStoreDescription(url: url)
-        store.type = NSSQLiteStoreType
-        container.persistentStoreDescriptions = [store]
-
-        #warning("TODO: handle errors")
-        container.loadPersistentStores { _, error in
-            guard error == nil else { return }
+        do {
+            let container = try NSPersistentContainer.load(loggerDatabaseUrl: url)
             let model = ConsoleViewModel(container: container)
             self.delegate?.showConsole(model: model)
+        } catch {
+            #warning("TODO: handle errors")
+            debugPrint("Failed to open database with url: \(url) with error: \(error)")
         }
     }
 

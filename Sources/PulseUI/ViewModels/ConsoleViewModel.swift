@@ -11,8 +11,8 @@ struct ConsoleMessagesRequestParameters {
 }
 
 final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
-    private let container: NSPersistentContainer
-    private let controller: NSFetchedResultsController<MessageEntity>
+    private var container: NSPersistentContainer
+    private var controller: NSFetchedResultsController<MessageEntity>
     #warning("TODO: cleanup")
 
     @Published var searchText: String = ""

@@ -85,10 +85,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
             }
     }
 
+    private func onDrop(providers: [NSItemProvider]) {
+        for provider in providers {
+            provider.loadItem(forTypeIdentifier: (kUTTypeFileURL as String), options: [:]) { result, error in
+                guard let data = result as? Data,
+                    let path = String(data: data, encoding: .utf8),
+                    let url = URL(string: path) else {
+                        #warning("TODO: implement error handling?")
+                        return
+                }
+                DispatchQueue.main.async {
+                    self.model.openDatabase(url: url)
+                }
+            }
+        }
+    }
+
     func showWelcomeView() {
         let contentView = AppWelcomeView(buttonOpenDocumentTapped: { [weak self] in
             self?.openDocument()
-        }).frame(minWidth: 320, minHeight: 320)
+        })
+            .frame(minWidth: 320, minHeight: 320)
+            .onDrop(of: [(kUTTypeFileURL as String)], isTargeted: nil) { [weak self] in
+                self?.onDrop(providers: $0)
+                return true
+            }
 
         #warning("TODO: open window not on top of the existing one")
         #warning("TODO: show a welcome when closing all of the windows")
