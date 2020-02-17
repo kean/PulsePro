@@ -15,10 +15,10 @@ let mockMessagesStore: NSPersistentContainer = {
 func makeMockMessagesStore() -> NSPersistentContainer {
     let container = NSPersistentContainer(name: "MockMessagesStore", managedObjectModel: LoggerStorage.coreDataModel)
 
-    let store = NSPersistentStoreDescription()
-    store.type = NSInMemoryStoreType
+//    let store = NSPersistentStoreDescription()
+//    store.type = NSInMemoryStoreType
 
-//    let store = NSPersistentStoreDescription(url: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
+    let store = NSPersistentStoreDescription(url: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
 
     container.persistentStoreDescriptions = [store]
 

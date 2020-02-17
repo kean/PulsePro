@@ -9,10 +9,7 @@ import Combine
 
 #if os(iOS)
 struct ConsoleView: View {
-    @FetchRequest<MessageEntity>(sortDescriptors: [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)], predicate: nil)
-    var messages: FetchedResults<MessageEntity>
-
-    @ObservedObject var model: ConsoleMessagesListViewModel
+    @ObservedObject var model: ConsoleViewModel
 
     @State private var isShowingShareSheet = false
 
@@ -37,10 +34,7 @@ struct ConsoleView: View {
 }
 #else
 struct ConsoleView: View {
-    @FetchRequest<MessageEntity>(sortDescriptors: [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)], predicate: nil)
-    var messages: FetchedResults<MessageEntity>
-
-    @ObservedObject var model: ConsoleMessagesListViewModel
+    @ObservedObject var model: ConsoleViewModel
 
     var body: some View {
         VStack {
@@ -66,8 +60,8 @@ struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {
         let store = mockMessagesStore
         return Group {
-            ConsoleView(model: ConsoleMessagesListViewModel(container: store))
-            ConsoleView(model: ConsoleMessagesListViewModel(container: store))
+            ConsoleView(model: ConsoleViewModel(container: store))
+            ConsoleView(model: ConsoleViewModel(container: store))
                 .environment(\.colorScheme, .dark)
         }
     }

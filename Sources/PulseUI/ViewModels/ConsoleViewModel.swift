@@ -10,7 +10,7 @@ struct ConsoleMessagesRequestParameters {
     let searchText: String
 }
 
-final class ConsoleMessagesListViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
+final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let container: NSPersistentContainer
     private let controller: NSFetchedResultsController<MessageEntity>
     #warning("TODO: cleanup")
