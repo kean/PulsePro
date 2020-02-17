@@ -6,24 +6,28 @@ import CoreData
 import Pulse
 import Combine
 
-struct ConsoleMessagesRequestParameters {
-    let searchText: String
+struct ConsoleSearchCriteria {
+    let levels: ConsoleFilter<String> = .hide(items: [])
+}
+
+enum ConsoleFilter<T: Hashable> {
+    case focus(item: T)
+    case hide(items: Set<T>)
 }
 
 final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private var container: NSPersistentContainer
     private var controller: NSFetchedResultsController<MessageEntity>
-    #warning("TODO: cleanup")
 
     @Published var searchText: String = ""
+    @Published var searchCriteria: ConsoleSearchCriteria = .init()
     @Published private(set) var messages: ConsoleMessages
 
-    init(container: NSPersistentContainer, parameters: ConsoleMessagesRequestParameters = .init(searchText: "")) {
+    init(container: NSPersistentContainer) {
         self.container = container
 
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         request.fetchBatchSize = 40
-        parameters.apply(to: request)
 
         self.controller = NSFetchedResultsController<MessageEntity>(fetchRequest: request, managedObjectContext: container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
@@ -33,13 +37,13 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
         controller.delegate = self
         try? controller.performFetch()
 
-        $searchText.sink { [unowned self] in
-            self.setParameters(.init(searchText: $0))
+        Publishers.CombineLatest($searchText, $searchCriteria).sink { [unowned self] _ in
+            self.refresh()
         }.store(in: &bag)
     }
 
-    private func setParameters(_ parameters: ConsoleMessagesRequestParameters) {
-        parameters.apply(to: controller.fetchRequest)
+    private func refresh() {
+        update(request: controller.fetchRequest, searchText: searchText, criteria: searchCriteria)
         try? controller.performFetch()
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
@@ -120,14 +124,22 @@ struct ConsoleMessages: RandomAccessCollection {
     }
 }
 
-private extension ConsoleMessagesRequestParameters {
-    func apply(to request: NSFetchRequest<MessageEntity>) {
-        var predicates = [NSPredicate]()
-        if searchText.count > 1 {
-            predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
-        }
-        request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
+private func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria) {
+    var predicates = [NSPredicate]()
+    if searchText.count > 1 {
+        predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
     }
+    func apply<T: CVarArg>(filter: ConsoleFilter<T>, field: String) {
+        switch filter {
+        case let .focus(item):
+            predicates.append(NSPredicate(format: "\(field) == %@", item))
+        case let .hide(items):
+            guard !items.isEmpty else { return }
+            predicates.append(NSPredicate(format: "\(field) IN %@", items))
+        }
+    }
+    apply(filter: criteria.levels, field: "level")
+
+    request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+    request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
 }
