@@ -68,12 +68,10 @@ func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria
     }
 
     func apply<T: CVarArg>(filter: ConsoleFilter<T>, field: String) {
-        switch filter {
-        case let .focus(item):
-            predicates.append(NSPredicate(format: "\(field) == %@", item))
-        case let .hide(items):
-            guard !items.isEmpty else { return }
-            predicates.append(NSPredicate(format: "NOT (\(field) IN %@)", items))
+        if filter.isWhitelist {
+            predicates.append(NSPredicate(format: "\(field) IN %@", filter.items))
+        } else if !filter.items.isEmpty {
+            predicates.append(NSPredicate(format: "NOT (\(field) IN %@)", filter.items))
         }
     }
 

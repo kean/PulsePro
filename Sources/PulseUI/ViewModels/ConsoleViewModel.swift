@@ -7,22 +7,6 @@ import Pulse
 import Combine
 import SwiftUI
 
-struct ConsoleSearchCriteria {
-    var levels: ConsoleFilter<Logger.Level> = .hide([])
-}
-
-enum ConsoleFilter<T: Hashable> {
-    case focus(_ item: T)
-    case hide(_ items: Set<T>)
-
-    func map<U>(_ transform: (T) -> U) -> ConsoleFilter<U> {
-        switch self {
-        case let .focus(item): return .focus(transform(item))
-        case let .hide(items): return .hide(Set(items.map(transform)))
-        }
-    }
-}
-
 final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private var container: NSPersistentContainer
     private var controller: NSFetchedResultsController<MessageEntity>
@@ -134,8 +118,8 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
 
     @objc private func segmentedControlValueChanges(_ sender: NSSegmentedControl) {
         switch sender.selectedSegment {
-        case 0: searchCriteria.levels = .hide([])
-        case 1: searchCriteria.levels = .hide([.debug, .info])
+        case 0: searchCriteria.levels = .allItems
+        case 1: searchCriteria.levels = .whitelist(items: [.error, .fatal])
         default: fatalError("Invalid selected segment: \(sender.selectedSegment)")
         }
     }

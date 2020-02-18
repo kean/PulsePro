@@ -11,10 +11,21 @@ struct ConsoleSearchOptionsView: View {
     var body: some View {
         HStack(spacing: 8) {
             MenuButton("Levels") {
-                Text("Test")
-            }.fixedSize()
+                MultiselectPickerView()
+            }
+            .fixedSize()
             Spacer(minLength: 8)
         }
+    }
+}
+
+private extension ConsoleFilter {
+    func isSelected(item: T) -> Bool {
+        isWhitelist ? items.contains(item) : !items.contains(item)
+    }
+
+    func setSelected(_ isSelected: Bool, item: T) {
+        
     }
 }
 
@@ -44,12 +55,17 @@ struct ConsoleSearchOptionsView: View {
 //        }
 //    }
 //}
-//
-//struct MultiselectPickerView: View {
-//    var body: some View {
-//
-//    }
-//}
+
+struct MultiselectPickerView: View {
+    var body: some View {
+        Group {
+            Toggle(isOn: .constant(false)) { Text("Debug") }
+            Toggle(isOn: .constant(false)) { Text("Info") }
+            Toggle(isOn: .constant(true)) { Text("Error") }
+            Toggle(isOn: .constant(true)) { Text("Fatal") }
+        }
+    }
+}
 
 struct PickerExample: View {
     var strengths = ["Mild", "Medium", "Mature"]
@@ -72,6 +88,7 @@ struct PickerExample: View {
 
 struct ConsoleSearchOptionsView_Previews: PreviewProvider {
     static var previews: some View {
-        ConsoleSearchOptionsView(searchCriteria: .constant(.init()))
+        MultiselectPickerView()
+//        ConsoleSearchOptionsView(searchCriteria: .constant(.init()))
     }
 }
