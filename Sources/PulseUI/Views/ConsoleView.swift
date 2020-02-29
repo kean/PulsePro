@@ -49,7 +49,7 @@ struct ConsoleView: View {
     #warning("TODO: add an option to hide details panel")
     var body: some View {
         VStack {
-            ConsoleSearchOptionsView(searchCriteria: $model.searchCriteria)
+            ConsoleSearchView(searchCriteria: $model.searchCriteria)
             HSplitView {
                 NavigationView {
                     List(model.messages, id: \.objectID) { message in
