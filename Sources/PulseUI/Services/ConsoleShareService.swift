@@ -67,10 +67,12 @@ public struct ConsoleShareService {
     }
 
     private func format(message: MessageEntity) -> String {
-        #warning("TODO: improve date format")
-        #warning("TODO: add icon for criticals/errors")
-        #warning("TODO: print type properly")
-        #warning("TODO: print type properly")
-        return "\(message.created) [\(message.system)][\(message.level)] \(message.text)"
+        "\(dateFormatter.string(from: message.created)) [\(message.level)]-[\(message.system):\(message.category)] \(message.text)"
     }
 }
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
+    return formatter
+}()
