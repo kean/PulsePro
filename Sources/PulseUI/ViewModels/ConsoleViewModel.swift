@@ -13,6 +13,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
 
     @Published var searchText: String = ""
     @Published var searchCriteria: ConsoleSearchCriteria = .init()
+    @Published var onlyErrors: Bool = false
     #warning("TODO: remove")
     @Published private(set) var isShowingFilters = false
     @Published private(set) var messages: ConsoleMessages
@@ -40,12 +41,26 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
         Publishers.CombineLatest($searchText, $searchCriteria).sink { [unowned self] searchText, criteria in
             self.refresh(searchText: searchText, criteria: criteria)
         }.store(in: &bag)
+
+        $onlyErrors.sink { [unowned self] in
+            self.setOnlyErrorsEnabled($0)
+        }.store(in: &bag)
     }
 
     private func refresh(searchText: String, criteria: ConsoleSearchCriteria) {
         update(request: controller.fetchRequest, searchText: searchText, criteria: criteria)
         try? controller.performFetch()
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
+    }
+
+    private func setOnlyErrorsEnabled(_ onlyErrors: Bool) {
+        var filters = searchCriteria.filters
+        filters.removeAll(where: { $0.kind == .level })
+        if onlyErrors {
+            filters.append(ConsoleSearchFilter(text: "error", kind: .level, relation: .equals))
+            filters.append(ConsoleSearchFilter(text: "fatal", kind: .level, relation: .equals))
+        }
+        searchCriteria.filters = filters
     }
 
     func prepareForSharing() throws -> URL {
@@ -125,15 +140,7 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
     // MARK: - NSSegmentedControl
 
     @objc private func segmentedControlValueChanges(_ sender: NSSegmentedControl) {
-        switch sender.selectedSegment {
-        case 0:
-            searchCriteria.filters.removeAll(where: { $0.kind == .level })
-        case 1:
-            searchCriteria.filters.removeAll(where: { $0.kind == .level })
-            searchCriteria.filters.append(ConsoleSearchFilter(text: "error", kind: .level, relation: .equals))
-            searchCriteria.filters.append(ConsoleSearchFilter(text: "fatal", kind: .level, relation: .equals))
-        default: fatalError("Invalid selected segment: \(sender.selectedSegment)")
-        }
+        onlyErrors = sender.selectedSegment == 1
         searchView?.searchCriteriaUpdatedProgramatically()
     }
 

@@ -16,8 +16,11 @@ struct ConsoleView: View {
     var body: some View {
         NavigationView {
             List {
-                SearchBar(title: "Search", text: $model.searchText)
-                    .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                VStack {
+                    SearchBar(title: "Search", text: $model.searchText)
+                    Spacer(minLength: 12)
+                    ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors)
+                }.padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
                 ForEach(model.messages, id: \.objectID) { message in
                     NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
                         ConsoleMessageView(model: .init(message: message))
