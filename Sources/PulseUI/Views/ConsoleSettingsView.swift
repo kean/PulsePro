@@ -19,6 +19,9 @@ struct ConsoleSettingsView: View {
                 Section {
                     buttonRemoveAll
                 }
+                Section {
+                    buttonResetFilters
+                }
             }
             .navigationBarTitle("Settings")
             .navigationBarItems(trailing:
@@ -51,9 +54,19 @@ struct ConsoleSettingsView: View {
                 title: Text("Are you sure you want to remove all recorded messages?"),
                 primaryButton: .destructive(Text("Remove all messages"), action: {
                     self.model.buttonRemoveAllMessagesTapped()
+                    self.isPresented = false
                 }),
                 secondaryButton: .cancel()
             )
+        }
+    }
+
+    private var buttonResetFilters: some View {
+        Button(action: {
+            self.model.searchCriteria = .init()
+            self.isPresented = false
+        }) {
+            Text("Reset Filters")
         }
     }
 }

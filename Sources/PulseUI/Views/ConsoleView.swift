@@ -63,7 +63,7 @@ struct ConsoleMessageViewListItem: View {
                     let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .equals)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Show system \"\(message.system)\"")
+                    Text("Focus system \"\(message.system)\"")
                     Image(systemName: "eye")
                 }
                 Button(action: {
