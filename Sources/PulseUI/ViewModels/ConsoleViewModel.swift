@@ -17,8 +17,10 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     @Published private(set) var isShowingFilters = false
     @Published private(set) var messages: ConsoleMessages
 
+    #if os(macOS)
     // TEMP:
     private var searchView: ConsoleSearchView?
+    #endif
 
     init(container: NSPersistentContainer) {
         self.container = container
