@@ -39,8 +39,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         dialog.allowsMultipleSelection = false
         dialog.allowedFileTypes = ["sqlite"]
 
-        #warning("TODO: open recent is not working")
-
         guard dialog.runModal() == NSApplication.ModalResponse.OK else {
             return // User cancelled the action
         }
@@ -51,7 +49,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     }
 
     func showConsole(model: ConsoleViewModel) {
-        #warning("TODO: improve preferred window/panels size")
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 320, height: 480),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
@@ -86,7 +83,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
                 guard let data = result as? Data,
                     let path = String(data: data, encoding: .utf8),
                     let url = URL(string: path) else {
-                        #warning("TODO: implement error handling?")
                         return
                 }
                 DispatchQueue.main.async {
@@ -97,10 +93,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     }
 
     func showWelcomeView() {
-        #warning("TODO: open window not on top of the existing one")
-        #warning("TODO: show a welcome when closing all of the windows")
-        #warning("TODO: add title to each window")
-        #warning("TODO: add support for tabs instead of windows")
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 320, height: 300),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
