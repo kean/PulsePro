@@ -8,11 +8,20 @@ import Pulse
 struct ConsoleMessageDetailsView: View {
     let model: ConsoleMessageDetailsViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @State private var isShowingShareSheet = false
 
     #if os(iOS)
     var body: some View {
         contents
             .navigationBarTitle("Message")
+            .navigationBarItems(trailing:
+                ShareButton {
+                    self.isShowingShareSheet = true
+                }
+            )
+            .sheet(isPresented: $isShowingShareSheet) {
+                ShareView(activityItems: [self.model.prepareForSharing()])
+            }
     }
     #else
     var body: some View {

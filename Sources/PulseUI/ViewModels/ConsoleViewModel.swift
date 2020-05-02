@@ -67,6 +67,10 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
         try ConsoleShareService(container: container).prepareForSharing()
     }
 
+    func buttonRemoveAllMessagesTapped() {
+        try? Logger.Store(container: container).removeAllMessages()
+    }
+
     // MARK: - NSFetchedResultsControllerDelegate
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

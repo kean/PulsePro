@@ -44,6 +44,10 @@ final class ConsoleMessageDetailsViewModel {
         self.text = message.text
         self.style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
     }
+
+    func prepareForSharing() -> Any {
+        return text
+    }
 }
 
 struct ConsoleMessageTagViewModel {
