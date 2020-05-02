@@ -35,8 +35,6 @@ final class ConsoleSearchFilter: Hashable {
         case system
         case category
         case level
-        #warning("TODO: implement 'created' filter")
-        // case created
         case any
     }
 
