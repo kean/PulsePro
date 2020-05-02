@@ -24,7 +24,7 @@ struct ConsoleView: View {
                 }.padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
                 ForEach(model.messages, id: \.objectID) { message in
                     NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
-                        ConsoleMessageViewListItem(message: message)
+                        ConsoleMessageViewListItem(searchCriteria: self.$model.searchCriteria, message: message)
                     }
                 }
             }
@@ -45,11 +45,13 @@ struct ConsoleView: View {
 }
 
 struct ConsoleMessageViewListItem: View {
+    @Binding var searchCriteria: ConsoleSearchCriteria
     let message: MessageEntity
     @State private var isShowingShareSheet = false
 
     var body: some View {
         ConsoleMessageView(model: .init(message: message))
+            // TODO: create a ViewModel for a share sheet
             .contextMenu {
                 Button(action: {
                     self.isShowingShareSheet = true
@@ -57,6 +59,20 @@ struct ConsoleMessageViewListItem: View {
                     Text("Share")
                     Image(systemName: "square.and.arrow.up")
                 }
+                Button(action: {
+                    let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .equals)
+                    self.searchCriteria.filters.append(filter)
+                }) {
+                    Text("Show system \"\(message.system)\"")
+                    Image(systemName: "eye")
+                }
+                Button(action: {
+                    let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .doesNotEqual)
+                    self.searchCriteria.filters.append(filter)
+                }) {
+                    Text("Hide system \"\(message.system)\"")
+                    Image(systemName: "eye.slash")
+                }.foregroundColor(.red)
         }
         .sheet(isPresented: $isShowingShareSheet) {
             ShareView(activityItems: [self.message.text])
