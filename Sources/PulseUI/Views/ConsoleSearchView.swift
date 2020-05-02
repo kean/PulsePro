@@ -57,9 +57,6 @@ final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
         return "\(title(for: filter.kind)): \(filter.text)"
     }
 
-    #warning("TODO: implement completions for systems")
-    #warning("TODO: could we make negated red")
-
     func tokenField(_ tokenField: NSTokenField, shouldAdd tokens: [Any], at index: Int) -> [Any] {
         for token in tokens.reversed() {
             searchCriteria.wrappedValue.filters.insert(token as! ConsoleSearchFilter, at: index)
