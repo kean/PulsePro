@@ -18,6 +18,8 @@ func makeMockMessagesStore() -> NSPersistentContainer {
     let store = NSPersistentStoreDescription(url: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
 
     container.persistentStoreDescriptions = [store]
+    container.viewContext.automaticallyMergesChangesFromParent = true
+    container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 
     var isCompleted = false
     container.loadPersistentStores { _, error in

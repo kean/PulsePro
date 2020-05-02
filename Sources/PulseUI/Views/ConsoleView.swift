@@ -24,7 +24,7 @@ struct ConsoleView: View {
                 }.padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
                 ForEach(model.messages, id: \.objectID) { message in
                     NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
-                        ConsoleMessageView(model: .init(message: message))
+                        ConsoleMessageViewListItem(message: message)
                     }
                 }
             }
@@ -40,6 +40,26 @@ struct ConsoleView: View {
             .sheet(isPresented: $isShowingSettings) {
                 ConsoleSettingsView(model: self.model, isPresented:  self.$isShowingSettings)
             }
+        }
+    }
+}
+
+struct ConsoleMessageViewListItem: View {
+    let message: MessageEntity
+    @State private var isShowingShareSheet = false
+
+    var body: some View {
+        ConsoleMessageView(model: .init(message: message))
+            .contextMenu {
+                Button(action: {
+                    self.isShowingShareSheet = true
+                }) {
+                    Text("Share")
+                    Image(systemName: "square.and.arrow.up")
+                }
+        }
+        .sheet(isPresented: $isShowingShareSheet) {
+            ShareView(activityItems: [self.message.text])
         }
     }
 }
