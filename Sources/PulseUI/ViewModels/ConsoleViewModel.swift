@@ -61,7 +61,6 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
 import AppKit
 
 private extension NSToolbarItem.Identifier {
-    static let searchFilters: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.filters")
     static let searchField: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.search_field")
     static let levelSegmentedControl: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.levels_segmented_control")
 }
@@ -97,20 +96,13 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
             let item = NSToolbarItem(itemIdentifier: .searchField)
             item.view = searchField
             return item
-        case .searchFilters:
-            let item = NSToolbarItem(itemIdentifier: .searchFilters)
-            let button = NSButton(image: NSImage(named: NSImage.actionTemplateName)!, target: self, action: #selector(buttonShowFiltersTapped))
-            button.bezelStyle = .texturedRounded
-            item.view = button
-            item.label = "Filters"
-            return item
         default:
             return nil
         }
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.searchField, .searchFilters, .flexibleSpace, .levelSegmentedControl]
+        [.searchField, .flexibleSpace, .levelSegmentedControl]
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
