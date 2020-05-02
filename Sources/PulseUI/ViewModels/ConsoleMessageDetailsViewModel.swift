@@ -43,7 +43,7 @@ final class ConsoleMessageDetailsViewModel {
             )
         ]
         self.text = message.text
-        self.style = ConsoleMessageStyle.make(level: message.level)
+        self.style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
     }
 }
 

@@ -53,7 +53,7 @@ private func populateStore(_ container: NSPersistentContainer) {
 
     addMessage {
         $0.created = Date() - 0.11
-        $0.level = .info
+        $0.level = "info"
         $0.system = "application"
         $0.category = "default"
         $0.session = "1"
@@ -62,7 +62,7 @@ private func populateStore(_ container: NSPersistentContainer) {
 
     addMessage {
         $0.created = Date() - 0.1
-        $0.level = .info
+        $0.level = "info"
         $0.system = "application"
         $0.category = "default"
         $0.session = "1"
@@ -71,7 +71,7 @@ private func populateStore(_ container: NSPersistentContainer) {
 
     addMessage {
         $0.created = Date() - 0.07
-        $0.level = .debug
+        $0.level = "debug"
         $0.system = "auth"
         $0.category = "default"
         $0.session = "1"
@@ -80,7 +80,7 @@ private func populateStore(_ container: NSPersistentContainer) {
 
     addMessage {
         $0.created = Date() - 0.05
-        $0.level = .error
+        $0.level = "error"
         $0.system = "auth"
         $0.category = "default"
         $0.session = "1"
@@ -89,7 +89,7 @@ private func populateStore(_ container: NSPersistentContainer) {
 
     addMessage {
         $0.created = Date() - 0.04
-        $0.level = .debug
+        $0.level = "debug"
         $0.system = "auth"
         $0.category = "default"
         $0.session = "1"
@@ -117,7 +117,7 @@ private func populateStore(_ container: NSPersistentContainer) {
 
     addMessage {
         $0.created = Date() - 0.03
-        $0.level = .fatal
+        $0.level = "fatal"
         $0.system = "default"
         $0.category = "default"
         $0.session = "1"

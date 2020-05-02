@@ -55,6 +55,7 @@ final class ConsoleSearchFilter: Hashable {
         case text
         case system
         case category
+        case level
         case created
         case any
     }

@@ -31,6 +31,6 @@ struct ConsoleMessageViewModel {
         let category = message.category == "default" ? "" : ":\(message.category)"
         self.title = "\(time) | \(message.system)\(category)"
         self.text = message.text
-        self.style = ConsoleMessageStyle.make(level: message.level)
+        self.style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
     }
 }

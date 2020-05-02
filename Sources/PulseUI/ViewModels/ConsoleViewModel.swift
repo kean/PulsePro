@@ -128,8 +128,12 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
 
     @objc private func segmentedControlValueChanges(_ sender: NSSegmentedControl) {
         switch sender.selectedSegment {
-        case 0: searchCriteria.levels = .allItems
-        case 1: searchCriteria.levels = .whitelist(items: [.error, .fatal])
+        case 0:
+            searchCriteria.filters.removeAll(where: { $0.kind == .level })
+        case 1:
+            searchCriteria.filters.removeAll(where: { $0.kind == .level })
+            searchCriteria.filters.append(ConsoleSearchFilter(text: "error", kind: .level, relation: .equals))
+            searchCriteria.filters.append(ConsoleSearchFilter(text: "fatal", kind: .level, relation: .equals))
         default: fatalError("Invalid selected segment: \(sender.selectedSegment)")
         }
     }

@@ -67,9 +67,11 @@ func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria
         predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
     }
 
-    for filter in criteria.filters {
-        predicates.append(predicate(for: filter))
+    let groups = Dictionary(grouping: criteria.filters, by: { $0.kind })
 
+    for group in groups {
+        let groupPredicates = group.value.flatMap(predicate(for:))
+        predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: groupPredicates))
     }
 
     func apply<T: CVarArg>(filter: ConsoleFilter<T>, field: String) {
@@ -86,22 +88,41 @@ func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria
     request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
 }
 
-private func predicate(for filter: ConsoleSearchFilter) -> NSPredicate {
+private func predicate(forLevelsFilters filters: [ConsoleSearchFilter]) -> NSPredicate {
+    let levels = filters
+        .map { $0.text }
+        .compactMap(Logger.Level.init(description:))
+
+    return NSPredicate(format: "level IN %@", levels)
+}
+
+extension Logger.Level {
+    init?(description: String) {
+        switch description {
+        case "debug": self = .debug
+        case "info": self = .info
+        case "error": self = .error
+        case "fatal": self = .fatal
+        default: return nil
+        }
+    }
+}
+
+private func predicate(for filter: ConsoleSearchFilter) -> [NSPredicate] {
     let fields: [String]
     switch filter.kind {
     case .category: fields = ["category"]
     case .system: fields = ["system"]
     case .text: fields = ["text"]
-    case .any: fields = ["category", "system", "text"]
-    default: fatalError("Unsupported filter: \(filter)")
+    case .any: fields = ["category", "system", "text", "level"]
+    case .created: fatalError("Unsupported")
+    case .level: fatalError("Unsupported")
     }
 
     let relation = filter.relation.isExactMatch ? "==" : "CONTAINS"
     let prefix = filter.relation.isNegated ? "NOT " : ""
 
-    let predicates: [NSPredicate] = fields.map { field in
+    return fields.map { field in
         NSPredicate(format: "\(prefix)\(field) \(relation) %@", filter.text)
     }
-
-    return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 }

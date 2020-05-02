@@ -17,7 +17,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         model.delegate = self
 
-        showWelcomeView()
+        #warning("TEMP:")
+//        showWelcomeView()
+
+        let console = ConsoleViewModel(container: mockMessagesStore)
+        showConsole(model: console)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
