@@ -35,10 +35,10 @@ struct ConsoleView: View {
                 ShareButton {
                     self.isShowingShareSheet = true
                 }
+                .sheet(isPresented: $isShowingShareSheet) {
+                    ShareView(activityItems: [try! self.model.prepareForSharing()])
+                }
             )
-            .sheet(isPresented: $isShowingShareSheet) {
-                ShareView(activityItems: [try! self.model.prepareForSharing()])
-            }
             .sheet(isPresented: $isShowingSettings) {
                 ConsoleSettingsView(model: self.model, isPresented:  self.$isShowingSettings)
             }
