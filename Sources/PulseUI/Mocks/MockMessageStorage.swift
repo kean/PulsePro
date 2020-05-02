@@ -49,47 +49,47 @@ private func populateStore(_ container: NSPersistentContainer) {
     }
 
     addMessage {
-        $0.created = Date() - 0.11
+        $0.createdAt = Date() - 0.11
         $0.level = "info"
         $0.system = "application"
         $0.category = "default"
-        $0.session = "1"
+        $0.session = Logger.default.logSessionId.uuidString
         $0.text = "UIApplication.didFinishLaunching"
     }
 
     addMessage {
-        $0.created = Date() - 0.1
+        $0.createdAt = Date() - 0.1
         $0.level = "info"
         $0.system = "application"
         $0.category = "default"
-        $0.session = "1"
+        $0.session = Logger.default.logSessionId.uuidString
         $0.text = "UIApplication.willEnterForeground"
     }
 
     addMessage {
-        $0.created = Date() - 0.07
+        $0.createdAt = Date() - 0.07
         $0.level = "debug"
         $0.system = "auth"
         $0.category = "default"
-        $0.session = "1"
+        $0.session = Logger.default.logSessionId.uuidString
         $0.text = "🌐 Will authorize user with name \"kean@github.com\""
     }
 
     addMessage {
-        $0.created = Date() - 0.05
+        $0.createdAt = Date() - 0.05
         $0.level = "error"
         $0.system = "auth"
         $0.category = "default"
-        $0.session = "1"
+        $0.session = Logger.default.logSessionId.uuidString
         $0.text = "🌐 Authorization request failed with error 500"
     }
 
     addMessage {
-        $0.created = Date() - 0.04
+        $0.createdAt = Date() - 0.04
         $0.level = "debug"
         $0.system = "auth"
         $0.category = "default"
-        $0.session = "1"
+        $0.session = Logger.default.logSessionId.uuidString
         $0.text = """
         Replace this implementation with code to handle the error appropriately. fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 
@@ -113,11 +113,11 @@ private func populateStore(_ container: NSPersistentContainer) {
     }
 
     addMessage {
-        $0.created = Date() - 0.03
+        $0.createdAt = Date() - 0.03
         $0.level = "fatal"
         $0.system = "default"
         $0.category = "default"
-        $0.session = "1"
+        $0.session = Logger.default.logSessionId.uuidString
         $0.text = "💥 0xDEADBEAF"
     }
 

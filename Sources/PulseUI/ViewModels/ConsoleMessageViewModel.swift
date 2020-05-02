@@ -26,7 +26,7 @@ struct ConsoleMessageViewModel {
 
     init(message: MessageEntity) {
         let time = ConsoleMessageViewModel.timeFormatter
-            .string(from: message.created)
+            .string(from: message.createdAt)
         let category = message.category == "default" ? "" : ":\(message.category)"
         self.title = "\(time) | \(message.system)\(category)"
         self.text = message.text

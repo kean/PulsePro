@@ -12,6 +12,7 @@ struct ConsoleView: View {
     @ObservedObject var model: ConsoleViewModel
 
     @State private var isShowingShareSheet = false
+    @State private var isShowingSettings = false
 
     var body: some View {
         NavigationView {
@@ -19,7 +20,7 @@ struct ConsoleView: View {
                 VStack {
                     SearchBar(title: "Search", text: $model.searchText)
                     Spacer(minLength: 12)
-                    ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors)
+                    ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors, isShowingSettings: $isShowingSettings)
                 }.padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
                 ForEach(model.messages, id: \.objectID) { message in
                     NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
@@ -35,6 +36,9 @@ struct ConsoleView: View {
             )
             .sheet(isPresented: $isShowingShareSheet) {
                 ShareView(activityItems: [try! self.model.prepareForSharing()])
+            }
+            .sheet(isPresented: $isShowingSettings) {
+                ConsoleSettingsView(model: self.model, isPresented:  self.$isShowingSettings)
             }
         }
     }

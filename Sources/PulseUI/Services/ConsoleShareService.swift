@@ -53,7 +53,7 @@ public struct ConsoleShareService {
 
     private func fetchAllMessages() throws -> [MessageEntity] {
         let request = NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.createdAt, ascending: true)]
         return try context.fetch(request)
     }
 
@@ -67,7 +67,7 @@ public struct ConsoleShareService {
     }
 
     private func format(message: MessageEntity) -> String {
-        "\(dateFormatter.string(from: message.created)) [\(message.level)]-[\(message.system):\(message.category)] \(message.text)"
+        "\(dateFormatter.string(from: message.createdAt)) [\(message.level)]-[\(message.system):\(message.category)] \(message.text)"
     }
 }
 

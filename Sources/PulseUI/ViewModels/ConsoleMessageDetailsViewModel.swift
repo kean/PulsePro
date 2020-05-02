@@ -30,7 +30,7 @@ final class ConsoleMessageDetailsViewModel {
             ConsoleMessageTagViewModel(
                 title: "Date",
                 value: ConsoleMessageViewModel.timeFormatter
-                    .string(from: message.created)
+                    .string(from: message.createdAt)
             ),
             ConsoleMessageTagViewModel(
                 title: "System",
