@@ -8,6 +8,8 @@ import Pulse
 import Combine
 
 #if os(iOS)
+import UIKit
+
 struct ConsoleView: View {
     @ObservedObject var model: ConsoleViewModel
 
@@ -57,7 +59,7 @@ struct ConsoleMessageViewListItem: View {
                     self.isShowingShareSheet = true
                 }) {
                     Text("Share")
-                    Image(systemName: "square.and.arrow.up")
+                    Image(uiImage: UIImage(systemName: "square.and.arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .black, scale: .medium))!)
                 }
                 Button(action: {
                     let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .equals)
