@@ -1,10 +1,6 @@
+// The MIT License (MIT)
 //
-//  AppDelegate.swift
-//  macOS
-//
-//  Created by Alexander Grebenyuk on 16.02.2020.
-//  Copyright © 2020 kean. All rights reserved.
-//
+// Copyright (c) 2020 Alexander Grebenyuk (github.com/kean).
 
 import Cocoa
 import Pulse
@@ -17,11 +13,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         model.delegate = self
 
-        #warning("TEMP:")
-//        showWelcomeView()
-
-        let console = ConsoleViewModel(container: mockMessagesStore)
-        showConsole(model: console)
+        if Configurataion.isMockStoreEnabled {
+            showConsole(model: ConsoleViewModel(container: mockMessagesStore))
+        } else {
+            showWelcomeView()
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
