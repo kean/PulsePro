@@ -10,7 +10,6 @@ struct ConsoleMessageViewModel {
     let text: String
     let style: ConsoleMessageStyle
 
-    #warning("TODO: improve and reuse formatter")
     static let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

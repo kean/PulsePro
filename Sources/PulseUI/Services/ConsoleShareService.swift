@@ -38,10 +38,6 @@ public struct ConsoleShareService {
         let userDefaultsContentsUrl = tempDir.appendingPathComponent("user-defaults.txt")
         try userDefaultsContents.write(to: userDefaultsContentsUrl)
 
-        #warning("TODO: this isn't going to work in Outlook")
-        #warning("TODO: add filtered logs")
-        #warning("TODO: add device DNA")
-
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let date = dateFormatter.string(from: Date())
@@ -62,7 +58,6 @@ public struct ConsoleShareService {
     }
 
     private func format(messages: [MessageEntity]) -> Data? {
-        #warning("TODO: split by sessions")
         var output = ""
         for message in messages {
             output.append(format(message: message))

@@ -17,7 +17,6 @@ final class AppViewModel: ObservableObject {
             let model = ConsoleViewModel(container: container)
             self.delegate?.showConsole(model: model)
         } catch {
-            #warning("TODO: handle errors")
             debugPrint("Failed to open database with url: \(url) with error: \(error)")
         }
     }
