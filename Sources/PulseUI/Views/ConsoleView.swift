@@ -13,9 +13,6 @@ struct ConsoleView: View {
 
     @State private var isShowingShareSheet = false
 
-    #warning("TODO: add a context menu")
-    #warning("TODO: add a more menu")
-    #warning("TODO: add share/more options")
     var body: some View {
         NavigationView {
             VStack {
