@@ -13,6 +13,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
 
     @Published var searchText: String = ""
     @Published var searchCriteria: ConsoleSearchCriteria = .init()
+    #warning("TODO: remove")
     @Published private(set) var isShowingFilters = false
     @Published private(set) var messages: ConsoleMessages
 
@@ -77,9 +78,18 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
             item.view = segmentedControl
             return item
         case .searchField:
-            let searchField = NSSearchField(string: searchText)
-            searchField.placeholderString = "Search"
-            searchField.delegate = self
+            #warning("TODO: there must be a clearer way to do that without @ObservedObject")
+            let binding = Binding(get: { [unowned self] in
+                return self.searchCriteria
+            }, set: { [unowned self] in
+                self.searchCriteria = $0
+            })
+            let searchField = ConsoleSearchView(searchCriteria: binding)
+            searchField.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
+            searchField.heightAnchor.constraint(equalToConstant: 22).isActive = true
+            let width = searchField.widthAnchor.constraint(equalToConstant: 320)
+            width.priority = .init(759)
+            width.isActive = true
             let item = NSToolbarItem(itemIdentifier: .searchField)
             item.view = searchField
             return item

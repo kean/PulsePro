@@ -67,6 +67,11 @@ func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria
         predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
     }
 
+    for filter in criteria.filters {
+        predicates.append(predicate(for: filter))
+
+    }
+
     func apply<T: CVarArg>(filter: ConsoleFilter<T>, field: String) {
         if filter.isWhitelist {
             predicates.append(NSPredicate(format: "\(field) IN %@", filter.items))
@@ -79,4 +84,24 @@ func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria
 
     request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
+}
+
+private func predicate(for filter: ConsoleSearchFilter) -> NSPredicate {
+    let fields: [String]
+    switch filter.kind {
+    case .category: fields = ["category"]
+    case .system: fields = ["system"]
+    case .text: fields = ["text"]
+    case .any: fields = ["category", "system", "text"]
+    default: fatalError("Unsupported filter: \(filter)")
+    }
+
+    let relation = filter.relation.isExactMatch ? "==" : "CONTAINS"
+    let prefix = filter.relation.isNegated ? "NOT " : ""
+
+    let predicates: [NSPredicate] = fields.map { field in
+        NSPredicate(format: "\(prefix)\(field) \(relation) %@", filter.text)
+    }
+
+    return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 }

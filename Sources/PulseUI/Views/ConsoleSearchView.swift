@@ -2,72 +2,152 @@
 //
 // Copyright (c) 2020 Alexander Grebenyuk (github.com/kean).
 
+#if os(macOS)
 import SwiftUI
 import Pulse
 import AppKit
 
-// TOOD: add code completion, suggest systems
-// TODO: finish menu
-struct ConsoleSearchView: NSViewRepresentable {
-    @Binding var searchCriteria: ConsoleSearchCriteria
+// I'm too lazy to create ViewModels for each of these components and menus,
+// this should do.
+final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
+    private let tokenField = NSTokenField()
+    private var searchCriteria: Binding<ConsoleSearchCriteria>
+    private var observer: Any?
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
+    init(searchCriteria: Binding<ConsoleSearchCriteria>) {
+        self.searchCriteria = searchCriteria
 
-    func makeNSView(context: Context) -> NSTokenField {
-        let tokenField = NSTokenField()
-        tokenField.delegate = context.coordinator
+        super.init(frame: .zero)
+
+        tokenField.placeholderString = "Search"
+        tokenField.delegate = self
         tokenField.tokenStyle = .rounded
-        return tokenField
+
+        addSubview(tokenField)
+        tokenField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tokenField.topAnchor.constraint(equalTo: topAnchor),
+            tokenField.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tokenField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tokenField.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+
+        observer = NotificationCenter.default
+            .addObserver(forName: NSControl.textDidChangeNotification, object: tokenField, queue: nil) { [weak self] _ in
+                self?.tokensUpdated()
+            }
     }
 
-    func updateNSView(_ textView: NSTokenField, context: Context) {
-//        guard textView.string != text else { return }
-//        textView.string = text
+    private func tokensUpdated() {
+        print("tokens udpated")
+
+        searchCriteria.filters.wrappedValue = tokenField.objectValue as! [ConsoleSearchFilter]
     }
 
-    class Coordinator: NSObject, NSTokenFieldDelegate {
-        func tokenField(_ tokenField: NSTokenField, displayStringForRepresentedObject representedObject: Any) -> String? {
-            return "System: \(representedObject)"
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func tokenField(_ tokenField: NSTokenField, displayStringForRepresentedObject representedObject: Any) -> String? {
+        let filter = representedObject as! ConsoleSearchFilter
+        return "\(title(for: filter.kind)): \(filter.text)"
+    }
+
+    #warning("TODO: implement completions for systems")
+
+    func tokenField(_ tokenField: NSTokenField, shouldAdd tokens: [Any], at index: Int) -> [Any] {
+        for token in tokens.reversed() {
+            searchCriteria.wrappedValue.filters.insert(token as! ConsoleSearchFilter, at: index)
+        }
+        return tokens
+    }
+
+    func tokenField(_ tokenField: NSTokenField, representedObjectForEditing editingString: String) -> Any? {
+        ConsoleSearchFilter(text: editingString, kind: .text, relation: .contains)
+    }
+
+    func tokenField(_ tokenField: NSTokenField, hasMenuForRepresentedObject representedObject: Any) -> Bool {
+        return true
+    }
+
+    func tokenField(_ tokenField: NSTokenField, menuForRepresentedObject representedObject: Any) -> NSMenu? {
+        let filter = representedObject as! ConsoleSearchFilter
+
+        let menu = NSMenu(title: title(for: filter.kind))
+
+        let allKinds = ConsoleSearchFilter.Kind.allCases
+        let kindItems: [NSMenuItem] = zip(allKinds.indices, allKinds).map { index, kind in
+            let item = NSMenuItem(title: title(for: kind), action: #selector(didSelectKind), keyEquivalent: "")
+            if kind == filter.kind {
+                item.state = .on
+            }
+            item.representedObject = filter
+            item.target = self
+            item.tag = index
+            return item
         }
 
-        func tokenField(_ tokenField: NSTokenField, hasMenuForRepresentedObject representedObject: Any) -> Bool {
-            return true
+        let allRelations = ConsoleSearchFilter.Relation.allCases
+        let relationItems: [NSMenuItem] = zip(allRelations.indices, allRelations).map { index, relation in
+            let item = NSMenuItem(title: title(for: relation), action: #selector(didSelectRelation), keyEquivalent: "")
+            if relation == filter.relation {
+                item.state = .on
+            }
+            item.representedObject = filter
+            item.target = self
+            item.tag = index
+            return item
         }
 
-        func tokenField(_ tokenField: NSTokenField, menuForRepresentedObject representedObject: Any) -> NSMenu? {
-            let menu = NSMenu(title: "Any")
+        menu.items = kindItems + [.separator()] + relationItems
 
-            let item1 = NSMenuItem(title: "test", action: #selector(doSomething), keyEquivalent: "")
-            item1.target = self
+        return menu
+    }
 
-            item1.state = .on
+    @objc func didSelectKind(_ item: NSMenuItem) {
+        let filter = item.representedObject as! ConsoleSearchFilter
 
-            let item2 = NSMenuItem(title: "test 2", action: #selector(doSomething), keyEquivalent: "")
+        let allKinds = ConsoleSearchFilter.Kind.allCases
+        let newKind = allKinds[item.tag]
 
-            let item3 = NSMenuItem(title: "test 3", action: #selector(doSomething), keyEquivalent: "")
-            item3.target = self
+        let newFilter = ConsoleSearchFilter(text: filter.text, kind: newKind, relation: filter.relation)
 
-//            menu.autoenablesItems = true
-//            menu.showsStateColumn = true
+        let index = searchCriteria.wrappedValue.filters.firstIndex(of: filter)!
+        searchCriteria.wrappedValue.filters[index] = newFilter
+        tokenField.objectValue = searchCriteria.wrappedValue.filters
+    }
 
-            menu.items = [item1, item2, .separator(), item3]
+    @objc func didSelectRelation(_ item: NSMenuItem) {
+        let filter = item.representedObject as! ConsoleSearchFilter
 
-            return menu
-        }
+        let allRelations = ConsoleSearchFilter.Relation.allCases
+        let newRelation = allRelations[item.tag]
 
-        @objc func doSomething() {
+        let newFilter = ConsoleSearchFilter(text: filter.text, kind: filter.kind, relation: newRelation)
 
-        }
+        let index = searchCriteria.wrappedValue.filters.firstIndex(of: filter)!
+        searchCriteria.wrappedValue.filters[index] = newFilter
+        tokenField.objectValue = searchCriteria.wrappedValue.filters
     }
 }
 
-struct ConsoleSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConsoleSearchView(searchCriteria: .constant(.init()))
-            .previewLayout(.fixed(width: 320, height: 50))
-//        ConsoleSearchOptionsView(searchCriteria: .constant(.init()))
+#endif
+
+private func title(for kind: ConsoleSearchFilter.Kind) -> String {
+    switch kind {
+    case .any: return "Any"
+    case .category: return "Category"
+    case .created: return "Time & Date"
+    case .system: return "System"
+    case .text: return "Text"
     }
 }
 
+private func title(for relation: ConsoleSearchFilter.Relation) -> String {
+    switch relation {
+    case .contains: return "Contains"
+    case .doesNotContain: return "Does Not Contain"
+    case .equals: return "Equals"
+    case .doesNotEqual: return "Does Not Equal"
+    }
+}

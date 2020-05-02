@@ -38,6 +38,7 @@ public struct ConsoleShareService {
         let userDefaultsContentsUrl = tempDir.appendingPathComponent("user-defaults.txt")
         try userDefaultsContents.write(to: userDefaultsContentsUrl)
 
+        #warning("TODO: this isn't going to work in Outlook")
         #warning("TODO: add filtered logs")
         #warning("TODO: add device DNA")
 
