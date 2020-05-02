@@ -17,6 +17,9 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     @Published private(set) var isShowingFilters = false
     @Published private(set) var messages: ConsoleMessages
 
+    // TEMP:
+    private var searchView: ConsoleSearchView?
+
     init(container: NSPersistentContainer) {
         self.container = container
 
@@ -87,6 +90,7 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
             let searchField = ConsoleSearchView(searchCriteria: binding)
             searchField.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
             searchField.heightAnchor.constraint(equalToConstant: 22).isActive = true
+            self.searchView = searchField
             let width = searchField.widthAnchor.constraint(equalToConstant: 320)
             width.priority = .init(759)
             width.isActive = true
@@ -136,6 +140,7 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
             searchCriteria.filters.append(ConsoleSearchFilter(text: "fatal", kind: .level, relation: .equals))
         default: fatalError("Invalid selected segment: \(sender.selectedSegment)")
         }
+        searchView?.searchCriteriaUpdatedProgramatically()
     }
 
     // MARK - Buttons

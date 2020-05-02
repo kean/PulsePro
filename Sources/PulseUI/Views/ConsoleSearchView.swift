@@ -6,6 +6,7 @@
 import SwiftUI
 import Pulse
 import AppKit
+import Combine
 
 // I'm too lazy to create ViewModels for each of these components and menus,
 // this should do.
@@ -13,6 +14,7 @@ final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
     private let tokenField = NSTokenField()
     private var searchCriteria: Binding<ConsoleSearchCriteria>
     private var observer: Any?
+    private var cancellable: AnyCancellable?
 
     init(searchCriteria: Binding<ConsoleSearchCriteria>) {
         self.searchCriteria = searchCriteria
@@ -36,6 +38,10 @@ final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
             .addObserver(forName: NSControl.textDidChangeNotification, object: tokenField, queue: nil) { [weak self] _ in
                 self?.tokensUpdated()
             }
+    }
+
+    func searchCriteriaUpdatedProgramatically() {
+        tokenField.objectValue = searchCriteria.filters.wrappedValue
     }
 
     private func tokensUpdated() {
@@ -136,7 +142,6 @@ private func title(for kind: ConsoleSearchFilter.Kind) -> String {
     switch kind {
     case .any: return "Any"
     case .category: return "Category"
-    case .created: return "Time & Date"
     case .system: return "System"
     case .level: return "Level"
     case .text: return "Text"

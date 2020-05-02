@@ -60,6 +60,16 @@ extension NSPersistentStoreCoordinator {
     }
 }
 
+private struct FilterParameters: Hashable {
+    let kind: ConsoleSearchFilter.Kind
+    let relation: ConsoleSearchFilter.Relation
+
+    init(filter: ConsoleSearchFilter) {
+        self.kind = filter.kind
+        self.relation = filter.relation
+    }
+}
+
 func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria) {
     var predicates = [NSPredicate]()
 
@@ -67,33 +77,15 @@ func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria
         predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
     }
 
-    let groups = Dictionary(grouping: criteria.filters, by: { $0.kind })
+    let groups = Dictionary(grouping: criteria.filters, by: { FilterParameters(filter: $0) })
 
     for group in groups {
-        let groupPredicates = group.value.flatMap(predicate(for:))
-        predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: groupPredicates))
+        let searchTerms = group.value.map { $0.text }
+        predicates.append(predicate(parameters: group.key, searchTerms: searchTerms))
     }
-
-    func apply<T: CVarArg>(filter: ConsoleFilter<T>, field: String) {
-        if filter.isWhitelist {
-            predicates.append(NSPredicate(format: "\(field) IN %@", filter.items))
-        } else if !filter.items.isEmpty {
-            predicates.append(NSPredicate(format: "NOT (\(field) IN %@)", filter.items))
-        }
-    }
-
-    apply(filter: criteria.levels.map { $0.rawValue }, field: "level")
 
     request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.created, ascending: false)]
-}
-
-private func predicate(forLevelsFilters filters: [ConsoleSearchFilter]) -> NSPredicate {
-    let levels = filters
-        .map { $0.text }
-        .compactMap(Logger.Level.init(description:))
-
-    return NSPredicate(format: "level IN %@", levels)
 }
 
 extension Logger.Level {
@@ -108,21 +100,23 @@ extension Logger.Level {
     }
 }
 
-private func predicate(for filter: ConsoleSearchFilter) -> [NSPredicate] {
+private func predicate(parameters: FilterParameters, searchTerms: [String]) -> NSPredicate {
     let fields: [String]
-    switch filter.kind {
+    switch parameters.kind {
     case .category: fields = ["category"]
     case .system: fields = ["system"]
     case .text: fields = ["text"]
+    case .level: fields = ["level"]
     case .any: fields = ["category", "system", "text", "level"]
-    case .created: fatalError("Unsupported")
-    case .level: fatalError("Unsupported")
     }
 
-    let relation = filter.relation.isExactMatch ? "==" : "CONTAINS"
-    let prefix = filter.relation.isNegated ? "NOT " : ""
+    let relation = parameters.relation.isExactMatch ? "==" : "CONTAINS"
+    let prefix = parameters.relation.isNegated ? "NOT " : ""
 
-    return fields.map { field in
-        NSPredicate(format: "\(prefix)\(field) \(relation) %@", filter.text)
-    }
+    let predicates = fields.map { field in
+        searchTerms.map { text in
+            NSPredicate(format: "\(prefix)\(field) \(relation) %@", text)
+        }
+    }.flatMap { $0 }
+    return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
 }

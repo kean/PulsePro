@@ -7,27 +7,6 @@ import Pulse
 
 struct ConsoleSearchCriteria {
     var filters = [ConsoleSearchFilter]()
-    var levels = ConsoleFilter<Logger.Level>.allItems
-}
-
-struct ConsoleFilter<T: Hashable>: Hashable {
-    let items: Set<T>
-    let isWhitelist: Bool
-
-    /// An "empty" filter which blacklists no items.
-    static var allItems: ConsoleFilter { .blacklist(items: []) }
-
-    static func whitelist(items: Set<T>) -> ConsoleFilter {
-        ConsoleFilter(items: items, isWhitelist: true)
-    }
-
-    static func blacklist(items: Set<T>) -> ConsoleFilter {
-        ConsoleFilter(items: items, isWhitelist: false)
-    }
-
-    func map<U>(_ transform: (T) -> U) -> ConsoleFilter<U> {
-        ConsoleFilter<U>(items: Set(items.map(transform)), isWhitelist: isWhitelist)
-    }
 }
 
 final class ConsoleSearchFilter: Hashable {
@@ -56,7 +35,8 @@ final class ConsoleSearchFilter: Hashable {
         case system
         case category
         case level
-        case created
+        #warning("TODO: implement 'created' filter")
+        // case created
         case any
     }
 
