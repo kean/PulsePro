@@ -10,20 +10,28 @@ import Combine
 #if os(iOS)
 import UIKit
 
-struct ConsoleView: View {
+public struct ConsoleView: View {
+    public init(logger: Logger) {
+        self.model = ConsoleViewModel(logger: logger)
+    }
+
+    init(model: ConsoleViewModel) {
+        self.model = model
+    }
+
     @ObservedObject var model: ConsoleViewModel
 
     @State private var isShowingShareSheet = false
     @State private var isShowingSettings = false
 
-    var body: some View {
+    public var body: some View {
         NavigationView {
             List {
                 VStack {
                     SearchBar(title: "Search \(model.messages.count) messages", text: $model.searchText)
-                    Spacer(minLength: 12)
+                    Spacer(minLength: 8)
                     ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors, isShowingSettings: $isShowingSettings)
-                }.padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
+                }.padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                 ForEach(model.messages, id: \.objectID) { message in
                     NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
                         ConsoleMessageViewListItem(searchCriteria: self.$model.searchCriteria, message: message)

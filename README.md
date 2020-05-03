@@ -6,7 +6,13 @@ View and filter [Pulse](https://github.com/kean/Pulse) messages.
 
 ### iOS Console
 
-Build a console right into your iOS apps.
+Use `ConsoleView` to display messages in your iOS apps.
+
+```swift
+let view = ConsoleView(logger: Logger.default)
+```
+
+> PulseUI is built almost entirely using SwiftUI. To use it in UIKit, wrap `ConsoleView` in a `UIHostingController`.
 
 <img width="320" alt="Screen Shot 2020-05-02 at 21 15 32" src="https://user-images.githubusercontent.com/1567433/80896282-d85cfd80-8cba-11ea-83f7-323cdf844bc9.png"> <img width="320" alt="Screen Shot 2020-05-02 at 21 16 00" src="https://user-images.githubusercontent.com/1567433/80896284-d98e2a80-8cba-11ea-8bd0-8c5500483766.png">
 
