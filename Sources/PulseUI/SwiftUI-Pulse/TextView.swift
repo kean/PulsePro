@@ -42,10 +42,10 @@ public struct TextView: UIViewRepresentable {
     @Binding private var text: String
     @Binding private var isEditing: Bool
 
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+
     private let textAlignment: TextAlignment
     private let font: UIFont
-    private let textColor: UIColor
-    private let backgroundColor: UIColor
     private let contentType: ContentType?
     private let autocorrection: Autocorrection
     private let autocapitalization: Autocapitalization
@@ -60,8 +60,6 @@ public struct TextView: UIViewRepresentable {
         isEditing: Binding<Bool>,
         textAlignment: TextAlignment = .left,
         font: UIFont = Self.defaultFont,
-        textColor: UIColor = .black,
-        backgroundColor: UIColor = .white,
         contentType: ContentType? = nil,
         autocorrection: Autocorrection = .default,
         autocapitalization: Autocapitalization = .sentences,
@@ -75,8 +73,6 @@ public struct TextView: UIViewRepresentable {
         _isEditing = isEditing
         self.textAlignment = textAlignment
         self.font = font
-        self.textColor = textColor
-        self.backgroundColor = backgroundColor
         self.contentType = contentType
         self.autocorrection = autocorrection
         self.autocapitalization = autocapitalization
@@ -96,8 +92,6 @@ public struct TextView: UIViewRepresentable {
         textView.delegate = context.coordinator
         textView.textAlignment = textAlignment
         textView.font = font
-        textView.textColor = textColor
-        textView.backgroundColor = backgroundColor
         textView.textContentType = contentType
         textView.autocorrectionType = autocorrection
         textView.autocapitalizationType = autocapitalization
@@ -111,6 +105,8 @@ public struct TextView: UIViewRepresentable {
 
     public func updateUIView(_ textView: UITextView, context _: Context) {
         textView.text = text
+        textView.textColor = UIColor.label
+        textView.backgroundColor = UIColor.clear
         _ = isEditing
             ? textView.becomeFirstResponder()
             : textView.resignFirstResponder()
