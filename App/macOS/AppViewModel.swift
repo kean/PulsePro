@@ -2,7 +2,6 @@ import Foundation
 import SwiftUI
 import Pulse
 
-#if os(macOS)
 protocol AppViewModelDelegate: class {
     func openDocument()
     func showConsole(model: ConsoleViewModel)
@@ -26,4 +25,3 @@ final class AppViewModel: ObservableObject {
         delegate?.openDocument()
     }
 }
-#endif
