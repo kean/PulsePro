@@ -1,6 +1,6 @@
 # PulseUI
 
-**PulseUI** allows you to quickly preview logs in your iOS or tvOS apps. Share logs, and use Pulse macOS app to search and filter them. **PulseUI** is available for [**GitHub sponsors**](https://github.com/sponsors/kean).
+**PulseUI** allows you to quickly preview logs in your iOS or tvOS apps. Share logs, and use Pulse macOS app to search and filter them.
 
 <br/>
 
@@ -26,7 +26,7 @@ To install the app, either download it from the [latest release](https://github.
 
 | Nuke          | Swift           | Xcode           | Platforms                                         |
 |---------------|-----------------|-----------------|---------------------------------------------------|
-| Pulse 0.1      | Swift 5.2       | Xcode 11.3      | iOS 13.0 / watchOS 6.0 / macOS 10.15 / tvOS 13.0  |
+| PulseUI 0.1      | Swift 5.2       | Xcode 11.3      | iOS 13.0 / watchOS 6.0 / macOS 10.15 / tvOS 13.0  |
 
 # License
 
