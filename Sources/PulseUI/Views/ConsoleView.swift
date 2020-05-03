@@ -59,20 +59,26 @@ struct ConsoleMessageViewListItem: View {
                     self.isShowingShareSheet = true
                 }) {
                     Text("Share")
-                    Image(uiImage: UIImage(systemName: "square.and.arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .black, scale: .medium))!)
+                    Image(uiImage: UIImage(systemName: "square.and.arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 44, weight: .black, scale: .medium))!)
+                }
+                Button(action: {
+                    UIPasteboard.general.string = self.message.text
+                }) {
+                    Text("Copy Message")
+                    Image(uiImage: UIImage(systemName: "doc.on.doc", withConfiguration: UIImage.SymbolConfiguration(pointSize: 44, weight: .black, scale: .medium))!)
                 }
                 Button(action: {
                     let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .equals)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Focus system \"\(message.system)\"")
+                    Text("Focus System \'\(message.system)\'")
                     Image(systemName: "eye")
                 }
                 Button(action: {
                     let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .doesNotEqual)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Hide system \"\(message.system)\"")
+                    Text("Hide System \'\(message.system)\'")
                     Image(systemName: "eye.slash")
                 }.foregroundColor(.red)
         }
