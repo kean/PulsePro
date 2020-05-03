@@ -5,6 +5,7 @@
 import SwiftUI
 import Pulse
 
+#if os(iOS)
 struct ConsoleQuickFiltersView: View {
     @Binding var onlyErrors: Bool
     @Binding var isShowingSettings: Bool
@@ -33,3 +34,4 @@ struct ConsoleQuickFiltersView_Previews: PreviewProvider {
         }
     }
 }
+#endif

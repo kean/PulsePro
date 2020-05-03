@@ -5,6 +5,7 @@
 import SwiftUI
 import Pulse
 
+#if os(iOS)
 struct ConsoleSettingsView: View {
     @ObservedObject var model: ConsoleViewModel
     @Binding var isPresented: Bool
@@ -78,3 +79,4 @@ struct ConsoleSettingsView_Previews: PreviewProvider {
         }
     }
 }
+#endif
