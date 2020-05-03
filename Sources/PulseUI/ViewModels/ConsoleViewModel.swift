@@ -18,11 +18,6 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     @Published var searchCriteria: ConsoleSearchCriteria = .init()
     @Published var onlyErrors: Bool = false
 
-    #if os(macOS)
-    // TEMP:
-    private var searchView: ConsoleSearchView?
-    #endif
-
     init(logger: Logger) {
         self.logger = logger
         self.container = logger.container
@@ -78,75 +73,3 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
 }
-
-#if os(macOS)
-import AppKit
-
-private extension NSToolbarItem.Identifier {
-    static let searchField: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.search_field")
-    static let levelSegmentedControl: NSToolbarItem.Identifier = NSToolbarItem.Identifier(rawValue: "console.levels_segmented_control")
-}
-
-/// This isn't great, but hey, I want this macOS thing to work and I don't have time to think.
-extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
-    // MARK: - NSToolbarDelegate
-
-    func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
-
-        switch itemIdentifier {
-        case .levelSegmentedControl:
-            let segmentedControl = NSSegmentedControl(labels: ["All Messages", "Only Errors"], trackingMode: .selectOne, target: self, action: #selector(segmentedControlValueChanges(_:)))
-            segmentedControl.selectedSegment = 0
-
-            let item = NSToolbarItem(itemIdentifier: .searchField)
-            item.view = segmentedControl
-            return item
-        case .searchField:
-            #warning("TODO: there must be a clearer way to do that without @ObservedObject")
-            let binding = Binding(get: { [unowned self] in
-                return self.searchCriteria
-            }, set: { [unowned self] in
-                self.searchCriteria = $0
-            })
-            let searchField = ConsoleSearchView(searchCriteria: binding)
-            searchField.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
-            searchField.heightAnchor.constraint(equalToConstant: 22).isActive = true
-            self.searchView = searchField
-            let width = searchField.widthAnchor.constraint(equalToConstant: 320)
-            width.priority = .init(759)
-            width.isActive = true
-            let item = NSToolbarItem(itemIdentifier: .searchField)
-            item.view = searchField
-            return item
-        default:
-            return nil
-        }
-    }
-
-    func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.searchField, .flexibleSpace, .levelSegmentedControl]
-    }
-
-    func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.levelSegmentedControl, .searchField, .space, .flexibleSpace, .print]
-    }
-
-    func toolbarSelectableItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        toolbarAllowedItemIdentifiers(toolbar)
-    }
-
-    // MARK: - NSTextFieldDelegate
-
-    func controlTextDidChange(_ notification: Notification) {
-        let textField = notification.object as! NSTextField
-        searchText = textField.stringValue
-    }
-
-    // MARK: - NSSegmentedControl
-
-    @objc private func segmentedControlValueChanges(_ sender: NSSegmentedControl) {
-        onlyErrors = sender.selectedSegment == 1
-        searchView?.searchCriteriaUpdatedProgramatically()
-    }
-}
-#endif

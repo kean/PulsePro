@@ -5,6 +5,7 @@
 import Cocoa
 import Pulse
 import SwiftUI
+import Combine
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
@@ -60,8 +61,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         window.contentView = NSHostingView(rootView: contentView)
 
         let toolbar = NSToolbar(identifier: "console.toolbar")
-        toolbar.delegate = model
+        let toolbarController = ConsoleToolbarController(model: model)
+        toolbar.delegate = toolbarController
         window.toolbar = toolbar
+        window.bag.append(AnyCancellable { _ = toolbarController })
 
         model.$messages
             .map { "Console (\($0.count) messages)" }
