@@ -65,7 +65,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     }
 
     func prepareForSharing() throws -> URL {
-        try ConsoleShareService(container: container).prepareForSharing()
+        try ConsoleShareService(logger: logger).prepareForSharing()
     }
 
     func buttonRemoveAllMessagesTapped() {

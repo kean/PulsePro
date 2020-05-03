@@ -7,11 +7,11 @@ import Pulse
 import CoreData
 
 public struct ConsoleShareService {
-    public let container: NSPersistentContainer
-    private var context: NSManagedObjectContext { container.viewContext }
+    public let logger: Logger
+    private var context: NSManagedObjectContext { logger.container.viewContext }
 
-    public init(container: NSPersistentContainer) {
-        self.container = container
+    public init(logger: Logger) {
+        self.logger = logger
     }
 
     /// Creates a directory with contents of the logger and some additional
@@ -23,12 +23,12 @@ public struct ConsoleShareService {
         try? FileManager.default.removeItem(at: tempDir)
         try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true, attributes: nil)
 
-        let allLogs = format(messages: try fetchAllMessages())
+        let allLogs = format(messages: try logger.store.allMessage())
         let allLogsUrl = tempDir.appendingPathComponent("logs-all.txt")
         try allLogs?.write(to: allLogsUrl)
 
         let coreDataUrl = tempDir.appendingPathComponent("debug-data.sqlite")
-        try container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
+        try logger.container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
 
         let userDefaultsContents = UserDefaults.standard.dictionaryRepresentation()
             .map { "\($0.key): \($0.value)" }
@@ -49,12 +49,6 @@ public struct ConsoleShareService {
         }
 
         return sharedDirUrl
-    }
-
-    private func fetchAllMessages() throws -> [MessageEntity] {
-        let request = NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.createdAt, ascending: true)]
-        return try context.fetch(request)
     }
 
     private func format(messages: [MessageEntity]) -> Data? {

@@ -10,6 +10,11 @@ let mockLogger: Logger = {
     let container = makeMockMessagesStore()
     let logger = Logger(container: container)
     populateStore(logger)
+
+//    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+//        logger.log("Hello, world")
+//    }
+
     return logger
 }()
 
