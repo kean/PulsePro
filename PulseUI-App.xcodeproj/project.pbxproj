@@ -21,8 +21,10 @@
 		0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */; };
 		0CB8724E245F23C700CAF647 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
 		0CB8724F245F23C700CAF647 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
-		0CB87250245F23CB00CAF647 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
-		0CB87251245F23CB00CAF647 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
+		0CB87254245F478C00CAF647 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
+		0CB87255245F478C00CAF647 /* Pulse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0CB87257245F478F00CAF647 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
+		0CB87258245F478F00CAF647 /* PulseUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,21 @@
 			remoteInfo = PulseUI;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0CB87256245F478C00CAF647 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0CB87258245F478F00CAF647 /* PulseUI.framework in Embed Frameworks */,
+				0CB87255245F478C00CAF647 /* Pulse.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0C57AD4D245F0EFB005B3400 /* Pulse iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,8 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CB87250245F23CB00CAF647 /* Pulse.framework in Frameworks */,
-				0CB87251245F23CB00CAF647 /* PulseUI.framework in Frameworks */,
+				0CB87257245F478F00CAF647 /* PulseUI.framework in Frameworks */,
+				0CB87254245F478C00CAF647 /* Pulse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +202,7 @@
 				0C57AD88245F0F55005B3400 /* Sources */,
 				0C57AD89245F0F55005B3400 /* Frameworks */,
 				0C57AD8A245F0F55005B3400 /* Resources */,
+				0CB87256245F478C00CAF647 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
