@@ -78,7 +78,7 @@ public struct ConsoleView: View {
                             ConsoleMessageView(model: .init(message: message))
                         }
                     }
-                    .frame(minWidth: 320, minHeight: 480)
+                    .frame(minWidth: 280, minHeight: 480)
                 }
             }
         }
@@ -86,7 +86,7 @@ public struct ConsoleView: View {
 
     private func detailsView(message: MessageEntity) -> some View {
         ConsoleMessageDetailsView(model: .init(message: message))
-            .frame(minWidth: 320, minHeight: 480)
+            .frame(minWidth: 280, minHeight: 480)
     }
 
     #endif
