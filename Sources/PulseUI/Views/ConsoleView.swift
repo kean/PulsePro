@@ -29,29 +29,40 @@ public struct ConsoleView: View {
     public var body: some View {
         NavigationView {
             List {
-                VStack {
-                    SearchBar(title: "Search \(model.messages.count) messages", text: $model.searchText)
-                    Spacer(minLength: 8)
-                    ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors, isShowingSettings: $isShowingSettings)
-                }.padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
-                ForEach(model.messages, id: \.objectID) { message in
-                    NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
-                        ConsoleMessageViewListItem(message: message, searchCriteria: self.$model.searchCriteria)
-                    }.listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
-                }
+                quickFiltersView
+                messagesListView
             }
             .navigationBarTitle(Text("Console"))
-            .navigationBarItems(trailing:
-                ShareButton {
-                    self.isShowingShareSheet = true
-                }
-                .sheet(isPresented: $isShowingShareSheet) {
-                    ShareView(activityItems: [try! self.model.prepareForSharing()])
-                }
-            )
-            .sheet(isPresented: $isShowingSettings) {
-                ConsoleSettingsView(model: self.model, isPresented:  self.$isShowingSettings)
-            }
+            .navigationBarItems(trailing: shareButton)
+        }
+    }
+
+    private var quickFiltersView: some View {
+        VStack {
+            SearchBar(title: "Search \(model.messages.count) messages", text: $model.searchText)
+            Spacer(minLength: 8)
+            ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors, isShowingSettings: $isShowingSettings)
+        }
+        .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+        .sheet(isPresented: $isShowingSettings) {
+            ConsoleSettingsView(model: self.model, isPresented:  self.$isShowingSettings)
+        }
+    }
+
+    private var messagesListView: some View {
+        ForEach(model.messages, id: \.objectID) { message in
+            NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
+                ConsoleMessageViewListItem(message: message, searchCriteria: self.$model.searchCriteria)
+            }.listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
+        }
+    }
+
+    private var shareButton: some View {
+        ShareButton {
+            self.isShowingShareSheet = true
+        }
+        .sheet(isPresented: $isShowingShareSheet) {
+            ShareView(activityItems: [try! self.model.prepareForSharing()])
         }
     }
 }
