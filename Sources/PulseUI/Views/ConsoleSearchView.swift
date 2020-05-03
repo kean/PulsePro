@@ -153,8 +153,6 @@ public final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
     }
 }
 
-#endif
-
 private var magnifiyingGlass: NSImage {
     let dataBase64 = "iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABmJLR0QA/wD/AP+gvaeTAAADbElEQVRoge2ZvU8UQRiHH8mJAYyKeBZAZUMjNnpiK/bSEGgsICFqSSg0ipZAYaeg/4AmGkPhRyyJrfEj0QZEE8OnIWgCJzlBDVjMgse7c8vtMLO7MfskU8ze5f29v5vbmXdmICUlJSUlueyxHK8COA20AieBJqAe2O99vgLMAxPAW2AMeA2sW87DOY3AEDADbIRsM8Ag0BB51gbUAXeBNcIblW0VGAEOR+ogBJ3AIrs3Ktsi0BGhjx3JoEa1VMJLwH2gB8gBWWCv17Lesx7gAbAcEGfY04qVKuAZ+gTHgS7vO2HidaMmMV3MpyHjWSWD3mwB6GV3o5EB+rxYMv6TXcY25p4mmVnglEWNHDCn0bljUaMsOjVJvEOtsbap92JLvXYHWlrq8M/Gs7gxu0kWmBSaC0CtQ80t5IxcwO7fuBTH8b/Tt12LNqIKgmLRXteiRfQL7Z+4/WcxJATHiXbGrME/iQ24EqvAXxt3uRIL4JLIYcrLzTpnhNAS8RQB1UBe5JIzDRb0S50V/eeodyhqCsAL8azVNFiQYTkTvzQVscCY6BuvEkGGm0T/vamIBaS2zM0K39n+3hxxIVImR0Uuiy5E5Ka+0oVImewTuayaBnIyvUeA8VlckOEV0T9gKmKBg6IvcyubIMNfRf+YqYgFpPasaaAgwx9F/4SpiAWk9mfTQEGG34i+LESi5Jzov3Ih0sL2mXGZeErLGuAHlkrLIHSbh24XQjtwWeQwjf0bky0GhdgE0W8P50UO110KNuA/AOhzKSi4KbTzwCHXoiNCtICjd0jQjP+I51YEutpDvDncH+J9EppT+AsQZ3QI8c1j2qwDrSzqKrVYax3/0uScYfymJ1Gni7Zoxj+yG8CoRY2yyaDuenRXLf2oGdWUGuAG+quWDeA36jIgcqpQdz26pOZQB27VIeJVo9ZZufQkynQGdddTKrE88BC4iKrWsqi9dCVqI9+C+mEe4a+git/ZUZTJRJgGddezwM4jE7ZN8W+C6iRhpmtR1x+yODFpedQ6K5eexJkGtSYPoEYnrNFp4BrBFVQiTYPacOSAq8Bj4APqMHAN+AV8Q51AjgJXvO+WuxFIrGmXtOM3/Qe4EGdSrklNk5r+fyk1kbXFmZRrdKanY80oAqTp+XjTiYY24AtqdM/HnEtKSkpKihF/AY392IKcUAttAAAAAElFTkSuQmCC"
     let data = Data(base64Encoded: dataBase64)!
@@ -190,6 +188,8 @@ private extension NSImage {
         return image
     }
 }
+
+#endif
 
 private func title(for kind: ConsoleSearchFilter.Kind) -> String {
     switch kind {

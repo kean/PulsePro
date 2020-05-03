@@ -95,8 +95,8 @@ public struct ConsoleView: View {
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {
         return Group {
-            ConsoleView(model: ConsoleViewModel(logger: mockLogger))
-            ConsoleView(model: ConsoleViewModel(logger: mockLogger))
+            ConsoleView(model: ConsoleViewModel(logger: .mock))
+            ConsoleView(model: ConsoleViewModel(logger: .mock))
                 .environment(\.colorScheme, .dark)
         }
     }

@@ -6,20 +6,22 @@ import Foundation
 import Pulse
 import CoreData
 
-#warning("TODO: this shouldn't be public")
-public let mockLogger: Logger = {
-    let container = makeMockMessagesStore()
-    let logger = Logger(container: container)
-    populateStore(logger)
+public extension Logger {
+    /// A mock logger.
+    static let mock: Logger = {
+        let container = makeMockMessagesStore()
+        let logger = Logger(container: container)
+        populateStore(logger)
 
-//    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-//        logger.log("Hello, world")
-//    }
+    //    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+    //        logger.log("Hello, world")
+    //    }
 
-    return logger
-}()
+        return logger
+    }()
+}
 
-func makeMockMessagesStore() -> NSPersistentContainer {
+private func makeMockMessagesStore() -> NSPersistentContainer {
     let container = NSPersistentContainer(name: "MockMessagesStore", managedObjectModel: Logger.Store.model)
 
     let store = NSPersistentStoreDescription(url: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))

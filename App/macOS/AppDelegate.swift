@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         model.delegate = self
 
         if Configurataion.isMockStoreEnabled {
-            showConsole(model: ConsoleViewModel(logger: mockLogger))
+            showConsole(model: ConsoleViewModel(logger: .mock))
         } else {
             showWelcomeView()
         }
