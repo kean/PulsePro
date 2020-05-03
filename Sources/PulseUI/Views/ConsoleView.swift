@@ -20,7 +20,7 @@ struct ConsoleView: View {
         NavigationView {
             List {
                 VStack {
-                    SearchBar(title: "Search", text: $model.searchText)
+                    SearchBar(title: "Search \(model.messages.count) messages", text: $model.searchText)
                     Spacer(minLength: 12)
                     ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors, isShowingSettings: $isShowingSettings)
                 }.padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
