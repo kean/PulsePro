@@ -16,26 +16,26 @@
 		0C57ADA3245F0F8E005B3400 /* ConsoleToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6C245F0F38005B3400 /* ConsoleToolbarController.swift */; };
 		0C57ADA4245F0F91005B3400 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6E245F0F38005B3400 /* AppDelegate.swift */; };
 		0C57ADA5245F0F96005B3400 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD70245F0F38005B3400 /* Configuration.swift */; };
-		0C57ADB3245F0FD2005B3400 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C57ADB1245F0FC6005B3400 /* PulseUI.framework */; };
-		0C57ADB4245F0FD6005B3400 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C57ADAF245F0FC6005B3400 /* Pulse.framework */; };
-		0C57ADBB245F1193005B3400 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C57ADAF245F0FC6005B3400 /* Pulse.framework */; };
-		0C57ADBC245F1193005B3400 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C57ADB1245F0FC6005B3400 /* PulseUI.framework */; };
 		0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6B245F0F38005B3400 /* AppViewModel.swift */; };
 		0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */; };
 		0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */; };
+		0CB8724E245F23C700CAF647 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
+		0CB8724F245F23C700CAF647 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
+		0CB87250245F23CB00CAF647 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
+		0CB87251245F23CB00CAF647 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0C57ADAE245F0FC6005B3400 /* PBXContainerItemProxy */ = {
+		0CB8724A245F236700CAF647 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0C57ADA6245F0FC6005B3400 /* PulseUI-Package.xcodeproj */;
+			containerPortal = 0CB87242245F236700CAF647 /* PulseUI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = "Pulse::Pulse::Product";
 			remoteInfo = Pulse;
 		};
-		0C57ADB0245F0FC6005B3400 /* PBXContainerItemProxy */ = {
+		0CB8724C245F236700CAF647 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0C57ADA6245F0FC6005B3400 /* PulseUI-Package.xcodeproj */;
+			containerPortal = 0CB87242245F236700CAF647 /* PulseUI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = "PulseUI::PulseUI::Product";
 			remoteInfo = PulseUI;
@@ -58,9 +58,9 @@
 		0C57AD78245F0F38005B3400 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C57AD79245F0F38005B3400 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		0C57AD8C245F0F55005B3400 /* Pulse macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0C57ADA6245F0FC6005B3400 /* PulseUI-Package.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "PulseUI-Package.xcodeproj"; sourceTree = "<group>"; };
 		0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 		0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWelcomeView.swift; sourceTree = "<group>"; };
+		0CB87242245F236700CAF647 /* PulseUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PulseUI.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,8 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C57ADBB245F1193005B3400 /* Pulse.framework in Frameworks */,
-				0C57ADBC245F1193005B3400 /* PulseUI.framework in Frameworks */,
+				0CB8724E245F23C700CAF647 /* Pulse.framework in Frameworks */,
+				0CB8724F245F23C700CAF647 /* PulseUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,8 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C57ADB4245F0FD6005B3400 /* Pulse.framework in Frameworks */,
-				0C57ADB3245F0FD2005B3400 /* PulseUI.framework in Frameworks */,
+				0CB87250245F23CB00CAF647 /* Pulse.framework in Frameworks */,
+				0CB87251245F23CB00CAF647 /* PulseUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +88,7 @@
 		0C57AD44245F0EFB005B3400 = {
 			isa = PBXGroup;
 			children = (
-				0C57ADA6245F0FC6005B3400 /* PulseUI-Package.xcodeproj */,
+				0CB87242245F236700CAF647 /* PulseUI.xcodeproj */,
 				0C57AD64245F0F38005B3400 /* App */,
 				0C57AD4E245F0EFB005B3400 /* Products */,
 				0C57ADB2245F0FD2005B3400 /* Frameworks */,
@@ -142,20 +142,20 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		0C57ADA7245F0FC6005B3400 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0C57ADAF245F0FC6005B3400 /* Pulse.framework */,
-				0C57ADB1245F0FC6005B3400 /* PulseUI.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		0C57ADB2245F0FD2005B3400 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0CB87243245F236700CAF647 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0CB8724B245F236700CAF647 /* Pulse.framework */,
+				0CB8724D245F236700CAF647 /* PulseUI.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,8 +226,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 0C57ADA7245F0FC6005B3400 /* Products */;
-					ProjectRef = 0C57ADA6245F0FC6005B3400 /* PulseUI-Package.xcodeproj */;
+					ProductGroup = 0CB87243245F236700CAF647 /* Products */;
+					ProjectRef = 0CB87242245F236700CAF647 /* PulseUI.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -239,18 +239,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0C57ADAF245F0FC6005B3400 /* Pulse.framework */ = {
+		0CB8724B245F236700CAF647 /* Pulse.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Pulse.framework;
-			remoteRef = 0C57ADAE245F0FC6005B3400 /* PBXContainerItemProxy */;
+			remoteRef = 0CB8724A245F236700CAF647 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0C57ADB1245F0FC6005B3400 /* PulseUI.framework */ = {
+		0CB8724D245F236700CAF647 /* PulseUI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = PulseUI.framework;
-			remoteRef = 0C57ADB0245F0FC6005B3400 /* PBXContainerItemProxy */;
+			remoteRef = 0CB8724C245F236700CAF647 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
