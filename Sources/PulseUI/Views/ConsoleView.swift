@@ -36,7 +36,7 @@ public struct ConsoleView: View {
                 }.padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                 ForEach(model.messages, id: \.objectID) { message in
                     NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
-                        ConsoleMessageViewListItem(searchCriteria: self.$model.searchCriteria, message: message)
+                        ConsoleMessageViewListItem(message: message, searchCriteria: self.$model.searchCriteria)
                     }.listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
                 }
             }
@@ -52,48 +52,6 @@ public struct ConsoleView: View {
             .sheet(isPresented: $isShowingSettings) {
                 ConsoleSettingsView(model: self.model, isPresented:  self.$isShowingSettings)
             }
-        }
-    }
-}
-
-struct ConsoleMessageViewListItem: View {
-    @Binding var searchCriteria: ConsoleSearchCriteria
-    let message: MessageEntity
-    @State private var isShowingShareSheet = false
-
-    var body: some View {
-        ConsoleMessageView(model: .init(message: message))
-            // TODO: create a ViewModel for a share sheet
-            .contextMenu {
-                Button(action: {
-                    self.isShowingShareSheet = true
-                }) {
-                    Text("Share")
-                    Image(uiImage: UIImage(systemName: "square.and.arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 44, weight: .black, scale: .medium))!)
-                }
-                Button(action: {
-                    UIPasteboard.general.string = self.message.text
-                }) {
-                    Text("Copy Message")
-                    Image(uiImage: UIImage(systemName: "doc.on.doc", withConfiguration: UIImage.SymbolConfiguration(pointSize: 44, weight: .black, scale: .medium))!)
-                }
-                Button(action: {
-                    let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .equals)
-                    self.searchCriteria.filters.append(filter)
-                }) {
-                    Text("Focus System \'\(message.system)\'")
-                    Image(systemName: "eye")
-                }
-                Button(action: {
-                    let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .doesNotEqual)
-                    self.searchCriteria.filters.append(filter)
-                }) {
-                    Text("Hide System \'\(message.system)\'")
-                    Image(systemName: "eye.slash")
-                }.foregroundColor(.red)
-        }
-        .sheet(isPresented: $isShowingShareSheet) {
-            ShareView(activityItems: [self.message.text])
         }
     }
 }
