@@ -96,7 +96,7 @@ private struct FilterParameters: Hashable {
     }
 }
 
-func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria, logger: Logger) {
+func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria: ConsoleSearchCriteria, logger: Logger) {
     var predicates = [NSPredicate]()
 
     if searchText.count > 1 {
@@ -126,7 +126,7 @@ func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria
 
 
     request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-    request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.createdAt, ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(keyPath: \LoggerMessage.createdAt, ascending: false)]
 }
 
 private func predicate(parameters: FilterParameters, searchTerms: [String]) -> NSPredicate {

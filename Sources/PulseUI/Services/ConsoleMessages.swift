@@ -6,9 +6,9 @@ import Foundation
 import Pulse
 
 public struct ConsoleMessages: RandomAccessCollection {
-    private let messages: [MessageEntity]
+    private let messages: [LoggerMessage]
 
-    public init(messages: [MessageEntity]) {
+    public init(messages: [LoggerMessage]) {
         self.messages = messages
     }
 
@@ -18,7 +18,7 @@ public struct ConsoleMessages: RandomAccessCollection {
     public var endIndex: Index { return messages.endIndex }
     public func index(after i: Index) -> Index { i + 1 }
 
-    public subscript(index: Index) -> MessageEntity {
+    public subscript(index: Index) -> LoggerMessage {
         return messages[index]
     }
 }

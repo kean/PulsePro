@@ -30,7 +30,7 @@ final class AppViewModel: ObservableObject {
 
 extension NSPersistentContainer {
     static func load(loggerDatabaseUrl url: URL) throws -> NSPersistentContainer {
-        let container = NSPersistentContainer(name: "LoggerStore", managedObjectModel: LoggerStorage.coreDataModel)
+        let container = NSPersistentContainer(name: "LoggerStore", managedObjectModel: Logger.Store.model)
 
         let store = NSPersistentStoreDescription(url: url)
         store.type = NSSQLiteStoreType

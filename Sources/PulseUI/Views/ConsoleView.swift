@@ -84,7 +84,7 @@ public struct ConsoleView: View {
         }
     }
 
-    private func detailsView(message: MessageEntity) -> some View {
+    private func detailsView(message: LoggerMessage) -> some View {
         ConsoleMessageDetailsView(model: .init(message: message))
             .frame(minWidth: 280, minHeight: 480)
     }

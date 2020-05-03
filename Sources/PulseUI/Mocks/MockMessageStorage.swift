@@ -20,7 +20,7 @@ public let mockLogger: Logger = {
 }()
 
 func makeMockMessagesStore() -> NSPersistentContainer {
-    let container = NSPersistentContainer(name: "MockMessagesStore", managedObjectModel: LoggerStorage.coreDataModel)
+    let container = NSPersistentContainer(name: "MockMessagesStore", managedObjectModel: Logger.Store.model)
 
     let store = NSPersistentStoreDescription(url: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
 
@@ -53,8 +53,8 @@ private func populateStore(_ logger: Logger) {
 
     let moc = logger.container.viewContext
 
-    func addMessage(_ closure: (MessageEntity) -> Void) {
-        let message = MessageEntity(using: moc)
+    func addMessage(_ closure: (LoggerMessage) -> Void) {
+        let message = LoggerMessage(using: moc)
         closure(message)
         moc.insert(message)
     }

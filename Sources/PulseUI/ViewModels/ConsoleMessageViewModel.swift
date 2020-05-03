@@ -24,7 +24,7 @@ struct ConsoleMessageViewModel {
         self.style = style
     }
 
-    init(message: MessageEntity) {
+    init(message: LoggerMessage) {
         let time = ConsoleMessageViewModel.timeFormatter
             .string(from: message.createdAt)
         let category = message.category == "default" ? "" : ":\(message.category)"
