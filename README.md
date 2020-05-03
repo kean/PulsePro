@@ -1,10 +1,10 @@
-## PulseUI
+# PulseUI
 
-View and filter [Pulse](https://github.com/kean/Pulse) messages.
+**PulseUI** allows you to quickly preview logs in your iOS or tvOS apps. Share logs, and use Pulse macOS app to search and filter them. **PulseUI** is available for [**GitHub sponsors**](https://github.com/sponsors/kean).
 
 <br/>
 
-### iOS Console
+## iOS Console
 
 Use `ConsoleView` to display messages in your iOS apps.
 
@@ -14,12 +14,21 @@ let view = ConsoleView(logger: Logger.default)
 
 > PulseUI is built almost entirely using SwiftUI. To use it in UIKit, wrap `ConsoleView` in a `UIHostingController`.
 
-<img width="320" alt="Screen Shot 2020-05-02 at 21 15 32" src="https://user-images.githubusercontent.com/1567433/80896282-d85cfd80-8cba-11ea-83f7-323cdf844bc9.png"> <img width="320" alt="Screen Shot 2020-05-02 at 21 16 00" src="https://user-images.githubusercontent.com/1567433/80896284-d98e2a80-8cba-11ea-8bd0-8c5500483766.png">
-
 <br/>
 
-### macOS Console
+## macOS Console
 
 Share your Pulse database and view it on your Mac. Use advanced search to filter your messages.
 
-<img width="800" alt="Screen Shot 2020-05-02 at 21 11 01" src="https://user-images.githubusercontent.com/1567433/80896328-22de7a00-8cbb-11ea-886e-8e29c4d9f7f0.png">
+To install the app, either download it from the [latest release](https://github.com/kean/PulseUI/releases), or build it from source.
+
+# Minimum Requirements
+
+| Nuke          | Swift           | Xcode           | Platforms                                         |
+|---------------|-----------------|-----------------|---------------------------------------------------|
+| Pulse 0.1      | Swift 5.2       | Xcode 11.3      | iOS 13.0 / watchOS 6.0 / macOS 10.15 / tvOS 13.0  |
+
+# License
+
+Pulse is available under the MIT license. See the LICENSE file for more info.
+
