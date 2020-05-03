@@ -1,10 +1,5 @@
-//
-//  ConsoleSearchService.swift
-//  PulseUI
-//
-//  Created by Alexander Grebenyuk on 02.05.2020.
-//  Copyright © 2020 kean. All rights reserved.
-//
+// Copyright (c) 2020 Alexander Grebenyuk (github.com/kean).
+// Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Foundation
 import Pulse
