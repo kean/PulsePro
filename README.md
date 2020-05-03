@@ -30,5 +30,5 @@ To install the app, either download it from the [latest release](https://github.
 
 # License
 
-Pulse is available under the MIT license. See the LICENSE file for more info.
+PulseUI is available under the Apache License license. See the LICENSE file for more info.
 
