@@ -24,6 +24,8 @@ public struct ConsoleView: View {
     @State private var isShowingShareSheet = false
     @State private var isShowingSettings = false
 
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+
     public var body: some View {
         NavigationView {
             List {
@@ -35,7 +37,7 @@ public struct ConsoleView: View {
                 ForEach(model.messages, id: \.objectID) { message in
                     NavigationLink(destination: ConsoleMessageDetailsView(model: .init(message: message))) {
                         ConsoleMessageViewListItem(searchCriteria: self.$model.searchCriteria, message: message)
-                    }
+                    }.listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
                 }
             }
             .navigationBarTitle(Text("Console"))

@@ -7,7 +7,7 @@ import Pulse
 
 struct ConsoleMessageView: View {
     let model: ConsoleMessageViewModel
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
     #if os(iOS)
     var body: some View {
@@ -75,6 +75,11 @@ struct ConsoleMessageStyle {
         textColor: .red,
         backgroundColor: .red
     )
+
+    static func backgroundColor(for message: MessageEntity, colorScheme: ColorScheme) -> Color {
+        let style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
+        return style.backgroundColor.opacity(colorScheme == .dark ? 0.1 : 0.05)
+    }
 }
 
 struct ConsoleMessageView_Previews: PreviewProvider {
