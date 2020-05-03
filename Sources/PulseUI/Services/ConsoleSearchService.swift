@@ -11,11 +11,11 @@ import Pulse
 import CoreData
 
 public struct ConsoleSearchCriteria {
-    var filters = [ConsoleSearchFilter]()
+    public var filters = [ConsoleSearchFilter]()
     #if os(iOS)
-    var timePeriod = TimePeriod.currentSession
+    public var timePeriod = TimePeriod.currentSession
     #else
-    var timePeriod = TimePeriod.all
+    public var timePeriod = TimePeriod.all
     #endif
 }
 
@@ -70,7 +70,7 @@ public final class ConsoleSearchFilter: Hashable {
     }
 }
 
-enum TimePeriod: CaseIterable {
+public enum TimePeriod: CaseIterable {
     case currentSession
     case lastTwentyMinutes
     case today
@@ -124,9 +124,7 @@ func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria
         predicates.append(NSPredicate(format: "createdAt >= %@", dateFrom as NSDate))
     }
 
-
     request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-    request.sortDescriptors = [NSSortDescriptor(keyPath: \LoggerMessage.createdAt, ascending: false)]
 }
 
 private func predicate(parameters: FilterParameters, searchTerms: [String]) -> NSPredicate {
