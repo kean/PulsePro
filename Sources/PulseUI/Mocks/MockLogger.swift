@@ -13,9 +13,9 @@ public extension Logger {
         let logger = Logger(store: Store(container: container))
         populateStore(logger)
 
-    //    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-    //        logger.log("Hello, world")
-    //    }
+//        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+//            logger.log("Hello, world")
+//        }
 
         return logger
     }()
