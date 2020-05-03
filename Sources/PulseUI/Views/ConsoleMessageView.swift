@@ -7,7 +7,6 @@ import Pulse
 
 struct ConsoleMessageView: View {
     let model: ConsoleMessageViewModel
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
     #if os(iOS)
     var body: some View {
@@ -19,7 +18,7 @@ struct ConsoleMessageView: View {
                 .font(.body)
                 .foregroundColor(model.style.textColor)
                 .lineLimit(4)
-        }.listRowBackground(model.style.backgroundColor.opacity(colorScheme == .dark ? 0.1 : 0.05))
+        }
     }
     #endif
 
