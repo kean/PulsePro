@@ -8,7 +8,7 @@ import CoreData
 
 public struct ConsoleShareService {
     public let logger: Logger
-    private var context: NSManagedObjectContext { logger.container.viewContext }
+    private var context: NSManagedObjectContext { logger.store.container.viewContext }
 
     public init(logger: Logger) {
         self.logger = logger
@@ -28,7 +28,7 @@ public struct ConsoleShareService {
         try allLogs?.write(to: allLogsUrl)
 
         let coreDataUrl = tempDir.appendingPathComponent("debug-data.sqlite")
-        try logger.container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
+        try logger.store.container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
 
         let userDefaultsContents = UserDefaults.standard.dictionaryRepresentation()
             .map { "\($0.key): \($0.value)" }

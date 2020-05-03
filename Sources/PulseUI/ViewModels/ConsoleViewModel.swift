@@ -9,7 +9,6 @@ import SwiftUI
 
 public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let logger: Logger
-    private let container: NSPersistentContainer
     private var controller: NSFetchedResultsController<LoggerMessage>
 
     @Published public private(set) var messages: ConsoleMessages
@@ -22,13 +21,12 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
 
     public init(logger: Logger) {
         self.logger = logger
-        self.container = logger.container
 
         let request = NSFetchRequest<LoggerMessage>(entityName: "\(LoggerMessage.self)")
         request.fetchBatchSize = 40
         request.sortDescriptors = [NSSortDescriptor(keyPath: \LoggerMessage.createdAt, ascending: false)]
 
-        self.controller = NSFetchedResultsController<LoggerMessage>(fetchRequest: request, managedObjectContext: container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.controller = NSFetchedResultsController<LoggerMessage>(fetchRequest: request, managedObjectContext: logger.store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
 
         super.init()

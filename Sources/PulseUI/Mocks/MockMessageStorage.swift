@@ -10,7 +10,7 @@ public extension Logger {
     /// A mock logger.
     static let mock: Logger = {
         let container = makeMockMessagesStore()
-        let logger = Logger(container: container)
+        let logger = Logger(store: Store(container: container))
         populateStore(logger)
 
     //    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
@@ -53,7 +53,7 @@ private extension NSManagedObject {
 private func populateStore(_ logger: Logger) {
     precondition(Thread.isMainThread)
 
-    let moc = logger.container.viewContext
+    let moc = logger.store.container.viewContext
 
     func addMessage(_ closure: (LoggerMessage) -> Void) {
         let message = LoggerMessage(using: moc)
