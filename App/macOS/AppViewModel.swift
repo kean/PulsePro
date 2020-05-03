@@ -15,7 +15,7 @@ final class AppViewModel: ObservableObject {
     func openDatabase(url: URL) {
         do {
             let container = try NSPersistentContainer.load(loggerDatabaseUrl: url)
-            let logger = Logger(container: container)
+            let logger = Logger(store: .init(container: container))
             let model = ConsoleViewModel(logger: logger)
             self.delegate?.showConsole(model: model)
         } catch {

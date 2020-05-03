@@ -21,11 +21,13 @@
       "size" : "32x32"
     },
     {
+      "filename" : "pulse-logo-128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
+      "filename" : "pulse-logo-256.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
