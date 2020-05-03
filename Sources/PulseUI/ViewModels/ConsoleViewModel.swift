@@ -12,12 +12,11 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     private let container: NSPersistentContainer
     private var controller: NSFetchedResultsController<MessageEntity>
 
+    @Published private(set) var messages: ConsoleMessages
+
     @Published var searchText: String = ""
     @Published var searchCriteria: ConsoleSearchCriteria = .init()
     @Published var onlyErrors: Bool = false
-    #warning("TODO: remove")
-    @Published private(set) var isShowingFilters = false
-    @Published private(set) var messages: ConsoleMessages
 
     #if os(macOS)
     // TEMP:
@@ -148,12 +147,6 @@ extension ConsoleViewModel: NSToolbarDelegate, NSSearchFieldDelegate {
     @objc private func segmentedControlValueChanges(_ sender: NSSegmentedControl) {
         onlyErrors = sender.selectedSegment == 1
         searchView?.searchCriteriaUpdatedProgramatically()
-    }
-
-    // MARK - Buttons
-
-    @objc private func buttonShowFiltersTapped() {
-        isShowingFilters.toggle()
     }
 }
 #endif
