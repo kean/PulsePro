@@ -8,7 +8,8 @@ import Combine
 import SwiftUI
 
 final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
-    private var container: NSPersistentContainer
+    private let logger: Logger
+    private let container: NSPersistentContainer
     private var controller: NSFetchedResultsController<MessageEntity>
 
     @Published var searchText: String = ""
@@ -23,8 +24,9 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     private var searchView: ConsoleSearchView?
     #endif
 
-    init(container: NSPersistentContainer) {
-        self.container = container
+    init(logger: Logger) {
+        self.logger = logger
+        self.container = logger.container
 
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         request.fetchBatchSize = 40
@@ -48,7 +50,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     }
 
     private func refresh(searchText: String, criteria: ConsoleSearchCriteria) {
-        update(request: controller.fetchRequest, searchText: searchText, criteria: criteria)
+        update(request: controller.fetchRequest, searchText: searchText, criteria: criteria, logger: logger)
         try? controller.performFetch()
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
@@ -68,7 +70,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
     }
 
     func buttonRemoveAllMessagesTapped() {
-        try? Logger.Store(container: container).removeAllMessages()
+        try? logger.store.removeAllMessages()
     }
 
     // MARK: - NSFetchedResultsControllerDelegate

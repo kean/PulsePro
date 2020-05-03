@@ -6,10 +6,11 @@ import Foundation
 import Pulse
 import CoreData
 
-let mockMessagesStore: NSPersistentContainer = {
+let mockLogger: Logger = {
     let container = makeMockMessagesStore()
-    populateStore(container)
-    return container
+    let logger = Logger(container: container)
+    populateStore(logger)
+    return logger
 }()
 
 func makeMockMessagesStore() -> NSPersistentContainer {
@@ -18,14 +19,16 @@ func makeMockMessagesStore() -> NSPersistentContainer {
     let store = NSPersistentStoreDescription(url: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
 
     container.persistentStoreDescriptions = [store]
-    container.viewContext.automaticallyMergesChangesFromParent = true
-    container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 
     var isCompleted = false
     container.loadPersistentStores { _, error in
         assert(error == nil, "Failed to load persistent store: \(String(describing: error))")
         isCompleted = true
     }
+
+    container.viewContext.automaticallyMergesChangesFromParent = true
+    container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+
     precondition(isCompleted)
 
     return container
@@ -39,10 +42,10 @@ private extension NSManagedObject {
     }
 }
 
-private func populateStore(_ container: NSPersistentContainer) {
+private func populateStore(_ logger: Logger) {
     precondition(Thread.isMainThread)
 
-    let moc = container.viewContext
+    let moc = logger.container.viewContext
 
     func addMessage(_ closure: (MessageEntity) -> Void) {
         let message = MessageEntity(using: moc)
@@ -55,7 +58,7 @@ private func populateStore(_ container: NSPersistentContainer) {
         $0.level = "info"
         $0.system = "application"
         $0.category = "default"
-        $0.session = Logger.default.logSessionId.uuidString
+        $0.session = logger.logSessionId.uuidString
         $0.text = "UIApplication.didFinishLaunching"
     }
 
@@ -64,7 +67,7 @@ private func populateStore(_ container: NSPersistentContainer) {
         $0.level = "info"
         $0.system = "application"
         $0.category = "default"
-        $0.session = Logger.default.logSessionId.uuidString
+        $0.session = logger.logSessionId.uuidString
         $0.text = "UIApplication.willEnterForeground"
     }
 
@@ -73,7 +76,7 @@ private func populateStore(_ container: NSPersistentContainer) {
         $0.level = "debug"
         $0.system = "auth"
         $0.category = "default"
-        $0.session = Logger.default.logSessionId.uuidString
+        $0.session = logger.logSessionId.uuidString
         $0.text = "🌐 Will authorize user with name \"kean@github.com\""
     }
 
@@ -82,7 +85,7 @@ private func populateStore(_ container: NSPersistentContainer) {
         $0.level = "error"
         $0.system = "auth"
         $0.category = "default"
-        $0.session = Logger.default.logSessionId.uuidString
+        $0.session = logger.logSessionId.uuidString
         $0.text = "🌐 Authorization request failed with error 500"
     }
 
@@ -91,7 +94,7 @@ private func populateStore(_ container: NSPersistentContainer) {
         $0.level = "debug"
         $0.system = "auth"
         $0.category = "default"
-        $0.session = Logger.default.logSessionId.uuidString
+        $0.session = logger.logSessionId.uuidString
         $0.text = """
         Replace this implementation with code to handle the error appropriately. fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 
@@ -119,7 +122,7 @@ private func populateStore(_ container: NSPersistentContainer) {
         $0.level = "fatal"
         $0.system = "default"
         $0.category = "default"
-        $0.session = Logger.default.logSessionId.uuidString
+        $0.session = logger.logSessionId.uuidString
         $0.text = "💥 0xDEADBEAF"
     }
 

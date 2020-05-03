@@ -96,7 +96,7 @@ private struct FilterParameters: Hashable {
     }
 }
 
-func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria, logger: Logger = .default) {
+func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria, logger: Logger) {
     var predicates = [NSPredicate]()
 
     if searchText.count > 1 {

@@ -117,10 +117,9 @@ struct ConsoleView: View {
 
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {
-        let store = mockMessagesStore
         return Group {
-            ConsoleView(model: ConsoleViewModel(container: store))
-            ConsoleView(model: ConsoleViewModel(container: store))
+            ConsoleView(model: ConsoleViewModel(logger: mockLogger))
+            ConsoleView(model: ConsoleViewModel(logger: mockLogger))
                 .environment(\.colorScheme, .dark)
         }
     }

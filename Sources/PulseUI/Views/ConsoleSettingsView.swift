@@ -74,7 +74,7 @@ struct ConsoleSettingsView: View {
 struct ConsoleSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConsoleSettingsView(model: ConsoleViewModel(container: mockMessagesStore), isPresented: .constant(true))
+            ConsoleSettingsView(model: ConsoleViewModel(logger: mockLogger), isPresented: .constant(true))
         }
     }
 }
