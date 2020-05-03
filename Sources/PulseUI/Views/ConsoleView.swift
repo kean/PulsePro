@@ -7,19 +7,18 @@ import CoreData
 import Pulse
 import Combine
 
-#if os(iOS)
-import UIKit
-
 public struct ConsoleView: View {
+    @ObservedObject var model: ConsoleViewModel
+
     public init(logger: Logger) {
         self.model = ConsoleViewModel(logger: logger)
     }
 
-    init(model: ConsoleViewModel) {
+    public init(model: ConsoleViewModel) {
         self.model = model
     }
 
-    @ObservedObject var model: ConsoleViewModel
+    #if os(iOS)
 
     @State private var isShowingShareSheet = false
     @State private var isShowingSettings = false
@@ -65,14 +64,12 @@ public struct ConsoleView: View {
             ShareView(activityItems: [try! self.model.prepareForSharing()])
         }
     }
-}
-#endif
 
-#if os(macOS)
-struct ConsoleView: View {
-    @ObservedObject var model: ConsoleViewModel
+    #endif
 
-    var body: some View {
+    #if os(macOS)
+
+    public var body: some View {
         VStack {
             HSplitView {
                 NavigationView {
@@ -91,8 +88,9 @@ struct ConsoleView: View {
         ConsoleMessageDetailsView(model: .init(message: message))
             .frame(minWidth: 320, minHeight: 480)
     }
+
+    #endif
 }
-#endif
 
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {

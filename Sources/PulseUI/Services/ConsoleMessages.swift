@@ -5,20 +5,20 @@
 import Foundation
 import Pulse
 
-struct ConsoleMessages: RandomAccessCollection {
+public struct ConsoleMessages: RandomAccessCollection {
     private let messages: [MessageEntity]
 
-    init(messages: [MessageEntity]) {
+    public init(messages: [MessageEntity]) {
         self.messages = messages
     }
 
-    typealias Index = Int
+    public typealias Index = Int
 
-    var startIndex: Index { return messages.startIndex }
-    var endIndex: Index { return messages.endIndex }
-    func index(after i: Index) -> Index { i + 1 }
+    public var startIndex: Index { return messages.startIndex }
+    public var endIndex: Index { return messages.endIndex }
+    public func index(after i: Index) -> Index { i + 1 }
 
-    subscript(index: Index) -> MessageEntity {
+    public subscript(index: Index) -> MessageEntity {
         return messages[index]
     }
 }

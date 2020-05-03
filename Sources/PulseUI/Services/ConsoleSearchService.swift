@@ -10,7 +10,7 @@ import Foundation
 import Pulse
 import CoreData
 
-struct ConsoleSearchCriteria {
+public struct ConsoleSearchCriteria {
     var filters = [ConsoleSearchFilter]()
     #if os(iOS)
     var timePeriod = TimePeriod.currentSession
@@ -19,7 +19,7 @@ struct ConsoleSearchCriteria {
     #endif
 }
 
-final class ConsoleSearchFilter: Hashable {
+public final class ConsoleSearchFilter: Hashable {
     let text: String
     let kind: Kind
     let relation: Relation

@@ -7,18 +7,20 @@ import Pulse
 import Combine
 import SwiftUI
 
-final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
+public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let logger: Logger
     private let container: NSPersistentContainer
     private var controller: NSFetchedResultsController<MessageEntity>
 
-    @Published private(set) var messages: ConsoleMessages
+    @Published public private(set) var messages: ConsoleMessages
 
-    @Published var searchText: String = ""
-    @Published var searchCriteria: ConsoleSearchCriteria = .init()
-    @Published var onlyErrors: Bool = false
+    @Published public var searchText: String = ""
+    @Published public var searchCriteria: ConsoleSearchCriteria = .init()
+    @Published public var onlyErrors: Bool = false
 
-    init(logger: Logger) {
+    private var bag = [AnyCancellable]()
+
+    public init(logger: Logger) {
         self.logger = logger
         self.container = logger.container
 
@@ -69,7 +71,7 @@ final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, Obse
 
     // MARK: - NSFetchedResultsControllerDelegate
 
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
 }

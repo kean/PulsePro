@@ -1,6 +1,8 @@
 import Foundation
 import SwiftUI
 import Pulse
+import PulseUI
+import CoreData
 
 protocol AppViewModelDelegate: class {
     func openDocument()
@@ -23,5 +25,28 @@ final class AppViewModel: ObservableObject {
 
     func buttonOpenDocumentTapped() {
         delegate?.openDocument()
+    }
+}
+
+extension NSPersistentContainer {
+    static func load(loggerDatabaseUrl url: URL) throws -> NSPersistentContainer {
+        let container = NSPersistentContainer(name: "LoggerStore", managedObjectModel: LoggerStorage.coreDataModel)
+
+        let store = NSPersistentStoreDescription(url: url)
+        store.type = NSSQLiteStoreType
+        container.persistentStoreDescriptions = [store]
+
+        var error: Error?
+        var isLoaded = false
+        container.loadPersistentStores {
+            isLoaded = true
+            error = $1
+        }
+        assert(isLoaded, "Expected persistent stores to be loaded synchronously")
+        if let error = error {
+            throw error
+        }
+
+        return container
     }
 }

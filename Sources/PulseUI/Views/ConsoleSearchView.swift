@@ -10,13 +10,13 @@ import Combine
 
 // I'm too lazy to create ViewModels for each of these components and menus,
 // this should do.
-final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
+public final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
     private let tokenField = NSTokenField()
     private var searchCriteria: Binding<ConsoleSearchCriteria>
     private var observer: Any?
     private var cancellable: AnyCancellable?
 
-    init(searchCriteria: Binding<ConsoleSearchCriteria>) {
+    public init(searchCriteria: Binding<ConsoleSearchCriteria>) {
         self.searchCriteria = searchCriteria
 
         super.init(frame: .zero)
@@ -40,7 +40,7 @@ final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
             }
     }
 
-    func searchCriteriaUpdatedProgramatically() {
+    public func searchCriteriaUpdatedProgramatically() {
         tokenField.objectValue = searchCriteria.filters.wrappedValue
     }
 
@@ -52,27 +52,29 @@ final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func tokenField(_ tokenField: NSTokenField, displayStringForRepresentedObject representedObject: Any) -> String? {
+    // MARK: - NSTokenFieldDelegate
+
+    public func tokenField(_ tokenField: NSTokenField, displayStringForRepresentedObject representedObject: Any) -> String? {
         let filter = representedObject as! ConsoleSearchFilter
         return "\(title(for: filter.kind)): \(filter.text)"
     }
 
-    func tokenField(_ tokenField: NSTokenField, shouldAdd tokens: [Any], at index: Int) -> [Any] {
+    public func tokenField(_ tokenField: NSTokenField, shouldAdd tokens: [Any], at index: Int) -> [Any] {
         for token in tokens.reversed() {
             searchCriteria.wrappedValue.filters.insert(token as! ConsoleSearchFilter, at: index)
         }
         return tokens
     }
 
-    func tokenField(_ tokenField: NSTokenField, representedObjectForEditing editingString: String) -> Any? {
+    public func tokenField(_ tokenField: NSTokenField, representedObjectForEditing editingString: String) -> Any? {
         ConsoleSearchFilter(text: editingString, kind: .text, relation: .contains)
     }
 
-    func tokenField(_ tokenField: NSTokenField, hasMenuForRepresentedObject representedObject: Any) -> Bool {
+    public func tokenField(_ tokenField: NSTokenField, hasMenuForRepresentedObject representedObject: Any) -> Bool {
         return true
     }
 
-    func tokenField(_ tokenField: NSTokenField, menuForRepresentedObject representedObject: Any) -> NSMenu? {
+    public func tokenField(_ tokenField: NSTokenField, menuForRepresentedObject representedObject: Any) -> NSMenu? {
         let filter = representedObject as! ConsoleSearchFilter
 
         let menu = NSMenu(title: title(for: filter.kind))

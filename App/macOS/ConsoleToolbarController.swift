@@ -4,6 +4,7 @@
 
 import Cocoa
 import Pulse
+import PulseUI
 import SwiftUI
 import AppKit
 

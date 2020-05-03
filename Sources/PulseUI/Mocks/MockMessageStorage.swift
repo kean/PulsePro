@@ -6,7 +6,8 @@ import Foundation
 import Pulse
 import CoreData
 
-let mockLogger: Logger = {
+#warning("TODO: this shouldn't be public")
+public let mockLogger: Logger = {
     let container = makeMockMessagesStore()
     let logger = Logger(container: container)
     populateStore(logger)

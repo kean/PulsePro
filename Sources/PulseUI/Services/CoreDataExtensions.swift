@@ -6,29 +6,6 @@ import Foundation
 import Pulse
 import CoreData
 
-extension NSPersistentContainer {
-    static func load(loggerDatabaseUrl url: URL) throws -> NSPersistentContainer {
-        let container = NSPersistentContainer(name: "LoggerStore", managedObjectModel: LoggerStorage.coreDataModel)
-
-        let store = NSPersistentStoreDescription(url: url)
-        store.type = NSSQLiteStoreType
-        container.persistentStoreDescriptions = [store]
-
-        var error: Error?
-        var isLoaded = false
-        container.loadPersistentStores {
-            isLoaded = true
-            error = $1
-        }
-        assert(isLoaded, "Expected persistent stores to be loaded synchronously")
-        if let error = error {
-            throw error
-        }
-
-        return container
-    }
-}
-
 extension NSPersistentStoreCoordinator {
     func createCopyOfStore(at url: URL) throws {
         assert(persistentStores.count == 1, "There is more than one persistent stores registered with the coordator")

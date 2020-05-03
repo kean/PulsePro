@@ -2,12 +2,12 @@
 //
 // Copyright (c) 2020 Alexander Grebenyuk (github.com/kean).
 
+import Pulse
+import PulseUI
 import SwiftUI
 import CoreData
-import Pulse
 import Combine
 
-#if os(macOS)
 struct AppWelcomeView: View {
     let buttonOpenDocumentTapped: () -> Void
 
@@ -31,4 +31,3 @@ struct AppWelcomeView_Previews: PreviewProvider {
         AppWelcomeView(buttonOpenDocumentTapped: {})
     }
 }
-#endif
