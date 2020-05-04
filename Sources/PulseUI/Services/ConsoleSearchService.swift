@@ -94,17 +94,6 @@ private struct FilterParameters: Hashable {
 func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria: ConsoleSearchCriteria, logger: Logger) {
     var predicates = [NSPredicate]()
 
-    if searchText.count > 1 {
-        predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
-    }
-
-    let groups = Dictionary(grouping: criteria.filters, by: { FilterParameters(filter: $0) })
-
-    for group in groups {
-        let searchTerms = group.value.map { $0.text }
-        predicates.append(predicate(parameters: group.key, searchTerms: searchTerms))
-    }
-
     switch criteria.timePeriod {
     case .all:
         break // No filters needed
@@ -117,6 +106,17 @@ func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria
     case .lastTwentyMinutes:
         let dateFrom = Date().addingTimeInterval(-20*60)
         predicates.append(NSPredicate(format: "createdAt >= %@", dateFrom as NSDate))
+    }
+
+    if searchText.count > 1 {
+        predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
+    }
+
+    let groups = Dictionary(grouping: criteria.filters, by: { FilterParameters(filter: $0) })
+
+    for group in groups {
+        let searchTerms = group.value.map { $0.text }
+        predicates.append(predicate(parameters: group.key, searchTerms: searchTerms))
     }
 
     request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
