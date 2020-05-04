@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Pulse",
+        "repositoryURL": "https://github.com/kean/Pulse.git",
+        "state": {
+          "branch": null,
+          "revision": "535223e20eb399475e518af92f567ea72e496c3d",
+          "version": "0.2.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

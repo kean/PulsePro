@@ -15,7 +15,7 @@ let package = Package(
         .library(name: "PulseUI", targets: ["PulseUI"]),
     ],
     dependencies: [
-        .package(path: "~/Develop/Pulse"),
+        .package(url: "https://github.com/kean/Pulse.git", from: "0.2.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
