@@ -130,7 +130,7 @@ private func populateStore(_ logger: Logger) {
         $0.system = "default"
         $0.category = "default"
         $0.session = logger.logSessionId.uuidString
-        $0.text = "💥 0xDEADBEAF"
+        $0.text = "💥 0xDEADBEEF"
     }
 
 //    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
