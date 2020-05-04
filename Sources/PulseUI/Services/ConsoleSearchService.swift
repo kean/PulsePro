@@ -108,15 +108,15 @@ func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria
         predicates.append(NSPredicate(format: "createdAt >= %@", dateFrom as NSDate))
     }
 
-    if searchText.count > 1 {
-        predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
-    }
-
     let groups = Dictionary(grouping: criteria.filters, by: { FilterParameters(filter: $0) })
 
     for group in groups {
         let searchTerms = group.value.map { $0.text }
         predicates.append(predicate(parameters: group.key, searchTerms: searchTerms))
+    }
+
+    if searchText.count > 1 {
+        predicates.append(NSPredicate(format: "text CONTAINS %@", searchText))
     }
 
     request.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
