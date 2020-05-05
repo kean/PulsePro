@@ -1,5 +1,11 @@
 # PulseUI 0.x
 
+## PulseUI 0.3
+
+*May 4, 2020*
+
+- Update package depenency to no longer use local dependencies
+
 ## PulseUI 0.2
 
 *May 4, 2020*
