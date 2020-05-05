@@ -44,7 +44,6 @@ struct ConsoleSettingsView: View {
     private var buttonRemoveAll: some View {
         Button(action: {
             self.isShowingRemoveConfirmationAlert = true
-            self.model.buttonRemoveAllMessagesTapped()
         }) {
             Text("Remove All Messages")
         }

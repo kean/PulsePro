@@ -63,7 +63,7 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
     }
 
     func buttonRemoveAllMessagesTapped() {
-        try? logger.store.removeAllMessages()
+        logger.store.removeAllMessages()
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
