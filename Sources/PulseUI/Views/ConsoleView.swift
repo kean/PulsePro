@@ -69,17 +69,13 @@ public struct ConsoleView: View {
     #if os(macOS)
 
     public var body: some View {
-        VStack {
-            HSplitView {
-                NavigationView {
-                    List(model.messages, id: \.objectID) { message in
-                        NavigationLink(destination: self.detailsView(message: message)) {
-                            ConsoleMessageView(model: .init(message: message))
-                        }
-                    }
-                    .frame(minWidth: 280, minHeight: 480)
+        NavigationView {
+            List(model.messages, id: \.objectID) { message in
+                NavigationLink(destination: self.detailsView(message: message)) {
+                    ConsoleMessageView(model: .init(message: message))
                 }
             }
+            .frame(minWidth: 280, minHeight: 480)
         }
     }
 
