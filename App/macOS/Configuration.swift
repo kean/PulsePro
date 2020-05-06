@@ -4,5 +4,5 @@
 import Foundation
 
 struct Configurataion {
-    static var isMockStoreEnabled = false
+    static var isMockStoreEnabled = true
 }

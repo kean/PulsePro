@@ -134,7 +134,7 @@ private func populateStore(_ logger: Logger) {
     }
 
 //    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-//        populateStore(container)
+//        populateStore(logger)
 //    }
 
     try! moc.save()
