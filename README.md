@@ -9,7 +9,7 @@
 Use `ConsoleView` to display messages in your iOS apps.
 
 ```swift
-let view = ConsoleView(logger: Logger.default)
+let view = ConsoleView(store: .default)
 ```
 
 > PulseUI is built almost entirely using SwiftUI. To use it in UIKit, wrap `ConsoleView` in a `UIHostingController`.
