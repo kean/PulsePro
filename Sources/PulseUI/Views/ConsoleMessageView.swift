@@ -3,6 +3,7 @@
 
 import SwiftUI
 import Pulse
+import Logging
 
 struct ConsoleMessageView: View {
     let model: ConsoleMessageViewModel
@@ -43,10 +44,13 @@ struct ConsoleMessageStyle {
 
     static func make(level: Logger.Level) -> ConsoleMessageStyle {
         switch level {
+        case .trace: return .debug
         case .debug: return .debug
         case .info: return .info
-        case .error: return .error
-        case .fatal: return .fatal
+        case .notice: return .error
+        case .warning: return .error
+        case .error: return .fatal
+        case .critical: return .fatal
         }
     }
 

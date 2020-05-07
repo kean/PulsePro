@@ -32,17 +32,17 @@ struct ConsoleMessageViewListItem: View {
                     Image(uiImage: UIImage(systemName: "doc.on.doc", withConfiguration: UIImage.SymbolConfiguration(pointSize: 44, weight: .black, scale: .medium))!)
                 }
                 Button(action: {
-                    let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .equals)
+                    let filter = ConsoleSearchFilter(text: self.message.label, kind: .system, relation: .equals)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Focus System \'\(message.system)\'")
+                    Text("Focus Label \'\(message.label)\'")
                     Image(systemName: "eye")
                 }
                 Button(action: {
-                    let filter = ConsoleSearchFilter(text: self.message.system, kind: .system, relation: .doesNotEqual)
+                    let filter = ConsoleSearchFilter(text: self.message.label, kind: .system, relation: .doesNotEqual)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Hide System \'\(message.system)\'")
+                    Text("Hide Label \'\(message.label)\'")
                     Image(systemName: "eye.slash")
                 }.foregroundColor(.red)
         }

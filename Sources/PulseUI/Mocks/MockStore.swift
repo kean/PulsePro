@@ -4,41 +4,40 @@
 import Foundation
 import Pulse
 import CoreData
+import Logging
 
-public extension Logger {
-    /// A mock logger.
-    static let mock: Logger = {
-        let container = makeMockMessagesStore()
-        let logger = Logger(store: Store(container: container))
-        populateStore(logger)
+public extension LoggerMessageStore {
+    static let mock: LoggerMessageStore = {
+        let store = makeMockStore()
+        populateStore(store)
 
-//        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-//            logger.log("Hello, world")
-//        }
+        //        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+        //            logger.log("Hello, world")
+        //        }
 
-        return logger
+        return store
     }()
 }
 
-private func makeMockMessagesStore() -> NSPersistentContainer {
-    let container = NSPersistentContainer(name: "MockMessagesStore", managedObjectModel: Logger.Store.model)
+private func makeMockStore() -> LoggerMessageStore {
+    let rootURL = FileManager.default.temporaryDirectory.appendingPathComponent("com.github.kean.pulse-ui-demo")
+    try? FileManager.default.removeItem(at: rootURL)
+    try? FileManager.default.createDirectory(at: rootURL, withIntermediateDirectories: true, attributes: nil)
 
-    let store = NSPersistentStoreDescription(url: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
+    let storeURL = rootURL.appendingPathComponent("demo-store")
+    return LoggerMessageStore(storeURL: storeURL)
+}
 
-    container.persistentStoreDescriptions = [store]
-
-    var isCompleted = false
-    container.loadPersistentStores { _, error in
-        assert(error == nil, "Failed to load persistent store: \(String(describing: error))")
-        isCompleted = true
+private extension LoggerMessageStore {
+    /// - storeURL: The storeURL.
+    ///
+    /// - warning: Make sure the directory used in storeURL exists.
+    convenience init(storeURL: URL) {
+        let container = NSPersistentContainer(name: storeURL.lastPathComponent, managedObjectModel: Self.model)
+        let store = NSPersistentStoreDescription(url: storeURL)
+        container.persistentStoreDescriptions = [store]
+        self.init(container: container)
     }
-
-    container.viewContext.automaticallyMergesChangesFromParent = true
-    container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-
-    precondition(isCompleted)
-
-    return container
 }
 
 private extension NSManagedObject {
@@ -49,10 +48,10 @@ private extension NSManagedObject {
     }
 }
 
-private func populateStore(_ logger: Logger) {
+private func populateStore(_ store: LoggerMessageStore) {
     precondition(Thread.isMainThread)
 
-    let moc = logger.store.container.viewContext
+    let moc = store.container.viewContext
 
     func addMessage(_ closure: (LoggerMessage) -> Void) {
         let message = LoggerMessage(using: moc)
@@ -62,46 +61,41 @@ private func populateStore(_ logger: Logger) {
 
     addMessage {
         $0.createdAt = Date() - 0.11
-        $0.level = "info"
-        $0.system = "application"
-        $0.category = "default"
-        $0.session = logger.logSessionId.uuidString
+        $0.level = Logger.Level.info.rawValue
+        $0.label = "application"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
         $0.text = "UIApplication.didFinishLaunching"
     }
 
     addMessage {
         $0.createdAt = Date() - 0.1
-        $0.level = "info"
-        $0.system = "application"
-        $0.category = "default"
-        $0.session = logger.logSessionId.uuidString
+        $0.level = Logger.Level.info.rawValue
+        $0.label = "application"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
         $0.text = "UIApplication.willEnterForeground"
     }
 
     addMessage {
         $0.createdAt = Date() - 0.07
-        $0.level = "debug"
-        $0.system = "auth"
-        $0.category = "default"
-        $0.session = logger.logSessionId.uuidString
+        $0.level = Logger.Level.debug.rawValue
+        $0.label = "auth"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
         $0.text = "🌐 Will authorize user with name \"kean@github.com\""
     }
 
     addMessage {
         $0.createdAt = Date() - 0.05
-        $0.level = "error"
-        $0.system = "auth"
-        $0.category = "default"
-        $0.session = logger.logSessionId.uuidString
+        $0.level = Logger.Level.warning.rawValue
+        $0.label = "auth"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
         $0.text = "🌐 Authorization request failed with error 500"
     }
 
     addMessage {
         $0.createdAt = Date() - 0.04
-        $0.level = "debug"
-        $0.system = "auth"
-        $0.category = "default"
-        $0.session = logger.logSessionId.uuidString
+        $0.level = Logger.Level.debug.rawValue
+        $0.label = "auth"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
         $0.text = """
         Replace this implementation with code to handle the error appropriately. fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 
@@ -126,10 +120,9 @@ private func populateStore(_ logger: Logger) {
 
     addMessage {
         $0.createdAt = Date() - 0.03
-        $0.level = "fatal"
-        $0.system = "default"
-        $0.category = "default"
-        $0.session = logger.logSessionId.uuidString
+        $0.level = Logger.Level.critical.rawValue
+        $0.label = "default"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
         $0.text = "💥 0xDEADBEEF"
     }
 

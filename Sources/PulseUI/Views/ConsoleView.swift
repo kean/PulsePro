@@ -9,8 +9,8 @@ import Combine
 public struct ConsoleView: View {
     @ObservedObject var model: ConsoleViewModel
 
-    public init(logger: Logger) {
-        self.model = ConsoleViewModel(logger: logger)
+    public init(store: LoggerMessageStore) {
+        self.model = ConsoleViewModel(store: store)
     }
 
     public init(model: ConsoleViewModel) {
@@ -91,8 +91,8 @@ public struct ConsoleView: View {
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {
         return Group {
-            ConsoleView(model: ConsoleViewModel(logger: .mock))
-            ConsoleView(model: ConsoleViewModel(logger: .mock))
+            ConsoleView(model: ConsoleViewModel(store: .mock))
+            ConsoleView(model: ConsoleViewModel(store: .mock))
                 .environment(\.colorScheme, .dark)
         }
     }

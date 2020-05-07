@@ -6,8 +6,17 @@
         "repositoryURL": "https://github.com/kean/Pulse.git",
         "state": {
           "branch": null,
-          "revision": "535223e20eb399475e518af92f567ea72e496c3d",
-          "version": "0.2.0"
+          "revision": "bcc81cae715ee4a5e7febee7e1b7a78d36dfe0d3",
+          "version": "0.3.0"
+        }
+      },
+      {
+        "package": "swift-log",
+        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "state": {
+          "branch": null,
+          "revision": "74d7b91ceebc85daf387ebb206003f78813f71aa",
+          "version": "1.2.0"
         }
       }
     ]

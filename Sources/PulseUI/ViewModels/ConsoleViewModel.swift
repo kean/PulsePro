@@ -3,11 +3,12 @@
 
 import CoreData
 import Pulse
+import Logging
 import Combine
 import SwiftUI
 
 public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
-    private let logger: Logger
+    private let store: LoggerMessageStore
     private var controller: NSFetchedResultsController<LoggerMessage>
 
     @Published public private(set) var messages: ConsoleMessages
@@ -18,14 +19,14 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
 
     private var bag = [AnyCancellable]()
 
-    public init(logger: Logger) {
-        self.logger = logger
+    public init(store: LoggerMessageStore) {
+        self.store = store
 
         let request = NSFetchRequest<LoggerMessage>(entityName: "\(LoggerMessage.self)")
         request.fetchBatchSize = 40
         request.sortDescriptors = [NSSortDescriptor(keyPath: \LoggerMessage.createdAt, ascending: false)]
 
-        self.controller = NSFetchedResultsController<LoggerMessage>(fetchRequest: request, managedObjectContext: logger.store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.controller = NSFetchedResultsController<LoggerMessage>(fetchRequest: request, managedObjectContext: store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
 
         super.init()
@@ -43,7 +44,8 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
     }
 
     private func refresh(searchText: String, criteria: ConsoleSearchCriteria) {
-        update(request: controller.fetchRequest, searchText: searchText, criteria: criteria, logger: logger)
+        // TODO: the latest session ID should come from the store
+        update(request: controller.fetchRequest, searchText: searchText, criteria: criteria, sessionId: PersistentLogHandler.logSessionId.uuidString)
         try? controller.performFetch()
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
@@ -52,18 +54,18 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
         var filters = searchCriteria.filters
         filters.removeAll(where: { $0.kind == .level })
         if onlyErrors {
-            filters.append(ConsoleSearchFilter(text: "error", kind: .level, relation: .equals))
-            filters.append(ConsoleSearchFilter(text: "fatal", kind: .level, relation: .equals))
+            filters.append(ConsoleSearchFilter(text: Logger.Level.error.rawValue, kind: .level, relation: .equals))
+            filters.append(ConsoleSearchFilter(text: Logger.Level.critical.rawValue, kind: .level, relation: .equals))
         }
         searchCriteria.filters = filters
     }
 
     func prepareForSharing() throws -> URL {
-        try ConsoleShareService(logger: logger).prepareForSharing()
+        try ConsoleShareService(store: store).prepareForSharing()
     }
 
     func buttonRemoveAllMessagesTapped() {
-        logger.store.removeAllMessages()
+        store.removeAllMessages()
     }
 
     // MARK: - NSFetchedResultsControllerDelegate

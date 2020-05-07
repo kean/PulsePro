@@ -3,6 +3,7 @@
 
 import CoreData
 import Pulse
+import Logging
 
 struct ConsoleMessageViewModel {
     let title: String
@@ -26,8 +27,7 @@ struct ConsoleMessageViewModel {
     init(message: LoggerMessage) {
         let time = ConsoleMessageViewModel.timeFormatter
             .string(from: message.createdAt)
-        let category = message.category == "default" ? "" : ":\(message.category)"
-        self.title = "\(time) | \(message.system)\(category)"
+        self.title = "\(time) | \(message.label)"
         self.text = message.text
         self.style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
     }

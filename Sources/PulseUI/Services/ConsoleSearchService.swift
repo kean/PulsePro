@@ -91,14 +91,14 @@ private struct FilterParameters: Hashable {
     }
 }
 
-func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria: ConsoleSearchCriteria, logger: Logger) {
+func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria: ConsoleSearchCriteria, sessionId: String) {
     var predicates = [NSPredicate]()
 
     switch criteria.timePeriod {
     case .all:
         break // No filters needed
     case .currentSession:
-        predicates.append(NSPredicate(format: "session == %@", logger.logSessionId.uuidString))
+        predicates.append(NSPredicate(format: "session == %@", sessionId))
     case .today:
         let calendar = Calendar.current
         let dateFrom = calendar.startOfDay(for: Date())

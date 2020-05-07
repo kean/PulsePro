@@ -6,11 +6,11 @@ import Pulse
 import CoreData
 
 public struct ConsoleShareService {
-    public let logger: Logger
-    private var context: NSManagedObjectContext { logger.store.container.viewContext }
+    public let store: LoggerMessageStore
+    private var context: NSManagedObjectContext { store.container.viewContext }
 
-    public init(logger: Logger) {
-        self.logger = logger
+    public init(store: LoggerMessageStore) {
+        self.store = store
     }
 
     /// Creates a directory with contents of the logger and some additional
@@ -22,12 +22,12 @@ public struct ConsoleShareService {
         try? FileManager.default.removeItem(at: tempDir)
         try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true, attributes: nil)
 
-        let allLogs = format(messages: try logger.store.allMessage())
+        let allLogs = format(messages: try store.allMessages())
         let allLogsUrl = tempDir.appendingPathComponent("logs-all.txt")
         try allLogs?.write(to: allLogsUrl)
 
         let coreDataUrl = tempDir.appendingPathComponent("debug-data.sqlite")
-        try logger.store.container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
+        try store.container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
 
         let userDefaultsContents = UserDefaults.standard.dictionaryRepresentation()
             .map { "\($0.key): \($0.value)" }
@@ -60,7 +60,7 @@ public struct ConsoleShareService {
     }
 
     private func format(message: LoggerMessage) -> String {
-        "\(dateFormatter.string(from: message.createdAt)) [\(message.level)]-[\(message.system):\(message.category)] \(message.text)"
+        "\(dateFormatter.string(from: message.createdAt)) [\(message.level)]-[\(message.label)] \(message.text)"
     }
 }
 

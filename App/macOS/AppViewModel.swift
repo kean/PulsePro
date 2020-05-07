@@ -16,14 +16,9 @@ final class AppViewModel: ObservableObject {
     weak var delegate: AppViewModelDelegate?
 
     func openDatabase(url: URL) {
-        do {
-            let container = try NSPersistentContainer.load(loggerDatabaseUrl: url)
-            let logger = Logger(store: .init(container: container))
-            let model = ConsoleViewModel(logger: logger)
-            self.delegate?.showConsole(model: model)
-        } catch {
-            debugPrint("Failed to open database with url: \(url) with error: \(error)")
-        }
+        let store = LoggerMessageStore(storeURL: url)
+        let model = ConsoleViewModel(store: store)
+        self.delegate?.showConsole(model: model)
     }
 
     func buttonOpenDocumentTapped() {
@@ -31,25 +26,14 @@ final class AppViewModel: ObservableObject {
     }
 }
 
-extension NSPersistentContainer {
-    static func load(loggerDatabaseUrl url: URL) throws -> NSPersistentContainer {
-        let container = NSPersistentContainer(name: "LoggerStore", managedObjectModel: Logger.Store.model)
-
-        let store = NSPersistentStoreDescription(url: url)
-        store.type = NSSQLiteStoreType
+private extension LoggerMessageStore {
+    /// - storeURL: The storeURL.
+    ///
+    /// - warning: Make sure the directory used in storeURL exists.
+    convenience init(storeURL: URL) {
+        let container = NSPersistentContainer(name: storeURL.lastPathComponent, managedObjectModel: Self.model)
+        let store = NSPersistentStoreDescription(url: storeURL)
         container.persistentStoreDescriptions = [store]
-
-        var error: Error?
-        var isLoaded = false
-        container.loadPersistentStores {
-            isLoaded = true
-            error = $1
-        }
-        assert(isLoaded, "Expected persistent stores to be loaded synchronously")
-        if let error = error {
-            throw error
-        }
-
-        return container
+        self.init(container: container)
     }
 }

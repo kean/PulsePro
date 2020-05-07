@@ -4,6 +4,7 @@
 import CoreData
 import Pulse
 import Combine
+import Logging
 
 final class ConsoleMessageDetailsViewModel {
     let tags: [ConsoleMessageTagViewModel]
@@ -32,13 +33,9 @@ final class ConsoleMessageDetailsViewModel {
                     .string(from: message.createdAt)
             ),
             ConsoleMessageTagViewModel(
-                title: "System",
-                value: message.system == "default" ? "n/a" : message.category
+                title: "Label",
+                value: message.label == "default" ? "n/a" : message.label
             ),
-            ConsoleMessageTagViewModel(
-                title: "Category",
-                value: message.category == "default" ? "n/a" : message.category
-            )
         ]
         self.text = message.text
         self.style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
