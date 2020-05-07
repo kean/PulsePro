@@ -42,6 +42,13 @@
 			remoteGlobalIDString = "PulseUI::PulseUI::Product";
 			remoteInfo = PulseUI;
 		};
+		0CF2FE3A2463AC2300054D07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CB87242245F236700CAF647 /* PulseUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "swift-log::Logging::Product";
+			remoteInfo = Logging;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -169,6 +176,7 @@
 		0CB87243245F236700CAF647 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				0CF2FE3B2463AC2300054D07 /* Logging.framework */,
 				0CB8724B245F236700CAF647 /* Pulse.framework */,
 				0CB8724D245F236700CAF647 /* PulseUI.framework */,
 			);
@@ -269,6 +277,13 @@
 			fileType = wrapper.framework;
 			path = PulseUI.framework;
 			remoteRef = 0CB8724C245F236700CAF647 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0CF2FE3B2463AC2300054D07 /* Logging.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Logging.framework;
+			remoteRef = 0CF2FE3A2463AC2300054D07 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -465,7 +480,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.kean.Pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -485,7 +500,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.kean.Pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -507,7 +522,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.kean.Pulse-macOS";
 				PRODUCT_NAME = "Pulse macOS";
 				SDKROOT = macosx;
@@ -529,7 +544,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.kean.Pulse-macOS";
 				PRODUCT_NAME = "Pulse macOS";
 				SDKROOT = macosx;

@@ -1,5 +1,11 @@
 # PulseUI 0.x
 
+## PulseUI 0.4
+
+*May 6, 2020*
+
+- Update to Pulse 0.3
+
 ## PulseUI 0.3
 
 *May 4, 2020*
