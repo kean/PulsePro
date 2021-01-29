@@ -30,6 +30,7 @@ public struct ConsoleView: View {
                 quickFiltersView
                 messagesListView
             }
+            .listStyle(PlainListStyle())
             .navigationBarTitle(Text("Console"))
             .navigationBarItems(trailing: shareButton)
         }
