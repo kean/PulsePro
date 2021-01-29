@@ -53,7 +53,11 @@ final class ConsoleToolbarController: NSObject, NSToolbarDelegate, NSSearchField
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.searchField, .flexibleSpace, .levelSegmentedControl]
+        if #available(OSX 11.0, *) {
+            return [.searchField, .levelSegmentedControl]
+        } else {
+            return [.searchField, .flexibleSpace, .levelSegmentedControl]
+        }
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
@@ -61,7 +65,7 @@ final class ConsoleToolbarController: NSObject, NSToolbarDelegate, NSSearchField
     }
 
     func toolbarSelectableItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        toolbarAllowedItemIdentifiers(toolbar)
+        []
     }
 
     // MARK: - NSTextFieldDelegate
