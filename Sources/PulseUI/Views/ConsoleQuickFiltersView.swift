@@ -6,14 +6,15 @@ import Pulse
 
 #if os(iOS)
 struct ConsoleQuickFiltersView: View {
-    @Binding var onlyErrors: Bool
+    @Binding var filter: ConsoleViewModel.FilterType
     @Binding var isShowingSettings: Bool
 
     var body: some View {
         HStack {
-            Picker("Systems", selection: $onlyErrors) {
-                Text("All Messages").tag(false)
-                Text("Only Errors").tag(true)
+            Picker("Systems", selection: $filter) {
+                Text("Trace").tag(ConsoleViewModel.FilterType.trace)
+                Text("Debug").tag(ConsoleViewModel.FilterType.debug)
+                Text("Errors").tag(ConsoleViewModel.FilterType.errors)
             }.pickerStyle(SegmentedPickerStyle())
             Spacer(minLength: 40)
             Button(action: { self.isShowingSettings = true }) {
@@ -28,7 +29,7 @@ struct ConsoleQuickFiltersView: View {
 struct ConsoleQuickFiltersView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConsoleQuickFiltersView(onlyErrors: .constant(false), isShowingSettings: .constant(false))
+            ConsoleQuickFiltersView(filter: .constant(.debug), isShowingSettings: .constant(false))
                 .previewLayout(.fixed(width: 320, height: 80))
         }
     }

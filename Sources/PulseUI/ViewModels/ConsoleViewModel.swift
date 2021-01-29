@@ -15,7 +15,13 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
 
     @Published public var searchText: String = ""
     @Published public var searchCriteria: ConsoleSearchCriteria = .init()
-    @Published public var onlyErrors: Bool = false
+    @Published public var filter: FilterType = .debug
+
+    public enum FilterType {
+        case trace
+        case debug
+        case errors
+    }
 
     private var bag = [AnyCancellable]()
 
@@ -38,8 +44,8 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
             self.refresh(searchText: searchText, criteria: criteria)
         }.store(in: &bag)
 
-        $onlyErrors.sink { [unowned self] in
-            self.setOnlyErrorsEnabled($0)
+        $filter.sink { [unowned self] in
+            self.setFilter($0)
         }.store(in: &bag)
     }
 
@@ -50,10 +56,15 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
 
-    private func setOnlyErrorsEnabled(_ onlyErrors: Bool) {
+    private func setFilter(_ filter: FilterType) {
         var filters = searchCriteria.filters
         filters.removeAll(where: { $0.kind == .level })
-        if onlyErrors {
+        switch filter {
+        case .trace:
+            break // Show all
+        case .debug:
+            filters.append(ConsoleSearchFilter(text: Logger.Level.trace.rawValue, kind: .level, relation: .doesNotEqual))
+        case .errors:
             filters.append(ConsoleSearchFilter(text: Logger.Level.error.rawValue, kind: .level, relation: .equals))
             filters.append(ConsoleSearchFilter(text: Logger.Level.critical.rawValue, kind: .level, relation: .equals))
         }

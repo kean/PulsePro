@@ -40,7 +40,7 @@ public struct ConsoleView: View {
         VStack {
             SearchBar(title: "Search \(model.messages.count) messages", text: $model.searchText)
             Spacer(minLength: 8)
-            ConsoleQuickFiltersView(onlyErrors: $model.onlyErrors, isShowingSettings: $isShowingSettings)
+            ConsoleQuickFiltersView(filter: $model.filter, isShowingSettings: $isShowingSettings)
         }
         .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
         .sheet(isPresented: $isShowingSettings) {
