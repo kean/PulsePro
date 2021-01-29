@@ -76,6 +76,22 @@ private func populateStore(_ store: LoggerMessageStore) {
     }
 
     addMessage {
+        $0.createdAt = Date() - 0.095
+        $0.level = Logger.Level.trace.rawValue
+        $0.label = "auth"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
+        $0.text = "Instantiated Session"
+    }
+
+    addMessage {
+        $0.createdAt = Date() - 0.092
+        $0.level = Logger.Level.trace.rawValue
+        $0.label = "auth"
+        $0.session = PersistentLogHandler.logSessionId.uuidString
+        $0.text = "Instantiated the new login request"
+    }
+
+    addMessage {
         $0.createdAt = Date() - 0.07
         $0.level = Logger.Level.debug.rawValue
         $0.label = "auth"
