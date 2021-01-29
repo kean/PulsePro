@@ -1,1150 +1,889 @@
 // !$*UTF8*$!
 {
-   archiveVersion = "1";
-   objectVersion = "46";
-   objects = {
-      "OBJ_1" = {
-         isa = "PBXProject";
-         attributes = {
-            LastSwiftMigration = "9999";
-            LastUpgradeCheck = "9999";
-         };
-         buildConfigurationList = "OBJ_2";
-         compatibilityVersion = "Xcode 3.2";
-         developmentRegion = "en";
-         hasScannedForEncodings = "0";
-         knownRegions = (
-            "en"
-         );
-         mainGroup = "OBJ_5";
-         productRefGroup = "OBJ_44";
-         projectDirPath = ".";
-         targets = (
-            "swift-log::Logging",
-            "Pulse::Pulse",
-            "Pulse::SwiftPMPackageDescription",
-            "PulseUI::PulseUI",
-            "PulseUI::SwiftPMPackageDescription",
-            "swift-log::SwiftPMPackageDescription"
-         );
-      };
-      "OBJ_10" = {
-         isa = "PBXFileReference";
-         path = "MockStore.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_100" = {
-         isa = "PBXBuildFile";
-         fileRef = "Pulse::Pulse::Product";
-      };
-      "OBJ_101" = {
-         isa = "PBXBuildFile";
-         fileRef = "swift-log::Logging::Product";
-      };
-      "OBJ_102" = {
-         isa = "PBXTargetDependency";
-         target = "Pulse::Pulse";
-      };
-      "OBJ_103" = {
-         isa = "PBXTargetDependency";
-         target = "swift-log::Logging";
-      };
-      "OBJ_105" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_106",
-            "OBJ_107"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_106" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.2.0"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_107" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.2.0"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Release";
-      };
-      "OBJ_108" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_109"
-         );
-      };
-      "OBJ_109" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_6";
-      };
-      "OBJ_11" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_12",
-            "OBJ_13",
-            "OBJ_14"
-         );
-         name = "Services";
-         path = "Services";
-         sourceTree = "<group>";
-      };
-      "OBJ_111" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_112",
-            "OBJ_113"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_112" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.0.0"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_113" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.0.0"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Release";
-      };
-      "OBJ_114" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_115"
-         );
-      };
-      "OBJ_115" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_43";
-      };
-      "OBJ_12" = {
-         isa = "PBXFileReference";
-         path = "ConsoleMessages.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_13" = {
-         isa = "PBXFileReference";
-         path = "ConsoleSearchService.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_14" = {
-         isa = "PBXFileReference";
-         path = "ConsoleShareService.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_15" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_16",
-            "OBJ_17",
-            "OBJ_18"
-         );
-         name = "SwiftUI+Extensions";
-         path = "SwiftUI+Extensions";
-         sourceTree = "<group>";
-      };
-      "OBJ_16" = {
-         isa = "PBXFileReference";
-         path = "SearchBar.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_17" = {
-         isa = "PBXFileReference";
-         path = "ShareView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_18" = {
-         isa = "PBXFileReference";
-         path = "TextView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_19" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_20",
-            "OBJ_21",
-            "OBJ_22"
-         );
-         name = "ViewModels";
-         path = "ViewModels";
-         sourceTree = "<group>";
-      };
-      "OBJ_2" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_3",
-            "OBJ_4"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_20" = {
-         isa = "PBXFileReference";
-         path = "ConsoleMessageDetailsViewModel.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_21" = {
-         isa = "PBXFileReference";
-         path = "ConsoleMessageViewModel.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_22" = {
-         isa = "PBXFileReference";
-         path = "ConsoleViewModel.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_23" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_24",
-            "OBJ_25",
-            "OBJ_26",
-            "OBJ_27",
-            "OBJ_28",
-            "OBJ_29",
-            "OBJ_30"
-         );
-         name = "Views";
-         path = "Views";
-         sourceTree = "<group>";
-      };
-      "OBJ_24" = {
-         isa = "PBXFileReference";
-         path = "ConsoleMessageDetailsView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_25" = {
-         isa = "PBXFileReference";
-         path = "ConsoleMessageView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_26" = {
-         isa = "PBXFileReference";
-         path = "ConsoleMessageViewListItem.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_27" = {
-         isa = "PBXFileReference";
-         path = "ConsoleQuickFiltersView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_28" = {
-         isa = "PBXFileReference";
-         path = "ConsoleSearchView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_29" = {
-         isa = "PBXFileReference";
-         path = "ConsoleSettingsView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_3" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            CLANG_ENABLE_OBJC_ARC = "YES";
-            COMBINE_HIDPI_IMAGES = "YES";
-            COPY_PHASE_STRIP = "NO";
-            DEBUG_INFORMATION_FORMAT = "dwarf";
-            DYLIB_INSTALL_NAME_BASE = "@rpath";
-            ENABLE_NS_ASSERTIONS = "YES";
-            GCC_OPTIMIZATION_LEVEL = "0";
-            GCC_PREPROCESSOR_DEFINITIONS = (
-               "$(inherited)",
-               "SWIFT_PACKAGE=1",
-               "DEBUG=1"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.10";
-            ONLY_ACTIVE_ARCH = "YES";
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)",
-               "-DXcode"
-            );
-            PRODUCT_NAME = "$(TARGET_NAME)";
-            SDKROOT = "macosx";
-            SUPPORTED_PLATFORMS = (
-               "macosx",
-               "iphoneos",
-               "iphonesimulator",
-               "appletvos",
-               "appletvsimulator",
-               "watchos",
-               "watchsimulator"
-            );
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)",
-               "SWIFT_PACKAGE",
-               "DEBUG"
-            );
-            SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-            USE_HEADERMAP = "NO";
-         };
-         name = "Debug";
-      };
-      "OBJ_30" = {
-         isa = "PBXFileReference";
-         path = "ConsoleView.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_31" = {
-         isa = "PBXGroup";
-         children = (
-         );
-         name = "Tests";
-         path = "";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_32" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_33",
-            "OBJ_38"
-         );
-         name = "Dependencies";
-         path = "";
-         sourceTree = "<group>";
-      };
-      "OBJ_33" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_34",
-            "OBJ_37"
-         );
-         name = "Pulse 0.3.0";
-         path = "";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_34" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_35",
-            "OBJ_36"
-         );
-         name = "Pulse";
-         path = ".build/checkouts/Pulse/Sources/Pulse";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_35" = {
-         isa = "PBXFileReference";
-         path = "LoggerMessageStore.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_36" = {
-         isa = "PBXFileReference";
-         path = "PersistentLogHandler.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_37" = {
-         isa = "PBXFileReference";
-         explicitFileType = "sourcecode.swift";
-         name = "Package.swift";
-         path = "/Users/kean/Develop/PulseUI/.build/checkouts/Pulse/Package.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_38" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_39",
-            "OBJ_43"
-         );
-         name = "swift-log 1.2.0";
-         path = "";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_39" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_40",
-            "OBJ_41",
-            "OBJ_42"
-         );
-         name = "Logging";
-         path = ".build/checkouts/swift-log/Sources/Logging";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_4" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            CLANG_ENABLE_OBJC_ARC = "YES";
-            COMBINE_HIDPI_IMAGES = "YES";
-            COPY_PHASE_STRIP = "YES";
-            DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-            DYLIB_INSTALL_NAME_BASE = "@rpath";
-            GCC_OPTIMIZATION_LEVEL = "s";
-            GCC_PREPROCESSOR_DEFINITIONS = (
-               "$(inherited)",
-               "SWIFT_PACKAGE=1"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.10";
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)",
-               "-DXcode"
-            );
-            PRODUCT_NAME = "$(TARGET_NAME)";
-            SDKROOT = "macosx";
-            SUPPORTED_PLATFORMS = (
-               "macosx",
-               "iphoneos",
-               "iphonesimulator",
-               "appletvos",
-               "appletvsimulator",
-               "watchos",
-               "watchsimulator"
-            );
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)",
-               "SWIFT_PACKAGE"
-            );
-            SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-            USE_HEADERMAP = "NO";
-         };
-         name = "Release";
-      };
-      "OBJ_40" = {
-         isa = "PBXFileReference";
-         path = "Locks.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_41" = {
-         isa = "PBXFileReference";
-         path = "LogHandler.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_42" = {
-         isa = "PBXFileReference";
-         path = "Logging.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_43" = {
-         isa = "PBXFileReference";
-         explicitFileType = "sourcecode.swift";
-         name = "Package.swift";
-         path = "/Users/kean/Develop/PulseUI/.build/checkouts/swift-log/Package.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_44" = {
-         isa = "PBXGroup";
-         children = (
-            "swift-log::Logging::Product",
-            "PulseUI::PulseUI::Product",
-            "Pulse::Pulse::Product"
-         );
-         name = "Products";
-         path = "";
-         sourceTree = "BUILT_PRODUCTS_DIR";
-      };
-      "OBJ_48" = {
-         isa = "PBXFileReference";
-         path = "App";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_49" = {
-         isa = "PBXFileReference";
-         path = "CHANGELOG.md";
-         sourceTree = "<group>";
-      };
-      "OBJ_5" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_6",
-            "OBJ_7",
-            "OBJ_31",
-            "OBJ_32",
-            "OBJ_44",
-            "OBJ_48",
-            "OBJ_49",
-            "OBJ_50",
-            "OBJ_51"
-         );
-         path = "";
-         sourceTree = "<group>";
-      };
-      "OBJ_50" = {
-         isa = "PBXFileReference";
-         path = "README.md";
-         sourceTree = "<group>";
-      };
-      "OBJ_51" = {
-         isa = "PBXFileReference";
-         path = "LICENSE.txt";
-         sourceTree = "<group>";
-      };
-      "OBJ_53" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_54",
-            "OBJ_55"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_54" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "PulseUI.xcodeproj/Logging_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.10";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "Logging";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "Logging";
-            TVOS_DEPLOYMENT_TARGET = "9.0";
-            WATCHOS_DEPLOYMENT_TARGET = "2.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_55" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "PulseUI.xcodeproj/Logging_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.10";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "Logging";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "Logging";
-            TVOS_DEPLOYMENT_TARGET = "9.0";
-            WATCHOS_DEPLOYMENT_TARGET = "2.0";
-         };
-         name = "Release";
-      };
-      "OBJ_56" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_57",
-            "OBJ_58",
-            "OBJ_59"
-         );
-      };
-      "OBJ_57" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_40";
-      };
-      "OBJ_58" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_41";
-      };
-      "OBJ_59" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_42";
-      };
-      "OBJ_6" = {
-         isa = "PBXFileReference";
-         explicitFileType = "sourcecode.swift";
-         path = "Package.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_60" = {
-         isa = "PBXFrameworksBuildPhase";
-         files = (
-         );
-      };
-      "OBJ_62" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_63",
-            "OBJ_64"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_63" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "PulseUI.xcodeproj/Pulse_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "11.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.13";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "Pulse";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "Pulse";
-            TVOS_DEPLOYMENT_TARGET = "11.0";
-            WATCHOS_DEPLOYMENT_TARGET = "4.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_64" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "PulseUI.xcodeproj/Pulse_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "11.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.13";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "Pulse";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "Pulse";
-            TVOS_DEPLOYMENT_TARGET = "11.0";
-            WATCHOS_DEPLOYMENT_TARGET = "4.0";
-         };
-         name = "Release";
-      };
-      "OBJ_65" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_66",
-            "OBJ_67"
-         );
-      };
-      "OBJ_66" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_35";
-      };
-      "OBJ_67" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_36";
-      };
-      "OBJ_68" = {
-         isa = "PBXFrameworksBuildPhase";
-         files = (
-            "OBJ_69"
-         );
-      };
-      "OBJ_69" = {
-         isa = "PBXBuildFile";
-         fileRef = "swift-log::Logging::Product";
-      };
-      "OBJ_7" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_8"
-         );
-         name = "Sources";
-         path = "Sources";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_70" = {
-         isa = "PBXTargetDependency";
-         target = "swift-log::Logging";
-      };
-      "OBJ_72" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_73",
-            "OBJ_74"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_73" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.1.0"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_74" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.1.0"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Release";
-      };
-      "OBJ_75" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_76"
-         );
-      };
-      "OBJ_76" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_37";
-      };
-      "OBJ_78" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_79",
-            "OBJ_80"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_79" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "PulseUI.xcodeproj/PulseUI_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "13.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.15";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "PulseUI";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "PulseUI";
-            TVOS_DEPLOYMENT_TARGET = "13.0";
-            WATCHOS_DEPLOYMENT_TARGET = "6.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_8" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_9",
-            "OBJ_11",
-            "OBJ_15",
-            "OBJ_19",
-            "OBJ_23"
-         );
-         name = "PulseUI";
-         path = "PulseUI";
-         sourceTree = "<group>";
-      };
-      "OBJ_80" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "PulseUI.xcodeproj/PulseUI_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "13.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.15";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "PulseUI";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "PulseUI";
-            TVOS_DEPLOYMENT_TARGET = "13.0";
-            WATCHOS_DEPLOYMENT_TARGET = "6.0";
-         };
-         name = "Release";
-      };
-      "OBJ_81" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_82",
-            "OBJ_83",
-            "OBJ_84",
-            "OBJ_85",
-            "OBJ_86",
-            "OBJ_87",
-            "OBJ_88",
-            "OBJ_89",
-            "OBJ_90",
-            "OBJ_91",
-            "OBJ_92",
-            "OBJ_93",
-            "OBJ_94",
-            "OBJ_95",
-            "OBJ_96",
-            "OBJ_97",
-            "OBJ_98"
-         );
-      };
-      "OBJ_82" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_10";
-      };
-      "OBJ_83" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_12";
-      };
-      "OBJ_84" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_13";
-      };
-      "OBJ_85" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_14";
-      };
-      "OBJ_86" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_16";
-      };
-      "OBJ_87" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_17";
-      };
-      "OBJ_88" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_18";
-      };
-      "OBJ_89" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_20";
-      };
-      "OBJ_9" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_10"
-         );
-         name = "Mocks";
-         path = "Mocks";
-         sourceTree = "<group>";
-      };
-      "OBJ_90" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_21";
-      };
-      "OBJ_91" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_22";
-      };
-      "OBJ_92" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_24";
-      };
-      "OBJ_93" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_25";
-      };
-      "OBJ_94" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_26";
-      };
-      "OBJ_95" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_27";
-      };
-      "OBJ_96" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_28";
-      };
-      "OBJ_97" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_29";
-      };
-      "OBJ_98" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_30";
-      };
-      "OBJ_99" = {
-         isa = "PBXFrameworksBuildPhase";
-         files = (
-            "OBJ_100",
-            "OBJ_101"
-         );
-      };
-      "Pulse::Pulse" = {
-         isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_62";
-         buildPhases = (
-            "OBJ_65",
-            "OBJ_68"
-         );
-         dependencies = (
-            "OBJ_70"
-         );
-         name = "Pulse";
-         productName = "Pulse";
-         productReference = "Pulse::Pulse::Product";
-         productType = "com.apple.product-type.framework";
-      };
-      "Pulse::Pulse::Product" = {
-         isa = "PBXFileReference";
-         path = "Pulse.framework";
-         sourceTree = "BUILT_PRODUCTS_DIR";
-      };
-      "Pulse::SwiftPMPackageDescription" = {
-         isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_72";
-         buildPhases = (
-            "OBJ_75"
-         );
-         dependencies = (
-         );
-         name = "PulsePackageDescription";
-         productName = "PulsePackageDescription";
-         productType = "com.apple.product-type.framework";
-      };
-      "PulseUI::PulseUI" = {
-         isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_78";
-         buildPhases = (
-            "OBJ_81",
-            "OBJ_99"
-         );
-         dependencies = (
-            "OBJ_102",
-            "OBJ_103"
-         );
-         name = "PulseUI";
-         productName = "PulseUI";
-         productReference = "PulseUI::PulseUI::Product";
-         productType = "com.apple.product-type.framework";
-      };
-      "PulseUI::PulseUI::Product" = {
-         isa = "PBXFileReference";
-         path = "PulseUI.framework";
-         sourceTree = "BUILT_PRODUCTS_DIR";
-      };
-      "PulseUI::SwiftPMPackageDescription" = {
-         isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_105";
-         buildPhases = (
-            "OBJ_108"
-         );
-         dependencies = (
-         );
-         name = "PulseUIPackageDescription";
-         productName = "PulseUIPackageDescription";
-         productType = "com.apple.product-type.framework";
-      };
-      "swift-log::Logging" = {
-         isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_53";
-         buildPhases = (
-            "OBJ_56",
-            "OBJ_60"
-         );
-         dependencies = (
-         );
-         name = "Logging";
-         productName = "Logging";
-         productReference = "swift-log::Logging::Product";
-         productType = "com.apple.product-type.framework";
-      };
-      "swift-log::Logging::Product" = {
-         isa = "PBXFileReference";
-         path = "Logging.framework";
-         sourceTree = "BUILT_PRODUCTS_DIR";
-      };
-      "swift-log::SwiftPMPackageDescription" = {
-         isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_111";
-         buildPhases = (
-            "OBJ_114"
-         );
-         dependencies = (
-         );
-         name = "swift-logPackageDescription";
-         productName = "swift-logPackageDescription";
-         productType = "com.apple.product-type.framework";
-      };
-   };
-   rootObject = "OBJ_1";
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0C98C6DE25C4C62E0086A13E /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6CF25C4C5E20086A13E /* Platform.swift */; };
+		0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6E525C4C73F0086A13E /* Wrapped.swift */; };
+		0CCEF11525C47C790095F021 /* NetworkInspectorResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */; };
+		0CCEF11D25C4803D0095F021 /* JSONPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEF11C25C4803D0095F021 /* JSONPrinter.swift */; };
+		0CD2FC9D25C473220040C9EC /* NetworkInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */; };
+		OBJ_100 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Pulse::Pulse::Product" /* Pulse.framework */; };
+		OBJ_101 /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-log::Logging::Product" /* Logging.framework */; };
+		OBJ_109 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_115 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* Package.swift */; };
+		OBJ_57 /* Locks.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* Locks.swift */; };
+		OBJ_58 /* LogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* LogHandler.swift */; };
+		OBJ_59 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Logging.swift */; };
+		OBJ_66 /* LoggerMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* LoggerMessageStore.swift */; };
+		OBJ_67 /* PersistentLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* PersistentLogHandler.swift */; };
+		OBJ_69 /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-log::Logging::Product" /* Logging.framework */; };
+		OBJ_76 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Package.swift */; };
+		OBJ_82 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* MockStore.swift */; };
+		OBJ_83 /* ConsoleMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* ConsoleMessages.swift */; };
+		OBJ_84 /* ConsoleSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* ConsoleSearchService.swift */; };
+		OBJ_85 /* ConsoleShareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* ConsoleShareService.swift */; };
+		OBJ_86 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* SearchBar.swift */; };
+		OBJ_87 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* ShareView.swift */; };
+		OBJ_88 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* TextView.swift */; };
+		OBJ_89 /* ConsoleMessageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* ConsoleMessageDetailsViewModel.swift */; };
+		OBJ_90 /* ConsoleMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* ConsoleMessageViewModel.swift */; };
+		OBJ_91 /* ConsoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* ConsoleViewModel.swift */; };
+		OBJ_92 /* ConsoleMessageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* ConsoleMessageDetailsView.swift */; };
+		OBJ_93 /* ConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* ConsoleMessageView.swift */; };
+		OBJ_94 /* ConsoleMessageViewListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* ConsoleMessageViewListItem.swift */; };
+		OBJ_95 /* ConsoleQuickFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* ConsoleQuickFiltersView.swift */; };
+		OBJ_96 /* ConsoleSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* ConsoleSearchView.swift */; };
+		OBJ_97 /* ConsoleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* ConsoleSettingsView.swift */; };
+		OBJ_98 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* ConsoleView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0CD2FC8F25C39B920040C9EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Pulse::Pulse";
+			remoteInfo = Pulse;
+		};
+		0CD2FC9025C39B920040C9EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "swift-log::Logging";
+			remoteInfo = Logging;
+		};
+		0CD2FC9125C39B920040C9EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "swift-log::Logging";
+			remoteInfo = Logging;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0C98C6CF25C4C5E20086A13E /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		0C98C6E525C4C73F0086A13E /* Wrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapped.swift; sourceTree = "<group>"; };
+		0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorResponseView.swift; sourceTree = "<group>"; };
+		0CCEF11C25C4803D0095F021 /* JSONPrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPrinter.swift; sourceTree = "<group>"; };
+		0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorView.swift; sourceTree = "<group>"; };
+		OBJ_10 /* MockStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
+		OBJ_12 /* ConsoleMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessages.swift; sourceTree = "<group>"; };
+		OBJ_13 /* ConsoleSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleSearchService.swift; sourceTree = "<group>"; };
+		OBJ_14 /* ConsoleShareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleShareService.swift; sourceTree = "<group>"; };
+		OBJ_16 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		OBJ_17 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		OBJ_18 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		OBJ_20 /* ConsoleMessageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageDetailsViewModel.swift; sourceTree = "<group>"; };
+		OBJ_21 /* ConsoleMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageViewModel.swift; sourceTree = "<group>"; };
+		OBJ_22 /* ConsoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleViewModel.swift; sourceTree = "<group>"; };
+		OBJ_24 /* ConsoleMessageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageDetailsView.swift; sourceTree = "<group>"; };
+		OBJ_25 /* ConsoleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageView.swift; sourceTree = "<group>"; };
+		OBJ_26 /* ConsoleMessageViewListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageViewListItem.swift; sourceTree = "<group>"; };
+		OBJ_27 /* ConsoleQuickFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleQuickFiltersView.swift; sourceTree = "<group>"; };
+		OBJ_28 /* ConsoleSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleSearchView.swift; sourceTree = "<group>"; };
+		OBJ_29 /* ConsoleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleSettingsView.swift; sourceTree = "<group>"; };
+		OBJ_30 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
+		OBJ_35 /* LoggerMessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerMessageStore.swift; sourceTree = "<group>"; };
+		OBJ_36 /* PersistentLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentLogHandler.swift; sourceTree = "<group>"; };
+		OBJ_37 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = /Users/kean/Develop/PulseUI/.build/checkouts/Pulse/Package.swift; sourceTree = "<group>"; };
+		OBJ_40 /* Locks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locks.swift; sourceTree = "<group>"; };
+		OBJ_41 /* LogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHandler.swift; sourceTree = "<group>"; };
+		OBJ_42 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		OBJ_43 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/kean/Develop/PulseUI/.build/checkouts/swift-log/Package.swift"; sourceTree = "<group>"; };
+		OBJ_48 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; path = App; sourceTree = SOURCE_ROOT; };
+		OBJ_49 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		OBJ_50 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		OBJ_51 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		"Pulse::Pulse::Product" /* Pulse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Pulse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"PulseUI::PulseUI::Product" /* PulseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PulseUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"swift-log::Logging::Product" /* Logging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Logging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_60 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_69 /* Logging.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_99 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_100 /* Pulse.framework in Frameworks */,
+				OBJ_101 /* Logging.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C98C6CE25C4C5D70086A13E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0C98C6CF25C4C5E20086A13E /* Platform.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0CD2FCB825C476800040C9EC /* Console */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_30 /* ConsoleView.swift */,
+				OBJ_22 /* ConsoleViewModel.swift */,
+				OBJ_26 /* ConsoleMessageViewListItem.swift */,
+				OBJ_25 /* ConsoleMessageView.swift */,
+				OBJ_21 /* ConsoleMessageViewModel.swift */,
+				OBJ_27 /* ConsoleQuickFiltersView.swift */,
+				OBJ_28 /* ConsoleSearchView.swift */,
+			);
+			path = Console;
+			sourceTree = "<group>";
+		};
+		0CD2FCBA25C476A70040C9EC /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_29 /* ConsoleSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0CD2FCBB25C476AD0040C9EC /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				0CD2FCB825C476800040C9EC /* Console */,
+				0CD2FCBE25C476E70040C9EC /* MessageDetails */,
+				0CD2FCBA25C476A70040C9EC /* Settings */,
+				0CD2FCBD25C476D60040C9EC /* NetworkInspector */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		0CD2FCBD25C476D60040C9EC /* NetworkInspector */ = {
+			isa = PBXGroup;
+			children = (
+				0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */,
+				0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */,
+			);
+			path = NetworkInspector;
+			sourceTree = "<group>";
+		};
+		0CD2FCBE25C476E70040C9EC /* MessageDetails */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_24 /* ConsoleMessageDetailsView.swift */,
+				OBJ_20 /* ConsoleMessageDetailsViewModel.swift */,
+			);
+			path = MessageDetails;
+			sourceTree = "<group>";
+		};
+		OBJ_11 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_12 /* ConsoleMessages.swift */,
+				OBJ_13 /* ConsoleSearchService.swift */,
+				OBJ_14 /* ConsoleShareService.swift */,
+				0CCEF11C25C4803D0095F021 /* JSONPrinter.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		OBJ_15 /* SwiftUI+Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_16 /* SearchBar.swift */,
+				OBJ_17 /* ShareView.swift */,
+				OBJ_18 /* TextView.swift */,
+				0C98C6E525C4C73F0086A13E /* Wrapped.swift */,
+			);
+			path = "SwiftUI+Extensions";
+			sourceTree = "<group>";
+		};
+		OBJ_31 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_32 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_33 /* Pulse 0.3.0 */,
+				OBJ_38 /* swift-log 1.2.0 */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		OBJ_33 /* Pulse 0.3.0 */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_34 /* Pulse */,
+				OBJ_37 /* Package.swift */,
+			);
+			name = "Pulse 0.3.0";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_34 /* Pulse */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_35 /* LoggerMessageStore.swift */,
+				OBJ_36 /* PersistentLogHandler.swift */,
+			);
+			name = Pulse;
+			path = .build/checkouts/Pulse/Sources/Pulse;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_38 /* swift-log 1.2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_39 /* Logging */,
+				OBJ_43 /* Package.swift */,
+			);
+			name = "swift-log 1.2.0";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_39 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_40 /* Locks.swift */,
+				OBJ_41 /* LogHandler.swift */,
+				OBJ_42 /* Logging.swift */,
+			);
+			name = Logging;
+			path = ".build/checkouts/swift-log/Sources/Logging";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_44 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"swift-log::Logging::Product" /* Logging.framework */,
+				"PulseUI::PulseUI::Product" /* PulseUI.framework */,
+				"Pulse::Pulse::Product" /* Pulse.framework */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_31 /* Tests */,
+				OBJ_32 /* Dependencies */,
+				OBJ_44 /* Products */,
+				OBJ_48 /* App */,
+				OBJ_49 /* CHANGELOG.md */,
+				OBJ_50 /* README.md */,
+				OBJ_51 /* LICENSE.txt */,
+			);
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* PulseUI */,
+			);
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* PulseUI */ = {
+			isa = PBXGroup;
+			children = (
+				0CD2FCBB25C476AD0040C9EC /* Features */,
+				OBJ_11 /* Services */,
+				OBJ_15 /* SwiftUI+Extensions */,
+				0C98C6CE25C4C5D70086A13E /* Extensions */,
+				OBJ_9 /* Mocks */,
+			);
+			path = PulseUI;
+			sourceTree = "<group>";
+		};
+		OBJ_9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_10 /* MockStore.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"Pulse::Pulse" /* Pulse */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_62 /* Build configuration list for PBXNativeTarget "Pulse" */;
+			buildPhases = (
+				OBJ_65 /* Sources */,
+				OBJ_68 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_70 /* PBXTargetDependency */,
+			);
+			name = Pulse;
+			productName = Pulse;
+			productReference = "Pulse::Pulse::Product" /* Pulse.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"Pulse::SwiftPMPackageDescription" /* PulsePackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_72 /* Build configuration list for PBXNativeTarget "PulsePackageDescription" */;
+			buildPhases = (
+				OBJ_75 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PulsePackageDescription;
+			productName = PulsePackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+		"PulseUI::PulseUI" /* PulseUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_78 /* Build configuration list for PBXNativeTarget "PulseUI" */;
+			buildPhases = (
+				OBJ_81 /* Sources */,
+				OBJ_99 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_102 /* PBXTargetDependency */,
+				OBJ_103 /* PBXTargetDependency */,
+			);
+			name = PulseUI;
+			productName = PulseUI;
+			productReference = "PulseUI::PulseUI::Product" /* PulseUI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"PulseUI::SwiftPMPackageDescription" /* PulseUIPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_105 /* Build configuration list for PBXNativeTarget "PulseUIPackageDescription" */;
+			buildPhases = (
+				OBJ_108 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PulseUIPackageDescription;
+			productName = PulseUIPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+		"swift-log::Logging" /* Logging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_53 /* Build configuration list for PBXNativeTarget "Logging" */;
+			buildPhases = (
+				OBJ_56 /* Sources */,
+				OBJ_60 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Logging;
+			productName = Logging;
+			productReference = "swift-log::Logging::Product" /* Logging.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"swift-log::SwiftPMPackageDescription" /* swift-logPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_111 /* Build configuration list for PBXNativeTarget "swift-logPackageDescription" */;
+			buildPhases = (
+				OBJ_114 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "swift-logPackageDescription";
+			productName = "swift-logPackageDescription";
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 9999;
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "PulseUI" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5;
+			productRefGroup = OBJ_44 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"swift-log::Logging" /* Logging */,
+				"Pulse::Pulse" /* Pulse */,
+				"Pulse::SwiftPMPackageDescription" /* PulsePackageDescription */,
+				"PulseUI::PulseUI" /* PulseUI */,
+				"PulseUI::SwiftPMPackageDescription" /* PulseUIPackageDescription */,
+				"swift-log::SwiftPMPackageDescription" /* swift-logPackageDescription */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_108 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_109 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_114 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_115 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_57 /* Locks.swift in Sources */,
+				OBJ_58 /* LogHandler.swift in Sources */,
+				OBJ_59 /* Logging.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_66 /* LoggerMessageStore.swift in Sources */,
+				OBJ_67 /* PersistentLogHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_75 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_76 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				0C98C6DE25C4C62E0086A13E /* Platform.swift in Sources */,
+				OBJ_82 /* MockStore.swift in Sources */,
+				OBJ_83 /* ConsoleMessages.swift in Sources */,
+				OBJ_84 /* ConsoleSearchService.swift in Sources */,
+				OBJ_85 /* ConsoleShareService.swift in Sources */,
+				OBJ_86 /* SearchBar.swift in Sources */,
+				OBJ_87 /* ShareView.swift in Sources */,
+				OBJ_88 /* TextView.swift in Sources */,
+				0CCEF11525C47C790095F021 /* NetworkInspectorResponseView.swift in Sources */,
+				0CD2FC9D25C473220040C9EC /* NetworkInspectorView.swift in Sources */,
+				OBJ_89 /* ConsoleMessageDetailsViewModel.swift in Sources */,
+				0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */,
+				OBJ_90 /* ConsoleMessageViewModel.swift in Sources */,
+				OBJ_91 /* ConsoleViewModel.swift in Sources */,
+				OBJ_92 /* ConsoleMessageDetailsView.swift in Sources */,
+				0CCEF11D25C4803D0095F021 /* JSONPrinter.swift in Sources */,
+				OBJ_93 /* ConsoleMessageView.swift in Sources */,
+				OBJ_94 /* ConsoleMessageViewListItem.swift in Sources */,
+				OBJ_95 /* ConsoleQuickFiltersView.swift in Sources */,
+				OBJ_96 /* ConsoleSearchView.swift in Sources */,
+				OBJ_97 /* ConsoleSettingsView.swift in Sources */,
+				OBJ_98 /* ConsoleView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		OBJ_102 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Pulse::Pulse" /* Pulse */;
+			targetProxy = 0CD2FC8F25C39B920040C9EC /* PBXContainerItemProxy */;
+		};
+		OBJ_103 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "swift-log::Logging" /* Logging */;
+			targetProxy = 0CD2FC9125C39B920040C9EC /* PBXContainerItemProxy */;
+		};
+		OBJ_70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "swift-log::Logging" /* Logging */;
+			targetProxy = 0CD2FC9025C39B920040C9EC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_106 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.2.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_107 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.2.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_112 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.0.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_113 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.0.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+		OBJ_54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = PulseUI.xcodeproj/Logging_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Logging;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = Logging;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = PulseUI.xcodeproj/Logging_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Logging;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = Logging;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = PulseUI.xcodeproj/Pulse_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Pulse;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = Pulse;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = PulseUI.xcodeproj/Pulse_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Pulse;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = Pulse;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = PulseUI.xcodeproj/PulseUI_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = PulseUI;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = PulseUI;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Debug;
+		};
+		OBJ_80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = PulseUI.xcodeproj/PulseUI_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = PulseUI;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = PulseUI;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_105 /* Build configuration list for PBXNativeTarget "PulseUIPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_106 /* Debug */,
+				OBJ_107 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_111 /* Build configuration list for PBXNativeTarget "swift-logPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_112 /* Debug */,
+				OBJ_113 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_2 /* Build configuration list for PBXProject "PulseUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_53 /* Build configuration list for PBXNativeTarget "Logging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_54 /* Debug */,
+				OBJ_55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_62 /* Build configuration list for PBXNativeTarget "Pulse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_63 /* Debug */,
+				OBJ_64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_72 /* Build configuration list for PBXNativeTarget "PulsePackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_73 /* Debug */,
+				OBJ_74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_78 /* Build configuration list for PBXNativeTarget "PulseUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_79 /* Debug */,
+				OBJ_80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
 }

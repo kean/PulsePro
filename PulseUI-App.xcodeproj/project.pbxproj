@@ -19,8 +19,12 @@
 		0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6B245F0F38005B3400 /* AppViewModel.swift */; };
 		0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */; };
 		0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */; };
-		0CB8724E245F23C700CAF647 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
-		0CB8724F245F23C700CAF647 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
+		0C98C6C725C4C08A0086A13E /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
+		0C98C6C825C4C08A0086A13E /* Pulse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C98C6CA25C4C08C0086A13E /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
+		0C98C6CB25C4C08C0086A13E /* PulseUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C98C6CC25C4C0A30086A13E /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CF2FE3B2463AC2300054D07 /* Logging.framework */; };
+		0C98C6CD25C4C0A30086A13E /* Logging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CF2FE3B2463AC2300054D07 /* Logging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0CB87254245F478C00CAF647 /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
 		0CB87255245F478C00CAF647 /* Pulse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0CB87257245F478F00CAF647 /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
@@ -52,6 +56,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		0C98C6C925C4C08A0086A13E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0C98C6CB25C4C08C0086A13E /* PulseUI.framework in Embed Frameworks */,
+				0C98C6C825C4C08A0086A13E /* Pulse.framework in Embed Frameworks */,
+				0C98C6CD25C4C0A30086A13E /* Logging.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0CB87256245F478C00CAF647 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -92,8 +109,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CB8724E245F23C700CAF647 /* Pulse.framework in Frameworks */,
-				0CB8724F245F23C700CAF647 /* PulseUI.framework in Frameworks */,
+				0C98C6CA25C4C08C0086A13E /* PulseUI.framework in Frameworks */,
+				0C98C6C725C4C08A0086A13E /* Pulse.framework in Frameworks */,
+				0C98C6CC25C4C0A30086A13E /* Logging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +211,7 @@
 				0C57AD49245F0EFB005B3400 /* Sources */,
 				0C57AD4A245F0EFB005B3400 /* Frameworks */,
 				0C57AD4B245F0EFB005B3400 /* Resources */,
+				0C98C6C925C4C08A0086A13E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -473,6 +492,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NR8DLKJ7E6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = App/iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -493,6 +513,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NR8DLKJ7E6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = App/iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
