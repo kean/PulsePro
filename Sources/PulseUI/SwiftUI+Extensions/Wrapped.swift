@@ -14,7 +14,7 @@ struct Wrapped<T: UIView>: UIViewRepresentable {
     let configuration: (T) -> Void
 
     func makeUIView(context: UIViewRepresentableContext<Self>) -> T {
-        UITextView()
+        T()
     }
 
     func updateUIView(_ uiView: T, context: UIViewRepresentableContext<Self>) {

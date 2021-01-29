@@ -14,7 +14,7 @@ struct NetworkInspectorResponseView: View {
     }
 
     var body: some View {
-        Wrapped<NSTextView> {
+        Wrapped<PlatformTextView> {
             $0.isSelectable = true
             $0.isEditable = false
             #if os(iOS)
@@ -40,7 +40,15 @@ struct NetworkInspectorResponseView: View {
 
 struct NetworkInspectorResponseView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkInspectorResponseView(response: sampleJSON.data(using: .utf8)!)
+        Group {
+            NetworkInspectorResponseView(response: sampleJSON.data(using: .utf8)!)
+                .environment(\.colorScheme, .light)
+
+            NetworkInspectorResponseView(response: sampleJSON.data(using: .utf8)!)
+            .previewDisplayName("Dark")
+                .previewLayout(.sizeThatFits)
+                .environment(\.colorScheme, .dark)
+        }
     }
 }
 

@@ -10,7 +10,9 @@ import UIKit
 #if os(macOS)
 typealias PlatformColor = NSColor
 typealias PlatformFont = NSFont
+typealias PlatformTextView = NSTextView
 #else
 typealias PlatformColor = UIColor
 typealias PlatformFont = UIFont
+typealias PlatformTextView = UITextView
 #endif
