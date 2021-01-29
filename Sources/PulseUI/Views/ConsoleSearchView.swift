@@ -194,7 +194,7 @@ private func title(for kind: ConsoleSearchFilter.Kind) -> String {
     switch kind {
     case .any: return "Any"
     case .category: return "Category"
-    case .system: return "System"
+    case .label: return "Label"
     case .level: return "Level"
     case .text: return "Text"
     }

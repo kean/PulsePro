@@ -37,7 +37,7 @@ public final class ConsoleSearchFilter: Hashable {
 
     enum Kind: CaseIterable {
         case text
-        case system
+        case label
         case category
         case level
         case any
@@ -126,10 +126,10 @@ private func predicate(parameters: FilterParameters, searchTerms: [String]) -> N
     let fields: [String]
     switch parameters.kind {
     case .category: fields = ["category"]
-    case .system: fields = ["system"]
+    case .label: fields = ["label"]
     case .text: fields = ["text"]
     case .level: fields = ["level"]
-    case .any: fields = ["category", "system", "text", "level"]
+    case .any: fields = ["category", "label", "text", "level"]
     }
 
     let relation = parameters.relation.isExactMatch ? "==" : "CONTAINS"
