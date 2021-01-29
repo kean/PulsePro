@@ -24,8 +24,8 @@ final class ConsoleToolbarController: NSObject, NSToolbarDelegate, NSSearchField
 
         switch itemIdentifier {
         case .levelSegmentedControl:
-            let segmentedControl = NSSegmentedControl(labels: ["All Messages", "Only Errors"], trackingMode: .selectOne, target: self, action: #selector(segmentedControlValueChanges(_:)))
-            segmentedControl.selectedSegment = 0
+            let segmentedControl = NSSegmentedControl(labels: ["Trace", "Debug", "Errors"], trackingMode: .selectOne, target: self, action: #selector(segmentedControlValueChanges(_:)))
+            segmentedControl.selectedSegment = 1
 
             let item = NSToolbarItem(itemIdentifier: .searchField)
             item.view = segmentedControl
@@ -74,7 +74,12 @@ final class ConsoleToolbarController: NSObject, NSToolbarDelegate, NSSearchField
     // MARK: - NSSegmentedControl
 
     @objc private func segmentedControlValueChanges(_ sender: NSSegmentedControl) {
-        model.onlyErrors = sender.selectedSegment == 1
+        switch sender.selectedSegment {
+        case 0: model.filter = .trace
+        case 1: model.filter = .debug
+        case 2: model.filter = .errors
+        default: assertionFailure(); break
+        }
         searchView?.searchCriteriaUpdatedProgramatically()
     }
 }
