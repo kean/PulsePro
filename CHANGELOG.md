@@ -2,6 +2,15 @@
 
 ## PulseUI 0.4
 
+*Jan 28, 2021*
+
+- Add Big Sur support
+- Add iOS 14 support
+- Update to support "label" filters on macOS
+- Add "trace" filter support, "trace" messages are no longer visible by default
+
+## PulseUI 0.4
+
 *May 6, 2020*
 
 - Update to Pulse 0.3
