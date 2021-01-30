@@ -6,6 +6,7 @@ import SwiftUI
 import CoreData
 import Pulse
 import PulseUI
+import Logging
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,7 +20,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
         // Create the SwiftUI view that provides the window contents.
-        let model = ConsoleViewModel(store: .mock)
+        let model: ConsoleViewModel
+        if ProcessInfo.processInfo.environment["PULSE_DEBUG_NETWORK_LOGGER"] != nil {
+            LoggingSystem.bootstrap(PersistentLogHandler.init)
+            model = ConsoleViewModel(store: LoggerMessageStore.default)
+            MockNetworkLogger.shared.sendRequest()
+        } else {
+            model = ConsoleViewModel(store: .mock)
+        }
         let contentView = ConsoleView(model: model)
 
         // Use a UIHostingController as window root view controller.

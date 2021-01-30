@@ -42,7 +42,14 @@ struct NetworkInspectorSummaryView: View {
     private var itemsForSummary: [(String, String)] {
         [("URL", request.url?.absoluteString ?? "–"),
          ("Method", request.httpMethod ?? "–"),
-         ("Status Code", httpResponse.map { "\($0.statusCode)" } ?? "–")]
+         ("Status Code", httpResponse.map { "\(descriptionForStatusCode($0.statusCode))" } ?? "–")]
+    }
+}
+
+private func descriptionForStatusCode(_ statusCode: Int) -> String {
+    switch statusCode {
+    case 200: return "200 (OK)"
+    default: return "\(statusCode) (\( HTTPURLResponse.localizedString(forStatusCode: statusCode).capitalized))"
     }
 }
 

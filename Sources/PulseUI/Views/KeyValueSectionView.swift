@@ -27,7 +27,7 @@ struct KeyValueSectionView: View {
                 #endif
                 $0.isAutomaticLinkDetectionEnabled = true
                 $0.linkTextAttributes = [
-                    .foregroundColor: tintColor,
+//                    .foregroundColor: tintColor,
                     .underlineStyle: 1
                 ]
                 $0.attributedText = makeAttributedText()

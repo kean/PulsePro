@@ -19,6 +19,8 @@
 		0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6B245F0F38005B3400 /* AppViewModel.swift */; };
 		0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */; };
 		0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */; };
+		0C68426925C5BD3000098066 /* MockNetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68426825C5BD3000098066 /* MockNetworkLogger.swift */; };
+		0C68426A25C5BD3000098066 /* MockNetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68426825C5BD3000098066 /* MockNetworkLogger.swift */; };
 		0C98C6C725C4C08A0086A13E /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
 		0C98C6C825C4C08A0086A13E /* Pulse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0C98C6CA25C4C08C0086A13E /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
@@ -101,6 +103,7 @@
 		0C57AD8C245F0F55005B3400 /* Pulse macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 		0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWelcomeView.swift; sourceTree = "<group>"; };
+		0C68426825C5BD3000098066 /* MockNetworkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkLogger.swift; sourceTree = "<group>"; };
 		0CB87242245F236700CAF647 /* PulseUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PulseUI.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +154,7 @@
 			children = (
 				0C57AD73245F0F38005B3400 /* iOS */,
 				0C57AD65245F0F38005B3400 /* macOS */,
+				0C68426725C5BD1200098066 /* Shared */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -175,6 +179,7 @@
 		0C57AD73245F0F38005B3400 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				0C68426025C5BCFB00098066 /* Shared */,
 				0C57AD74245F0F38005B3400 /* Assets.xcassets */,
 				0C57AD75245F0F38005B3400 /* LaunchScreen.storyboard */,
 				0C57AD77245F0F38005B3400 /* AppDelegate.swift */,
@@ -189,6 +194,21 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0C68426025C5BCFB00098066 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		0C68426725C5BD1200098066 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0C68426825C5BD3000098066 /* MockNetworkLogger.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		0CB87243245F236700CAF647 /* Products */ = {
@@ -335,6 +355,7 @@
 			files = (
 				0C57AD85245F0F38005B3400 /* AppDelegate.swift in Sources */,
 				0C57AD87245F0F38005B3400 /* SceneDelegate.swift in Sources */,
+				0C68426925C5BD3000098066 /* MockNetworkLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +369,7 @@
 				0C57ADA5245F0F96005B3400 /* Configuration.swift in Sources */,
 				0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */,
 				0C57ADA3245F0F8E005B3400 /* ConsoleToolbarController.swift in Sources */,
+				0C68426A25C5BD3000098066 /* MockNetworkLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
