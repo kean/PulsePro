@@ -54,7 +54,7 @@
          <EnvironmentVariable
             key = "PULSE_DEBUG_NETWORK_LOGGER"
             value = "true"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
