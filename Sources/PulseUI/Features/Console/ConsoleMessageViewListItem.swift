@@ -11,7 +11,7 @@ import UIKit
 
 // TODO: create a ViewModel for a share sheet
 struct ConsoleMessageViewListItem: View {
-    let message: LoggerMessage
+    let message: MessageEntity
 
     @Binding var searchCriteria: ConsoleSearchCriteria
     @State private var isShowingShareSheet = false

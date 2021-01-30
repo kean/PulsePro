@@ -91,7 +91,7 @@ private struct FilterParameters: Hashable {
     }
 }
 
-func update(request: NSFetchRequest<LoggerMessage>, searchText: String, criteria: ConsoleSearchCriteria, sessionId: String) {
+func update(request: NSFetchRequest<MessageEntity>, searchText: String, criteria: ConsoleSearchCriteria, sessionId: String) {
     var predicates = [NSPredicate]()
 
     switch criteria.timePeriod {

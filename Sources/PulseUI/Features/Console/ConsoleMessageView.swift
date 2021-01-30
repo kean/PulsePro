@@ -78,7 +78,7 @@ struct ConsoleMessageStyle {
         backgroundColor: .red
     )
 
-    static func backgroundColor(for message: LoggerMessage, colorScheme: ColorScheme) -> Color {
+    static func backgroundColor(for message: MessageEntity, colorScheme: ColorScheme) -> Color {
         let style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
         return style.backgroundColor.opacity(colorScheme == .dark ? 0.1 : 0.05)
     }

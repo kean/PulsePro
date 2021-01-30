@@ -50,7 +50,7 @@ public struct ConsoleShareService {
         return sharedDirUrl
     }
 
-    private func format(messages: [LoggerMessage]) -> Data? {
+    private func format(messages: [MessageEntity]) -> Data? {
         var output = ""
         for message in messages {
             output.append(format(message: message))
@@ -59,7 +59,7 @@ public struct ConsoleShareService {
         return output.data(using: .utf8)
     }
 
-    private func format(message: LoggerMessage) -> String {
+    private func format(message: MessageEntity) -> String {
         "\(dateFormatter.string(from: message.createdAt)) [\(message.level)]-[\(message.label)] \(message.text)"
     }
 }

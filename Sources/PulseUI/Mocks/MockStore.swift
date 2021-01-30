@@ -53,8 +53,8 @@ private func populateStore(_ store: LoggerMessageStore) {
 
     let moc = store.container.viewContext
 
-    func addMessage(_ closure: (LoggerMessage) -> Void) {
-        let message = LoggerMessage(using: moc)
+    func addMessage(_ closure: (MessageEntity) -> Void) {
+        let message = MessageEntity(using: moc)
         closure(message)
         moc.insert(message)
     }
