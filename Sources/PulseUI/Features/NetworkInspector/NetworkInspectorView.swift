@@ -45,7 +45,17 @@ struct NetworkInspectorView: View {
 #if DEBUG
 struct NetworkInspectorView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
+        Group {
+            NavigationView {
+                NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
+            }
+
+            NavigationView {
+                NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
+            }
+            .previewDisplayName("Dark")
+            .environment(\.colorScheme, .dark)
+        }
     }
 }
 #endif
