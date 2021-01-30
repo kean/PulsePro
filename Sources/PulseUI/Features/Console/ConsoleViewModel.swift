@@ -79,6 +79,12 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
         store.removeAllMessages()
     }
 
+    // MARK: - DetailsViewModel
+
+    func makeDetailsRouter(for message: MessageEntity) -> ConsoleMessageDetailsRouter {
+        ConsoleMessageDetailsRouter(store: store, message: message)
+    }
+
     // MARK: - NSFetchedResultsControllerDelegate
 
     public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

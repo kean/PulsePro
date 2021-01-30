@@ -7,6 +7,8 @@ import Pulse
 import Combine
 
 struct NetworkInspectorView: View {
+    @ObservedObject var model: NetworkInspectorViewModel
+
     var body: some View {
         NavigationView {
             VStack {
@@ -15,12 +17,13 @@ struct NetworkInspectorView: View {
                     Text("Headers").tag(1)
                     Text("Response").tag(2)
                     Text("Request").tag(3)
-                }.pickerStyle(SegmentedPickerStyle())
-                padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
 
                 messagesListView
             }
-//            .navigationBarTitle(Text("Network Inspector"))
+            .navigationBarTitle(Text("Network Inspector"))
         }
     }
 
@@ -33,6 +36,6 @@ struct NetworkInspectorView: View {
 
 struct NetworkInspectorView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkInspectorView()
+        NetworkInspectorView(model: .init(store: .mock, taskId: "a"))
     }
 }

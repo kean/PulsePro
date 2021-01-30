@@ -18,6 +18,8 @@ final class MockNetworkLogger {
 
         self.logger = NetworkLogger(logger)
         self.dataLoader = MockDataLoader(logger: self.logger)
+
+        logger.log(level: .info, "MockNetworkLogger initialized")
     }
 
     func sendRequest() {
