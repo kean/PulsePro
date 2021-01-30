@@ -87,28 +87,11 @@ struct NetworkInspectorHeadersView: View {
 }
 
 #if DEBUG
-struct NetworkInspectorSummaryView_Previews: PreviewProvider {
+struct NetworkInspectorHeadersView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorHeadersView(
-                request: mockRequest, response: mockResponse)
-
+            NetworkInspectorSummaryView(request: MockDataTask.first.request, response: MockDataTask.first.response)
         }
     }
 }
-
-private let mockRequest: URLRequest = {
-    var request = URLRequest(url: URL(string: "https://example.com")!)
-
-    request.setValue("text/json", forHTTPHeaderField: "Content-Type")
-    request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
-    request.setValue("en-us", forHTTPHeaderField: "Accept-Language")
-
-    return request
-}()
-
-private let mockResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 200, httpVersion: "2.0", headerFields: [
-    "Content-Length": "12400",
-    "Content-Type": "text/json"
-])!
 #endif
