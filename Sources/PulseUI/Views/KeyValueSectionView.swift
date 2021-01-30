@@ -8,6 +8,10 @@ struct KeyValueSectionView: View {
     let items: [(String, String)]
     let tintColor: UXColor
 
+    private var actualTintColor: UXColor {
+        items.isEmpty ? .systemGray : tintColor
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
@@ -23,13 +27,13 @@ struct KeyValueSectionView: View {
                 #endif
                 $0.isAutomaticLinkDetectionEnabled = true
                 $0.linkTextAttributes = [
-                    .foregroundColor: JSONColors.valueString,
+                    .foregroundColor: tintColor,
                     .underlineStyle: 1
                 ]
                 $0.attributedText = makeAttributedText()
             }
             .padding(EdgeInsets(top: 0, leading: 5, bottom: 2, trailing: 0))
-            .border(width: 2, edges: [.leading], color: Color(UXColor.systemBlue))
+            .border(width: 2, edges: [.leading], color: Color(actualTintColor))
             .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 0))
         }
     }
@@ -37,19 +41,19 @@ struct KeyValueSectionView: View {
     private func makeAttributedText() -> NSAttributedString {
         guard !items.isEmpty else {
             return NSAttributedString(string: "Empty", attributes: [
-                .foregroundColor: tintColor, .font: UXFont.systemFont(ofSize: 14, weight: .medium)
+                .foregroundColor: actualTintColor, .font: UXFont.systemFont(ofSize: 15, weight: .medium)
             ])
         }
         let output = NSMutableAttributedString()
         for (key, value) in items {
             let string = NSMutableAttributedString()
             string.append("" + key + ": ", [
-                .foregroundColor: tintColor,
-                .font: UXFont.systemFont(ofSize: 14, weight: .medium)
+                .foregroundColor: actualTintColor,
+                .font: UXFont.systemFont(ofSize: 15, weight: .medium)
             ])
             string.append(value, [
                 .foregroundColor: UXColor.label,
-                .font: UXFont.systemFont(ofSize: 14, weight: .regular)
+                .font: UXFont.systemFont(ofSize: 15, weight: .regular)
             ])
             if key != items.last?.0 {
                 string.append("\n")
