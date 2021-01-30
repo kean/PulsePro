@@ -10,22 +10,28 @@ struct NetworkInspectorView: View {
     @ObservedObject var model: NetworkInspectorViewModel
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Picker("", selection: .constant(0)) {
-                    Text("Summary").tag(0)
-                    Text("Headers").tag(1)
-                    Text("Response").tag(2)
-                    Text("Request").tag(3)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-
-                Text(model.messageCount.description)
-
-                messagesListView
-            }
+        #if os(iOS)
+        content
             .navigationBarTitle(Text("Network Inspector"))
+        #else
+        content
+        #endif
+    }
+
+    private var content: some View {
+        VStack {
+            Picker("", selection: .constant(0)) {
+                Text("Summary").tag(0)
+                Text("Headers").tag(1)
+                Text("Response").tag(2)
+                Text("Request").tag(3)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+
+            Text(model.messageCount.description)
+
+            messagesListView
         }
     }
 
