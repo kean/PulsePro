@@ -8,7 +8,7 @@ import CoreData
 struct JSONColors {
     static let punctuation = PlatformColor.label.withAlphaComponent(0.7)
     static let key = PlatformColor.label
-    static let valueString = PlatformColor.systemRed
+    static let valueString = PlatformColor.systemIndigo
     static let valueOther = PlatformColor.systemBlue
     static let null = PlatformColor.systemPurple
 }

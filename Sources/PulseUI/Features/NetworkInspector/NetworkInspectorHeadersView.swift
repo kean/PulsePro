@@ -90,7 +90,7 @@ struct NetworkInspectorHeadersView: View {
 struct NetworkInspectorHeadersView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorSummaryView(request: MockDataTask.first.request, response: MockDataTask.first.response)
+            NetworkInspectorHeadersView(request: MockDataTask.first.request, response: MockDataTask.first.response)
         }
     }
 }
