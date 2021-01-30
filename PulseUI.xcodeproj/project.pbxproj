@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C68424125C5A51800098066 /* KeyValueSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68424025C5A51800098066 /* KeyValueSectionView.swift */; };
 		0C98C6DE25C4C62E0086A13E /* UXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6CF25C4C5E20086A13E /* UXKit.swift */; };
 		0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6E525C4C73F0086A13E /* Wrapped.swift */; };
 		0C98C6F425C4CF460086A13E /* NetworkInspectorHeadersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */; };
@@ -73,6 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C68424025C5A51800098066 /* KeyValueSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueSectionView.swift; sourceTree = "<group>"; };
 		0C98C6CF25C4C5E20086A13E /* UXKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UXKit.swift; sourceTree = "<group>"; };
 		0C98C6E525C4C73F0086A13E /* Wrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapped.swift; sourceTree = "<group>"; };
 		0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorHeadersView.swift; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 				0C98C6CF25C4C5E20086A13E /* UXKit.swift */,
 			);
 			path = UXKit;
+			sourceTree = "<group>";
+		};
+		0C68423F25C5A4F900098066 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C68424025C5A51800098066 /* KeyValueSectionView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		0C98C6CE25C4C5D70086A13E /* Extensions */ = {
@@ -332,6 +342,7 @@
 			children = (
 				0CD2FCBB25C476AD0040C9EC /* Features */,
 				OBJ_11 /* Services */,
+				0C68423F25C5A4F900098066 /* Views */,
 				OBJ_15 /* SwiftUI+Extensions */,
 				0C98C6CE25C4C5D70086A13E /* Extensions */,
 				0C68423825C5037800098066 /* UXKit */,
@@ -524,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				0C68424125C5A51800098066 /* KeyValueSectionView.swift in Sources */,
 				0C98C6F425C4CF460086A13E /* NetworkInspectorHeadersView.swift in Sources */,
 				0C98C70E25C4D4000086A13E /* NSAttributedString+Extensions.swift in Sources */,
 				0C98C6DE25C4C62E0086A13E /* UXKit.swift in Sources */,
