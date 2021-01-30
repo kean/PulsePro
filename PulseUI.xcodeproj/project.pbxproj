@@ -12,6 +12,7 @@
 		0C98C6F425C4CF460086A13E /* NetworkInspectorHeadersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */; };
 		0C98C70E25C4D4000086A13E /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C70D25C4D4000086A13E /* NSAttributedString+Extensions.swift */; };
 		0C98C71625C4F75B0086A13E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C71525C4F75B0086A13E /* Border.swift */; };
+		0C98C71E25C4FC1F0086A13E /* NSIntrinsicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C71D25C4FC1F0086A13E /* NSIntrinsicTextView.swift */; };
 		0CCEF11525C47C790095F021 /* NetworkInspectorResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */; };
 		0CCEF11D25C4803D0095F021 /* JSONPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEF11C25C4803D0095F021 /* JSONPrinter.swift */; };
 		0CD2FC9D25C473220040C9EC /* NetworkInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */; };
@@ -75,6 +76,7 @@
 		0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorHeadersView.swift; sourceTree = "<group>"; };
 		0C98C70D25C4D4000086A13E /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		0C98C71525C4F75B0086A13E /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
+		0C98C71D25C4FC1F0086A13E /* NSIntrinsicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSIntrinsicTextView.swift; sourceTree = "<group>"; };
 		0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorResponseView.swift; sourceTree = "<group>"; };
 		0CCEF11C25C4803D0095F021 /* JSONPrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPrinter.swift; sourceTree = "<group>"; };
 		0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorView.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				0C98C6CF25C4C5E20086A13E /* Platform.swift */,
 				0C98C70D25C4D4000086A13E /* NSAttributedString+Extensions.swift */,
+				0C98C71D25C4FC1F0086A13E /* NSIntrinsicTextView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				OBJ_86 /* SearchBar.swift in Sources */,
 				OBJ_87 /* ShareView.swift in Sources */,
 				OBJ_88 /* TextView.swift in Sources */,
+				0C98C71E25C4FC1F0086A13E /* NSIntrinsicTextView.swift in Sources */,
 				0CCEF11525C47C790095F021 /* NetworkInspectorResponseView.swift in Sources */,
 				0CD2FC9D25C473220040C9EC /* NetworkInspectorView.swift in Sources */,
 				OBJ_89 /* ConsoleMessageDetailsViewModel.swift in Sources */,

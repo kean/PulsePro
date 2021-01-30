@@ -28,16 +28,17 @@ struct NetworkInspectorHeadersView: View {
     private func makeSection(title: String, headers: [String: String]?) -> some View {
         VStack(alignment: .leading) {
             Text(title)
-                .font(.headline)
+                .font(.title)
 
-            Wrapped<PlatformTextView> {
+            Wrapped<PlatformAutoTextView> {
                 $0.isSelectable = true
                 $0.isEditable = false
-                $0.isScrollEnabled = false
                 #if os(iOS)
+                $0.isScrollEnabled = false
                 $0.dataDetectorTypes = [.link]
                 #elseif os(macOS)
                 $0.isAutomaticLinkDetectionEnabled = true
+                $0.backgroundColor = .clear
                 #endif
                 $0.linkTextAttributes = [
                     .foregroundColor: JSONColors.valueString,

@@ -11,8 +11,14 @@ import UIKit
 typealias PlatformColor = NSColor
 typealias PlatformFont = NSFont
 typealias PlatformTextView = NSTextView
+typealias PlatformAutoTextView = NSIntrinsicTextView
+
+extension NSColor {
+    static var label: NSColor { labelColor }
+}
 #else
 typealias PlatformColor = UIColor
 typealias PlatformFont = UIFont
 typealias PlatformTextView = UITextView
+typealias PlatformAutoTextView = UITextView
 #endif
