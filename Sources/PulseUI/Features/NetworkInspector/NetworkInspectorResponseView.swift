@@ -7,23 +7,13 @@ import Pulse
 import Combine
 
 struct NetworkInspectorResponseView: View {
-    let response: Data
-
-    init(response: Data) {
-        self.response = response
-    }
+    let data: Data
 
     var body: some View {
-        Wrapped<UXTextView> {
-            $0.isSelectable = true
-            $0.isEditable = false
-            $0.isAutomaticLinkDetectionEnabled = true
-            $0.linkTextAttributes = [
-                .foregroundColor: JSONColors.valueString,
-                .underlineStyle: 1
-            ]
-
-            $0.attributedText = JSONPrinter.print(data: response)
+        if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+            JSONViewer(json: json)
+        } else {
+            Text(String(bytes: data, encoding: .utf8) ?? "–")
         }
     }
 }
@@ -32,10 +22,10 @@ struct NetworkInspectorResponseView: View {
 struct NetworkInspectorResponseView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorResponseView(response: MockDataTask.first.responseBody)
+            NetworkInspectorResponseView(data: MockDataTask.first.responseBody)
                 .environment(\.colorScheme, .light)
 
-            NetworkInspectorResponseView(response: MockDataTask.first.responseBody)
+            NetworkInspectorResponseView(data: MockDataTask.first.responseBody)
             .previewDisplayName("Dark")
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .dark)

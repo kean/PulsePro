@@ -8,12 +8,12 @@ import CoreData
 struct JSONColors {
     static let punctuation = UXColor.label.withAlphaComponent(0.7)
     static let key = UXColor.label
-    static let valueString = UXColor.systemIndigo
+    static let valueString = UXColor.systemRed
     static let valueOther = UXColor.systemBlue
     static let null = UXColor.systemPurple
 }
 
-struct JSONPrinter {
+final class JSONPrinter {
     private let output = NSMutableAttributedString()
     private var indention = 0
     private let json: Any
@@ -22,21 +22,13 @@ struct JSONPrinter {
         self.json = json
     }
 
-    static func print(data: Data) -> NSAttributedString? {
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
-            return nil
-        }
-        var printer = JSONPrinter(json: json)
-        return printer.print()
-    }
-
-    mutating func print() -> NSAttributedString {
+    func print() -> NSAttributedString {
         print(json: json, isFree: true)
         output.addAttributes([.font: UXFont.monospacedSystemFont(ofSize: 12, weight: .regular)])
         return output
     }
 
-    mutating func print(json: Any, isFree: Bool) {
+    func print(json: Any, isFree: Bool) {
         switch json {
         case let object as [String: Any]:
             if isFree {

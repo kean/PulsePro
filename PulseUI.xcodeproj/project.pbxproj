@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C68424125C5A51800098066 /* KeyValueSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68424025C5A51800098066 /* KeyValueSectionView.swift */; };
 		0C68424925C5AA0D00098066 /* NetworkInspectorTimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68424825C5AA0D00098066 /* NetworkInspectorTimingView.swift */; };
+		0C68425125C5B00D00098066 /* JSONViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68425025C5B00D00098066 /* JSONViewer.swift */; };
 		0C98C6DE25C4C62E0086A13E /* UXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6CF25C4C5E20086A13E /* UXKit.swift */; };
 		0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6E525C4C73F0086A13E /* Wrapped.swift */; };
 		0C98C6F425C4CF460086A13E /* NetworkInspectorHeadersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		0C68424025C5A51800098066 /* KeyValueSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueSectionView.swift; sourceTree = "<group>"; };
 		0C68424825C5AA0D00098066 /* NetworkInspectorTimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorTimingView.swift; sourceTree = "<group>"; };
+		0C68425025C5B00D00098066 /* JSONViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONViewer.swift; sourceTree = "<group>"; };
 		0C98C6CF25C4C5E20086A13E /* UXKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UXKit.swift; sourceTree = "<group>"; };
 		0C98C6E525C4C73F0086A13E /* Wrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapped.swift; sourceTree = "<group>"; };
 		0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorHeadersView.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				0C68424025C5A51800098066 /* KeyValueSectionView.swift */,
+				0C68425025C5B00D00098066 /* JSONViewer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				0CCEF11525C47C790095F021 /* NetworkInspectorResponseView.swift in Sources */,
 				0C98C72625C4FF840086A13E /* NetworkInspectorSummaryView.swift in Sources */,
 				0CD2FC9D25C473220040C9EC /* NetworkInspectorView.swift in Sources */,
+				0C68425125C5B00D00098066 /* JSONViewer.swift in Sources */,
 				OBJ_89 /* ConsoleMessageDetailsViewModel.swift in Sources */,
 				0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */,
 				OBJ_90 /* ConsoleMessageViewModel.swift in Sources */,
