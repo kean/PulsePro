@@ -21,18 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print(NSHomeDirectory())
 
         // Create the SwiftUI view that provides the window contents.
-        let model: ConsoleViewModel
-        if ProcessInfo.processInfo.environment["PULSE_DEBUG_NETWORK_LOGGER"] != nil {
-            LoggingSystem.bootstrap(PersistentLogHandler.init)
-            model = ConsoleViewModel(store: LoggerMessageStore.default)
-            let messages = (try? LoggerMessageStore.default.allMessages()) ?? []
-            if messages.isEmpty {
-                MockNetworkLogger.shared.sendRequest()
-            }
-        } else {
-            model = ConsoleViewModel(store: .mock)
-        }
+        let model = ConsoleViewModel(store: .mock)
         let contentView = ConsoleView(model: model)
+
+        MockNetworkLogger.shared.sendRequest()
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

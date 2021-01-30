@@ -6,6 +6,7 @@ import Pulse
 import CoreData
 import Logging
 
+#if DEBUG
 public extension LoggerMessageStore {
     static let mock: LoggerMessageStore = {
         let store = makeMockStore()
@@ -26,18 +27,6 @@ private func makeMockStore() -> LoggerMessageStore {
 
     let storeURL = rootURL.appendingPathComponent("demo-store")
     return LoggerMessageStore(storeURL: storeURL)
-}
-
-private extension LoggerMessageStore {
-    /// - storeURL: The storeURL.
-    ///
-    /// - warning: Make sure the directory used in storeURL exists.
-    convenience init(storeURL: URL) {
-        let container = NSPersistentContainer(name: storeURL.lastPathComponent, managedObjectModel: Self.model)
-        let store = NSPersistentStoreDescription(url: storeURL)
-        container.persistentStoreDescriptions = [store]
-        self.init(container: container)
-    }
 }
 
 private extension NSManagedObject {
@@ -69,11 +58,20 @@ private func populateStore(_ store: LoggerMessageStore) {
     logger(named: "auth")
         .log(level: .trace, "Instantiated the new login request")
 
-    logger(named: "auth")
-        .log(level: .debug, "🌐 Will authorize user with name \"kean@github.com\"")
+    let networkLogger = NetworkLogger(logger(named: "network"))
 
-    logger(named: "auth")
-        .log(level: .warning, "🌐 Authorization request failed with error 500")
+    let urlSession = URLSession(configuration: .default)
+    let dataTask = urlSession.dataTask(with: MockDataTask.login.request)
+
+    networkLogger.urlSession(urlSession, didStartTask: dataTask)
+    Thread.sleep(forTimeInterval: 0.01)
+    networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: MockDataTask.login.response)
+    Thread.sleep(forTimeInterval: 0.01)
+    networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: MockDataTask.login.responseBody)
+    networkLogger.urlSession(urlSession, task: dataTask, didCompleteWithError: nil)
+
+    logger(named: "application")
+        .log(level: .info, "Will navigate to Dashboard")
 
     let stackTrace = """
         Replace this implementation with code to handle the error appropriately. fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -105,3 +103,4 @@ private func populateStore(_ store: LoggerMessageStore) {
     // Wait until everything is stored
     store.container.viewContext.performAndWait {}
 }
+#endif

@@ -22,10 +22,10 @@ struct NetworkInspectorResponseView: View {
 struct NetworkInspectorResponseView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorResponseView(data: MockDataTask.first.responseBody)
+            NetworkInspectorResponseView(data: MockDataTask.login.responseBody)
                 .environment(\.colorScheme, .light)
 
-            NetworkInspectorResponseView(data: MockDataTask.first.responseBody)
+            NetworkInspectorResponseView(data: MockDataTask.login.responseBody)
             .previewDisplayName("Dark")
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .dark)

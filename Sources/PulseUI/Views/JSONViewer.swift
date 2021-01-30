@@ -40,7 +40,7 @@ struct JSONViewer_Previews: PreviewProvider {
 }
 
 private var json: Any {
-    let body = MockDataTask.first.responseBody
+    let body = MockJSON.allPossibleValues
     return try! JSONSerialization.jsonObject(with: body, options: [])
 }
 

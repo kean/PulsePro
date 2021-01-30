@@ -50,13 +50,6 @@
             ReferencedContainer = "container:PulseUI-App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "PULSE_DEBUG_NETWORK_LOGGER"
-            value = "true"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
