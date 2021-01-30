@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C68424125C5A51800098066 /* KeyValueSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68424025C5A51800098066 /* KeyValueSectionView.swift */; };
+		0C68424925C5AA0D00098066 /* NetworkInspectorTimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68424825C5AA0D00098066 /* NetworkInspectorTimingView.swift */; };
 		0C98C6DE25C4C62E0086A13E /* UXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6CF25C4C5E20086A13E /* UXKit.swift */; };
 		0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6E525C4C73F0086A13E /* Wrapped.swift */; };
 		0C98C6F425C4CF460086A13E /* NetworkInspectorHeadersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */; };
@@ -75,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		0C68424025C5A51800098066 /* KeyValueSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueSectionView.swift; sourceTree = "<group>"; };
+		0C68424825C5AA0D00098066 /* NetworkInspectorTimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorTimingView.swift; sourceTree = "<group>"; };
 		0C98C6CF25C4C5E20086A13E /* UXKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UXKit.swift; sourceTree = "<group>"; };
 		0C98C6E525C4C73F0086A13E /* Wrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapped.swift; sourceTree = "<group>"; };
 		0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorHeadersView.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				0C98C72525C4FF840086A13E /* NetworkInspectorSummaryView.swift */,
 				0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */,
 				0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */,
+				0C68424825C5AA0D00098066 /* NetworkInspectorTimingView.swift */,
 			);
 			path = NetworkInspector;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				OBJ_92 /* ConsoleMessageDetailsView.swift in Sources */,
 				0CCEF11D25C4803D0095F021 /* JSONPrinter.swift in Sources */,
 				OBJ_93 /* ConsoleMessageView.swift in Sources */,
+				0C68424925C5AA0D00098066 /* NetworkInspectorTimingView.swift in Sources */,
 				OBJ_94 /* ConsoleMessageViewListItem.swift in Sources */,
 				OBJ_95 /* ConsoleQuickFiltersView.swift in Sources */,
 				OBJ_96 /* ConsoleSearchView.swift in Sources */,

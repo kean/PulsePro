@@ -2,9 +2,6 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import SwiftUI
-import CoreData
-import Pulse
-import Combine
 
 struct NetworkInspectorSummaryView: View {
     let request: URLRequest
