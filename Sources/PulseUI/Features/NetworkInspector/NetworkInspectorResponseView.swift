@@ -14,26 +14,16 @@ struct NetworkInspectorResponseView: View {
     }
 
     var body: some View {
-        Wrapped<PlatformTextView> {
+        Wrapped<UXTextView> {
             $0.isSelectable = true
             $0.isEditable = false
-            #if os(iOS)
-            $0.dataDetectorTypes = [.link]
-            #elseif os(macOS)
             $0.isAutomaticLinkDetectionEnabled = true
-            #endif
             $0.linkTextAttributes = [
                 .foregroundColor: JSONColors.valueString,
                 .underlineStyle: 1
             ]
 
-            if let text = JSONPrinter.print(data: response) {
-                #if os(iOS)
-                $0.attributedText = text
-                #elseif os(macOS)
-                $0.textStorage?.setAttributedString(text)
-                #endif
-            }
+            $0.attributedText = JSONPrinter.print(data: response)
         }
     }
 }

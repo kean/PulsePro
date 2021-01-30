@@ -30,30 +30,23 @@ struct NetworkInspectorHeadersView: View {
             Text(title)
                 .font(.title)
 
-            Wrapped<PlatformAutoTextView> {
+            Wrapped<UXAutoTextView> {
                 $0.isSelectable = true
                 $0.isEditable = false
                 #if os(iOS)
                 $0.isScrollEnabled = false
-                $0.dataDetectorTypes = [.link]
                 #elseif os(macOS)
-                $0.isAutomaticLinkDetectionEnabled = true
                 $0.backgroundColor = .clear
                 #endif
+                $0.isAutomaticLinkDetectionEnabled = true
                 $0.linkTextAttributes = [
                     .foregroundColor: JSONColors.valueString,
                     .underlineStyle: 1
                 ]
-
-                let text = makeAttributedText(headers: headers)
-                #if os(iOS)
-                $0.attributedText = text
-                #elseif os(macOS)
-                $0.textStorage?.setAttributedString(text)
-                #endif
+                $0.attributedText = makeAttributedText(headers: headers)
             }
             .padding(EdgeInsets(top: 0, leading: 5, bottom: 2, trailing: 0))
-            .border(width: 2, edges: [.leading], color: Color(PlatformColor.systemBlue))
+            .border(width: 2, edges: [.leading], color: Color(UXColor.systemBlue))
             .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 0))
         }
     }
@@ -61,7 +54,7 @@ struct NetworkInspectorHeadersView: View {
     private func makeAttributedText(headers: [String: Any]?) -> NSAttributedString {
         guard let headers = headers, !headers.isEmpty else {
             return NSAttributedString(string: "No Headers", attributes: [
-                .foregroundColor: PlatformColor.systemBlue, .font: PlatformFont.systemFont(ofSize: 14, weight: .medium)
+                .foregroundColor: UXColor.systemBlue, .font: UXFont.systemFont(ofSize: 14, weight: .medium)
             ])
         }
         let output = NSMutableAttributedString()
@@ -69,12 +62,12 @@ struct NetworkInspectorHeadersView: View {
         for key in keys {
             let string = NSMutableAttributedString()
             string.append("" + key + ": ", [
-                .foregroundColor: PlatformColor.systemBlue,
-                .font: PlatformFont.systemFont(ofSize: 14, weight: .medium)
+                .foregroundColor: UXColor.systemBlue,
+                .font: UXFont.systemFont(ofSize: 14, weight: .medium)
             ])
             string.append("\(headers[key]!)", [
-                .foregroundColor: PlatformColor.label,
-                .font: PlatformFont.systemFont(ofSize: 14, weight: .regular)
+                .foregroundColor: UXColor.label,
+                .font: UXFont.systemFont(ofSize: 14, weight: .regular)
             ])
             if key != keys.last {
                 string.append("\n")

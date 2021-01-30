@@ -6,11 +6,11 @@ import Pulse
 import CoreData
 
 struct JSONColors {
-    static let punctuation = PlatformColor.label.withAlphaComponent(0.7)
-    static let key = PlatformColor.label
-    static let valueString = PlatformColor.systemIndigo
-    static let valueOther = PlatformColor.systemBlue
-    static let null = PlatformColor.systemPurple
+    static let punctuation = UXColor.label.withAlphaComponent(0.7)
+    static let key = UXColor.label
+    static let valueString = UXColor.systemIndigo
+    static let valueOther = UXColor.systemBlue
+    static let null = UXColor.systemPurple
 }
 
 struct JSONPrinter {
@@ -32,7 +32,7 @@ struct JSONPrinter {
 
     mutating func print() -> NSAttributedString {
         print(json: json, isFree: true)
-        output.addAttributes([.font: PlatformFont.monospacedSystemFont(ofSize: 12, weight: .regular)])
+        output.addAttributes([.font: UXFont.monospacedSystemFont(ofSize: 12, weight: .regular)])
         return output
     }
 

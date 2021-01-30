@@ -6,6 +6,9 @@ import Foundation
 #if os(macOS)
 import AppKit
 
+// NSTextView that returns proper intrinsic content size and grows
+// automatically if needed. Same behavior as UITextView with scroll
+// disabled.
 final class NSIntrinsicTextView: NSTextView {
     override var intrinsicContentSize: NSSize {
         guard let layoutManager = layoutManager,
@@ -21,5 +24,4 @@ final class NSIntrinsicTextView: NSTextView {
         invalidateIntrinsicContentSize()
     }
 }
-
 #endif
