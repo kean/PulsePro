@@ -355,13 +355,13 @@
 		OBJ_8 /* PulseUI */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* Extensions */,
 				OBJ_13 /* Features */,
 				OBJ_33 /* Mocks */,
 				OBJ_36 /* Services */,
 				OBJ_41 /* SwiftUI+Extensions */,
 				OBJ_47 /* UXKit */,
 				OBJ_49 /* Views */,
+				OBJ_9 /* Extensions */,
 			);
 			path = PulseUI;
 			sourceTree = "<group>";

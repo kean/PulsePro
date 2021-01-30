@@ -36,8 +36,10 @@ struct NetworkInspectorView: View {
     }
 }
 
+#if DEBUG
 struct NetworkInspectorView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkInspectorView(model: .init(store: .default, taskId: "A409ED79-91B2-490D-B364-607A2B565557"))
+        NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
     }
 }
+#endif
