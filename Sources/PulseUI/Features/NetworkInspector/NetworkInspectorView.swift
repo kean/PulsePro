@@ -21,6 +21,8 @@ struct NetworkInspectorView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
 
+                Text(model.messageCount.description)
+
                 messagesListView
             }
             .navigationBarTitle(Text("Network Inspector"))
@@ -36,6 +38,6 @@ struct NetworkInspectorView: View {
 
 struct NetworkInspectorView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkInspectorView(model: .init(store: .mock, taskId: "a"))
+        NetworkInspectorView(model: .init(store: .default, taskId: "A409ED79-91B2-490D-B364-607A2B565557"))
     }
 }

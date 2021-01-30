@@ -8,8 +8,11 @@ import Pulse
 final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let store: LoggerMessageStore
     private let taskId: String
+    private var messages: [MessageEntity] = []
 
     private let controller: NSFetchedResultsController<MessageEntity>
+
+    @Published var messageCount = 0
 
     public init(store: LoggerMessageStore, taskId: String) {
         self.store = store
@@ -26,12 +29,17 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
 
         controller.delegate = self
         try? controller.performFetch()
+        self.didUpdateMessages(self.controller.fetchedObjects ?? [])
+    }
+
+    private func didUpdateMessages(_ messages: [MessageEntity]) {
+        self.messages = messages
+        self.messageCount = messages.count
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
 
     public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        let messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
-        print(messages)
+        self.didUpdateMessages(self.controller.fetchedObjects ?? [])
     }
 }

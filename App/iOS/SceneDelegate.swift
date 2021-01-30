@@ -18,13 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
+        print(NSHomeDirectory())
 
         // Create the SwiftUI view that provides the window contents.
         let model: ConsoleViewModel
         if ProcessInfo.processInfo.environment["PULSE_DEBUG_NETWORK_LOGGER"] != nil {
             LoggingSystem.bootstrap(PersistentLogHandler.init)
             model = ConsoleViewModel(store: LoggerMessageStore.default)
-            MockNetworkLogger.shared.sendRequest()
+            let messages = (try? LoggerMessageStore.default.allMessages()) ?? []
+            if messages.isEmpty {
+                MockNetworkLogger.shared.sendRequest()
+            }
         } else {
             model = ConsoleViewModel(store: .mock)
         }
