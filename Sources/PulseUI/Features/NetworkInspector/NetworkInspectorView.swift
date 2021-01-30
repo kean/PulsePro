@@ -11,7 +11,7 @@ struct NetworkInspectorView: View {
         NavigationView {
             VStack {
                 Picker("", selection: .constant(0)) {
-                    Text("Overview").tag(0)
+                    Text("Summary").tag(0)
                     Text("Headers").tag(1)
                     Text("Response").tag(2)
                     Text("Request").tag(3)

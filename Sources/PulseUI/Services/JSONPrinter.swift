@@ -32,7 +32,7 @@ struct JSONPrinter {
 
     mutating func print() -> NSAttributedString {
         print(json: json, isFree: true)
-        output.addAttributes([.font: PlatformFont.monospacedSystemFont(ofSize: 12, weight: .regular)], range: NSRange(location: 0, length: output.string.count))
+        output.addAttributes([.font: PlatformFont.monospacedSystemFont(ofSize: 12, weight: .regular)])
         return output
     }
 
@@ -102,52 +102,6 @@ struct JSONPrinter {
     }
 
     func append(_ string: String, _ attributes: [NSAttributedString.Key: Any] = [:]) {
-        output.append(NSAttributedString(string: string, attributes: attributes))
+        output.append(string, attributes)
     }
 }
-
-//
-//private func prettify(_ json: Data) -> String? {
-//    guard let object = try? JSONSerialization.jsonObject(with: json, options: []),
-//          let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]) else {
-//        return nil
-//    }
-//    let string = String(data: data, encoding: .utf8)
-//    return string?.replacingOccurrences(of: " : ", with: ": ")
-//}
-//
-//private let keysRegex = try? Regex(#"(\"[^\"]+\"):"#)
-//
-//private func highlightKeys(_ attributedString: NSMutableAttributedString) {
-//    guard let regex = keysRegex else { return }
-//    let string = attributedString.string
-//    for match in regex.matches(in: string) {
-//        guard let group = match.groups.first else { continue }
-//        let start = string.distance(from: string.startIndex, to: group.startIndex)
-//        let length = group.distance(from: group.startIndex, to: group.endIndex)
-//        let range = NSMakeRange(start, length)
-//
-//        attributedString.addAttributes([.foregroundColor: UIColor.systemIndigo], range: range)
-//    }
-//}
-//
-//private let valuesRegex = try? Regex(#": (\"[^\"]+\")"#)
-//
-//private func highlightStringValues(_ attributedString: NSMutableAttributedString) {
-//    guard let regex = valuesRegex else { return }
-//    let string = attributedString.string
-//    for match in regex.matches(in: string) {
-//        guard let group = match.groups.first else { continue }
-//        let start = string.distance(from: string.startIndex, to: group.startIndex)
-//        let length = group.distance(from: group.startIndex, to: group.endIndex)
-//        let range = NSMakeRange(start, length)
-//
-//        attributedString.addAttributes([.foregroundColor: UIColor.systemRed], range: range)
-//    }
-//}
-//
-//private let numbersRegex = try? Regex("")
-//
-//private func highlightNumbers(_ attributedString: NSMutableAttributedString) {
-//
-//}

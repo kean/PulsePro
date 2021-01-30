@@ -38,6 +38,7 @@ struct NetworkInspectorResponseView: View {
     }
 }
 
+#if DEBUG
 struct NetworkInspectorResponseView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -90,3 +91,4 @@ private let sampleJSON = """
   ]
 }
 """
+#endif

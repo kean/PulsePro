@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0C98C6DE25C4C62E0086A13E /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6CF25C4C5E20086A13E /* Platform.swift */; };
 		0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6E525C4C73F0086A13E /* Wrapped.swift */; };
+		0C98C6F425C4CF460086A13E /* NetworkInspectorHeadersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */; };
+		0C98C70E25C4D4000086A13E /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C70D25C4D4000086A13E /* NSAttributedString+Extensions.swift */; };
+		0C98C71625C4F75B0086A13E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C98C71525C4F75B0086A13E /* Border.swift */; };
 		0CCEF11525C47C790095F021 /* NetworkInspectorResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */; };
 		0CCEF11D25C4803D0095F021 /* JSONPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEF11C25C4803D0095F021 /* JSONPrinter.swift */; };
 		0CD2FC9D25C473220040C9EC /* NetworkInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */; };
@@ -69,6 +72,9 @@
 /* Begin PBXFileReference section */
 		0C98C6CF25C4C5E20086A13E /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		0C98C6E525C4C73F0086A13E /* Wrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapped.swift; sourceTree = "<group>"; };
+		0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorHeadersView.swift; sourceTree = "<group>"; };
+		0C98C70D25C4D4000086A13E /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		0C98C71525C4F75B0086A13E /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorResponseView.swift; sourceTree = "<group>"; };
 		0CCEF11C25C4803D0095F021 /* JSONPrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPrinter.swift; sourceTree = "<group>"; };
 		0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorView.swift; sourceTree = "<group>"; };
@@ -138,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				0C98C6CF25C4C5E20086A13E /* Platform.swift */,
+				0C98C70D25C4D4000086A13E /* NSAttributedString+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -179,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				0CD2FC9C25C473220040C9EC /* NetworkInspectorView.swift */,
+				0C98C6F325C4CF460086A13E /* NetworkInspectorHeadersView.swift */,
 				0CCEF11425C47C790095F021 /* NetworkInspectorResponseView.swift */,
 			);
 			path = NetworkInspector;
@@ -211,6 +219,7 @@
 				OBJ_17 /* ShareView.swift */,
 				OBJ_18 /* TextView.swift */,
 				0C98C6E525C4C73F0086A13E /* Wrapped.swift */,
+				0C98C71525C4F75B0086A13E /* Border.swift */,
 			);
 			path = "SwiftUI+Extensions";
 			sourceTree = "<group>";
@@ -498,6 +507,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				0C98C6F425C4CF460086A13E /* NetworkInspectorHeadersView.swift in Sources */,
+				0C98C70E25C4D4000086A13E /* NSAttributedString+Extensions.swift in Sources */,
 				0C98C6DE25C4C62E0086A13E /* Platform.swift in Sources */,
 				OBJ_82 /* MockStore.swift in Sources */,
 				OBJ_83 /* ConsoleMessages.swift in Sources */,
@@ -512,6 +523,7 @@
 				0C98C6E625C4C73F0086A13E /* Wrapped.swift in Sources */,
 				OBJ_90 /* ConsoleMessageViewModel.swift in Sources */,
 				OBJ_91 /* ConsoleViewModel.swift in Sources */,
+				0C98C71625C4F75B0086A13E /* Border.swift in Sources */,
 				OBJ_92 /* ConsoleMessageDetailsView.swift in Sources */,
 				0CCEF11D25C4803D0095F021 /* JSONPrinter.swift in Sources */,
 				OBJ_93 /* ConsoleMessageView.swift in Sources */,
