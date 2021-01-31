@@ -3,6 +3,7 @@
 
 import Foundation
 import Pulse
+import CoreData
 
 final class NetworkLoggerSummary {
     let isCompleted: Bool
@@ -72,3 +73,23 @@ private final class NetworkLoggerMessages {
         return try? JSONDecoder().decode(T.self, from: data)
     }
 }
+
+#if DEBUG
+extension NetworkLoggerSummary {
+    static func mock(url: URL) -> NetworkLoggerSummary {
+        guard let taskId = LoggerMessageStore.mock.taskIdWithURL(url) else {
+            return NetworkLoggerSummary(messages: [])
+        }
+        return NetworkLoggerSummary.mock(taskId: taskId)
+    }
+
+    static func mock(taskId: String) -> NetworkLoggerSummary {
+        let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
+        request.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId.rawValue, taskId)
+        request.relationshipKeyPathsForPrefetching = ["\(\MessageEntity.metadata.self)"]
+
+        let messages = (try? LoggerMessageStore.mock.container.viewContext.fetch(request)) ?? []
+        return NetworkLoggerSummary(messages: messages)
+    }
+}
+#endif

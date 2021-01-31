@@ -3,7 +3,11 @@
 
 import SwiftUI
 
+// MARK: - View
+
 struct NetworkInspectorMetricsView: View {
+    let model: NetworkInspectorMetricsViewModel
+
     var body: some View {
         Text("Timing View")
 
@@ -14,20 +18,36 @@ struct NetworkInspectorMetricsView: View {
     }
 }
 
+// MARK: - ViewModel
+
+final class NetworkInspectorMetricsViewModel {
+    private let metrics: NetworkLoggerMetrics
+
+    init(metrics: NetworkLoggerMetrics) {
+        self.metrics = metrics
+    }
+}
+
+// MARK: - Preview
+
 #if DEBUG
 struct NetworkInspectorMetricsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorMetricsView()
+            NetworkInspectorMetricsView(model: mockModel)
                 .previewLayout(.fixed(width: 320, height: 500))
                 .previewDisplayName("Light")
                 .environment(\.colorScheme, .light)
             
-            NetworkInspectorMetricsView()
+            NetworkInspectorMetricsView(model: mockModel)
                 .previewLayout(.fixed(width: 320, height: 500))
                 .previewDisplayName("Dark")
                 .environment(\.colorScheme, .dark)
         }
     }
 }
+
+private let mockModel = NetworkInspectorMetricsViewModel(
+    metrics: MockDataTask.login.metrics
+)
 #endif
