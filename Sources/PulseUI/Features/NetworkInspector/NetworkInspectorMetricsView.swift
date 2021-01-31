@@ -13,9 +13,9 @@ struct NetworkInspectorMetricsView: View {
             GeometryReader { geo in
                 VStack {
                     TimingView(model: model.timingModel, width: geo.size.width)
-                    Spacer(minLength: 16)
+                    Spacer(minLength: 32)
 
-                    KeyValueSectionView(title: "Total", items: [
+                    KeyValueSectionView(title: "Details", items: [
                         ("Duration", formatDuration(model.metrics.taskInterval.duration))
                     ], tintColor: .secondaryLabel)
                 }
@@ -62,7 +62,7 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
                 let section = TimingRowSectionViewModel(
                     title: "Local Cache",
                     items: [
-                        makeRow(title: "Cache Lookup", color: .yellow, from: requestStartDate, to: responseEndDate)
+                        makeRow(title: "Lookup", color: .yellow, from: requestStartDate, to: responseEndDate)
                     ])
                 sections.append(section)
             }
@@ -70,6 +70,21 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
             var scheduling: [TimingRowViewModel] = []
             var connection: [TimingRowViewModel] = []
             var response: [TimingRowViewModel] = []
+
+            let earliestEventDate = [
+                transaction.requestStartDate,
+                transaction.connectStartDate,
+                transaction.domainLookupStartDate,
+                transaction.responseStartDate,
+                transaction.connectStartDate
+            ]
+            .compactMap { $0 }
+            .sorted()
+            .first
+
+            if let fetchStartDate = transaction.fetchStartDate, let endDate = earliestEventDate {
+                scheduling.append(makeRow(title: "Queued", color: .systemGray4, from: fetchStartDate, to: endDate))
+            }
 
             if let domainLookupStartDate = transaction.domainLookupStartDate {
                 connection.append(makeRow(title: "DNS", color: .systemPurple, from: domainLookupStartDate, to: transaction.domainLookupEndDate))
@@ -88,9 +103,8 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
                 response.append(makeRow(title: "Download", color: .systemBlue, from: responseStartDate, to: transaction.responseEndDate))
             }
 
-
             if !scheduling.isEmpty {
-                sections.append(TimingRowSectionViewModel(title: "Connection", items: scheduling))
+                sections.append(TimingRowSectionViewModel(title: "Scheduling", items: scheduling))
             }
             if !connection.isEmpty {
                 sections.append(TimingRowSectionViewModel(title: "Connection", items: connection))
@@ -103,15 +117,16 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
         }
     }
 
+    sections.append(TimingRowSectionViewModel(title: "Total", items: [
+        makeRow(title: "Total", color: .systemGray2, from: taskInterval.start, to: taskInterval.end)
+    ]))
+
     return sections
 }
 
 // MARK: - Private
 
 private func formatDuration(_ timeInterval: TimeInterval) -> String {
-    if timeInterval < 0.01 {
-        return String(format: "%.2fms", timeInterval * 1000)
-    }
     if timeInterval < 0.95 {
         return String(format: "%.1fms", timeInterval * 1000)
     }
@@ -119,7 +134,11 @@ private func formatDuration(_ timeInterval: TimeInterval) -> String {
         return String(format: "%.1fs", timeInterval)
     }
     let minutes = timeInterval / 60
-    return String(format: "%.1fmin", minutes)
+    if minutes < 60 {
+        return String(format: "%.1fmin", minutes)
+    }
+    let hours = timeInterval / (60 * 60)
+    return String(format: "%.1fh", hours)
 }
 
 // MARK: - Preview

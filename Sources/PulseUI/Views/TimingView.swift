@@ -21,10 +21,10 @@ private struct TimingSectionView: View {
     let width: CGFloat
 
     var body: some View {
-        VStack {
+        VStack(spacing: 6) {
             HStack {
                 Text(model.title)
-                    .font(.headline)
+                    .font(.subheadline)
                     .foregroundColor(Color(UXColor.label))
                 Spacer()
             }
@@ -43,12 +43,12 @@ private struct TimingRowView: View {
     let width: CGFloat
 
     static let rowHeight: CGFloat = 14
-    static let titleWidth: CGFloat = 90
-    static let valueWidth: CGFloat = 60
+    static let titleWidth: CGFloat = 80
+    static let valueWidth: CGFloat = 56
 
     var body: some View {
         HStack {
-            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth - 16
+            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth - 10
             let start = clamp(model.start)
             let length = min(1 - start, model.length)
 
@@ -63,7 +63,7 @@ private struct TimingRowView: View {
                 .frame(width: max(2, barWidth * length))
             Spacer()
             Text(model.value)
-                .font(.footnote)
+                .font(.system(.caption, design: .monospaced))
                 .foregroundColor(Color(UXColor.secondaryLabel))
                 .frame(width: TimingRowView.valueWidth, alignment: .trailing)
         }
