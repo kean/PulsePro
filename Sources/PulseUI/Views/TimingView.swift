@@ -5,13 +5,12 @@ import SwiftUI
 
 struct TimingView: View {
     let model: [TimingRowSectionViewModel]
+    let width: CGFloat
 
     var body: some View {
-        GeometryReader { geo in
-            VStack(spacing: 16) {
-                ForEach(model, id: \.self.title) {
-                    TimingSectionView(model: $0, width: geo.size.width)
-                }
+        VStack(spacing: 16) {
+            ForEach(model, id: \.self.title) {
+                TimingSectionView(model: $0, width: width)
             }
         }
     }
@@ -101,16 +100,18 @@ private func clamp(_ value: CGFloat) -> CGFloat {
 struct TimingView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TimingView(model: mockModel)
-                .previewLayout(.fixed(width: 320, height: 200))
-                .previewDisplayName("Light")
-                .environment(\.colorScheme, .light)
+            GeometryReader { geo in
+                TimingView(model: mockModel, width: geo.size.width)
+                    .previewLayout(.fixed(width: 320, height: 200))
+                    .previewDisplayName("Light")
+                    .environment(\.colorScheme, .light)
 
-            TimingView(model: mockModel)
-                .previewLayout(.fixed(width: 320, height: 200))
-                .previewDisplayName("Dark")
-                .background(Color(UXColor.systemBackground))
-                .environment(\.colorScheme, .dark)
+                TimingView(model: mockModel, width: geo.size.width)
+                    .previewLayout(.fixed(width: 320, height: 200))
+                    .previewDisplayName("Dark")
+                    .background(Color(UXColor.systemBackground))
+                    .environment(\.colorScheme, .dark)
+            }
         }
     }
 }

@@ -9,16 +9,18 @@ struct NetworkInspectorMetricsView: View {
     let model: NetworkInspectorMetricsViewModel
 
     var body: some View {
-        ScrollView {
-            TimingView(model: model.timingModel)
-                .padding()
+        GeometryReader { geo in
+            ScrollView {
+                VStack {
+                    TimingView(model: model.timingModel, width: geo.size.width)
+                        .padding()
 
-            Spacer(minLength: 32)
-
-            KeyValueSectionView(title: "Total", items: [
-                ("Duration", formatDuration(model.metrics.taskInterval.duration))
-            ], tintColor: .secondaryLabel)
-            .padding()
+                    KeyValueSectionView(title: "Total", items: [
+                        ("Duration", formatDuration(model.metrics.taskInterval.duration))
+                    ], tintColor: .secondaryLabel)
+                    .padding()
+                }
+            }
         }
     }
 }
