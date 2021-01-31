@@ -11,14 +11,14 @@ struct NetworkInspectorView: View {
 
     var body: some View {
         #if os(iOS)
-        content
+        universalBody
             .navigationBarTitle(Text("Network Inspector"))
         #else
-        content
+        universalBody
         #endif
     }
 
-    private var content: some View {
+    private var universalBody: some View {
         VStack {
             Picker("", selection: .constant(0)) {
                 Text("Summary").tag(0)
@@ -33,6 +33,10 @@ struct NetworkInspectorView: View {
 
             messagesListView
         }
+    }
+
+    private var contentView: some View {
+        Text("test")
     }
 
     private var messagesListView: some View {

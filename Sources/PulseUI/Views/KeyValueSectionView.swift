@@ -20,14 +20,16 @@ struct KeyValueSectionView: View {
             Wrapped<UXAutoTextView> {
                 $0.isSelectable = true
                 $0.isEditable = false
+                $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
                 #if os(iOS)
                 $0.isScrollEnabled = false
+                $0.textContainer.lineBreakMode = .byCharWrapping
                 #elseif os(macOS)
                 $0.backgroundColor = .clear
+                $0.textContainer?.lineBreakMode = .byCharWrapping
                 #endif
                 $0.isAutomaticLinkDetectionEnabled = true
                 $0.linkTextAttributes = [
-//                    .foregroundColor: tintColor,
                     .underlineStyle: 1
                 ]
                 $0.attributedText = makeAttributedText()
