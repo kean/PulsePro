@@ -72,8 +72,10 @@ public struct ConsoleShareService {
     }
 
     private func prepareNetworkMessageForSharing(taskId: String) -> String {
-        let info = NetworkLoggerSummary(store: store, taskId: taskId)
+        return prepareForSharing(summary: NetworkLoggerSummary(store: store, taskId: taskId))
+    }
 
+    func prepareForSharing(summary info: NetworkLoggerSummary) -> String {
         var output = ""
 
         func add(title: String) {

@@ -12,11 +12,20 @@ struct NetworkInspectorView: View {
     // Make sure all tabs are updated live
     @ObservedObject var model: NetworkInspectorViewModel
     @State private var selectedTab: NetworkInspectorTab = .summary
+    @State private var isShowingShareSheet = false
 
     var body: some View {
         #if os(iOS)
         universalBody
             .navigationBarTitle(Text("Network Inspector"))
+            .navigationBarItems(trailing:
+                ShareButton {
+                    self.isShowingShareSheet = true
+                }
+            )
+            .sheet(isPresented: $isShowingShareSheet) {
+                ShareView(activityItems: [self.model.prepareForSharing()])
+            }
         #else
         universalBody
         #endif
@@ -139,6 +148,12 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
 
     func makeMetricsModel() -> NetworkInspectorMetricsViewModel? {
         summary.metrics.map(NetworkInspectorMetricsViewModel.init)
+    }
+
+    // MARK: Sharing
+
+    func prepareForSharing() -> String {
+        ConsoleShareService(store: store).prepareForSharing(summary: summary)
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
