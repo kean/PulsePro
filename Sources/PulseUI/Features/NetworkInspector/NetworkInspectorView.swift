@@ -60,6 +60,8 @@ struct NetworkInspectorView_Previews: PreviewProvider {
             NavigationView {
                 NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
             }
+            .previewDisplayName("Light")
+            .environment(\.colorScheme, .light)
 
             NavigationView {
                 NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
