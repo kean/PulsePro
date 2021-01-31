@@ -276,7 +276,7 @@ public final class NetworkLogger: NSObject {
             if let statusCode = statusCode, !(200..<400).contains(statusCode) {
                 level = .error
             } else {
-                level = .info
+                level = .debug
             }
             message = "🌐 \(statusCode.map(descriptionForStatusCode) ?? "–") \(urlRequest.httpMethod ?? "–") \(task.url ?? "–")"
         }
