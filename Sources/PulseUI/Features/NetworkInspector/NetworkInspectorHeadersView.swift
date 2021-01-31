@@ -11,7 +11,7 @@ struct NetworkInspectorHeadersView: View {
             VStack {
                 makeSection(title: "Request", items: model.requestHeaders)
                 Spacer(minLength: 16)
-                makeSection(title: "Response", items: model.requestHeaders)
+                makeSection(title: "Response", items: model.responseHeaders)
                 Spacer()
             }.padding()
         }
