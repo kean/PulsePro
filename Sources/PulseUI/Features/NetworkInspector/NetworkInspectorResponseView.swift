@@ -13,8 +13,10 @@ struct NetworkInspectorResponseView: View {
         if let data = model.data {
             if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                 JSONViewer(json: json)
+                    .padding([.leading, .trailing], 6)
             } else {
                 Text(String(bytes: data, encoding: .utf8) ?? "Data: \(data.localizedSize)")
+                    .padding()
             }
         } else {
             Text("Empty")
