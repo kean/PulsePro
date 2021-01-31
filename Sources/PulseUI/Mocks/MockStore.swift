@@ -61,19 +61,22 @@ private func populateStore(_ store: LoggerMessageStore) {
     let networkLogger = NetworkLogger(logger(named: "network"))
 
     let urlSession = URLSession(configuration: .default)
-    let dataTask = urlSession.dataTask(with: MockDataTask.login.request)
 
-    let mockTask = MockDataTask.login
-    networkLogger.urlSession(urlSession, didStartTask: dataTask)
-    Thread.sleep(forTimeInterval: 0.01)
-    networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.response)
-    Thread.sleep(forTimeInterval: 0.01)
-    networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.responseBody)
-    networkLogger.testInjectMetrics(mockTask.metrics, for: dataTask)
-    networkLogger.urlSession(urlSession, task: dataTask, didCompleteWithError: nil)
+    func logTask(_ mockTask: MockDataTask) {
+        let dataTask = urlSession.dataTask(with: mockTask.request)
+        networkLogger.urlSession(urlSession, didStartTask: dataTask)
+        networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.response)
+        networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.responseBody)
+        networkLogger.testInjectMetrics(mockTask.metrics, for: dataTask)
+        networkLogger.urlSession(urlSession, task: dataTask, didCompleteWithError: nil)
+    }
+
+    logTask(MockDataTask.login)
 
     logger(named: "application")
         .log(level: .info, "Will navigate to Dashboard")
+
+    logTask(MockDataTask.profileFailure)
 
     let stackTrace = """
         Replace this implementation with code to handle the error appropriately. fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
