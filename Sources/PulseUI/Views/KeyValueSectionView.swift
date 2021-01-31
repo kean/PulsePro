@@ -5,7 +5,7 @@ import SwiftUI
 
 struct KeyValueSectionView: View {
     let title: String
-    let items: [(String, String)]
+    let items: [(String, String?)]
     let tintColor: UXColor
 
     private var actualTintColor: UXColor {
@@ -47,17 +47,18 @@ struct KeyValueSectionView: View {
             ])
         }
         let output = NSMutableAttributedString()
-        for (key, value) in items {
+        for index in items.indices {
+            let (key, value) = items[index]
             let string = NSMutableAttributedString()
             string.append("" + key + ": ", [
                 .foregroundColor: actualTintColor,
                 .font: UXFont.systemFont(ofSize: fontSize, weight: .medium)
             ])
-            string.append(value, [
+            string.append(value ?? "–", [
                 .foregroundColor: UXColor.label,
                 .font: UXFont.systemFont(ofSize: fontSize, weight: .regular)
             ])
-            if key != items.last?.0 {
+            if index < items.endIndex - 1 {
                 string.append("\n")
             }
             output.append(string)

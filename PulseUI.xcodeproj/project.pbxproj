@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C3A2E4325C6F04A002568E2 /* TimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3A2E4225C6F04A002568E2 /* TimingView.swift */; };
+		0C3A2E4B25C7255B002568E2 /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3A2E4A25C7255B002568E2 /* Foundation+Extensions.swift */; };
 		0C70401725C5FBCC00897C5B /* NetworkInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C70401625C5FBCC00897C5B /* NetworkInspectorViewModel.swift */; };
 		0C70402525C5FC9000897C5B /* ConsoleMessageDetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C70402425C5FC9000897C5B /* ConsoleMessageDetailsRouter.swift */; };
 		0C70403F25C62ED800897C5B /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C70403E25C62ED800897C5B /* NetworkLogger.swift */; };
@@ -83,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		0C3A2E4225C6F04A002568E2 /* TimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingView.swift; sourceTree = "<group>"; };
+		0C3A2E4A25C7255B002568E2 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		0C70401625C5FBCC00897C5B /* NetworkInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorViewModel.swift; sourceTree = "<group>"; };
 		0C70402425C5FC9000897C5B /* ConsoleMessageDetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageDetailsRouter.swift; sourceTree = "<group>"; };
 		0C70403E25C62ED800897C5B /* NetworkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogger.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				OBJ_12 /* Pulse+PulseUI.swift */,
 				0C70403E25C62ED800897C5B /* NetworkLogger.swift */,
 				0C70404625C6300900897C5B /* NetworkLoggerSummary.swift */,
+				0C3A2E4A25C7255B002568E2 /* Foundation+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				OBJ_117 /* NetworkInspectorSummaryView.swift in Sources */,
 				OBJ_118 /* NetworkInspectorMetricsView.swift in Sources */,
 				OBJ_119 /* NetworkInspectorView.swift in Sources */,
+				0C3A2E4B25C7255B002568E2 /* Foundation+Extensions.swift in Sources */,
 				OBJ_120 /* ConsoleSettingsView.swift in Sources */,
 				OBJ_121 /* MockDataTask.swift in Sources */,
 				OBJ_122 /* MockStore.swift in Sources */,
