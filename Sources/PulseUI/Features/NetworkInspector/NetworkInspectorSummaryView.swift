@@ -16,6 +16,11 @@ struct NetworkInspectorSummaryView: View {
                 if let error = model.errorModel {
                     KeyValueSectionView(model: error)
                 }
+                if let transfer = model.transferModel {
+                    Spacer(minLength: 32)
+                    NetworkInspectorTransferInfoView(model: transfer)
+                    Spacer(minLength: 32)
+                }
                 Spacer()
             }.padding()
         }
@@ -79,6 +84,10 @@ final class NetworkInspectorSummaryViewModel {
                 ("Message", error.localizedDescription)
             ])
     }
+
+    var transferModel: NetworkInspectorTransferInfoViewModel? {
+        metrics.flatMap(NetworkInspectorTransferInfoViewModel.init)
+    }
 }
 
 // MARK: - Private
@@ -115,7 +124,7 @@ private let mockModel = NetworkInspectorSummaryViewModel(
     response: NetworkLoggerResponse(urlResponse: MockDataTask.login.response),
     responseBody: MockDataTask.login.responseBody,
     error: nil,
-    metrics: nil
+    metrics: MockDataTask.login.metrics
 )
 
 private let mockFailureModel = NetworkInspectorSummaryViewModel(

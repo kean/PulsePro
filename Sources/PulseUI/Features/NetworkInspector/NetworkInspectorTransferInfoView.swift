@@ -6,20 +6,21 @@ import SwiftUI
 // MARK: - View
 
 struct NetworkInspectorTransferInfoView: View {
-    #if os(iOS)
-    @Environment(\.horizontalSizeClass) var sizeClass: UserInterfaceSizeClass?
-    #endif
     @Environment(\.colorScheme) var colorScheme
 
     let model: NetworkInspectorTransferInfoViewModel
 
     var body: some View {
         HStack {
+            Spacer()
             makeView(title: "Bytes Sent", imageName: "icloud.and.arrow.up", total: model.totalBytesSent, headers: model.headersBytesSent, body: model.bodyBytesSent)
+            Spacer()
 
             Divider()
 
+            Spacer()
             makeView(title: "Bytes Received", imageName: "icloud.and.arrow.down", total: model.totalBytesRecieved, headers: model.headersBytesRecieved, body: model.bodyBytesRecieved)
+            Spacer()
         }
     }
 
@@ -29,25 +30,37 @@ struct NetworkInspectorTransferInfoView: View {
                 .font(.headline)
             HStack {
                 #if os(iOS)
-                Image(uiImage: UIImage(systemName: imageName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)) ?? .init())
+                Image(uiImage: UIImage(systemName: imageName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .default)) ?? .init())
                 #endif
                 Text(total)
-                    .font(.title)
+                    .font(.headline)
             }
             HStack(alignment: .center, spacing: 4) {
                 VStack(alignment: .trailing) {
-                    Text("Headers: ")
+                    Text("Headers:")
                         .foregroundColor(Color(UXColor.label.withAlphaComponent(0.7)))
-                    Text("Body: ")
+                        .font(.system(size: fontSize))
+                    Text("Body:")
                         .foregroundColor(Color(UXColor.label.withAlphaComponent(0.7)))
+                        .font(.system(size: fontSize))
                 }
                 VStack(alignment: .leading) {
                     Text(headers)
+                        .font(.system(size: fontSize))
                     Text(body)
+                        .font(.system(size: fontSize))
                 }
             }
         }
     }
+}
+
+private var fontSize: CGFloat {
+    #if os(iOS)
+    return 15
+    #else
+    return 12
+    #endif
 }
 
 private struct Row {
