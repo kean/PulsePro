@@ -100,7 +100,7 @@ private func populateStore(_ store: LoggerMessageStore) {
         """
 
     logger(named: "auth")
-        .log(level: .debug, .init(stringLiteral: stackTrace))
+        .log(level: .warning, .init(stringLiteral: stackTrace))
 
     logger(named: "default")
         .log(level: .critical, "💥 0xDEADBEEF")
