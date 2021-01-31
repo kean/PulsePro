@@ -7,11 +7,11 @@ import Logging
 
 // MARK: - NetworkLogger
 
-public struct NetworkLoggerMetadataKey {
-    static let taskId = "networkTaskId"
-    static let eventType = "networkEventType"
-    static let taskType = "networkEventTaskType"
-    static let payload = "networkEventPayload"
+public enum NetworkLoggerMetadataKey: String {
+    case taskId = "networkTaskId"
+    case eventType = "networkEventType"
+    case taskType = "networkEventTaskType"
+    case payload = "networkEventPayload"
 }
 
 public enum NetworkLoggerEventType: String, Codable {
@@ -37,7 +37,7 @@ public enum NetworkLoggerEvent {
 
     public struct TaskDidComplete: Codable {
         public let request: NetworkLoggerRequest
-        public let reponse: NetworkLoggerResponse?
+        public let response: NetworkLoggerResponse?
         public let error: NetworkLoggerError?
         public let data: Data?
         public let metrics: NetworkLoggerMetrics?
@@ -169,7 +169,7 @@ public final class NetworkLogger: NSObject {
         let request = NetworkLoggerRequest(urlRequest: urlRequest)
         let response = context.response.map(NetworkLoggerResponse.init)
         let metrics = context.metrics.map(NetworkLoggerMetrics.init)
-        let event = NetworkLoggerEvent.TaskDidComplete(request: request, reponse: response, error: error, data: context.data, metrics: metrics)
+        let event = NetworkLoggerEvent.TaskDidComplete(request: request, response: response, error: error, data: context.data, metrics: metrics)
 
         let level: Logger.Level
         let message: String
@@ -209,10 +209,10 @@ public final class NetworkLogger: NSObject {
 
     private func makeMetadata<T: Encodable>(_ context: TaskContext, _ task: URLSessionTask, _ eventType: NetworkLoggerEventType, _ payload: T) -> Logger.Metadata {
         [
-            NetworkLoggerMetadataKey.taskId: .string(context.uuid.uuidString),
-            NetworkLoggerMetadataKey.eventType: .string(eventType.rawValue),
-            NetworkLoggerMetadataKey.taskType: .string(NetworkTaskType(task: task).rawValue),
-            NetworkLoggerMetadataKey.payload: .string(encode(payload) ?? "")
+            NetworkLoggerMetadataKey.taskId.rawValue: .string(context.uuid.uuidString),
+            NetworkLoggerMetadataKey.eventType.rawValue: .string(eventType.rawValue),
+            NetworkLoggerMetadataKey.taskType.rawValue: .string(NetworkTaskType(task: task).rawValue),
+            NetworkLoggerMetadataKey.payload.rawValue: .string(encode(payload) ?? "")
         ]
     }
 }

@@ -40,13 +40,9 @@ struct NetworkInspectorView: View {
             case .request:
                 Text("Request")
             }
-        }
-    }
 
-    private var messagesListView: some View {
-        List((0...5).map { $0 }, id: \.self) {
-            Text("\($0)")
-        }.listStyle(PlainListStyle())
+            Spacer()
+        }
     }
 }
 

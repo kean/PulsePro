@@ -20,8 +20,15 @@ struct NetworkInspectorSummaryView: View {
         KeyValueSectionView(
             title: "Summary",
             items: model.itemsForSummary,
-            tintColor: model.isSuccess ? .systemGreen : .systemRed
+            tintColor: tintColor
         )
+    }
+
+    private var tintColor: UXColor {
+        guard model.response != nil else {
+            return .systemGray
+        }
+        return model.isSuccess ? .systemGreen : .systemRed
     }
 }
 

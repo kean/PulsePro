@@ -10,12 +10,12 @@ extension LoggerMessageStore {
     func taskIdWithURL(_ url: URL) -> String? {
         let messages = ((try? allMessages()) ?? []).filter {
             $0.metadata.contains {
-                $0.key == NetworkLoggerMetadataKey.eventType && $0.value == NetworkLoggerEventType.taskDidComplete.rawValue
+                $0.key == NetworkLoggerMetadataKey.eventType.rawValue && $0.value == NetworkLoggerEventType.taskDidComplete.rawValue
             }
         }
 
         func event(for message: MessageEntity) -> NetworkLoggerEvent.TaskDidComplete? {
-            guard let payload = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.payload })?.value else {
+            guard let payload = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.payload.rawValue })?.value else {
                 return nil
             }
             guard let data = payload.data(using: .utf8) else {
@@ -28,7 +28,7 @@ extension LoggerMessageStore {
             event(for: $0)?.request.url == url
         })
 
-        return message?.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.taskId })?.value
+        return message?.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.taskId.rawValue })?.value
     }
 }
 #endif

@@ -8,7 +8,8 @@ import Pulse
 final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let store: LoggerMessageStore
     private let taskId: String
-    private var messages: [MessageEntity] = []
+    @Published private(set) var messages: [MessageEntity] = []
+    private var summary: NetworkLoggerSummary
 
     private let controller: NSFetchedResultsController<MessageEntity>
 
@@ -17,11 +18,12 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
         self.taskId = taskId
 
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
-        request.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId, taskId)
+        request.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId.rawValue, taskId)
         request.relationshipKeyPathsForPrefetching = ["\(\MessageEntity.metadata.self)"]
         request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.createdAt, ascending: false)]
 
         self.controller = NSFetchedResultsController<MessageEntity>(fetchRequest: request, managedObjectContext: store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.summary = NetworkLoggerSummary(messages: [])
 
         super.init()
 
@@ -32,17 +34,18 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
 
     private func didUpdateMessages(_ messages: [MessageEntity]) {
         self.messages = messages
+        self.summary = NetworkLoggerSummary(messages: messages)
     }
 
     // MARK: - Tabs
 
     func makeSummaryModel() -> NetworkInspectorSummaryViewModel {
         NetworkInspectorSummaryViewModel(
-            request: nil,
-            response: nil,
-            responseBody: nil,
-            error: nil,
-            metrics: nil
+            request: summary.request,
+            response: summary.response,
+            responseBody: summary.responseBody,
+            error: summary.error,
+            metrics: summary.metrics
         )
     }
 
