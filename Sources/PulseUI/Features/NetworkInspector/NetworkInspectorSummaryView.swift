@@ -2,23 +2,10 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import SwiftUI
+import Pulse
 
 struct NetworkInspectorSummaryView: View {
-    let request: URLRequest
-    let response: URLResponse?
-    let error: Error?
-
-    private var httpResponse: HTTPURLResponse? {
-        response as? HTTPURLResponse
-    }
-
-    private var isSuccess: Bool {
-        error == nil && (200..<400).contains(httpResponse?.statusCode ?? 200)
-    }
-
-    private var responseHeaders: [String: String]? {
-        httpResponse?.allHeaderFields as? [String: String]
-    }
+    let model: NetworkInspectorSummaryViewModel
 
     var body: some View {
         ScrollView {
@@ -32,17 +19,30 @@ struct NetworkInspectorSummaryView: View {
     private var responseSummaryView: some View {
         KeyValueSectionView(
             title: "Summary",
-            items: itemsForSummary,
-            tintColor: isSuccess ? .systemGreen : .systemRed
+            items: model.itemsForSummary,
+            tintColor: model.isSuccess ? .systemGreen : .systemRed
         )
     }
+}
 
-    // MARK: Data Access
+struct NetworkInspectorSummaryViewModel {
+    let request: NetworkLoggerRequest?
+    let response: NetworkLoggerResponse?
+    let responseBody: Data?
+    let error: NetworkLoggerError?
+    let metrics: NetworkLoggerMetrics?
 
-    private var itemsForSummary: [(String, String)] {
-        [("URL", request.url?.absoluteString ?? "–"),
-         ("Method", request.httpMethod ?? "–"),
-         ("Status Code", httpResponse.map { "\(descriptionForStatusCode($0.statusCode))" } ?? "–")]
+    var isSuccess: Bool {
+        guard let response = response else {
+            return false
+        }
+        return error == nil && (200..<400).contains(response.statusCode ?? 200)
+    }
+
+    var itemsForSummary: [(String, String)] {
+        [("URL", request?.url?.absoluteString ?? "–"),
+         ("Method", request?.httpMethod ?? "–"),
+         ("Status Code", response?.statusCode.map(descriptionForStatusCode) ?? "–")]
     }
 }
 
@@ -57,14 +57,16 @@ private func descriptionForStatusCode(_ statusCode: Int) -> String {
 struct NetworkInspectorSummaryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorSummaryView(
-                request: MockDataTask.login.request,
-                response: MockDataTask.login.response,
-                error: nil
-            )
+            NetworkInspectorSummaryView(model: mockModel)
         }
     }
 }
 
-
+private let mockModel = NetworkInspectorSummaryViewModel(
+    request: NetworkLoggerRequest(urlRequest: MockDataTask.login.request),
+    response: NetworkLoggerResponse(urlResponse: MockDataTask.login.response),
+    responseBody: MockDataTask.login.responseBody,
+    error: nil,
+    metrics: nil
+)
 #endif

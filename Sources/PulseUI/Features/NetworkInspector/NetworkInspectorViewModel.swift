@@ -12,9 +12,7 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
 
     private let controller: NSFetchedResultsController<MessageEntity>
 
-    @Published var messageCount = 0
-
-    public init(store: LoggerMessageStore, taskId: String) {
+    init(store: LoggerMessageStore, taskId: String) {
         self.store = store
         self.taskId = taskId
 
@@ -34,12 +32,23 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
 
     private func didUpdateMessages(_ messages: [MessageEntity]) {
         self.messages = messages
-        self.messageCount = messages.count
+    }
+
+    // MARK: - Tabs
+
+    func makeSummaryModel() -> NetworkInspectorSummaryViewModel {
+        NetworkInspectorSummaryViewModel(
+            request: nil,
+            response: nil,
+            responseBody: nil,
+            error: nil,
+            metrics: nil
+        )
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
 
-    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.didUpdateMessages(self.controller.fetchedObjects ?? [])
     }
 }
