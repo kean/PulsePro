@@ -79,28 +79,36 @@ public struct ConsoleShareService {
         var output = ""
 
         func add(title: String) {
-            output.append("# \(title)\n\n")
+            output.append("## \(title)\n\n")
         }
 
         func add(data: Data) {
             let json = try? JSONSerialization.jsonObject(with: data, options: [])
             output.append("```\(json != nil ? "json" : "")\n")
             output.append(prettifyJSON(data))
+            output.append("\n")
             output.append("```")
             output.append("\n\n")
         }
 
-        func add(_ keyValueViewModel: KeyValueSectionViewModel?) {
+        func add(_ keyValueViewModel: KeyValueSectionViewModel?, isEscaped: Bool = false) {
             guard let model = keyValueViewModel else { return }
             add(title: model.title)
             if model.items.isEmpty {
-                output.append("Empty")
+                output.append("Empty\n")
             } else {
+                if isEscaped {
+                    output.append("```\n")
+                }
                 for item in model.items {
                     output.append("\(item.0): \(item.1 ?? "–")")
+                    output.append("\n")
+                }
+                if isEscaped {
+                    output.append("```\n")
                 }
             }
-            output.append("\n\n")
+            output.append("\n")
         }
 
         let summary = NetworkInspectorSummaryViewModel(summary: info)
@@ -121,16 +129,14 @@ public struct ConsoleShareService {
 
         let headers = NetworkInspectorHeaderViewModel(request: info.request, response: info.response)
 
-        add(title: "Request Headers")
-        add(headers.requestHeaders)
+        add(headers.requestHeaders, isEscaped: true)
 
         if let body = info.requestBody {
             add(title: "Request Body")
             add(data: body)
         }
 
-        add(title: "Response Headers")
-        add(headers.responseHeaders)
+        add(headers.responseHeaders, isEscaped: true)
 
         if let body = info.responseBody {
             add(title: "Response Body")

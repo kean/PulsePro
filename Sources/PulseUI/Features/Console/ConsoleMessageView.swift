@@ -18,7 +18,7 @@ struct ConsoleMessageView: View {
                 .font(.body)
                 .foregroundColor(model.style.textColor)
                 .lineLimit(4)
-        }
+        }.padding(.vertical, 4)
     }
     #endif
 

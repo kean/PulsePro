@@ -31,12 +31,12 @@ struct NetworkInspectorHeaderViewModel {
 
     var requestHeaders: KeyValueSectionViewModel {
         let items = (request?.headers ?? [:]).sorted(by: { $0.key < $1.key })
-        return KeyValueSectionViewModel(title: "Request", color: .systemBlue, items: items)
+        return KeyValueSectionViewModel(title: "Request Headers", color: .systemBlue, items: items)
     }
 
     var responseHeaders: KeyValueSectionViewModel {
         let items = (response?.headers ?? [:]).sorted(by: { $0.key < $1.key })
-        return KeyValueSectionViewModel(title: "Response", color: .systemIndigo, items: items)
+        return KeyValueSectionViewModel(title: "Response Headers", color: .systemIndigo, items: items)
     }
 }
 
