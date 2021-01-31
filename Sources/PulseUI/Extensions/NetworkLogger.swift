@@ -223,7 +223,7 @@ public final class NetworkLogger: NSObject {
         let event = NetworkLoggerEvent.TaskDidStart(request: request)
 
         logger.log(
-            level: .debug,
+            level: .trace,
             "Did start request \(task.originalRequest?.url?.absoluteString ?? "null")",
             metadata: makeMetadata(context, task, .taskDidStart, event)
         )
