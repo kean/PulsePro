@@ -97,7 +97,7 @@ final class NetworkInspectorSummaryViewModel {
 
     var timingDetailsModel: KeyValueSectionViewModel? {
         guard let metrics = metrics else { return nil }
-        return KeyValueSectionViewModel(title: "Timing", color: .systemGray, items: [
+        return KeyValueSectionViewModel(title: "Timing", color: .systemBlue, items: [
             ("Start Date", dateFormatter.string(from: metrics.taskInterval.start)),
             ("Duration", DurationFormatter.string(from: metrics.taskInterval.duration)),
             ("Redirect Count", metrics.redirectCount.description),
