@@ -15,7 +15,6 @@
 		0C57ADA0245F0F87005B3400 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C57AD69245F0F38005B3400 /* Main.storyboard */; };
 		0C57ADA3245F0F8E005B3400 /* ConsoleToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6C245F0F38005B3400 /* ConsoleToolbarController.swift */; };
 		0C57ADA4245F0F91005B3400 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6E245F0F38005B3400 /* AppDelegate.swift */; };
-		0C57ADA5245F0F96005B3400 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD70245F0F38005B3400 /* Configuration.swift */; };
 		0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6B245F0F38005B3400 /* AppViewModel.swift */; };
 		0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */; };
 		0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */; };
@@ -94,7 +93,6 @@
 		0C57AD6D245F0F38005B3400 /* macOS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		0C57AD6E245F0F38005B3400 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C57AD6F245F0F38005B3400 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0C57AD70245F0F38005B3400 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		0C57AD74245F0F38005B3400 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C57AD76245F0F38005B3400 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C57AD77245F0F38005B3400 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 				0C57AD6D245F0F38005B3400 /* macOS.entitlements */,
 				0C57AD6E245F0F38005B3400 /* AppDelegate.swift */,
 				0C57AD6F245F0F38005B3400 /* Info.plist */,
-				0C57AD70245F0F38005B3400 /* Configuration.swift */,
 				0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */,
 			);
 			path = macOS;
@@ -366,7 +363,6 @@
 				0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */,
 				0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */,
 				0C57ADA4245F0F91005B3400 /* AppDelegate.swift in Sources */,
-				0C57ADA5245F0F96005B3400 /* Configuration.swift in Sources */,
 				0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */,
 				0C57ADA3245F0F8E005B3400 /* ConsoleToolbarController.swift in Sources */,
 				0C68426A25C5BD3000098066 /* MockNetworkLogger.swift in Sources */,

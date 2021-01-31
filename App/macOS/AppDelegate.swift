@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         model.delegate = self
 
-        if Configurataion.isMockStoreEnabled {
+        if ProcessInfo.processInfo.environment["PULSE_MOCK_STORE_ENABLED"] != nil {
             showConsole(model: ConsoleViewModel(store: .mock))
         } else {
             showWelcomeView()
