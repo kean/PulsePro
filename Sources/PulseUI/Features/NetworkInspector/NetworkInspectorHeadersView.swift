@@ -9,16 +9,16 @@ struct NetworkInspectorHeadersView: View {
     var body: some View {
         ScrollView {
             VStack {
-                makeSection(title: "Request", items: model.requestHeaders)
+                makeSection(title: "Request", color: .systemBlue, items: model.requestHeaders)
                 Spacer(minLength: 16)
-                makeSection(title: "Response", items: model.responseHeaders)
+                makeSection(title: "Response", color: .systemIndigo, items: model.responseHeaders)
                 Spacer()
             }.padding()
         }
     }
 
-    private func makeSection(title: String, items: [(String, String)]) -> some View {
-        KeyValueSectionView(model: KeyValueSectionViewModel(title: title, color: .systemBlue, items: items))
+    private func makeSection(title: String, color: UXColor, items: [(String, String)]) -> some View {
+        KeyValueSectionView(model: KeyValueSectionViewModel(title: title, color: color, items: items))
     }
 }
 
