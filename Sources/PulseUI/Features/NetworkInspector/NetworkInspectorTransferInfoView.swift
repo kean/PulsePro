@@ -33,6 +33,10 @@ struct NetworkInspectorTransferInfoView: View {
                 Image(uiImage:
                         UIImage(systemName: imageName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .default)) ?? .init())
                     .renderingMode(.template)
+                #else
+                if #available(OSX 11.0, *) {
+                    Image(nsImage: NSImage(systemSymbolName: imageName, accessibilityDescription: nil) ?? NSImage())
+                }
                 #endif
                 Text(total)
                     .font(.headline)
@@ -40,10 +44,10 @@ struct NetworkInspectorTransferInfoView: View {
             HStack(alignment: .center, spacing: 4) {
                 VStack(alignment: .trailing) {
                     Text("Headers:")
-                        .foregroundColor(Color(UXColor.label.withAlphaComponent(0.7)))
+                        .foregroundColor(.secondary)
                         .font(.system(size: fontSize))
                     Text("Body:")
-                        .foregroundColor(Color(UXColor.label.withAlphaComponent(0.7)))
+                        .foregroundColor(.secondary)
                         .font(.system(size: fontSize))
                 }
                 VStack(alignment: .leading) {

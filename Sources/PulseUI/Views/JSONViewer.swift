@@ -18,6 +18,7 @@ struct JSONViewer: View {
                 .foregroundColor: JSONColors.valueString,
                 .underlineStyle: 1
             ]
+            $0.backgroundColor = .clear
             $0.attributedText = JSONPrinter(json: json).print()
         }
     }

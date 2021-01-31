@@ -25,7 +25,7 @@ private struct TimingSectionView: View {
             HStack {
                 Text(model.title)
                     .font(.subheadline)
-                    .foregroundColor(Color(UXColor.label))
+                    .foregroundColor(.primary)
                 Spacer()
             }
 

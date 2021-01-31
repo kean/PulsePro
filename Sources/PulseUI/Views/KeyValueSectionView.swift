@@ -28,7 +28,7 @@ struct KeyValueSectionView: View {
                                 .foregroundColor(Color(actualTintColor))
                                 .font(.system(size: fontSize, weight: .medium))
                             let value = Text(row.item.1 ?? "–")
-                                .foregroundColor(Color(UXColor.label))
+                                .foregroundColor(.primary)
                                 .font(.system(size: fontSize, weight: .regular))
                             (title + value).lineLimit(nil)
                             Spacer()
