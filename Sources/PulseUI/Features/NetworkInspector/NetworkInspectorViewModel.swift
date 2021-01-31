@@ -49,6 +49,13 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
         )
     }
 
+    func makeHeadersModel() -> NetworkInspectorHeaderViewModel {
+        NetworkInspectorHeaderViewModel(
+            request: summary.request,
+            response: summary.response
+        )
+    }
+
     // MARK: - NSFetchedResultsControllerDelegate
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

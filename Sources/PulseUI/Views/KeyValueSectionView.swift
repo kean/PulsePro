@@ -15,7 +15,7 @@ struct KeyValueSectionView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
-                .font(.title)
+                .font(.headline)
 
             Wrapped<UXAutoTextView> {
                 $0.isSelectable = true
@@ -43,7 +43,7 @@ struct KeyValueSectionView: View {
     private func makeAttributedText() -> NSAttributedString {
         guard !items.isEmpty else {
             return NSAttributedString(string: "Empty", attributes: [
-                .foregroundColor: actualTintColor, .font: UXFont.systemFont(ofSize: 15, weight: .medium)
+                .foregroundColor: actualTintColor, .font: UXFont.systemFont(ofSize: fontSize, weight: .medium)
             ])
         }
         let output = NSMutableAttributedString()
@@ -51,11 +51,11 @@ struct KeyValueSectionView: View {
             let string = NSMutableAttributedString()
             string.append("" + key + ": ", [
                 .foregroundColor: actualTintColor,
-                .font: UXFont.systemFont(ofSize: 15, weight: .medium)
+                .font: UXFont.systemFont(ofSize: fontSize, weight: .medium)
             ])
             string.append(value, [
                 .foregroundColor: UXColor.label,
-                .font: UXFont.systemFont(ofSize: 15, weight: .regular)
+                .font: UXFont.systemFont(ofSize: fontSize, weight: .regular)
             ])
             if key != items.last?.0 {
                 string.append("\n")
@@ -64,5 +64,13 @@ struct KeyValueSectionView: View {
         }
 
         return output
+    }
+
+    private var fontSize: CGFloat {
+        #if os(iOS)
+        return 15
+        #else
+        return 12
+        #endif
     }
 }

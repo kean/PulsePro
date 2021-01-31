@@ -4,27 +4,34 @@
 import SwiftUI
 
 struct NetworkInspectorHeadersView: View {
-    let request: URLRequest
-    let response: URLResponse
-
-    private var responseHeaders: [String: String]? {
-        guard let httpResponse = (response as? HTTPURLResponse) else { return nil}
-        return httpResponse.allHeaderFields as? [String: String]
-    }
+    let model: NetworkInspectorHeaderViewModel
 
     var body: some View {
         ScrollView {
             VStack {
-                makeSection(title: "Request", headers: request.allHTTPHeaderFields)
-                makeSection(title: "Response", headers: responseHeaders)
+                makeSection(title: "Request", items: model.requestHeaders)
+                Spacer(minLength: 16)
+                makeSection(title: "Response", items: model.requestHeaders)
                 Spacer()
-            }.padding(10)
+            }.padding()
         }
     }
 
-    private func makeSection(title: String, headers: [String: String]?) -> some View {
-        let items = (headers ?? [:]).sorted(by: { $0.key > $1.key })
+    private func makeSection(title: String, items: [(String, String)]) -> some View {
         return KeyValueSectionView(title: title, items: items, tintColor: .systemBlue)
+    }
+}
+
+struct NetworkInspectorHeaderViewModel {
+    let request: NetworkLoggerRequest?
+    let response: NetworkLoggerResponse?
+
+    var requestHeaders: [(String, String)] {
+        (request?.headers ?? [:]).sorted(by: { $0.key < $1.key })
+    }
+
+    var responseHeaders: [(String, String)] {
+        (response?.headers ?? [:]).sorted(by: { $0.key < $1.key })
     }
 }
 
@@ -32,8 +39,13 @@ struct NetworkInspectorHeadersView: View {
 struct NetworkInspectorHeadersView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorHeadersView(request: MockDataTask.login.request, response: MockDataTask.login.response)
+            NetworkInspectorHeadersView(model: mockModel)
         }
     }
 }
+
+private let mockModel = NetworkInspectorHeaderViewModel(
+    request: NetworkLoggerRequest(urlRequest: MockDataTask.login.request),
+    response: NetworkLoggerResponse(urlResponse:  MockDataTask.login.response)
+)
 #endif

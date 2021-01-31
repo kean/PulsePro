@@ -7,6 +7,7 @@ import Pulse
 import Combine
 
 struct NetworkInspectorView: View {
+    // Make sure all tabs are updated live
     @ObservedObject var model: NetworkInspectorViewModel
     @State private var selectedTab: NetworkInspectorTab = .summary
 
@@ -28,13 +29,13 @@ struct NetworkInspectorView: View {
                 Text("Request").tag(NetworkInspectorTab.request)
             }
             .pickerStyle(SegmentedPickerStyle())
-            .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+            .padding()
 
             switch selectedTab {
             case .summary:
                 NetworkInspectorSummaryView(model: model.makeSummaryModel())
             case .headers:
-                Text("Headers")
+                NetworkInspectorHeadersView(model: model.makeHeadersModel())
             case .response:
                 Text("Response")
             case .request:

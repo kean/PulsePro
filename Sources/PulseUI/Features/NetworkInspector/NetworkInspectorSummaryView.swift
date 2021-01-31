@@ -12,7 +12,7 @@ struct NetworkInspectorSummaryView: View {
             VStack {
                 responseSummaryView
                 Spacer()
-            }.padding(10)
+            }.padding()
         }
     }
 
