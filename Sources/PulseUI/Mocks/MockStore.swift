@@ -6,14 +6,15 @@ import Pulse
 import CoreData
 import Logging
 
+#if DEBUG
 public extension LoggerMessageStore {
     static let mock: LoggerMessageStore = {
         let store = makeMockStore()
         populateStore(store)
 
-        //        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-        //            logger.log("Hello, world")
-        //        }
+//        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+//            populateStore(store)
+//        }
 
         return store
     }()
@@ -28,18 +29,6 @@ private func makeMockStore() -> LoggerMessageStore {
     return LoggerMessageStore(storeURL: storeURL)
 }
 
-private extension LoggerMessageStore {
-    /// - storeURL: The storeURL.
-    ///
-    /// - warning: Make sure the directory used in storeURL exists.
-    convenience init(storeURL: URL) {
-        let container = NSPersistentContainer(name: storeURL.lastPathComponent, managedObjectModel: Self.model)
-        let store = NSPersistentStoreDescription(url: storeURL)
-        container.persistentStoreDescriptions = [store]
-        self.init(container: container)
-    }
-}
-
 private extension NSManagedObject {
     convenience init(using usedContext: NSManagedObjectContext) {
         let name = String(describing: type(of: self))
@@ -51,68 +40,45 @@ private extension NSManagedObject {
 private func populateStore(_ store: LoggerMessageStore) {
     precondition(Thread.isMainThread)
 
-    let moc = store.container.viewContext
-
-    func addMessage(_ closure: (LoggerMessage) -> Void) {
-        let message = LoggerMessage(using: moc)
-        closure(message)
-        moc.insert(message)
+    func logger(named: String) -> Logger {
+        var logger = Logger(label: named, factory: { PersistentLogHandler(label: $0, store: store) })
+        logger.logLevel = .trace
+        return logger
     }
 
-    addMessage {
-        $0.createdAt = Date() - 0.11
-        $0.level = Logger.Level.info.rawValue
-        $0.label = "application"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = "UIApplication.didFinishLaunching"
+    logger(named: "application")
+        .log(level: .info, "UIApplication.didFinishLaunching")
+
+    logger(named: "application")
+        .log(level: .info, "UIApplication.willEnterForeground")
+
+    logger(named: "auth")
+        .log(level: .trace, "Instantiated Session")
+
+    logger(named: "auth")
+        .log(level: .trace, "Instantiated the new login request")
+
+    let networkLogger = NetworkLogger(logger(named: "network"))
+
+    let urlSession = URLSession(configuration: .default)
+
+    func logTask(_ mockTask: MockDataTask) {
+        let dataTask = urlSession.dataTask(with: mockTask.request)
+        networkLogger.urlSession(urlSession, didStartTask: dataTask)
+        networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.response)
+        networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.responseBody)
+        networkLogger.testInjectMetrics(mockTask.metrics, for: dataTask)
+        networkLogger.urlSession(urlSession, task: dataTask, didCompleteWithError: nil)
     }
 
-    addMessage {
-        $0.createdAt = Date() - 0.1
-        $0.level = Logger.Level.info.rawValue
-        $0.label = "application"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = "UIApplication.willEnterForeground"
-    }
+    logTask(MockDataTask.login)
 
-    addMessage {
-        $0.createdAt = Date() - 0.095
-        $0.level = Logger.Level.trace.rawValue
-        $0.label = "auth"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = "Instantiated Session"
-    }
+    logger(named: "application")
+        .log(level: .info, "Will navigate to Dashboard")
 
-    addMessage {
-        $0.createdAt = Date() - 0.092
-        $0.level = Logger.Level.trace.rawValue
-        $0.label = "auth"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = "Instantiated the new login request"
-    }
+    logTask(MockDataTask.profileFailure)
 
-    addMessage {
-        $0.createdAt = Date() - 0.07
-        $0.level = Logger.Level.debug.rawValue
-        $0.label = "auth"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = "🌐 Will authorize user with name \"kean@github.com\""
-    }
-
-    addMessage {
-        $0.createdAt = Date() - 0.05
-        $0.level = Logger.Level.warning.rawValue
-        $0.label = "auth"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = "🌐 Authorization request failed with error 500"
-    }
-
-    addMessage {
-        $0.createdAt = Date() - 0.04
-        $0.level = Logger.Level.debug.rawValue
-        $0.label = "auth"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = """
+    let stackTrace = """
         Replace this implementation with code to handle the error appropriately. fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 
         2015-12-08 15:04:03.888 Conversion[76776:4410388] call stack:
@@ -132,19 +98,14 @@ private func populateStore(_ store: LoggerMessageStore) {
             20  libdyld.dylib                       0x34f34873 <redacted> + 2
         )
         """
-    }
 
-    addMessage {
-        $0.createdAt = Date() - 0.03
-        $0.level = Logger.Level.critical.rawValue
-        $0.label = "default"
-        $0.session = PersistentLogHandler.logSessionId.uuidString
-        $0.text = "💥 0xDEADBEEF"
-    }
+    logger(named: "auth")
+        .log(level: .warning, .init(stringLiteral: stackTrace))
 
-//    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-//        populateStore(logger)
-//    }
+    logger(named: "default")
+        .log(level: .critical, "💥 0xDEADBEEF")
 
-    try! moc.save()
+    // Wait until everything is stored
+    store.container.viewContext.performAndWait {}
 }
+#endif

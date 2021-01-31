@@ -11,7 +11,8 @@ import UIKit
 
 // TODO: create a ViewModel for a share sheet
 struct ConsoleMessageViewListItem: View {
-    let message: LoggerMessage
+    let store: LoggerMessageStore
+    let message: MessageEntity
 
     @Binding var searchCriteria: ConsoleSearchCriteria
     @State private var isShowingShareSheet = false
@@ -32,24 +33,23 @@ struct ConsoleMessageViewListItem: View {
                     Image(uiImage: UIImage(systemName: "doc.on.doc", withConfiguration: UIImage.SymbolConfiguration(pointSize: 44, weight: .black, scale: .medium))!)
                 }
                 Button(action: {
-                    let filter = ConsoleSearchFilter(text: self.message.label, kind: .system, relation: .equals)
+                    let filter = ConsoleSearchFilter(text: self.message.label, kind: .label, relation: .equals)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Focus Label \'\(message.label)\'")
+                    Text("Focus \'\(message.label)\'")
                     Image(systemName: "eye")
                 }
                 Button(action: {
-                    let filter = ConsoleSearchFilter(text: self.message.label, kind: .system, relation: .doesNotEqual)
+                    let filter = ConsoleSearchFilter(text: self.message.label, kind: .label, relation: .doesNotEqual)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Hide Label \'\(message.label)\'")
+                    Text("Hide \'\(message.label)\'")
                     Image(systemName: "eye.slash")
                 }.foregroundColor(.red)
         }
         .sheet(isPresented: $isShowingShareSheet) {
-            ShareView(activityItems: [self.message.text])
+            ShareView(activityItems: [ConsoleShareService(store: store).prepareMessageForSharing(message)])
         }
     }
 }
-
 #endif

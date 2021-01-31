@@ -24,7 +24,7 @@ struct ConsoleMessageViewModel {
         self.style = style
     }
 
-    init(message: LoggerMessage) {
+    init(message: MessageEntity) {
         let time = ConsoleMessageViewModel.timeFormatter
             .string(from: message.createdAt)
         self.title = "\(time) | \(message.label)"

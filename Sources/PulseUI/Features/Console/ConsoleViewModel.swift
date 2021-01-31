@@ -9,7 +9,7 @@ import SwiftUI
 
 public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let store: LoggerMessageStore
-    private var controller: NSFetchedResultsController<LoggerMessage>
+    private var controller: NSFetchedResultsController<MessageEntity>
 
     @Published public private(set) var messages: ConsoleMessages
 
@@ -28,11 +28,11 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
     public init(store: LoggerMessageStore) {
         self.store = store
 
-        let request = NSFetchRequest<LoggerMessage>(entityName: "\(LoggerMessage.self)")
+        let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         request.fetchBatchSize = 40
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \LoggerMessage.createdAt, ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.createdAt, ascending: false)]
 
-        self.controller = NSFetchedResultsController<LoggerMessage>(fetchRequest: request, managedObjectContext: store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.controller = NSFetchedResultsController<MessageEntity>(fetchRequest: request, managedObjectContext: store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
 
         super.init()
@@ -79,9 +79,21 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
         store.removeAllMessages()
     }
 
+    // MARK: - DetailsViewModel
+
+    func makeDetailsRouter(for message: MessageEntity) -> ConsoleMessageDetailsRouter {
+        ConsoleMessageDetailsRouter(store: store, message: message)
+    }
+
     // MARK: - NSFetchedResultsControllerDelegate
 
     public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
+    }
+
+    // MARK: - Temporary
+
+    func tempGetStore() -> LoggerMessageStore {
+        store
     }
 }

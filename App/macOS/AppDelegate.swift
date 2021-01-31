@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         model.delegate = self
 
-        if Configurataion.isMockStoreEnabled {
+        if ProcessInfo.processInfo.environment["PULSE_MOCK_STORE_ENABLED"] != nil {
             showConsole(model: ConsoleViewModel(store: .mock))
         } else {
             showWelcomeView()
@@ -60,11 +60,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         let contentView = ConsoleView(model: model)
         window.contentView = NSHostingView(rootView: contentView)
 
-        let toolbar = NSToolbar(identifier: "console.toolbar")
-        let toolbarController = ConsoleToolbarController(model: model)
-        toolbar.delegate = toolbarController
-        window.toolbar = toolbar
-        window.bag.append(AnyCancellable { _ = toolbarController })
+        // TODO: Add toolbar late
+//        let toolbar = NSToolbar(identifier: "console.toolbar")
+//        let toolbarController = ConsoleToolbarController(model: model)
+//        toolbar.delegate = toolbarController
+//        window.toolbar = toolbar
+//        window.bag.append(AnyCancellable { _ = toolbarController })
 
         model.$messages
             .map { "Console (\($0.count) messages)" }

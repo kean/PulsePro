@@ -25,7 +25,7 @@ final class ConsoleMessageDetailsViewModel {
         self.style = style
     }
 
-    init(message: LoggerMessage) {
+    init(message: MessageEntity) {
         self.tags = [
             ConsoleMessageTagViewModel(
                 title: "Date",

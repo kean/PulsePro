@@ -11,10 +11,33 @@ import Combine
 // this should do.
 public final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
     private let tokenField = NSTokenField()
-    private var searchCriteria: Binding<ConsoleSearchCriteria>
+    var searchCriteria: Binding<ConsoleSearchCriteria>!
     private var observer: Any?
     private var cancellable: AnyCancellable?
 
+    public override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+
+        tokenField.placeholderAttributedString = makePlaceholderString()
+        tokenField.delegate = self
+        tokenField.tokenStyle = .rounded
+
+        addSubview(tokenField)
+        tokenField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tokenField.topAnchor.constraint(equalTo: topAnchor),
+            tokenField.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tokenField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tokenField.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+
+        observer = NotificationCenter.default
+            .addObserver(forName: NSControl.textDidChangeNotification, object: tokenField, queue: nil) { [weak self] _ in
+                self?.tokensUpdated()
+            }
+    }
+
+    #warning("TODO: remove")
     public init(searchCriteria: Binding<ConsoleSearchCriteria>) {
         self.searchCriteria = searchCriteria
 

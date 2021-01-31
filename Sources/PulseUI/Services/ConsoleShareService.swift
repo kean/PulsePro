@@ -50,7 +50,7 @@ public struct ConsoleShareService {
         return sharedDirUrl
     }
 
-    private func format(messages: [LoggerMessage]) -> Data? {
+    private func format(messages: [MessageEntity]) -> Data? {
         var output = ""
         for message in messages {
             output.append(format(message: message))
@@ -59,8 +59,91 @@ public struct ConsoleShareService {
         return output.data(using: .utf8)
     }
 
-    private func format(message: LoggerMessage) -> String {
+    private func format(message: MessageEntity) -> String {
         "\(dateFormatter.string(from: message.createdAt)) [\(message.level)]-[\(message.label)] \(message.text)"
+    }
+
+    func prepareMessageForSharing(_ message: MessageEntity) -> String {
+        if let taskId = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.taskId.rawValue })?.value {
+            return prepareNetworkMessageForSharing(taskId: taskId)
+        } else {
+            return message.text
+        }
+    }
+
+    private func prepareNetworkMessageForSharing(taskId: String) -> String {
+        return prepareForSharing(summary: NetworkLoggerSummary(store: store, taskId: taskId))
+    }
+
+    func prepareForSharing(summary info: NetworkLoggerSummary) -> String {
+        var output = ""
+
+        func add(title: String) {
+            output.append("## \(title)\n\n")
+        }
+
+        func add(data: Data) {
+            let json = try? JSONSerialization.jsonObject(with: data, options: [])
+            output.append("```\(json != nil ? "json" : "")\n")
+            output.append(prettifyJSON(data))
+            output.append("\n")
+            output.append("```")
+            output.append("\n\n")
+        }
+
+        func add(_ keyValueViewModel: KeyValueSectionViewModel?, isEscaped: Bool = false) {
+            guard let model = keyValueViewModel else { return }
+            add(title: model.title)
+            if model.items.isEmpty {
+                output.append("Empty\n")
+            } else {
+                if isEscaped {
+                    output.append("```\n")
+                }
+                for item in model.items {
+                    output.append("\(item.0): \(item.1 ?? "–")")
+                    output.append("\n")
+                }
+                if isEscaped {
+                    output.append("```\n")
+                }
+            }
+            output.append("\n")
+        }
+
+        let summary = NetworkInspectorSummaryViewModel(summary: info)
+        add(summary.summaryModel)
+        add(summary.errorModel)
+        add(summary.timingDetailsModel)
+        if let transferModel = summary.transferModel {
+            add(KeyValueSectionViewModel(title: "Sent data", color: .gray, items: [
+                ("Total Bytes Sent", transferModel.totalBytesSent),
+                ("Headers Sent", transferModel.headersBytesSent),
+                ("Body Sent", transferModel.bodyBytesSent),
+                ("Total Bytes Recieved", transferModel.totalBytesRecieved),
+                ("Headers Recieved", transferModel.headersBytesRecieved),
+                ("Body Recieved", transferModel.bodyBytesRecieved),
+            ]))
+        }
+        add(summary.parametersModel)
+
+        let headers = NetworkInspectorHeaderViewModel(request: info.request, response: info.response)
+
+        add(headers.requestHeaders, isEscaped: true)
+
+        if let body = info.requestBody {
+            add(title: "Request Body")
+            add(data: body)
+        }
+
+        add(headers.responseHeaders, isEscaped: true)
+
+        if let body = info.responseBody {
+            add(title: "Response Body")
+            add(data: body)
+        }
+
+        return output
     }
 }
 
