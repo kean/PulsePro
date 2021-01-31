@@ -39,7 +39,8 @@ public enum NetworkLoggerEvent {
         public let request: NetworkLoggerRequest
         public let response: NetworkLoggerResponse?
         public let error: NetworkLoggerError?
-        public let data: Data?
+        public let requestBody: Data?
+        public let responseBody: Data?
         public let metrics: NetworkLoggerMetrics?
     }
 }
@@ -48,11 +49,26 @@ public struct NetworkLoggerRequest: Codable {
     public let url: URL?
     public let httpMethod: String?
     public let headers: [String: String]
+    /// `URLRequest.CachePolicy` raw value
+    public let cachePolicy: UInt
+    public let timeoutInterval: TimeInterval
+    public let allowsCellularAccess: Bool
+    public let allowsExpensiveNetworkAccess: Bool
+    public let allowsConstrainedNetworkAccess: Bool
+    public let httpShouldHandleCookies: Bool
+    public let httpShouldUsePipelining: Bool
 
     init(urlRequest: URLRequest) {
         self.url = urlRequest.url
         self.httpMethod = urlRequest.httpMethod
         self.headers = urlRequest.allHTTPHeaderFields ?? [:]
+        self.cachePolicy = urlRequest.cachePolicy.rawValue
+        self.timeoutInterval = urlRequest.timeoutInterval
+        self.allowsCellularAccess = urlRequest.allowsCellularAccess
+        self.allowsExpensiveNetworkAccess = urlRequest.allowsExpensiveNetworkAccess
+        self.allowsConstrainedNetworkAccess = urlRequest.allowsConstrainedNetworkAccess
+        self.httpShouldHandleCookies = urlRequest.httpShouldHandleCookies
+        self.httpShouldUsePipelining = urlRequest.httpShouldUsePipelining
     }
 }
 
@@ -83,14 +99,18 @@ public struct NetworkLoggerError: Codable {
 public struct NetworkLoggerMetrics: Codable {
     public let taskInterval: DateInterval
     public let redirectCount: Int
+    public let transactions: [NetworkLoggerTransactionMetrics]
 
     init(metrics: URLSessionTaskMetrics) {
         self.taskInterval = metrics.taskInterval
         self.redirectCount = metrics.redirectCount
+        self.transactions = metrics.transactionMetrics.map(NetworkLoggerTransactionMetrics.init)
     }
 }
 
 public final class NetworkLoggerTransactionMetrics: Codable {
+    public let request: NetworkLoggerRequest?
+    public let response: NetworkLoggerResponse?
     public let fetchStartDate: Date?
     public let domainLookupStartDate: Date?
     public let domainLookupEndDate: Date?
@@ -127,6 +147,8 @@ public final class NetworkLoggerTransactionMetrics: Codable {
     public let negotiatedTLSCipherSuite: UInt16?
 
     init(metrics: URLSessionTaskTransactionMetrics) {
+        self.request = NetworkLoggerRequest(urlRequest: metrics.request)
+        self.response = metrics.response.map(NetworkLoggerResponse.init)
         self.fetchStartDate = metrics.fetchStartDate
         self.domainLookupStartDate = metrics.domainLookupStartDate
         self.domainLookupEndDate = metrics.domainLookupEndDate
@@ -242,7 +264,7 @@ public final class NetworkLogger: NSObject {
         let request = NetworkLoggerRequest(urlRequest: urlRequest)
         let response = context.response.map(NetworkLoggerResponse.init)
         let metrics = context.metrics
-        let event = NetworkLoggerEvent.TaskDidComplete(request: request, response: response, error: error, data: context.data, metrics: metrics)
+        let event = NetworkLoggerEvent.TaskDidComplete(request: request, response: response, error: error, requestBody: urlRequest.httpBody, responseBody: context.data, metrics: metrics)
 
         let level: Logger.Level
         let message: String

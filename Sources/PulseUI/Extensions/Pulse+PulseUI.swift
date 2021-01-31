@@ -18,10 +18,10 @@ extension LoggerMessageStore {
             guard let payload = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.payload.rawValue })?.value else {
                 return nil
             }
-            guard let data = payload.data(using: .utf8) else {
+            guard let responseBody = payload.data(using: .utf8) else {
                 return nil
             }
-            return try? JSONDecoder().decode(NetworkLoggerEvent.TaskDidComplete.self, from: data)
+            return try? JSONDecoder().decode(NetworkLoggerEvent.TaskDidComplete.self, from: responseBody)
         }
 
         let message = messages.first(where: {

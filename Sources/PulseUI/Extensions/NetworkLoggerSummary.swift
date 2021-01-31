@@ -27,7 +27,7 @@ final class NetworkLoggerSummary {
         self.request = didCompleteEvent.request
         self.response = didCompleteEvent.response
         self.error = didCompleteEvent.error
-        self.responseBody = didCompleteEvent.data
+        self.responseBody = didCompleteEvent.responseBody
         self.metrics = didCompleteEvent.metrics
     }
 }
