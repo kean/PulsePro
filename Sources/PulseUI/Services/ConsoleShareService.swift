@@ -76,6 +76,18 @@ public struct ConsoleShareService {
 
         var output = ""
 
+        func add(title: String) {
+            output.append("# \(title)\n\n")
+        }
+
+        func add(data: Data) {
+            let json = try? JSONSerialization.jsonObject(with: data, options: [])
+            output.append("```\(json != nil ? "json" : "")\n")
+            output.append(prettifyJSON(data))
+            output.append("```")
+            output.append("\n\n")
+        }
+
         func add(_ keyValueViewModel: KeyValueSectionViewModel?) {
             guard let model = keyValueViewModel else { return }
             add(title: model.title)
@@ -86,18 +98,6 @@ public struct ConsoleShareService {
                     output.append("\(item.0): \(item.1 ?? "–")")
                 }
             }
-            output.append("\n\n")
-        }
-
-        func add(title: String) {
-            output.append("# \(title)\n\n")
-        }
-
-        func add(data: Data) {
-            let json = try? JSONSerialization.jsonObject(with: data, options: [])
-            output.append("```\(json != nil ? "json" : "")\n")
-            output.append(prettifyJSON(data))
-            output.append("```")
             output.append("\n\n")
         }
 
