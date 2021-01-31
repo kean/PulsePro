@@ -37,7 +37,7 @@ struct NetworkInspectorView: View {
             case .headers:
                 NetworkInspectorHeadersView(model: model.makeHeadersModel())
             case .response:
-                Text("Response")
+                NetworkInspectorResponseView(model: model.makeResponseModel())
             case .request:
                 Text("Request")
             }

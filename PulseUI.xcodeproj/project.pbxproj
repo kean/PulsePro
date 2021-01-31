@@ -202,9 +202,9 @@
 			children = (
 				OBJ_30 /* NetworkInspectorView.swift */,
 				0C70401625C5FBCC00897C5B /* NetworkInspectorViewModel.swift */,
+				OBJ_28 /* NetworkInspectorSummaryView.swift */,
 				OBJ_26 /* NetworkInspectorHeadersView.swift */,
 				OBJ_27 /* NetworkInspectorResponseView.swift */,
-				OBJ_28 /* NetworkInspectorSummaryView.swift */,
 				OBJ_29 /* NetworkInspectorTimingView.swift */,
 			);
 			path = NetworkInspector;

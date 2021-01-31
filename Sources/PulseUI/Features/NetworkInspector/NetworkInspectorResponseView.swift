@@ -7,14 +7,28 @@ import Pulse
 import Combine
 
 struct NetworkInspectorResponseView: View {
-    let data: Data
+    let model: NetworkInspectorResponseViewModel
 
     var body: some View {
-        if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
-            JSONViewer(json: json)
+        if let data = model.data {
+            if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+                JSONViewer(json: json)
+            } else {
+                Text(String(bytes: data, encoding: .utf8) ?? "Data: \(data.localizedSize)")
+            }
         } else {
-            Text(String(bytes: data, encoding: .utf8) ?? "–")
+            Text("Empty")
         }
+    }
+}
+
+struct NetworkInspectorResponseViewModel {
+    let data: Data?
+}
+
+private extension Data {
+    var localizedSize: String {
+        ByteCountFormatter.string(fromByteCount: Int64(count), countStyle: .file)
     }
 }
 
@@ -22,14 +36,17 @@ struct NetworkInspectorResponseView: View {
 struct NetworkInspectorResponseView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorResponseView(data: MockDataTask.login.responseBody)
+            NetworkInspectorResponseView(model: mockModel)
+                .previewDisplayName("Light")
                 .environment(\.colorScheme, .light)
 
-            NetworkInspectorResponseView(data: MockDataTask.login.responseBody)
-            .previewDisplayName("Dark")
+            NetworkInspectorResponseView(model: mockModel)
+                .previewDisplayName("Dark")
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .dark)
         }
     }
 }
+
+private let mockModel = NetworkInspectorResponseViewModel(data: MockJSON.allPossibleValues)
 #endif

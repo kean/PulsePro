@@ -56,6 +56,12 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
         )
     }
 
+    func makeResponseModel() -> NetworkInspectorResponseViewModel {
+        NetworkInspectorResponseViewModel(
+            data: summary.responseBody
+        )
+    }
+
     // MARK: - NSFetchedResultsControllerDelegate
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
