@@ -4,18 +4,25 @@
 import SwiftUI
 import Pulse
 
+// MARK: - View
+
 struct NetworkInspectorSummaryView: View {
     let model: NetworkInspectorSummaryViewModel
 
     var body: some View {
         ScrollView {
             VStack {
-                KeyValueSectionView(model: model.summary)
+                KeyValueSectionView(model: model.summaryModel)
+                if let error = model.errorModel {
+                    KeyValueSectionView(model: error)
+                }
                 Spacer()
             }.padding()
         }
     }
 }
+
+// MARK: - ViewModel
 
 final class NetworkInspectorSummaryViewModel {
     private let request: NetworkLoggerRequest?
@@ -50,7 +57,7 @@ final class NetworkInspectorSummaryViewModel {
         return isSuccess ? .systemGreen : .systemRed
     }
 
-    var summary: KeyValueSectionViewModel {
+    var summaryModel: KeyValueSectionViewModel {
         KeyValueSectionViewModel(
             title: "Summary",
             color: tintColor,
@@ -60,6 +67,27 @@ final class NetworkInspectorSummaryViewModel {
                 ("Status Code", response?.statusCode.map(descriptionForStatusCode) ?? "–")
             ])
     }
+
+    var errorModel: KeyValueSectionViewModel? {
+        guard let error = error else { return nil }
+        return KeyValueSectionViewModel(
+            title: "Error",
+            color: .systemRed,
+            items: [
+                ("Domain", error.domain),
+                ("Code", descriptionForError(domain: error.domain, code: error.code)),
+                ("Message", error.localizedDescription)
+            ])
+    }
+}
+
+// MARK: - Private
+
+private func descriptionForError(domain: String, code: Int) -> String {
+    guard domain == NSURLErrorDomain else {
+        return "\(code)"
+    }
+    return "\(code) (\(descriptionForURLErrorCode(code)))"
 }
 
 private func descriptionForStatusCode(_ statusCode: Int) -> String {
@@ -68,6 +96,8 @@ private func descriptionForStatusCode(_ statusCode: Int) -> String {
     default: return "\(statusCode) (\( HTTPURLResponse.localizedString(forStatusCode: statusCode).capitalized))"
     }
 }
+
+// MARK: - Preview
 
 #if DEBUG
 struct NetworkInspectorSummaryView_Previews: PreviewProvider {
@@ -92,7 +122,7 @@ private let mockFailureModel = NetworkInspectorSummaryViewModel(
     request: NetworkLoggerRequest(urlRequest: MockDataTask.login.request),
     response: nil,
     responseBody: nil,
-    error: NetworkLoggerError(error: NSError(domain: NSURLErrorDomain, code: NSURLErrorNotConnectedToInternet, userInfo: [NSLocalizedDescriptionKey: "Not connected to the internet"])),
+    error: NetworkLoggerError(error: NSError(domain: NSURLErrorDomain, code: NSURLErrorNotConnectedToInternet, userInfo: [NSLocalizedDescriptionKey: "The Internet connection appears to be offline."])),
     metrics: nil
 )
 #endif

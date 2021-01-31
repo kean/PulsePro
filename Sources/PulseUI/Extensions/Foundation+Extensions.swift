@@ -51,6 +51,61 @@ extension tls_protocol_version_t {
     }
 }
 
+func descriptionForURLErrorCode(_ code: Int) -> String {
+    switch code {
+    case NSURLErrorUnknown: return "URLErrorUnknown"
+    case NSURLErrorCancelled: return "URLErrorCancelled"
+    case NSURLErrorBadURL: return "URLErrorBadURL"
+    case NSURLErrorTimedOut: return "URLErrorTimedOut"
+    case NSURLErrorUnsupportedURL: return "URLErrorUnsupportedURL"
+    case NSURLErrorCannotFindHost: return "URLErrorCannotFindHost"
+    case NSURLErrorCannotConnectToHost: return "URLErrorCannotConnectToHost"
+    case NSURLErrorNetworkConnectionLost: return "URLErrorNetworkConnectionLost"
+    case NSURLErrorDNSLookupFailed: return "URLErrorDNSLookupFailed"
+    case NSURLErrorHTTPTooManyRedirects: return "URLErrorHTTPTooManyRedirects"
+    case NSURLErrorResourceUnavailable: return "URLErrorResourceUnavailable"
+    case NSURLErrorNotConnectedToInternet: return "URLErrorNotConnectedToInternet"
+    case NSURLErrorRedirectToNonExistentLocation: return "URLErrorRedirectToNonExistentLocation"
+    case NSURLErrorBadServerResponse: return "URLErrorBadServerResponse"
+    case NSURLErrorUserCancelledAuthentication: return "URLErrorUserCancelledAuthentication"
+    case NSURLErrorUserAuthenticationRequired: return "URLErrorUserAuthenticationRequired"
+    case NSURLErrorZeroByteResource: return "URLErrorZeroByteResource"
+    case NSURLErrorCannotDecodeRawData: return "URLErrorCannotDecodeRawData"
+    case NSURLErrorCannotDecodeContentData: return "URLErrorCannotDecodeContentData"
+    case NSURLErrorCannotParseResponse: return "URLErrorCannotParseResponse"
+    case NSURLErrorAppTransportSecurityRequiresSecureConnection: return "URLErrorAppTransportSecurityRequiresSecureConnection"
+    case NSURLErrorFileDoesNotExist: return "URLErrorFileDoesNotExist"
+    case NSURLErrorFileIsDirectory: return "URLErrorFileIsDirectory"
+    case NSURLErrorNoPermissionsToReadFile: return "URLErrorNoPermissionsToReadFile"
+    case NSURLErrorDataLengthExceedsMaximum: return "URLErrorDataLengthExceedsMaximum"
+    case NSURLErrorFileOutsideSafeArea: return "URLErrorFileOutsideSafeArea"
+    case NSURLErrorSecureConnectionFailed: return "URLErrorSecureConnectionFailed"
+    case NSURLErrorServerCertificateHasBadDate: return "URLErrorServerCertificateHasBadDate"
+    case NSURLErrorServerCertificateUntrusted: return "URLErrorServerCertificateUntrusted"
+    case NSURLErrorServerCertificateHasUnknownRoot: return "URLErrorServerCertificateHasUnknownRoot"
+    case NSURLErrorServerCertificateNotYetValid: return "URLErrorServerCertificateNotYetValid"
+    case NSURLErrorClientCertificateRejected: return "URLErrorClientCertificateRejected"
+    case NSURLErrorClientCertificateRequired: return "URLErrorClientCertificateRequired"
+    case NSURLErrorCannotLoadFromNetwork: return "URLErrorCannotLoadFromNetwork"
+    case NSURLErrorCannotCreateFile: return "URLErrorCannotCreateFile"
+    case NSURLErrorCannotOpenFile: return "URLErrorCannotOpenFile"
+    case NSURLErrorCannotCloseFile: return "URLErrorCannotCloseFile"
+    case NSURLErrorCannotWriteToFile: return "URLErrorCannotWriteToFile"
+    case NSURLErrorCannotRemoveFile: return "URLErrorCannotRemoveFile"
+    case NSURLErrorCannotMoveFile: return "URLErrorCannotMoveFile"
+    case NSURLErrorDownloadDecodingFailedMidStream: return "URLErrorDownloadDecodingFailedMidStream"
+    case NSURLErrorDownloadDecodingFailedToComplete: return "URLErrorDownloadDecodingFailedToComplete"
+    case NSURLErrorInternationalRoamingOff: return "URLErrorInternationalRoamingOff"
+    case NSURLErrorCallIsActive: return "URLErrorCallIsActive"
+    case NSURLErrorDataNotAllowed: return "URLErrorDataNotAllowed"
+    case NSURLErrorRequestBodyStreamExhausted: return "URLErrorRequestBodyStreamExhausted"
+    case NSURLErrorBackgroundSessionRequiresSharedContainer: return "URLErrorBackgroundSessionRequiresSharedContainer"
+    case NSURLErrorBackgroundSessionInUseByAnotherProcess: return "URLErrorBackgroundSessionInUseByAnotherProcess"
+    case NSURLErrorBackgroundSessionWasDisconnected: return "URLErrorBackgroundSessionWasDisconnected"
+    default: return "Unknown"
+    }
+}
+
 extension Array {
     func chunked(into size: Int) -> [[Element]] {
         return stride(from: 0, to: count, by: size).map {

@@ -24,8 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let model = ConsoleViewModel(store: .mock)
         let contentView = ConsoleView(model: model)
 
-        MockNetworkLogger.shared.sendRequest()
-
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
