@@ -6,13 +6,37 @@ import SwiftUI
 // MARK: - View
 
 struct NetworkInspectorMetricsDetailsView: View {
+    @Environment(\.horizontalSizeClass) var sizeClass: UserInterfaceSizeClass?
+
     let model: NetworkMetricsDetailsViewModel
 
     var body: some View {
-        ForEach(model.sections, id: \.title) {
-            KeyValueSectionView(title: $0.title, items: $0.items, tintColor: $0.color)
+        if sizeClass == .regular {
+            let rows = model.sections.chunked(into: 2).enumerated().map {
+                Row(index: $0, items: $1)
+            }
+            ForEach(rows, id: \.index) { row in
+                HStack {
+                    ForEach(row.items, id: \.title) { item in
+                        VStack {
+                            KeyValueSectionView(title: item.title, items: item.items, tintColor: item.color)
+                            Spacer()
+                                .layoutPriority(1)
+                        }
+                    }
+                }
+            }
+        } else {
+            ForEach(model.sections, id: \.title) {
+                KeyValueSectionView(title: $0.title, items: $0.items, tintColor: $0.color)
+            }
         }
     }
+}
+
+private struct Row {
+    let index: Int
+    let items: [NetworkMetricsDetailsSectionViewModel]
 }
 
 // MARK: - ViewModel
@@ -24,8 +48,8 @@ struct NetworkMetricsDetailsViewModel {
         self.sections = [
             makeTransferSection(for: metrics),
             makeProtocolSection(for: metrics),
-            makeSecuritySection(for: metrics),
-            makeMiscSection(for: metrics)
+            makeMiscSection(for: metrics),
+            makeSecuritySection(for: metrics)
         ].compactMap { $0 }
     }
 }
