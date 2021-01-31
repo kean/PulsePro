@@ -9,18 +9,17 @@ struct NetworkInspectorMetricsView: View {
     let model: NetworkInspectorMetricsViewModel
 
     var body: some View {
-        GeometryReader { geo in
-            ScrollView {
+        ScrollView {
+            GeometryReader { geo in
                 VStack {
                     TimingView(model: model.timingModel, width: geo.size.width)
-                        .padding()
+                    Spacer(minLength: 16)
 
                     KeyValueSectionView(title: "Total", items: [
                         ("Duration", formatDuration(model.metrics.taskInterval.duration))
                     ], tintColor: .secondaryLabel)
-                    .padding()
                 }
-            }
+            }.padding()
         }
     }
 }
@@ -81,14 +80,23 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
             if let secureConnectionStartDate = transaction.secureConnectionStartDate {
                 connection.append(makeRow(title: "Secure", color: .systemRed, from: secureConnectionStartDate, to: transaction.secureConnectionEndDate))
             }
+
+            if let requestStartDate = transaction.requestStartDate {
+                response.append(makeRow(title: "Waiting", color: .systemGreen, from: requestStartDate, to: transaction.requestEndDate))
+            }
+            if let responseStartDate = transaction.responseStartDate {
+                response.append(makeRow(title: "Download", color: .systemBlue, from: responseStartDate, to: transaction.responseEndDate))
+            }
+
+
             if !scheduling.isEmpty {
-                sections.append(TimingRowSectionViewModel(title: "Connection", items: connection))
+                sections.append(TimingRowSectionViewModel(title: "Connection", items: scheduling))
             }
             if !connection.isEmpty {
                 sections.append(TimingRowSectionViewModel(title: "Connection", items: connection))
             }
             if !response.isEmpty {
-                sections.append(TimingRowSectionViewModel(title: "Response", items: connection))
+                sections.append(TimingRowSectionViewModel(title: "Response", items: response))
             }
         default:
             continue

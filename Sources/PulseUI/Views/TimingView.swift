@@ -48,7 +48,7 @@ private struct TimingRowView: View {
 
     var body: some View {
         HStack {
-            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth - 10
+            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth - 16
             let start = clamp(model.start)
             let length = min(1 - start, model.length)
 
