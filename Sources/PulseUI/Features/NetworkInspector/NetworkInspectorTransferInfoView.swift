@@ -30,7 +30,9 @@ struct NetworkInspectorTransferInfoView: View {
                 .font(.headline)
             HStack {
                 #if os(iOS)
-                Image(uiImage: UIImage(systemName: imageName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .default)) ?? .init())
+                Image(uiImage:
+                        UIImage(systemName: imageName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .default)) ?? .init())
+                    .renderingMode(.template)
                 #endif
                 Text(total)
                     .font(.headline)
