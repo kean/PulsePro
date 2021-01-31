@@ -24,7 +24,7 @@ final class MockNetworkLogger {
 
     func sendRequest() {
         // TODO: remove this
-        let url = URL(string: "https://www.flickr.com/services/rest/?method=flickr.photos.getExif&api_key=028205e598d52ef77ec2d7664cc7aafc&photo_id=50720070118&secret=9b27875a4804a5f8&format=json&nojsoncallback=1")!
+        let url = URL(string: "https://developer.apple.com/tutorials/js/analytics.js")!
         _ = dataLoader.loadData(with: URLRequest(url: url), didReceiveData: { _, _ in
             // Do nothing
         }, completion: { _ in

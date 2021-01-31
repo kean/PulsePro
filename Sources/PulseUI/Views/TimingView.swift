@@ -49,7 +49,7 @@ private struct TimingRowView: View {
 
     var body: some View {
         HStack {
-            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth - 4
+            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth - 10
             let start = clamp(model.start)
             let length = min(1 - start, model.length)
 
@@ -119,11 +119,11 @@ private let mockModel = [
     TimingRowSectionViewModel(title: "Response", items: [
         TimingRowViewModel(title: "Scheduling", value: "0.01ms", color: .blue, start: 0.0, length: 0.001),
         TimingRowViewModel(title: "Waiting", value: "41.2ms", color: .blue, start: 0.0, length: 0.4),
-        TimingRowViewModel(title: "Download", value: "0.2ms", color: .red, start: 0.4, length: 0.05)
+        TimingRowViewModel(title: "Download", value: "0.2ms", color: .red, start: 0.4, length: 0.05),
     ]),
     TimingRowSectionViewModel(title: "Cache Lookup", items: [
-        TimingRowViewModel(title: "Waiting", value: "50.2ms", color: .yellow, start: 0.45, length: 0.5),
-        TimingRowViewModel(title: "Download", value: "5.2ms", color: .green, start: 0.95, length: 0.05)
+        TimingRowViewModel(title: "Waiting", value: "50.2ms", color: .yellow, start: 0.45, length: 0.3),
+        TimingRowViewModel(title: "Download", value: "–", color: .green, start: 0.75, length: 100.0)
     ])
 ]
 #endif

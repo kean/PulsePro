@@ -41,11 +41,12 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
 
     var sections = [TimingRowSectionViewModel]()
 
-    func makeRow(title: String, color: Color, from: Date, to: Date) -> TimingRowViewModel {
-        let duration = to.timeIntervalSince(from)
-        let start = from.timeIntervalSince(taskInterval.start) / taskInterval.duration
-        let length = duration / taskInterval.duration
-        return TimingRowViewModel(title: title, value: formatDuration(duration), color: color, start: CGFloat(start), length: CGFloat(length))
+    func makeRow(title: String, color: UXColor, from: Date, to: Date?) -> TimingRowViewModel {
+        let start = CGFloat(from.timeIntervalSince(taskInterval.start) / taskInterval.duration)
+        let duration = to.map { $0.timeIntervalSince(from) }
+        let length = duration.map { CGFloat($0 / taskInterval.duration) }
+        let value = duration.map(formatDuration) ?? "–"
+        return TimingRowViewModel(title: title, value: value, color: Color(color), start: CGFloat(start), length: length ?? 1)
     }
 
     for transaction in metrics.transactions {
@@ -65,14 +66,27 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
                 sections.append(section)
             }
         case .networkLoad:
-            if let domainLookupStartDate = transaction.domainLookupStartDate,
-               let domainLookupEndDate = transaction.domainLookupEndDate {
-                let section = TimingRowSectionViewModel(
-                    title: "DNS",
-                    items: [
-                        makeRow(title: "Cache Lookup", color: .yellow, from: requestStartDate, to: responseEndDate)
-                    ])
-                sections.append(section)
+            var scheduling: [TimingRowViewModel] = []
+            var connection: [TimingRowViewModel] = []
+            var response: [TimingRowViewModel] = []
+
+            if let domainLookupStartDate = transaction.domainLookupStartDate {
+                connection.append(makeRow(title: "DNS", color: .systemPurple, from: domainLookupStartDate, to: transaction.domainLookupEndDate))
+            }
+            if let connectStartDate = transaction.connectStartDate {
+                connection.append(makeRow(title: "TCP", color: .systemYellow, from: connectStartDate, to: transaction.connectEndDate))
+            }
+            if let secureConnectionStartDate = transaction.secureConnectionStartDate {
+                connection.append(makeRow(title: "Secure", color: .systemRed, from: secureConnectionStartDate, to: transaction.secureConnectionEndDate))
+            }
+            if !scheduling.isEmpty {
+                sections.append(TimingRowSectionViewModel(title: "Connection", items: connection))
+            }
+            if !connection.isEmpty {
+                sections.append(TimingRowSectionViewModel(title: "Connection", items: connection))
+            }
+            if !response.isEmpty {
+                sections.append(TimingRowSectionViewModel(title: "Response", items: connection))
             }
         default:
             continue
@@ -109,6 +123,7 @@ struct NetworkInspectorMetricsView_Previews: PreviewProvider {
                 .environment(\.colorScheme, .light)
             
             NetworkInspectorMetricsView(model: mockModel)
+                .background(Color(UXColor.systemBackground))
                 .previewDisplayName("Dark")
                 .environment(\.colorScheme, .dark)
         }
