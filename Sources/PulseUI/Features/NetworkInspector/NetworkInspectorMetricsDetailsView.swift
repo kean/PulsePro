@@ -11,6 +11,7 @@ struct NetworkInspectorMetricsDetailsView: View {
     let model: NetworkMetricsDetailsViewModel
 
     var body: some View {
+        #if os(iOS)
         if sizeClass == .regular {
             let rows = model.sections.chunked(into: 2).enumerated().map {
                 Row(index: $0, items: $1)
@@ -31,6 +32,7 @@ struct NetworkInspectorMetricsDetailsView: View {
                 KeyValueSectionView(model: $0)
             }
         }
+        #endif
     }
 }
 
