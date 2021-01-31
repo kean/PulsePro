@@ -6,39 +6,11 @@ import SwiftUI
 // MARK: - View
 
 struct NetworkInspectorMetricsDetailsView: View {
-    @Environment(\.horizontalSizeClass) var sizeClass: UserInterfaceSizeClass?
-
     let model: NetworkMetricsDetailsViewModel
 
     var body: some View {
-        #if os(iOS)
-        if sizeClass == .regular {
-            let rows = model.sections.chunked(into: 2).enumerated().map {
-                Row(index: $0, items: $1)
-            }
-            ForEach(rows, id: \.index) { row in
-                HStack {
-                    ForEach(row.items, id: \.title) { item in
-                        VStack {
-                            KeyValueSectionView(model: item)
-                            Spacer()
-                                .layoutPriority(1)
-                        }
-                    }
-                }
-            }
-        } else {
-            ForEach(model.sections, id: \.title) {
-                KeyValueSectionView(model: $0)
-            }
-        }
-        #endif
+        KeyValueGridView(items: model.sections)
     }
-}
-
-private struct Row {
-    let index: Int
-    let items: [KeyValueSectionViewModel]
 }
 
 // MARK: - ViewModel
