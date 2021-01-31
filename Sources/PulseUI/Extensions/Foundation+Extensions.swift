@@ -106,6 +106,20 @@ func descriptionForURLErrorCode(_ code: Int) -> String {
     }
 }
 
+extension URLRequest.CachePolicy {
+    var description: String {
+        switch self {
+        case .useProtocolCachePolicy: return "useProtocolCachePolicy"
+        case .reloadIgnoringLocalCacheData: return "reloadIgnoringLocalCacheData"
+        case .reloadIgnoringLocalAndRemoteCacheData: return "reloadIgnoringLocalAndRemoteCacheData"
+        case .returnCacheDataElseLoad: return "returnCacheDataElseLoad"
+        case .returnCacheDataDontLoad: return "returnCacheDataDontLoad"
+        case .reloadRevalidatingCacheData: return "reloadRevalidatingCacheData"
+        @unknown default: return "unknown"
+        }
+    }
+}
+
 extension Array {
     func chunked(into size: Int) -> [[Element]] {
         return stride(from: 0, to: count, by: size).map {

@@ -21,6 +21,12 @@ struct NetworkInspectorSummaryView: View {
                     NetworkInspectorTransferInfoView(model: transfer)
                     Spacer(minLength: 32)
                 }
+                if let timing = model.timingDetailsModel {
+                    KeyValueSectionView(model: timing)
+                }
+                if let parameters = model.parametersModel {
+                    KeyValueSectionView(model: parameters)
+                }
                 Spacer()
             }.padding()
         }
@@ -88,9 +94,39 @@ final class NetworkInspectorSummaryViewModel {
     var transferModel: NetworkInspectorTransferInfoViewModel? {
         metrics.flatMap(NetworkInspectorTransferInfoViewModel.init)
     }
+
+    var timingDetailsModel: KeyValueSectionViewModel? {
+        guard let metrics = metrics else { return nil }
+        return KeyValueSectionViewModel(title: "Timing", color: .systemGray, items: [
+            ("Start Date", dateFormatter.string(from: metrics.taskInterval.start)),
+            ("Duration", DurationFormatter.string(from: metrics.taskInterval.duration)),
+            ("Redirect Count", metrics.redirectCount.description),
+        ])
+    }
+
+    var parametersModel: KeyValueSectionViewModel? {
+        guard let request = request else { return nil }
+        return KeyValueSectionViewModel(title: "Request Parameters", color: .systemGray, items: [
+            ("Cache Policy", URLRequest.CachePolicy(rawValue: request.cachePolicy).map { $0.description }),
+            ("Timeout Interval", DurationFormatter.string(from: request.timeoutInterval)),
+            ("Allows Cellular Access", request.allowsCellularAccess.description),
+            ("Allows Expensive Network Access", request.allowsExpensiveNetworkAccess.description),
+            ("Allows Constrained Network Access", request.allowsConstrainedNetworkAccess.description),
+            ("HTTP Should Handle Cookies", request.httpShouldHandleCookies.description),
+            ("HTTP Should Use Pipelining", request.httpShouldUsePipelining.description)
+        ])
+    }
 }
 
 // MARK: - Private
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    formatter.doesRelativeDateFormatting = true
+    formatter.timeStyle = .medium
+    return formatter
+}()
 
 private func descriptionForError(domain: String, code: Int) -> String {
     guard domain == NSURLErrorDomain else {

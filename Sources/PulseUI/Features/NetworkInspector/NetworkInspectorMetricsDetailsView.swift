@@ -95,25 +95,14 @@ private func makeMiscSection(for metrics: NetworkLoggerTransactionMetrics) -> Ke
         ("Constrained", metrics.isConstrained.description),
         ("Proxy Connection", metrics.isProxyConnection.description),
         ("Reused Connection", metrics.isReusedConnection.description),
-        ("Multipath", metrics.isMultipath.description),
+        ("Multipath", metrics.isMultipath.description)
     ])
 }
 
 // MARK: - Private
 
 private func formatDuration(_ timeInterval: TimeInterval) -> String {
-    if timeInterval < 0.95 {
-        return String(format: "%.1fms", timeInterval * 1000)
-    }
-    if timeInterval < 200 {
-        return String(format: "%.1fs", timeInterval)
-    }
-    let minutes = timeInterval / 60
-    if minutes < 60 {
-        return String(format: "%.1fmin", minutes)
-    }
-    let hours = timeInterval / (60 * 60)
-    return String(format: "%.1fh", hours)
+    DurationFormatter.string(from: timeInterval)
 }
 
 private func formatBytes(_ count: Int64) -> String {
