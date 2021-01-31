@@ -55,7 +55,8 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
 
         switch fetchType {
         case .localCache:
-            if let requestStartDate = transaction.requestStartDate, let responseEndDate = transaction.responseEndDate {
+            if let requestStartDate = transaction.requestStartDate,
+               let responseEndDate = transaction.responseEndDate {
                 let section = TimingRowSectionViewModel(
                     title: "Local Cache",
                     items: [
@@ -64,7 +65,15 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
                 sections.append(section)
             }
         case .networkLoad:
-            continue
+            if let domainLookupStartDate = transaction.domainLookupStartDate,
+               let domainLookupEndDate = transaction.domainLookupEndDate {
+                let section = TimingRowSectionViewModel(
+                    title: "DNS",
+                    items: [
+                        makeRow(title: "Cache Lookup", color: .yellow, from: requestStartDate, to: responseEndDate)
+                    ])
+                sections.append(section)
+            }
         default:
             continue
         }
