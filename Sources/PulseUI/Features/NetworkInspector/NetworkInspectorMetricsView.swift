@@ -97,7 +97,10 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
             }
 
             if let requestStartDate = transaction.requestStartDate {
-                response.append(makeRow(title: "Waiting", color: .systemGreen, from: requestStartDate, to: transaction.requestEndDate))
+                response.append(makeRow(title: "Request", color: .systemGreen, from: requestStartDate, to: transaction.requestEndDate))
+            }
+            if let requestStartDate = transaction.requestStartDate, let responseStartDate = transaction.responseStartDate {
+                response.append(makeRow(title: "Waiting", color: .systemGray3, from: requestStartDate, to: responseStartDate))
             }
             if let responseStartDate = transaction.responseStartDate {
                 response.append(makeRow(title: "Download", color: .systemBlue, from: responseStartDate, to: transaction.responseEndDate))
