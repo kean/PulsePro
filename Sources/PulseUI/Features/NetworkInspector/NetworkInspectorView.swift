@@ -42,7 +42,7 @@ struct NetworkInspectorView: View {
                 if let model = model.makeMetricsModel() {
                     NetworkInspectorMetricsView(model: model)
                 } else {
-                    Text("No Metrics")
+                    Text("No Available")
                         .font(.title)
                         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 }
