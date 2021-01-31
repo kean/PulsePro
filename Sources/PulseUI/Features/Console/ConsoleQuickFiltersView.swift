@@ -4,28 +4,32 @@
 import SwiftUI
 import Pulse
 
-#if os(iOS)
 struct ConsoleQuickFiltersView: View {
     @Binding var filter: ConsoleViewModel.FilterType
+    #if os(iOS)
     @Binding var isShowingSettings: Bool
+    #endif
 
     var body: some View {
         HStack {
-            Picker("Systems", selection: $filter) {
+            Picker("", selection: $filter) {
                 Text("Trace").tag(ConsoleViewModel.FilterType.trace)
                 Text("Debug").tag(ConsoleViewModel.FilterType.debug)
                 Text("Errors").tag(ConsoleViewModel.FilterType.errors)
             }.pickerStyle(SegmentedPickerStyle())
             Spacer(minLength: 40)
+            #if os(iOS)
             Button(action: { self.isShowingSettings = true }) {
                 Image(systemName: "gear")
                     .frame(width: 44, height: 44)
-            }
-        }.buttonStyle(BorderlessButtonStyle())
+            }.buttonStyle(BorderlessButtonStyle())
+            #endif
+        }
     }
-
 }
 
+#if DEBUG
+#if os(iOS)
 struct ConsoleQuickFiltersView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -34,4 +38,5 @@ struct ConsoleQuickFiltersView_Previews: PreviewProvider {
         }
     }
 }
+#endif
 #endif

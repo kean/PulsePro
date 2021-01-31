@@ -188,13 +188,13 @@
 		OBJ_14 /* Console */ = {
 			isa = PBXGroup;
 			children = (
+				OBJ_20 /* ConsoleView.swift */,
+				OBJ_21 /* ConsoleViewModel.swift */,
 				OBJ_15 /* ConsoleMessageView.swift */,
 				OBJ_16 /* ConsoleMessageViewListItem.swift */,
 				OBJ_17 /* ConsoleMessageViewModel.swift */,
 				OBJ_18 /* ConsoleQuickFiltersView.swift */,
 				OBJ_19 /* ConsoleSearchView.swift */,
-				OBJ_20 /* ConsoleView.swift */,
-				OBJ_21 /* ConsoleViewModel.swift */,
 			);
 			path = Console;
 			sourceTree = "<group>";

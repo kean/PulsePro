@@ -60,11 +60,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         let contentView = ConsoleView(model: model)
         window.contentView = NSHostingView(rootView: contentView)
 
-        let toolbar = NSToolbar(identifier: "console.toolbar")
-        let toolbarController = ConsoleToolbarController(model: model)
-        toolbar.delegate = toolbarController
-        window.toolbar = toolbar
-        window.bag.append(AnyCancellable { _ = toolbarController })
+        // TODO: Add toolbar late
+//        let toolbar = NSToolbar(identifier: "console.toolbar")
+//        let toolbarController = ConsoleToolbarController(model: model)
+//        toolbar.delegate = toolbarController
+//        window.toolbar = toolbar
+//        window.bag.append(AnyCancellable { _ = toolbarController })
 
         model.$messages
             .map { "Console (\($0.count) messages)" }

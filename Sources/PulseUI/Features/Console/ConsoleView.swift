@@ -71,6 +71,36 @@ public struct ConsoleView: View {
 
     public var body: some View {
         NavigationView {
+            List {
+                quickFiltersView
+                ForEach(model.messages, id: \.objectID) { message in
+                    NavigationLink(destination: self.detailsView(message: message)) {
+                        ConsoleMessageView(model: .init(message: message))
+                    }
+                }
+            }
+            .frame(minWidth: 280, idealWidth: 400)//, maxWidth: 480)
+        }
+        .frame(minWidth: 770, minHeight: 480)
+    }
+
+    private var quickFiltersView: some View {
+        VStack {
+            searchBar
+            Spacer(minLength: 8)
+            ConsoleQuickFiltersView(filter: $model.filter)
+        }
+        .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+    }
+
+    private var searchBar: some View {
+        Wrapped<ConsoleSearchView> {
+            $0.searchCriteria = $model.searchCriteria
+        }
+    }
+
+    private var messagesListView: some View {
+        NavigationView {
             List(model.messages, id: \.objectID) { message in
                 NavigationLink(destination: self.detailsView(message: message)) {
                     ConsoleMessageView(model: .init(message: message))
