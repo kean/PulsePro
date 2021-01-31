@@ -10,6 +10,7 @@ final class NetworkLoggerSummary {
     private(set) var request: NetworkLoggerRequest?
     private(set) var response: NetworkLoggerResponse?
     private(set) var error: NetworkLoggerError?
+    private(set) var requestBody: Data?
     private(set) var responseBody: Data?
     private(set) var metrics: NetworkLoggerMetrics?
 
@@ -28,6 +29,7 @@ final class NetworkLoggerSummary {
         self.request = didCompleteEvent.request
         self.response = didCompleteEvent.response
         self.error = didCompleteEvent.error
+        self.requestBody = didCompleteEvent.requestBody
         self.responseBody = didCompleteEvent.responseBody
         self.metrics = didCompleteEvent.metrics
     }

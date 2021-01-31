@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C29C39925C73972001553AA /* NetworkInspectorTransferInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C29C39825C73972001553AA /* NetworkInspectorTransferInfoView.swift */; };
 		0C29C3A125C74338001553AA /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C29C3A025C74338001553AA /* Formatters.swift */; };
+		0C29C3A925C75426001553AA /* NetworkInspectorRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C29C3A825C75426001553AA /* NetworkInspectorRequestView.swift */; };
 		0C3A2E4325C6F04A002568E2 /* TimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3A2E4225C6F04A002568E2 /* TimingView.swift */; };
 		0C3A2E4B25C7255B002568E2 /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3A2E4A25C7255B002568E2 /* Foundation+Extensions.swift */; };
 		0C3A2E5325C729D7002568E2 /* NetworkInspectorMetricsDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3A2E5225C729D7002568E2 /* NetworkInspectorMetricsDetailsView.swift */; };
@@ -87,6 +88,7 @@
 /* Begin PBXFileReference section */
 		0C29C39825C73972001553AA /* NetworkInspectorTransferInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorTransferInfoView.swift; sourceTree = "<group>"; };
 		0C29C3A025C74338001553AA /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		0C29C3A825C75426001553AA /* NetworkInspectorRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorRequestView.swift; sourceTree = "<group>"; };
 		0C3A2E4225C6F04A002568E2 /* TimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingView.swift; sourceTree = "<group>"; };
 		0C3A2E4A25C7255B002568E2 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		0C3A2E5225C729D7002568E2 /* NetworkInspectorMetricsDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorMetricsDetailsView.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				OBJ_30 /* NetworkInspectorView.swift */,
 				OBJ_28 /* NetworkInspectorSummaryView.swift */,
 				OBJ_26 /* NetworkInspectorHeadersView.swift */,
+				0C29C3A825C75426001553AA /* NetworkInspectorRequestView.swift */,
 				OBJ_27 /* NetworkInspectorResponseView.swift */,
 				OBJ_29 /* NetworkInspectorMetricsView.swift */,
 				0C3A2E5225C729D7002568E2 /* NetworkInspectorMetricsDetailsView.swift */,
@@ -550,6 +553,7 @@
 				OBJ_121 /* MockDataTask.swift in Sources */,
 				0C3A2E5325C729D7002568E2 /* NetworkInspectorMetricsDetailsView.swift in Sources */,
 				OBJ_122 /* MockStore.swift in Sources */,
+				0C29C3A925C75426001553AA /* NetworkInspectorRequestView.swift in Sources */,
 				OBJ_123 /* ConsoleMessages.swift in Sources */,
 				OBJ_124 /* ConsoleSearchService.swift in Sources */,
 				0C3A2E4325C6F04A002568E2 /* TimingView.swift in Sources */,

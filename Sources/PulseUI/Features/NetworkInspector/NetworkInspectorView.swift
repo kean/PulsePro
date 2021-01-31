@@ -27,6 +27,7 @@ struct NetworkInspectorView: View {
             Picker("", selection: $selectedTab) {
                 Text("Summary").tag(NetworkInspectorTab.summary)
                 Text("Headers").tag(NetworkInspectorTab.headers)
+                Text("Request").tag(NetworkInspectorTab.request)
                 Text("Response").tag(NetworkInspectorTab.response)
                 Text("Metrics").tag(NetworkInspectorTab.metrics)
             }
@@ -38,15 +39,23 @@ struct NetworkInspectorView: View {
                 NetworkInspectorSummaryView(model: model.makeSummaryModel())
             case .headers:
                 NetworkInspectorHeadersView(model: model.makeHeadersModel())
+            case .request:
+                if let model = model.makeRequestModel() {
+                    NetworkInspectorRequestView(model: model)
+                } else {
+                    PlaceholderView(title: "Empty")
+                }
             case .response:
-                NetworkInspectorResponseView(model: model.makeResponseModel())
+                if let model = model.makeResponseModel() {
+                    NetworkInspectorResponseView(model: model)
+                } else {
+                    PlaceholderView(title: model.isCompleted ? "Request Pending" : "Empty")
+                }
             case .metrics:
                 if let model = model.makeMetricsModel() {
                     NetworkInspectorMetricsView(model: model)
                 } else {
-                    Text("Not Available")
-                        .font(.title)
-                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    PlaceholderView(title: "Not Available")
                 }
             }
 
@@ -55,9 +64,20 @@ struct NetworkInspectorView: View {
     }
 }
 
+private struct PlaceholderView: View {
+    let title: String
+
+    var body: some View {
+        Text(title)
+            .font(.headline)
+            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+    }
+}
+
 private enum NetworkInspectorTab {
     case summary
     case headers
+    case request
     case response
     case metrics
 }
@@ -69,7 +89,7 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
     private let taskId: String
     @Published private(set) var messages: [MessageEntity] = []
     private var summary: NetworkLoggerSummary
-
+    var isCompleted: Bool { summary.isCompleted }
     private let controller: NSFetchedResultsController<MessageEntity>
 
     init(store: LoggerMessageStore, taskId: String) {
@@ -115,10 +135,12 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
         )
     }
 
-    func makeResponseModel() -> NetworkInspectorResponseViewModel {
-        NetworkInspectorResponseViewModel(
-            data: summary.responseBody
-        )
+    func makeRequestModel() -> NetworkInspectorRequestViewModel? {
+        summary.requestBody.map(NetworkInspectorRequestViewModel.init)
+    }
+
+    func makeResponseModel() -> NetworkInspectorResponseViewModel? {
+        summary.responseBody.map(NetworkInspectorResponseViewModel.init)
     }
 
     func makeMetricsModel() -> NetworkInspectorMetricsViewModel? {

@@ -4,10 +4,9 @@
 import SwiftUI
 import CoreData
 import Pulse
-import Combine
 
-struct NetworkInspectorResponseView: View {
-    let model: NetworkInspectorResponseViewModel
+struct NetworkInspectorRequestView: View {
+    let model: NetworkInspectorRequestViewModel
 
     var body: some View {
         if let json = try? JSONSerialization.jsonObject(with: model.data, options: []) {
@@ -20,7 +19,7 @@ struct NetworkInspectorResponseView: View {
     }
 }
 
-struct NetworkInspectorResponseViewModel {
+struct NetworkInspectorRequestViewModel {
     let data: Data
 }
 
@@ -31,7 +30,7 @@ private extension Data {
 }
 
 #if DEBUG
-struct NetworkInspectorResponseView_Previews: PreviewProvider {
+struct NetworkInspectorRequestView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NetworkInspectorResponseView(model: mockModel)
