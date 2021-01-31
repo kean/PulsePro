@@ -12,6 +12,13 @@ struct NetworkInspectorMetricsView: View {
         ScrollView {
             TimingView(model: model.timingModel)
                 .padding()
+
+            Spacer(minLength: 32)
+
+            KeyValueSectionView(title: "Total", items: [
+                ("Duration", formatDuration(model.metrics.taskInterval.duration))
+            ], tintColor: .secondaryLabel)
+            .padding()
         }
     }
 }
@@ -19,7 +26,7 @@ struct NetworkInspectorMetricsView: View {
 // MARK: - ViewModel
 
 final class NetworkInspectorMetricsViewModel {
-    private let metrics: NetworkLoggerMetrics
+    let metrics: NetworkLoggerMetrics
     let timingModel: [TimingRowSectionViewModel]
 
     init(metrics: NetworkLoggerMetrics) {
