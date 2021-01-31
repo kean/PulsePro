@@ -35,14 +35,14 @@ struct ConsoleMessageViewListItem: View {
                     let filter = ConsoleSearchFilter(text: self.message.label, kind: .label, relation: .equals)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Focus Label \'\(message.label)\'")
+                    Text("Focus \'\(message.label)\'")
                     Image(systemName: "eye")
                 }
                 Button(action: {
                     let filter = ConsoleSearchFilter(text: self.message.label, kind: .label, relation: .doesNotEqual)
                     self.searchCriteria.filters.append(filter)
                 }) {
-                    Text("Hide Label \'\(message.label)\'")
+                    Text("Hide \'\(message.label)\'")
                     Image(systemName: "eye.slash")
                 }.foregroundColor(.red)
         }
