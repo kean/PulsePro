@@ -89,12 +89,12 @@ struct TimingView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             TimingView(model: mockModel)
-                .previewLayout(.fixed(width: 320, height: 500))
+                .previewLayout(.fixed(width: 320, height: 200))
                 .previewDisplayName("Light")
                 .environment(\.colorScheme, .light)
 
             TimingView(model: mockModel)
-                .previewLayout(.fixed(width: 320, height: 500))
+                .previewLayout(.fixed(width: 320, height: 200))
                 .previewDisplayName("Dark")
                 .background(Color(UXColor.systemBackground))
                 .environment(\.colorScheme, .dark)
