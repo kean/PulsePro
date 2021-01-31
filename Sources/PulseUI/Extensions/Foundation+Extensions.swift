@@ -127,3 +127,13 @@ extension Array {
         }
     }
 }
+
+func prettifyJSON(_ data: Data) -> String {
+    guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+        return String(data: data, encoding: .utf8) ?? ""
+    }
+    guard let pretty = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]) else {
+        return String(data: data, encoding: .utf8) ?? ""
+    }
+    return String(data: pretty, encoding: .utf8) ?? ""
+}

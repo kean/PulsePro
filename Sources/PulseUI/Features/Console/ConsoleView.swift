@@ -51,7 +51,7 @@ public struct ConsoleView: View {
     private var messagesListView: some View {
         ForEach(model.messages, id: \.objectID) { message in
             NavigationLink(destination: model.makeDetailsRouter(for: message)) {
-                ConsoleMessageViewListItem(message: message, searchCriteria: self.$model.searchCriteria)
+                ConsoleMessageViewListItem(store: model.tempGetStore(), message: message, searchCriteria: self.$model.searchCriteria)
             }.listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
         }
     }

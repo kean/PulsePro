@@ -10,9 +10,9 @@ struct NetworkInspectorHeadersView: View {
         ScrollView {
             HStack {
                 VStack {
-                    makeSection(title: "Request", color: .systemBlue, items: model.requestHeaders)
+                    KeyValueSectionView(model: model.requestHeaders)
                     Spacer(minLength: 16)
-                    makeSection(title: "Response", color: .systemIndigo, items: model.responseHeaders)
+                    KeyValueSectionView(model: model.responseHeaders)
                     Spacer()
                 }.padding()
                 Spacer()
@@ -29,12 +29,14 @@ struct NetworkInspectorHeaderViewModel {
     let request: NetworkLoggerRequest?
     let response: NetworkLoggerResponse?
 
-    var requestHeaders: [(String, String)] {
-        (request?.headers ?? [:]).sorted(by: { $0.key < $1.key })
+    var requestHeaders: KeyValueSectionViewModel {
+        let items = (request?.headers ?? [:]).sorted(by: { $0.key < $1.key })
+        return KeyValueSectionViewModel(title: "Request", color: .systemBlue, items: items)
     }
 
-    var responseHeaders: [(String, String)] {
-        (response?.headers ?? [:]).sorted(by: { $0.key < $1.key })
+    var responseHeaders: KeyValueSectionViewModel {
+        let items = (response?.headers ?? [:]).sorted(by: { $0.key < $1.key })
+        return KeyValueSectionViewModel(title: "Response", color: .systemIndigo, items: items)
     }
 }
 

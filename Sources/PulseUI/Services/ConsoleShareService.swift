@@ -62,6 +62,81 @@ public struct ConsoleShareService {
     private func format(message: MessageEntity) -> String {
         "\(dateFormatter.string(from: message.createdAt)) [\(message.level)]-[\(message.label)] \(message.text)"
     }
+
+    func prepareMessageForSharing(_ message: MessageEntity) -> String {
+        if let taskId = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.taskId.rawValue })?.value {
+            return prepareNetworkMessageForSharing(taskId: taskId)
+        } else {
+            return message.text
+        }
+    }
+
+    private func prepareNetworkMessageForSharing(taskId: String) -> String {
+        let info = NetworkLoggerSummary(store: store, taskId: taskId)
+
+        var output = ""
+
+        func add(_ keyValueViewModel: KeyValueSectionViewModel?) {
+            guard let model = keyValueViewModel else { return }
+            add(title: model.title)
+            if model.items.isEmpty {
+                output.append("Empty")
+            } else {
+                for item in model.items {
+                    output.append("\(item.0): \(item.1 ?? "–")")
+                }
+            }
+            output.append("\n\n")
+        }
+
+        func add(title: String) {
+            output.append("# \(title)\n\n")
+        }
+
+        func add(data: Data) {
+            let json = try? JSONSerialization.jsonObject(with: data, options: [])
+            output.append("```\(json != nil ? "json" : "")\n")
+            output.append(prettifyJSON(data))
+            output.append("```")
+            output.append("\n\n")
+        }
+
+        let summary = NetworkInspectorSummaryViewModel(summary: info)
+        add(summary.summaryModel)
+        add(summary.errorModel)
+        add(summary.timingDetailsModel)
+        if let transferModel = summary.transferModel {
+            add(KeyValueSectionViewModel(title: "Sent data", color: .gray, items: [
+                ("Total Bytes Sent", transferModel.totalBytesSent),
+                ("Headers Sent", transferModel.headersBytesSent),
+                ("Body Sent", transferModel.bodyBytesSent),
+                ("Total Bytes Recieved", transferModel.totalBytesRecieved),
+                ("Headers Recieved", transferModel.headersBytesRecieved),
+                ("Body Recieved", transferModel.bodyBytesRecieved),
+            ]))
+        }
+        add(summary.parametersModel)
+
+        let headers = NetworkInspectorHeaderViewModel(request: info.request, response: info.response)
+
+        add(title: "Request Headers")
+        add(headers.requestHeaders)
+
+        if let body = info.requestBody {
+            add(title: "Request Body")
+            add(data: body)
+        }
+
+        add(title: "Response Headers")
+        add(headers.responseHeaders)
+
+        if let body = info.responseBody {
+            add(title: "Response Body")
+            add(data: body)
+        }
+
+        return output
+    }
 }
 
 private let dateFormatter: DateFormatter = {

@@ -41,6 +41,10 @@ final class NetworkInspectorSummaryViewModel {
     private let error: NetworkLoggerError?
     private let metrics: NetworkLoggerMetrics?
 
+    convenience init(summary: NetworkLoggerSummary) {
+        self.init(request: summary.request, response: summary.response, responseBody: summary.responseBody, error: summary.error, metrics: summary.metrics)
+    }
+
     init(request: NetworkLoggerRequest?,
         response: NetworkLoggerResponse?,
         responseBody: Data?,

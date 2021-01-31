@@ -119,13 +119,7 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
     // MARK: - Tabs
 
     func makeSummaryModel() -> NetworkInspectorSummaryViewModel {
-        NetworkInspectorSummaryViewModel(
-            request: summary.request,
-            response: summary.response,
-            responseBody: summary.responseBody,
-            error: summary.error,
-            metrics: summary.metrics
-        )
+        NetworkInspectorSummaryViewModel(summary: summary)
     }
 
     func makeHeadersModel() -> NetworkInspectorHeaderViewModel {

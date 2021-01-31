@@ -33,6 +33,15 @@ final class NetworkLoggerSummary {
         self.responseBody = didCompleteEvent.responseBody
         self.metrics = didCompleteEvent.metrics
     }
+
+    convenience init(store: LoggerMessageStore, taskId: String) {
+        let metrics = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
+        metrics.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId.rawValue, taskId)
+        metrics.relationshipKeyPathsForPrefetching = ["\(\MessageEntity.metadata.self)"]
+
+        let messages = (try? store.container.viewContext.fetch(metrics)) ?? []
+        self.init(messages: messages)
+    }
 }
 
 private final class NetworkLoggerMessages {
@@ -86,12 +95,7 @@ extension NetworkLoggerSummary {
     }
 
     static func mock(taskId: String) -> NetworkLoggerSummary {
-        let metrics = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
-        metrics.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId.rawValue, taskId)
-        metrics.relationshipKeyPathsForPrefetching = ["\(\MessageEntity.metadata.self)"]
-
-        let messages = (try? LoggerMessageStore.mock.container.viewContext.fetch(metrics)) ?? []
-        return NetworkLoggerSummary(messages: messages)
+        NetworkLoggerSummary(store: .mock, taskId: taskId)
     }
 }
 #endif

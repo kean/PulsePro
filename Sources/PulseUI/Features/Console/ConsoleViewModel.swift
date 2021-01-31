@@ -90,4 +90,10 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
     public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.messages = ConsoleMessages(messages: self.controller.fetchedObjects ?? [])
     }
+
+    // MARK: - Temporary
+
+    func tempGetStore() -> LoggerMessageStore {
+        store
+    }
 }
