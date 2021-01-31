@@ -8,20 +8,20 @@ import SwiftUI
 struct NetworkInspectorMetricsView: View {
     let model: NetworkInspectorMetricsViewModel
 
+    private static let padding: CGFloat = 16
+
     var body: some View {
-        ScrollView {
-            GeometryReader { geo in
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
                 VStack {
-                    TimingView(model: model.timingModel, width: geo.size.width)
+                    TimingView(model: model.timingModel, width: geo.size.width - NetworkInspectorMetricsView.padding * 2)
                     Spacer(minLength: 32)
 
                     if let details = model.details {
-                        ForEach(details.sections, id: \.title) {
-                            KeyValueSectionView(title: $0.title, items: $0.items, tintColor: $0.color)
-                        }
+                        NetworkInspectorMetricsDetailsView(model: details)
                     }
                 }
-            }.padding()
+            }.padding(NetworkInspectorMetricsView.padding)
         }
     }
 }
@@ -41,68 +41,6 @@ final class NetworkInspectorMetricsViewModel {
             $0.resourceFetchType == URLSessionTaskMetrics.ResourceFetchType.networkLoad.rawValue
         }).map(NetworkMetricsDetailsViewModel.init)
     }
-}
-
-private struct NetworkMetricsDetailsViewModel {
-    let sections: [NetworkMetricsDetailsSectionViewModel]
-
-    init(metrics: NetworkLoggerTransactionMetrics) {
-        self.sections = [
-            makeTransferSection(for: metrics),
-            makeProtocolSection(for: metrics),
-            makeSecuritySection(for: metrics),
-            makeMiscSection(for: metrics)
-        ].compactMap { $0 }
-    }
-}
-
-private struct NetworkMetricsDetailsSectionViewModel {
-    let title: String
-    let color: UXColor
-    let items: [(String, String?)]
-}
-
-private func makeTransferSection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel {
-    NetworkMetricsDetailsSectionViewModel(title: "Data Transfer", color: .secondaryLabel, items: [
-        ("Request Body", formatBytes(metrics.countOfRequestBodyBytesBeforeEncoding)),
-        ("Request Body (Encoded)", formatBytes(metrics.countOfRequestBodyBytesSent)),
-        ("Request Headers", formatBytes(metrics.countOfRequestHeaderBytesSent)),
-        ("Response Body", formatBytes(metrics.countOfResponseBodyBytesReceived)),
-        ("Response Body (Decoded)", formatBytes(metrics.countOfResponseBodyBytesAfterDecoding)),
-        ("Response Headers", formatBytes(metrics.countOfResponseHeaderBytesReceived))
-    ])
-}
-
-private func makeProtocolSection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel {
-    NetworkMetricsDetailsSectionViewModel(title: "Protocol", color: .secondaryLabel, items: [
-        ("Network Protocol", metrics.networkProtocolName),
-        ("Remote Address", metrics.remoteAddress),
-        ("Remote Port", metrics.remotePort.map(String.init)),
-        ("Local Address", metrics.localAddress),
-        ("Local Port", metrics.localPort.map(String.init))
-    ])
-}
-
-private func makeSecuritySection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel? {
-    guard let suite = metrics.negotiatedTLSCipherSuite.flatMap(tls_ciphersuite_t.init(rawValue:)),
-          let version = metrics.negotiatedTLSProtocolVersion.flatMap(tls_protocol_version_t.init(rawValue:)) else {
-        return nil
-    }
-    return NetworkMetricsDetailsSectionViewModel(title: "Security", color: .secondaryLabel, items: [
-        ("Cipher Suite", suite.description),
-        ("Protocol Version", version.description)
-    ])
-}
-
-private func makeMiscSection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel {
-    return NetworkMetricsDetailsSectionViewModel(title: "Characteristics", color: .secondaryLabel, items: [
-        ("Cellular", metrics.isCellular.description),
-        ("Expensive", metrics.isExpensive.description),
-        ("Constrained", metrics.isConstrained.description),
-        ("Proxy Connection", metrics.isProxyConnection.description),
-        ("Reused Connection", metrics.isReusedConnection.description),
-        ("Multipath", metrics.isMultipath.description),
-    ])
 }
 
 private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewModel] {
