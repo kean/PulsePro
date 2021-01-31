@@ -10,46 +10,55 @@ struct NetworkInspectorSummaryView: View {
     var body: some View {
         ScrollView {
             VStack {
-                responseSummaryView
+                KeyValueSectionView(model: model.summary)
                 Spacer()
             }.padding()
         }
     }
-
-    private var responseSummaryView: some View {
-        KeyValueSectionView(
-            title: "Summary",
-            items: model.itemsForSummary,
-            tintColor: tintColor
-        )
-    }
-
-    private var tintColor: UXColor {
-        guard model.response != nil else {
-            return .systemGray
-        }
-        return model.isSuccess ? .systemGreen : .systemRed
-    }
 }
 
-struct NetworkInspectorSummaryViewModel {
-    let request: NetworkLoggerRequest?
-    let response: NetworkLoggerResponse?
-    let responseBody: Data?
-    let error: NetworkLoggerError?
-    let metrics: NetworkLoggerMetrics?
+final class NetworkInspectorSummaryViewModel {
+    private let request: NetworkLoggerRequest?
+    private let response: NetworkLoggerResponse?
+    private let responseBody: Data?
+    private let error: NetworkLoggerError?
+    private let metrics: NetworkLoggerMetrics?
 
-    var isSuccess: Bool {
+    init(request: NetworkLoggerRequest?,
+        response: NetworkLoggerResponse?,
+        responseBody: Data?,
+        error: NetworkLoggerError?,
+        metrics: NetworkLoggerMetrics?) {
+        self.request = request
+        self.response = response
+        self.responseBody = responseBody
+        self.error = error
+        self.metrics = metrics
+    }
+
+    private var isSuccess: Bool {
         guard let response = response else {
             return false
         }
         return error == nil && (200..<400).contains(response.statusCode ?? 200)
     }
 
-    var itemsForSummary: [(String, String)] {
-        [("URL", request?.url?.absoluteString ?? "–"),
-         ("Method", request?.httpMethod ?? "–"),
-         ("Status Code", response?.statusCode.map(descriptionForStatusCode) ?? "–")]
+    private var tintColor: UXColor {
+        guard response != nil else {
+            return .systemGray
+        }
+        return isSuccess ? .systemGreen : .systemRed
+    }
+
+    var summary: KeyValueSectionViewModel {
+        KeyValueSectionViewModel(
+            title: "Summary",
+            color: tintColor,
+            items: [
+                ("URL", request?.url?.absoluteString ?? "–"),
+                ("Method", request?.httpMethod ?? "–"),
+                ("Status Code", response?.statusCode.map(descriptionForStatusCode) ?? "–")
+            ])
     }
 }
 
@@ -65,6 +74,8 @@ struct NetworkInspectorSummaryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NetworkInspectorSummaryView(model: mockModel)
+
+            NetworkInspectorSummaryView(model: mockFailureModel)
         }
     }
 }
@@ -74,6 +85,14 @@ private let mockModel = NetworkInspectorSummaryViewModel(
     response: NetworkLoggerResponse(urlResponse: MockDataTask.login.response),
     responseBody: MockDataTask.login.responseBody,
     error: nil,
+    metrics: nil
+)
+
+private let mockFailureModel = NetworkInspectorSummaryViewModel(
+    request: NetworkLoggerRequest(urlRequest: MockDataTask.login.request),
+    response: nil,
+    responseBody: nil,
+    error: NetworkLoggerError(error: NSError(domain: NSURLErrorDomain, code: NSURLErrorNotConnectedToInternet, userInfo: [NSLocalizedDescriptionKey: "Not connected to the internet"])),
     metrics: nil
 )
 #endif

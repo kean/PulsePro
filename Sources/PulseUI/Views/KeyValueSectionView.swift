@@ -4,17 +4,15 @@
 import SwiftUI
 
 struct KeyValueSectionView: View {
-    let title: String
-    let items: [(String, String?)]
-    let tintColor: UXColor
+    let model: KeyValueSectionViewModel
 
     private var actualTintColor: UXColor {
-        items.isEmpty ? .systemGray : tintColor
+        model.items.isEmpty ? .systemGray : model.color
     }
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(title)
+            Text(model.title)
                 .font(.headline)
 
             Wrapped<UXAutoTextView> {
@@ -41,14 +39,14 @@ struct KeyValueSectionView: View {
     }
 
     private func makeAttributedText() -> NSAttributedString {
-        guard !items.isEmpty else {
+        guard !model.items.isEmpty else {
             return NSAttributedString(string: "Empty", attributes: [
                 .foregroundColor: actualTintColor, .font: UXFont.systemFont(ofSize: fontSize, weight: .medium)
             ])
         }
         let output = NSMutableAttributedString()
-        for index in items.indices {
-            let (key, value) = items[index]
+        for index in model.items.indices {
+            let (key, value) = model.items[index]
             let string = NSMutableAttributedString()
             string.append("" + key + ": ", [
                 .foregroundColor: actualTintColor,
@@ -58,7 +56,7 @@ struct KeyValueSectionView: View {
                 .foregroundColor: UXColor.label,
                 .font: UXFont.systemFont(ofSize: fontSize, weight: .regular)
             ])
-            if index < items.endIndex - 1 {
+            if index < model.items.endIndex - 1 {
                 string.append("\n")
             }
             output.append(string)
@@ -74,4 +72,10 @@ struct KeyValueSectionView: View {
         return 12
         #endif
     }
+}
+
+struct KeyValueSectionViewModel {
+    let title: String
+    let color: UXColor
+    let items: [(String, String?)]
 }

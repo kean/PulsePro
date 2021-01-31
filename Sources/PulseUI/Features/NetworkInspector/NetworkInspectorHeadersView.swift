@@ -18,7 +18,7 @@ struct NetworkInspectorHeadersView: View {
     }
 
     private func makeSection(title: String, items: [(String, String)]) -> some View {
-        return KeyValueSectionView(title: title, items: items, tintColor: .systemBlue)
+        KeyValueSectionView(model: KeyValueSectionViewModel(title: title, color: .systemBlue, items: items))
     }
 }
 

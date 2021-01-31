@@ -11,7 +11,7 @@ struct MockDataTask {
     let metrics: NetworkLoggerMetrics
 }
 
-// MARK: - Github Login (Success)
+// MARK: - GitHub Login (Success)
 
 extension MockDataTask {
     static let login = MockDataTask(
@@ -130,7 +130,7 @@ private let mockMetrics = try! JSONDecoder().decode(NetworkLoggerMetrics.self, f
 }
 """.data(using: .utf8)!)
 
-// MARK: - Github Profile (Failure, 404)
+// MARK: - GitHub Profile (Failure, 404)
 
 extension MockDataTask {
     static let profileFailure = MockDataTask(
@@ -163,6 +163,22 @@ private let mockProfileFailureResponse = HTTPURLResponse(url: URL(string: "https
     "Cache-Control": "no-store",
     "Content-Encoding": "gzip"
 ])!
+
+// MARK: - GitHub Stats (Network Error)
+
+let mockStatsFailureRequest: URLRequest = {
+    var request = URLRequest(url: URL(string: "https://github.com/stats")!)
+
+    request.setValue("gzip", forHTTPHeaderField: "Accept-Encoding")
+    request.setValue("github.com", forHTTPHeaderField: "Host")
+    request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15", forHTTPHeaderField: "User-Agent")
+    request.setValue("text/json", forHTTPHeaderField: "Content-Type")
+    request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+    request.setValue("en-us", forHTTPHeaderField: "Accept-Language")
+    request.setValue("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", forHTTPHeaderField: "Accept")
+
+    return request
+}()
 
 // MARK: - JSON (Mocks)
 

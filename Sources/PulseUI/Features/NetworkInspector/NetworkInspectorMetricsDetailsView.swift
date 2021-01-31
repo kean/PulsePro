@@ -19,7 +19,7 @@ struct NetworkInspectorMetricsDetailsView: View {
                 HStack {
                     ForEach(row.items, id: \.title) { item in
                         VStack {
-                            KeyValueSectionView(title: item.title, items: item.items, tintColor: item.color)
+                            KeyValueSectionView(model: item)
                             Spacer()
                                 .layoutPriority(1)
                         }
@@ -28,7 +28,7 @@ struct NetworkInspectorMetricsDetailsView: View {
             }
         } else {
             ForEach(model.sections, id: \.title) {
-                KeyValueSectionView(title: $0.title, items: $0.items, tintColor: $0.color)
+                KeyValueSectionView(model: $0)
             }
         }
     }
@@ -36,13 +36,13 @@ struct NetworkInspectorMetricsDetailsView: View {
 
 private struct Row {
     let index: Int
-    let items: [NetworkMetricsDetailsSectionViewModel]
+    let items: [KeyValueSectionViewModel]
 }
 
 // MARK: - ViewModel
 
 struct NetworkMetricsDetailsViewModel {
-    let sections: [NetworkMetricsDetailsSectionViewModel]
+    let sections: [KeyValueSectionViewModel]
 
     init(metrics: NetworkLoggerTransactionMetrics) {
         self.sections = [
@@ -54,14 +54,8 @@ struct NetworkMetricsDetailsViewModel {
     }
 }
 
-struct NetworkMetricsDetailsSectionViewModel {
-    let title: String
-    let color: UXColor
-    let items: [(String, String?)]
-}
-
-private func makeTransferSection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel {
-    NetworkMetricsDetailsSectionViewModel(title: "Data Transfer", color: .secondaryLabel, items: [
+private func makeTransferSection(for metrics: NetworkLoggerTransactionMetrics) -> KeyValueSectionViewModel {
+    KeyValueSectionViewModel(title: "Data Transfer", color: .secondaryLabel, items: [
         ("Request Body", formatBytes(metrics.countOfRequestBodyBytesBeforeEncoding)),
         ("Request Body (Encoded)", formatBytes(metrics.countOfRequestBodyBytesSent)),
         ("Request Headers", formatBytes(metrics.countOfRequestHeaderBytesSent)),
@@ -71,8 +65,8 @@ private func makeTransferSection(for metrics: NetworkLoggerTransactionMetrics) -
     ])
 }
 
-private func makeProtocolSection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel {
-    NetworkMetricsDetailsSectionViewModel(title: "Protocol", color: .secondaryLabel, items: [
+private func makeProtocolSection(for metrics: NetworkLoggerTransactionMetrics) -> KeyValueSectionViewModel {
+    KeyValueSectionViewModel(title: "Protocol", color: .secondaryLabel, items: [
         ("Network Protocol", metrics.networkProtocolName),
         ("Remote Address", metrics.remoteAddress),
         ("Remote Port", metrics.remotePort.map(String.init)),
@@ -81,19 +75,19 @@ private func makeProtocolSection(for metrics: NetworkLoggerTransactionMetrics) -
     ])
 }
 
-private func makeSecuritySection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel? {
+private func makeSecuritySection(for metrics: NetworkLoggerTransactionMetrics) -> KeyValueSectionViewModel? {
     guard let suite = metrics.negotiatedTLSCipherSuite.flatMap(tls_ciphersuite_t.init(rawValue:)),
           let version = metrics.negotiatedTLSProtocolVersion.flatMap(tls_protocol_version_t.init(rawValue:)) else {
         return nil
     }
-    return NetworkMetricsDetailsSectionViewModel(title: "Security", color: .secondaryLabel, items: [
+    return KeyValueSectionViewModel(title: "Security", color: .secondaryLabel, items: [
         ("Cipher Suite", suite.description),
         ("Protocol Version", version.description)
     ])
 }
 
-private func makeMiscSection(for metrics: NetworkLoggerTransactionMetrics) -> NetworkMetricsDetailsSectionViewModel {
-    return NetworkMetricsDetailsSectionViewModel(title: "Characteristics", color: .secondaryLabel, items: [
+private func makeMiscSection(for metrics: NetworkLoggerTransactionMetrics) -> KeyValueSectionViewModel {
+    return KeyValueSectionViewModel(title: "Characteristics", color: .secondaryLabel, items: [
         ("Cellular", metrics.isCellular.description),
         ("Expensive", metrics.isExpensive.description),
         ("Constrained", metrics.isConstrained.description),
