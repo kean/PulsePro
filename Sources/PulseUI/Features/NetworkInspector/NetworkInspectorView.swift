@@ -26,7 +26,7 @@ struct NetworkInspectorView: View {
                 Text("Summary").tag(NetworkInspectorTab.summary)
                 Text("Headers").tag(NetworkInspectorTab.headers)
                 Text("Response").tag(NetworkInspectorTab.response)
-                Text("Request").tag(NetworkInspectorTab.request)
+                Text("Metrics").tag(NetworkInspectorTab.request)
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()

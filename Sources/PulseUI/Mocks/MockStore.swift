@@ -226,6 +226,4 @@ private let mockMetrics = try! JSONDecoder().decode(NetworkLoggerMetrics.self, f
   "redirectCount": 0
 }
 """.data(using: .utf8)!)
-
-
 #endif
