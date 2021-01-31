@@ -89,6 +89,7 @@ public struct ConsoleView: View {
     #endif
 }
 
+#if DEBUG
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {
         return Group {
@@ -98,3 +99,4 @@ struct ConsoleView_Previews: PreviewProvider {
         }
     }
 }
+#endif

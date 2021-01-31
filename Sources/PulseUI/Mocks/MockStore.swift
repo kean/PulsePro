@@ -12,9 +12,9 @@ public extension LoggerMessageStore {
         let store = makeMockStore()
         populateStore(store)
 
-        //        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-        //            logger.log("Hello, world")
-        //        }
+//        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+//            populateStore(store)
+//        }
 
         return store
     }()
