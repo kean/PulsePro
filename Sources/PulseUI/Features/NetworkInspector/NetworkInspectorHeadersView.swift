@@ -8,12 +8,15 @@ struct NetworkInspectorHeadersView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
-                makeSection(title: "Request", color: .systemBlue, items: model.requestHeaders)
-                Spacer(minLength: 16)
-                makeSection(title: "Response", color: .systemIndigo, items: model.responseHeaders)
+            HStack {
+                VStack {
+                    makeSection(title: "Request", color: .systemBlue, items: model.requestHeaders)
+                    Spacer(minLength: 16)
+                    makeSection(title: "Response", color: .systemIndigo, items: model.responseHeaders)
+                    Spacer()
+                }.padding()
                 Spacer()
-            }.padding()
+            }
         }
     }
 
