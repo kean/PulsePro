@@ -82,7 +82,7 @@ public struct ConsoleView: View {
     }
 
     private func detailsView(message: MessageEntity) -> some View {
-        ConsoleMessageDetailsView(model: .init(message: message))
+        model.makeDetailsRouter(for: message)
             .frame(minWidth: 280)
     }
 
