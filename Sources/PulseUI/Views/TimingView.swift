@@ -44,22 +44,25 @@ private struct TimingRowView: View {
     let width: CGFloat
 
     static let rowHeight: CGFloat = 14
-    static let titleWidth: CGFloat = 80
+    static let titleWidth: CGFloat = 90
     static let valueWidth: CGFloat = 60
 
     var body: some View {
         HStack {
-            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth
+            let barWidth = width - TimingRowView.titleWidth - TimingRowView.valueWidth - 4
+            let start = clamp(model.start)
+            let length = min(1 - start, model.length)
+
             Text(model.title)
                 .font(.footnote)
                 .foregroundColor(Color(UXColor.secondaryLabel))
                 .frame(width: TimingRowView.titleWidth, alignment: .leading)
             Spacer()
-                .frame(width: barWidth * model.start)
-            RoundedRectangle(cornerRadius: 3)
+                .frame(width: 2 + barWidth * start)
+            RoundedRectangle(cornerRadius: 2)
                 .fill(model.color)
+                .frame(width: max(2, barWidth * length))
             Spacer()
-                .frame(width: barWidth * (1 - model.end))
             Text(model.value)
                 .font(.footnote)
                 .foregroundColor(Color(UXColor.secondaryLabel))
@@ -68,6 +71,8 @@ private struct TimingRowView: View {
         .frame(height: TimingRowView.rowHeight)
     }
 }
+
+// MARK: - ViewModel
 
 struct TimingRowSectionViewModel {
     let title: String
@@ -81,8 +86,16 @@ struct TimingRowViewModel {
     // [0, 1]
     let start: CGFloat
     // [0, 1]
-    let end: CGFloat
+    let length: CGFloat
 }
+
+// MARK: - Private
+
+private func clamp(_ value: CGFloat) -> CGFloat {
+    max(0, min(1, value))
+}
+
+// MARK: - Preview
 
 #if DEBUG
 struct TimingView_Previews: PreviewProvider {
@@ -104,12 +117,13 @@ struct TimingView_Previews: PreviewProvider {
 
 private let mockModel = [
     TimingRowSectionViewModel(title: "Response", items: [
-        TimingRowViewModel(title: "Waiting", value: "41.2ms", color: .blue, start: 0.0, end: 0.4),
-        TimingRowViewModel(title: "Download", value: "0.2ms", color: .red, start: 0.4, end: 0.45)
+        TimingRowViewModel(title: "Scheduling", value: "0.01ms", color: .blue, start: 0.0, length: 0.001),
+        TimingRowViewModel(title: "Waiting", value: "41.2ms", color: .blue, start: 0.0, length: 0.4),
+        TimingRowViewModel(title: "Download", value: "0.2ms", color: .red, start: 0.4, length: 0.05)
     ]),
     TimingRowSectionViewModel(title: "Cache Lookup", items: [
-        TimingRowViewModel(title: "Waiting", value: "50.2ms", color: .yellow, start: 0.45, end: 0.95),
-        TimingRowViewModel(title: "Download", value: "5.2ms", color: .green, start: 0.95, end: 1)
+        TimingRowViewModel(title: "Waiting", value: "50.2ms", color: .yellow, start: 0.45, length: 0.5),
+        TimingRowViewModel(title: "Download", value: "5.2ms", color: .green, start: 0.95, length: 0.05)
     ])
 ]
 #endif

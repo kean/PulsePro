@@ -62,6 +62,10 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
         )
     }
 
+    func makeMetricsModel() -> NetworkInspectorMetricsViewModel? {
+        summary.metrics.map(NetworkInspectorMetricsViewModel.init)
+    }
+
     // MARK: - NSFetchedResultsControllerDelegate
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

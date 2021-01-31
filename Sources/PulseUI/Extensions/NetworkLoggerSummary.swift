@@ -84,11 +84,11 @@ extension NetworkLoggerSummary {
     }
 
     static func mock(taskId: String) -> NetworkLoggerSummary {
-        let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
-        request.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId.rawValue, taskId)
-        request.relationshipKeyPathsForPrefetching = ["\(\MessageEntity.metadata.self)"]
+        let metrics = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
+        metrics.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId.rawValue, taskId)
+        metrics.relationshipKeyPathsForPrefetching = ["\(\MessageEntity.metadata.self)"]
 
-        let messages = (try? LoggerMessageStore.mock.container.viewContext.fetch(request)) ?? []
+        let messages = (try? LoggerMessageStore.mock.container.viewContext.fetch(metrics)) ?? []
         return NetworkLoggerSummary(messages: messages)
     }
 }

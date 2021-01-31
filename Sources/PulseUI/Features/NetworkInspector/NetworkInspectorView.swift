@@ -26,7 +26,7 @@ struct NetworkInspectorView: View {
                 Text("Summary").tag(NetworkInspectorTab.summary)
                 Text("Headers").tag(NetworkInspectorTab.headers)
                 Text("Response").tag(NetworkInspectorTab.response)
-                Text("Metrics").tag(NetworkInspectorTab.request)
+                Text("Metrics").tag(NetworkInspectorTab.metrics)
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
@@ -38,8 +38,14 @@ struct NetworkInspectorView: View {
                 NetworkInspectorHeadersView(model: model.makeHeadersModel())
             case .response:
                 NetworkInspectorResponseView(model: model.makeResponseModel())
-            case .request:
-                Text("Request")
+            case .metrics:
+                if let model = model.makeMetricsModel() {
+                    NetworkInspectorMetricsView(model: model)
+                } else {
+                    Text("No Metrics")
+                        .font(.title)
+                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                }
             }
 
             Spacer()
@@ -51,7 +57,7 @@ private enum NetworkInspectorTab {
     case summary
     case headers
     case response
-    case request
+    case metrics
 }
 
 #if DEBUG
