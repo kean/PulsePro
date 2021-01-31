@@ -12,14 +12,13 @@ struct NetworkInspectorSummaryView: View {
     var body: some View {
         ScrollView {
             VStack {
+                if let transfer = model.transferModel {
+                    NetworkInspectorTransferInfoView(model: transfer)
+                    Spacer(minLength: 32)
+                }
                 KeyValueSectionView(model: model.summaryModel)
                 if let error = model.errorModel {
                     KeyValueSectionView(model: error)
-                }
-                if let transfer = model.transferModel {
-                    Spacer(minLength: 32)
-                    NetworkInspectorTransferInfoView(model: transfer)
-                    Spacer(minLength: 32)
                 }
                 if let timing = model.timingDetailsModel {
                     KeyValueSectionView(model: timing)
