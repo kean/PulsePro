@@ -68,6 +68,7 @@ private func populateStore(_ store: LoggerMessageStore) {
     networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: MockDataTask.login.response)
     Thread.sleep(forTimeInterval: 0.01)
     networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: MockDataTask.login.responseBody)
+//    networkLogger.testInjectMetrics(<#T##metrics: NetworkLoggerMetrics##NetworkLoggerMetrics#>, for: <#T##URLSessionTask#>)
     networkLogger.urlSession(urlSession, task: dataTask, didCompleteWithError: nil)
 
     logger(named: "application")

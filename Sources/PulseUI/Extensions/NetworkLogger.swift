@@ -82,9 +82,82 @@ public struct NetworkLoggerError: Codable {
 
 public struct NetworkLoggerMetrics: Codable {
     public let taskInterval: DateInterval
+    public let redirectCount: Int
 
     init(metrics: URLSessionTaskMetrics) {
         self.taskInterval = metrics.taskInterval
+        self.redirectCount = metrics.redirectCount
+    }
+}
+
+public final class NetworkLoggerTransactionMetrics: Codable {
+    public let fetchStartDate: Date?
+    public let domainLookupStartDate: Date?
+    public let domainLookupEndDate: Date?
+    public let connectStartDate: Date?
+    public let secureConnectionStartDate: Date?
+    public let secureConnectionEndDate: Date?
+    public let connectEndDate: Date?
+    public let requestStartDate: Date?
+    public let requestEndDate: Date?
+    public let responseStartDate: Date?
+    public let responseEndDate: Date?
+    public let networkProtocolName: String?
+    public let isProxyConnection: Bool
+    public let isReusedConnection: Bool
+    /// `URLSessionTaskMetrics.ResourceFetchType` enum raw value
+    public let resourceFetchType: Int
+    public let countOfRequestHeaderBytesSent: Int64
+    public let countOfRequestBodyBytesSent: Int64
+    public let countOfRequestBodyBytesBeforeEncoding: Int64
+    public let countOfResponseHeaderBytesReceived: Int64
+    public let countOfResponseBodyBytesReceived: Int64
+    public let countOfResponseBodyBytesAfterDecoding: Int64
+    public let localAddress: String?
+    public let remoteAddress: String?
+    public let isCellular: Bool
+    public let isExpensive: Bool
+    public let isConstrained: Bool
+    public let isMultipath: Bool
+    public let localPort: Int?
+    public let remotePort: Int?
+    /// `tls_protocol_version_t` enum raw value
+    public let negotiatedTLSProtocolVersion: UInt16?
+    /// `tls_ciphersuite_t`  enum raw value
+    public let negotiatedTLSCipherSuite: UInt16?
+
+    init(metrics: URLSessionTaskTransactionMetrics) {
+        self.fetchStartDate = metrics.fetchStartDate
+        self.domainLookupStartDate = metrics.domainLookupStartDate
+        self.domainLookupEndDate = metrics.domainLookupEndDate
+        self.connectStartDate = metrics.connectStartDate
+        self.secureConnectionStartDate = metrics.secureConnectionStartDate
+        self.secureConnectionEndDate = metrics.secureConnectionEndDate
+        self.connectEndDate = metrics.connectEndDate
+        self.requestStartDate = metrics.requestStartDate
+        self.requestEndDate = metrics.requestEndDate
+        self.responseStartDate = metrics.responseStartDate
+        self.responseEndDate = metrics.responseEndDate
+        self.networkProtocolName = metrics.networkProtocolName
+        self.isProxyConnection = metrics.isProxyConnection
+        self.isReusedConnection = metrics.isReusedConnection
+        self.resourceFetchType = metrics.resourceFetchType.rawValue
+        self.countOfRequestHeaderBytesSent = metrics.countOfRequestHeaderBytesSent
+        self.countOfRequestBodyBytesSent = metrics.countOfRequestBodyBytesSent
+        self.countOfRequestBodyBytesBeforeEncoding = metrics.countOfRequestBodyBytesBeforeEncoding
+        self.countOfResponseHeaderBytesReceived = metrics.countOfResponseHeaderBytesReceived
+        self.countOfResponseBodyBytesReceived = metrics.countOfResponseBodyBytesReceived
+        self.countOfResponseBodyBytesAfterDecoding = metrics.countOfResponseBodyBytesAfterDecoding
+        self.localAddress = metrics.localAddress
+        self.remoteAddress = metrics.remoteAddress
+        self.isCellular = metrics.isCellular
+        self.isExpensive = metrics.isExpensive
+        self.isConstrained = metrics.isConstrained
+        self.isMultipath = metrics.isMultipath
+        self.localPort = metrics.localPort
+        self.remotePort = metrics.remotePort
+        self.negotiatedTLSProtocolVersion = metrics.negotiatedTLSProtocolVersion?.rawValue
+        self.negotiatedTLSCipherSuite = metrics.negotiatedTLSCipherSuite?.rawValue
     }
 }
 
@@ -168,7 +241,7 @@ public final class NetworkLogger: NSObject {
         let error = error.map(NetworkLoggerError.init)
         let request = NetworkLoggerRequest(urlRequest: urlRequest)
         let response = context.response.map(NetworkLoggerResponse.init)
-        let metrics = context.metrics.map(NetworkLoggerMetrics.init)
+        let metrics = context.metrics
         let event = NetworkLoggerEvent.TaskDidComplete(request: request, response: response, error: error, data: context.data, metrics: metrics)
 
         let level: Logger.Level
@@ -193,7 +266,7 @@ public final class NetworkLogger: NSObject {
 
     public func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
         guard let context = tasks[task] else { return }
-        context.metrics = metrics
+        context.metrics = NetworkLoggerMetrics(metrics: metrics)
     }
 
     // MARK: - Private
@@ -203,7 +276,7 @@ public final class NetworkLogger: NSObject {
     private final class TaskContext {
         let uuid = UUID()
         var response: URLResponse?
-        var metrics: URLSessionTaskMetrics?
+        var metrics: NetworkLoggerMetrics?
         lazy var data = Data()
     }
 
@@ -214,6 +287,10 @@ public final class NetworkLogger: NSObject {
             NetworkLoggerMetadataKey.taskType.rawValue: .string(NetworkTaskType(task: task).rawValue),
             NetworkLoggerMetadataKey.payload.rawValue: .string(encode(payload) ?? "")
         ]
+    }
+
+    func testInjectMetrics(_ metrics: NetworkLoggerMetrics, for task: URLSessionTask) {
+        tasks[task]?.metrics = metrics
     }
 }
 
