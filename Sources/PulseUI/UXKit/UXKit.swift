@@ -16,7 +16,6 @@ import SwiftUI
 typealias UXColor = NSColor
 typealias UXFont = NSFont
 typealias UXTextView = NSTextView
-typealias UXAutoTextView = NSIntrinsicTextView
 
 extension NSColor {
     static var label: NSColor { labelColor }
@@ -30,7 +29,6 @@ extension NSColor {
 typealias UXColor = UIColor
 typealias UXFont = UIFont
 typealias UXTextView = UITextView
-typealias UXAutoTextView = UITextView
 #endif
 
 // MARK: - NSTextView

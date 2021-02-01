@@ -18,7 +18,6 @@
 		0C70403F25C62ED800897C5B /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C70403E25C62ED800897C5B /* NetworkLogger.swift */; };
 		0C70404725C6300900897C5B /* NetworkLoggerSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C70404625C6300900897C5B /* NetworkLoggerSummary.swift */; };
 		OBJ_103 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* NSAttributedString+Extensions.swift */; };
-		OBJ_104 /* NSIntrinsicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* NSIntrinsicTextView.swift */; };
 		OBJ_105 /* Pulse+PulseUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Pulse+PulseUI.swift */; };
 		OBJ_106 /* ConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* ConsoleMessageView.swift */; };
 		OBJ_107 /* ConsoleMessageViewListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* ConsoleMessageViewListItem.swift */; };
@@ -98,7 +97,6 @@
 		0C70403E25C62ED800897C5B /* NetworkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogger.swift; sourceTree = "<group>"; };
 		0C70404625C6300900897C5B /* NetworkLoggerSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerSummary.swift; sourceTree = "<group>"; };
 		OBJ_10 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
-		OBJ_11 /* NSIntrinsicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSIntrinsicTextView.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Pulse+PulseUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse+PulseUI.swift"; sourceTree = "<group>"; };
 		OBJ_15 /* ConsoleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageView.swift; sourceTree = "<group>"; };
 		OBJ_16 /* ConsoleMessageViewListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageViewListItem.swift; sourceTree = "<group>"; };
@@ -389,7 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_10 /* NSAttributedString+Extensions.swift */,
-				OBJ_11 /* NSIntrinsicTextView.swift */,
 				OBJ_12 /* Pulse+PulseUI.swift */,
 				0C70403E25C62ED800897C5B /* NetworkLogger.swift */,
 				0C70404625C6300900897C5B /* NetworkLoggerSummary.swift */,
@@ -534,7 +531,6 @@
 				0C29C3B725C75E5C001553AA /* KeyValueGridView.swift in Sources */,
 				0C70403F25C62ED800897C5B /* NetworkLogger.swift in Sources */,
 				OBJ_103 /* NSAttributedString+Extensions.swift in Sources */,
-				OBJ_104 /* NSIntrinsicTextView.swift in Sources */,
 				OBJ_105 /* Pulse+PulseUI.swift in Sources */,
 				OBJ_106 /* ConsoleMessageView.swift in Sources */,
 				OBJ_107 /* ConsoleMessageViewListItem.swift in Sources */,
