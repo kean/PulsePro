@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C01D36525C8D8C2008A3ED6 /* BlobStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C01D36425C8D8C2008A3ED6 /* BlobStore.swift */; };
 		0C29C39925C73972001553AA /* NetworkInspectorTransferInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C29C39825C73972001553AA /* NetworkInspectorTransferInfoView.swift */; };
 		0C29C3A125C74338001553AA /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C29C3A025C74338001553AA /* Formatters.swift */; };
 		0C29C3A925C75426001553AA /* NetworkInspectorRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C29C3A825C75426001553AA /* NetworkInspectorRequestView.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C01D36425C8D8C2008A3ED6 /* BlobStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobStore.swift; sourceTree = "<group>"; };
 		0C29C39825C73972001553AA /* NetworkInspectorTransferInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorTransferInfoView.swift; sourceTree = "<group>"; };
 		0C29C3A025C74338001553AA /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		0C29C3A825C75426001553AA /* NetworkInspectorRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorRequestView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,9 @@
 				OBJ_38 /* ConsoleSearchService.swift */,
 				OBJ_39 /* ConsoleShareService.swift */,
 				OBJ_40 /* JSONPrinter.swift */,
+				0C70403E25C62ED800897C5B /* NetworkLogger.swift */,
+				0C70404625C6300900897C5B /* NetworkLoggerSummary.swift */,
+				0C01D36425C8D8C2008A3ED6 /* BlobStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -388,8 +393,6 @@
 			children = (
 				OBJ_10 /* NSAttributedString+Extensions.swift */,
 				OBJ_12 /* Pulse+PulseUI.swift */,
-				0C70403E25C62ED800897C5B /* NetworkLogger.swift */,
-				0C70404625C6300900897C5B /* NetworkLoggerSummary.swift */,
 				0C3A2E4A25C7255B002568E2 /* Foundation+Extensions.swift */,
 				0C29C3A025C74338001553AA /* Formatters.swift */,
 			);
@@ -534,6 +537,7 @@
 				OBJ_105 /* Pulse+PulseUI.swift in Sources */,
 				OBJ_106 /* ConsoleMessageView.swift in Sources */,
 				OBJ_107 /* ConsoleMessageViewListItem.swift in Sources */,
+				0C01D36525C8D8C2008A3ED6 /* BlobStore.swift in Sources */,
 				OBJ_108 /* ConsoleMessageViewModel.swift in Sources */,
 				OBJ_109 /* ConsoleQuickFiltersView.swift in Sources */,
 				OBJ_110 /* ConsoleSearchView.swift in Sources */,
