@@ -12,6 +12,7 @@ import UIKit
 // TODO: create a ViewModel for a share sheet
 struct ConsoleMessageViewListItem: View {
     let store: LoggerMessageStore
+    let blobs: BlobStoring
     let message: MessageEntity
 
     @Binding var searchCriteria: ConsoleSearchCriteria
@@ -48,7 +49,7 @@ struct ConsoleMessageViewListItem: View {
                 }.foregroundColor(.red)
         }
         .sheet(isPresented: $isShowingShareSheet) {
-            ShareView(activityItems: [ConsoleShareService(store: store).prepareMessageForSharing(message)])
+            ShareView(activityItems: [ConsoleShareService(store: store, blobs: blobs).prepareMessageForSharing(message)])
         }
     }
 }

@@ -16,7 +16,7 @@ final class MockNetworkLogger {
         var logger = Logger(label: "network-logger")
         logger.logLevel = .trace
 
-        self.logger = NetworkLogger(logger)
+        self.logger = NetworkLogger(logger: logger)
         self.dataLoader = MockDataLoader(logger: self.logger)
 
         logger.log(level: .info, "MockNetworkLogger initialized")

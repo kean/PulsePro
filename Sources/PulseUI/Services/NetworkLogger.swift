@@ -206,12 +206,12 @@ public enum NetworkTaskType: String, Codable {
 
 public final class NetworkLogger: NSObject {
     private let logger: Logger
-    private let blobStore: BlobStore
+    private let blobs: BlobStoring
     private let queue = DispatchQueue(label: "com.github.kean.pulse.network-logger", target: .global(qos: .utility))
 
-    public init(logger: Logger, blobStore: BlobStore = .default) {
+    public init(logger: Logger, blobs: BlobStoring = BlobStore.default) {
         self.logger = logger
-        self.blobStore = blobStore
+        self.blobs = blobs
     }
 
     // MARK: Logging
@@ -283,8 +283,8 @@ public final class NetworkLogger: NSObject {
             request: NetworkLoggerRequest(urlRequest: urlRequest),
             response: context.response.map(NetworkLoggerResponse.init),
             error: error.map(NetworkLoggerError.init),
-            requestBodyKey: blobStore.storeData(urlRequest.httpBody),
-            responseBodyKey: blobStore.storeData(context.data),
+            requestBodyKey: blobs.storeData(urlRequest.httpBody),
+            responseBodyKey: blobs.storeData(context.data),
             metrics: context.metrics
         )
 
@@ -338,7 +338,9 @@ public final class NetworkLogger: NSObject {
     }
 
     func testInjectMetrics(_ metrics: NetworkLoggerMetrics, for task: URLSessionTask) {
-        tasks[task]?.metrics = metrics
+        queue.async {
+            self.tasks[task]?.metrics = metrics
+        }
     }
 }
 

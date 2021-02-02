@@ -9,6 +9,7 @@ import SwiftUI
 
 public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let store: LoggerMessageStore
+    private let blobs: BlobStoring
     private var controller: NSFetchedResultsController<MessageEntity>
 
     @Published public private(set) var messages: ConsoleMessages
@@ -25,8 +26,9 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
 
     private var bag = [AnyCancellable]()
 
-    public init(store: LoggerMessageStore) {
+    public init(store: LoggerMessageStore, blobs: BlobStoring) {
         self.store = store
+        self.blobs = blobs
 
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         request.fetchBatchSize = 40
@@ -72,7 +74,7 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
     }
 
     func prepareForSharing() throws -> URL {
-        try ConsoleShareService(store: store).prepareForSharing()
+        try ConsoleShareService(store: store, blobs: blobs).prepareForSharing()
     }
 
     func buttonRemoveAllMessagesTapped() {
@@ -82,7 +84,7 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
     // MARK: - DetailsViewModel
 
     func makeDetailsRouter(for message: MessageEntity) -> ConsoleMessageDetailsRouter {
-        ConsoleMessageDetailsRouter(store: store, message: message)
+        ConsoleMessageDetailsRouter(store: store, blobs: blobs, message: message)
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
@@ -95,5 +97,9 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
 
     func tempGetStore() -> LoggerMessageStore {
         store
+    }
+
+    func tempGetBlobs() -> BlobStoring {
+        blobs
     }
 }

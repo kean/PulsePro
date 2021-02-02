@@ -9,8 +9,8 @@ import Combine
 public struct ConsoleView: View {
     @ObservedObject var model: ConsoleViewModel
 
-    public init(store: LoggerMessageStore) {
-        self.model = ConsoleViewModel(store: store)
+    public init(store: LoggerMessageStore, blobs: BlobStoring) {
+        self.model = ConsoleViewModel(store: store, blobs: blobs)
     }
 
     public init(model: ConsoleViewModel) {
@@ -51,7 +51,7 @@ public struct ConsoleView: View {
     private var messagesListView: some View {
         ForEach(model.messages, id: \.objectID) { message in
             NavigationLink(destination: model.makeDetailsRouter(for: message)) {
-                ConsoleMessageViewListItem(store: model.tempGetStore(), message: message, searchCriteria: self.$model.searchCriteria)
+                ConsoleMessageViewListItem(store: model.tempGetStore(), blobs: model.tempGetBlobs(), message: message, searchCriteria: self.$model.searchCriteria)
             }.listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
         }
     }
@@ -123,8 +123,8 @@ public struct ConsoleView: View {
 struct ConsoleView_Previews: PreviewProvider {
     static var previews: some View {
         return Group {
-            ConsoleView(model: ConsoleViewModel(store: .mock))
-            ConsoleView(model: ConsoleViewModel(store: .mock))
+            ConsoleView(model: ConsoleViewModel(store: .mock, blobs: BlobStore.mock))
+            ConsoleView(model: ConsoleViewModel(store: .mock, blobs: BlobStore.mock))
                 .environment(\.colorScheme, .dark)
         }
     }

@@ -6,11 +6,13 @@ import Pulse
 import CoreData
 
 public struct ConsoleShareService {
-    public let store: LoggerMessageStore
+    private let store: LoggerMessageStore
+    private let blobs: BlobStoring
     private var context: NSManagedObjectContext { store.container.viewContext }
 
-    public init(store: LoggerMessageStore) {
+    public init(store: LoggerMessageStore, blobs: BlobStoring) {
         self.store = store
+        self.blobs = blobs
     }
 
     /// Creates a directory with contents of the logger and some additional
@@ -72,7 +74,7 @@ public struct ConsoleShareService {
     }
 
     private func prepareNetworkMessageForSharing(taskId: String) -> String {
-        return prepareForSharing(summary: NetworkLoggerSummary(store: store, taskId: taskId))
+        prepareForSharing(summary: NetworkLoggerSummary(store: store, blobs: blobs, taskId: taskId))
     }
 
     func prepareForSharing(summary info: NetworkLoggerSummary) -> String {

@@ -10,7 +10,7 @@ import Logging
 public extension LoggerMessageStore {
     static let mock: LoggerMessageStore = {
         let store = makeMockStore()
-        populateStore(store)
+        populateStore(store, BlobStore.mock)
 
 //        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
 //            populateStore(store)
@@ -61,7 +61,7 @@ private extension NSManagedObject {
     }
 }
 
-private func populateStore(_ store: LoggerMessageStore) {
+private func populateStore(_ store: LoggerMessageStore, _ blobs: BlobStoring) {
     precondition(Thread.isMainThread)
 
     func logger(named: String) -> Logger {
@@ -82,7 +82,7 @@ private func populateStore(_ store: LoggerMessageStore) {
     logger(named: "auth")
         .log(level: .trace, "Instantiated the new login request")
 
-    let networkLogger = NetworkLogger(logger: logger(named: "network"))
+    let networkLogger = NetworkLogger(logger: logger(named: "network"), blobs: blobs)
 
     let urlSession = URLSession(configuration: .default)
 

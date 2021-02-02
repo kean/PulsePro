@@ -95,14 +95,16 @@ private enum NetworkInspectorTab {
 
 final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let store: LoggerMessageStore
+    private let blobs: BlobStoring
     private let taskId: String
     @Published private(set) var messages: [MessageEntity] = []
     private var summary: NetworkLoggerSummary
     var isCompleted: Bool { summary.isCompleted }
     private let controller: NSFetchedResultsController<MessageEntity>
 
-    init(store: LoggerMessageStore, taskId: String) {
+    init(store: LoggerMessageStore, blobs: BlobStoring, taskId: String) {
         self.store = store
+        self.blobs = blobs
         self.taskId = taskId
 
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
@@ -111,7 +113,7 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
         request.sortDescriptors = [NSSortDescriptor(keyPath: \MessageEntity.createdAt, ascending: false)]
 
         self.controller = NSFetchedResultsController<MessageEntity>(fetchRequest: request, managedObjectContext: store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        self.summary = NetworkLoggerSummary(messages: [])
+        self.summary = NetworkLoggerSummary(messages: [], blobs: blobs)
 
         super.init()
 
@@ -122,7 +124,7 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
 
     private func didUpdateMessages(_ messages: [MessageEntity]) {
         self.messages = messages
-        self.summary = NetworkLoggerSummary(messages: messages)
+        self.summary = NetworkLoggerSummary(messages: messages, blobs: blobs)
     }
 
     // MARK: - Tabs
@@ -153,7 +155,7 @@ final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDeleg
     // MARK: Sharing
 
     func prepareForSharing() -> String {
-        ConsoleShareService(store: store).prepareForSharing(summary: summary)
+        ConsoleShareService(store: store, blobs: blobs).prepareForSharing(summary: summary)
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
@@ -170,13 +172,13 @@ struct NetworkInspectorView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
+                NetworkInspectorView(model: .init(store: .mock, blobs: BlobStore.mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
             }
             .previewDisplayName("Light")
             .environment(\.colorScheme, .light)
 
             NavigationView {
-                NetworkInspectorView(model: .init(store: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
+                NetworkInspectorView(model: .init(store: .mock, blobs: BlobStore.mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
             }
             .previewDisplayName("Dark")
             .environment(\.colorScheme, .dark)
