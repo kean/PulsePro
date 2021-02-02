@@ -5,6 +5,12 @@ import Foundation
 import Pulse
 import Logging
 
+public protocol BlobStoring {
+    func getData(for key: String) -> Data?
+    func storeData(_ data: Data?) -> String?
+    func removeData(for key: String)
+}
+
 /// Blob storage.
 ///
 /// - Stores blobs using file system
@@ -12,7 +18,7 @@ import Logging
 /// - Has size limits and performs LRU cleanup
 ///
 /// Thread-safe. Can be used with multiple logger stores.
-public final class BlobStore {
+public final class BlobStore: BlobStoring {
     /// A cache key.
     public typealias Key = String
 
@@ -83,15 +89,16 @@ public final class BlobStore {
 
     // MARK: Store
 
-    /// Retrieves data for the given key. The completion will be called
-    /// syncrhonously if there is no cached data for the given key.
-    public func cachedData(for key: Key) -> Data? {
+    public func getData(for key: Key) -> Data? {
         try? Data(contentsOf: url(for: key))
     }
 
     /// Stored data in the blob storage. If the file with the same contents is
     /// already stored, returns the existing file.
-    public func storeData(_ data: Data) -> Key? {
+    public func storeData(_ data: Data?) -> Key? {
+        guard let data = data, !data.isEmpty else {
+            return nil
+        }
         let hash = data.sha256
         let url = path.appendingPathComponent(hash, isDirectory: false)
         guard !FileManager.default.fileExists(atPath: url.absoluteString) else {
@@ -218,26 +225,5 @@ public final class BlobStore {
         contents(keys: [.totalFileAllocatedSizeKey]).reduce(0) {
             $0 + ($1.meta.totalFileAllocatedSize ?? 0)
         }
-    }
-}
-
-// MARK: - Private
-
-import CommonCrypto
-
-private extension Data {
-    /// Calculates SHA256 from the given string and returns its hex representation.
-    ///
-    /// ```swift
-    /// print("http://test.com".data(using: .utf8)!.sha256)
-    /// // prints "8b408a0c7163fdfff06ced3e80d7d2b3acd9db900905c4783c28295b8c996165"
-    /// ```
-    var sha256: String {
-        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
-            var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-            CC_SHA256(bytes.baseAddress, CC_LONG(count), &hash)
-            return hash
-        }
-        return hash.map({ String(format: "%02x", $0) }).joined()
     }
 }

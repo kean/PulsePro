@@ -39,8 +39,8 @@ public enum NetworkLoggerEvent {
         public let request: NetworkLoggerRequest
         public let response: NetworkLoggerResponse?
         public let error: NetworkLoggerError?
-        public let requestBody: Data?
-        public let responseBody: Data?
+        public let requestBodyKey: String?
+        public let responseBodyKey: String?
         public let metrics: NetworkLoggerMetrics?
     }
 }
@@ -205,15 +205,22 @@ public enum NetworkTaskType: String, Codable {
 }
 
 public final class NetworkLogger: NSObject {
-    let logger: Logger
+    private let logger: Logger
+    private let blobStore: BlobStore
+    private let queue = DispatchQueue(label: "com.github.kean.pulse.network-logger", target: .global(qos: .utility))
 
-    public init(_ logger: Logger) {
+    public init(logger: Logger, blobStore: BlobStore = .default) {
         self.logger = logger
+        self.blobStore = blobStore
     }
 
     // MARK: Logging
 
     public func urlSession(_ session: URLSession, didStartTask task: URLSessionTask) {
+        queue.async { self._urlSession(session, didStartTask: task) }
+    }
+
+    private func _urlSession(_ session: URLSession, didStartTask task: URLSessionTask) {
         guard let urlRequest = task.originalRequest else { return }
 
         let context = TaskContext()
@@ -230,6 +237,10 @@ public final class NetworkLogger: NSObject {
     }
 
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse) {
+        queue.async { self._urlSession(session, dataTask: dataTask, didReceive: response) }
+    }
+
+    private func _urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse) {
         guard let context = tasks[dataTask] else { return }
         context.response = response
 
@@ -245,6 +256,10 @@ public final class NetworkLogger: NSObject {
     }
 
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        queue.async { self._urlSession(session, dataTask: dataTask, didReceive: data) }
+    }
+
+    private func _urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         guard let context = tasks[dataTask] else { return }
         context.data.append(data)
 
@@ -258,13 +273,20 @@ public final class NetworkLogger: NSObject {
     }
 
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        queue.async { self._urlSession(session, task: task, didCompleteWithError: error) }
+    }
+
+    private func _urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let context = tasks[task], let urlRequest = task.originalRequest else { return }
 
-        let error = error.map(NetworkLoggerError.init)
-        let request = NetworkLoggerRequest(urlRequest: urlRequest)
-        let response = context.response.map(NetworkLoggerResponse.init)
-        let metrics = context.metrics
-        let event = NetworkLoggerEvent.TaskDidComplete(request: request, response: response, error: error, requestBody: urlRequest.httpBody, responseBody: context.data, metrics: metrics)
+        let event = NetworkLoggerEvent.TaskDidComplete(
+            request: NetworkLoggerRequest(urlRequest: urlRequest),
+            response: context.response.map(NetworkLoggerResponse.init),
+            error: error.map(NetworkLoggerError.init),
+            requestBodyKey: blobStore.storeData(urlRequest.httpBody),
+            responseBodyKey: blobStore.storeData(context.data),
+            metrics: context.metrics
+        )
 
         let level: Logger.Level
         let message: String
@@ -287,6 +309,10 @@ public final class NetworkLogger: NSObject {
     }
 
     public func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
+        queue.async { self._urlSession(session, task: task, didFinishCollecting: metrics) }
+    }
+
+    private func _urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
         guard let context = tasks[task] else { return }
         context.metrics = NetworkLoggerMetrics(metrics: metrics)
     }

@@ -20,6 +20,30 @@ public extension LoggerMessageStore {
     }()
 }
 
+public extension BlobStore {
+    static let mock: BlobStoring = MockBlobStore()
+}
+
+// In-memory blob store.
+public final class MockBlobStore: BlobStoring {
+    private var store = [String: Data]()
+
+    public func getData(for key: String) -> Data? {
+        store[key]
+    }
+
+    public func storeData(_ data: Data?) -> String? {
+        guard let data = data, !data.isEmpty else { return nil }
+        let hash = data.sha256
+        store[hash] = data
+        return hash
+    }
+
+    public func removeData(for key: String) {
+        store[key] = nil
+    }
+}
+
 private func makeMockStore() -> LoggerMessageStore {
     let rootURL = FileManager.default.temporaryDirectory.appendingPathComponent("com.github.kean.pulse-ui-demo")
     try? FileManager.default.removeItem(at: rootURL)
@@ -58,7 +82,7 @@ private func populateStore(_ store: LoggerMessageStore) {
     logger(named: "auth")
         .log(level: .trace, "Instantiated the new login request")
 
-    let networkLogger = NetworkLogger(logger(named: "network"))
+    let networkLogger = NetworkLogger(logger: logger(named: "network"))
 
     let urlSession = URLSession(configuration: .default)
 

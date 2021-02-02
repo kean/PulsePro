@@ -2,6 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Foundation
+import CommonCrypto
 
 extension tls_ciphersuite_t {
     var description: String {
@@ -136,4 +137,21 @@ func prettifyJSON(_ data: Data) -> String {
         return String(data: data, encoding: .utf8) ?? ""
     }
     return String(data: pretty, encoding: .utf8) ?? ""
+}
+
+extension Data {
+    /// Calculates SHA256 from the given string and returns its hex representation.
+    ///
+    /// ```swift
+    /// print("http://test.com".data(using: .utf8)!.sha256)
+    /// // prints "8b408a0c7163fdfff06ced3e80d7d2b3acd9db900905c4783c28295b8c996165"
+    /// ```
+    var sha256: String {
+        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+            var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+            CC_SHA256(bytes.baseAddress, CC_LONG(count), &hash)
+            return hash
+        }
+        return hash.map({ String(format: "%02x", $0) }).joined()
+    }
 }
