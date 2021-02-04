@@ -31,21 +31,13 @@ public struct ConsoleShareService {
         let coreDataUrl = tempDir.appendingPathComponent("debug-data.sqlite")
         try store.container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
 
-        let userDefaultsContents = UserDefaults.standard.dictionaryRepresentation()
-            .map { "\($0.key): \($0.value)" }
-            .joined(separator: "\n")
-            .data(using: .utf8) ??
-            "<failed to generate user defaults>".data(using: .utf8)!
-        let userDefaultsContentsUrl = tempDir.appendingPathComponent("user-defaults.txt")
-        try userDefaultsContents.write(to: userDefaultsContentsUrl)
-
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let date = dateFormatter.string(from: Date())
         let sharedDirUrl = tempDir.appendingPathComponent("logs-\(date)")
         try FileManager.default.createDirectory(at: sharedDirUrl, withIntermediateDirectories: true, attributes: nil)
 
-        for url in [allLogsUrl, coreDataUrl, userDefaultsContentsUrl] {
+        for url in [allLogsUrl, coreDataUrl] {
             try FileManager.default.moveItem(at: url, to: sharedDirUrl.appendingPathComponent(url.lastPathComponent))
         }
 
