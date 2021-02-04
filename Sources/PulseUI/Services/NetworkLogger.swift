@@ -8,7 +8,7 @@ import Logging
 // MARK: - NetworkLogger
 
 public enum NetworkLoggerMetadataKey: String {
-    case taskId = "networkTaskId"
+    case taskId = "networkEventTaskId"
     case eventType = "networkEventType"
     case taskType = "networkEventTaskType"
     case payload = "networkEventPayload"
