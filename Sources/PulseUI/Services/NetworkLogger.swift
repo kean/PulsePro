@@ -14,6 +14,10 @@ public enum NetworkLoggerMetadataKey: String {
     case payload = "networkEventPayload"
 }
 
+private extension NetworkLoggerMetadataKey {
+    static let createdAt = "networkEventCreatedAt"
+}
+
 public enum NetworkLoggerEventType: String, Codable {
     case dataTaskDidReceieveResponse
     case dataTaskDidReceiveData
@@ -217,10 +221,11 @@ public final class NetworkLogger: NSObject {
     // MARK: Logging
 
     public func urlSession(_ session: URLSession, didStartTask task: URLSessionTask) {
-        queue.async { self._urlSession(session, didStartTask: task) }
+        let date = Date()
+        queue.async { self._urlSession(session, didStartTask: task, date: date) }
     }
 
-    private func _urlSession(_ session: URLSession, didStartTask task: URLSessionTask) {
+    private func _urlSession(_ session: URLSession, didStartTask task: URLSessionTask, date: Date) {
         guard let urlRequest = task.originalRequest else { return }
 
         let context = TaskContext()
@@ -232,15 +237,16 @@ public final class NetworkLogger: NSObject {
         logger.log(
             level: .trace,
             "Did start request \(task.originalRequest?.url?.absoluteString ?? "null")",
-            metadata: makeMetadata(context, task, .taskDidStart, event)
+            metadata: makeMetadata(context, task, .taskDidStart, event, date)
         )
     }
 
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse) {
-        queue.async { self._urlSession(session, dataTask: dataTask, didReceive: response) }
+        let date = Date()
+        queue.async { self._urlSession(session, dataTask: dataTask, didReceive: response, date: date) }
     }
 
-    private func _urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse) {
+    private func _urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, date: Date) {
         guard let context = tasks[dataTask] else { return }
         context.response = response
 
@@ -251,15 +257,16 @@ public final class NetworkLogger: NSObject {
         logger.log(
             level: .trace,
             "Did receive response with status code: \(statusCode.map(descriptionForStatusCode) ?? "–") for \(dataTask.url ?? "null")",
-            metadata: makeMetadata(context, dataTask, .dataTaskDidReceieveResponse, event)
+            metadata: makeMetadata(context, dataTask, .dataTaskDidReceieveResponse, event, date)
         )
     }
 
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        queue.async { self._urlSession(session, dataTask: dataTask, didReceive: data) }
+        let date = Date()
+        queue.async { self._urlSession(session, dataTask: dataTask, didReceive: data, date: date) }
     }
 
-    private func _urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+    private func _urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data, date: Date) {
         guard let context = tasks[dataTask] else { return }
         context.data.append(data)
 
@@ -268,15 +275,16 @@ public final class NetworkLogger: NSObject {
         logger.log(
             level: .trace,
             "Did receive data: \(ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: .file)) for \(dataTask.url ?? "null")",
-            metadata: makeMetadata(context, dataTask, .dataTaskDidReceiveData, event)
+            metadata: makeMetadata(context, dataTask, .dataTaskDidReceiveData, event, date)
         )
     }
 
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        queue.async { self._urlSession(session, task: task, didCompleteWithError: error) }
+        let date = Date()
+        queue.async { self._urlSession(session, task: task, didCompleteWithError: error, date: date) }
     }
 
-    private func _urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    private func _urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?, date: Date) {
         guard let context = tasks[task], let urlRequest = task.originalRequest else { return }
 
         let event = NetworkLoggerEvent.TaskDidComplete(
@@ -303,7 +311,7 @@ public final class NetworkLogger: NSObject {
             message = "🌐 \(statusCode.map(descriptionForStatusCode) ?? "–") \(urlRequest.httpMethod ?? "–") \(task.url ?? "–")"
         }
 
-        logger.log(level: level, .init(stringLiteral: message), metadata: makeMetadata(context, task, .taskDidComplete, event))
+        logger.log(level: level, .init(stringLiteral: message), metadata: makeMetadata(context, task, .taskDidComplete, event, date))
 
         tasks[task] = nil
     }
@@ -328,12 +336,13 @@ public final class NetworkLogger: NSObject {
         lazy var data = Data()
     }
 
-    private func makeMetadata<T: Encodable>(_ context: TaskContext, _ task: URLSessionTask, _ eventType: NetworkLoggerEventType, _ payload: T) -> Logger.Metadata {
+    private func makeMetadata<T: Encodable>(_ context: TaskContext, _ task: URLSessionTask, _ eventType: NetworkLoggerEventType, _ payload: T, _ date: Date) -> Logger.Metadata {
         [
             NetworkLoggerMetadataKey.taskId.rawValue: .string(context.uuid.uuidString),
             NetworkLoggerMetadataKey.eventType.rawValue: .string(eventType.rawValue),
             NetworkLoggerMetadataKey.taskType.rawValue: .string(NetworkTaskType(task: task).rawValue),
-            NetworkLoggerMetadataKey.payload.rawValue: .string(encode(payload) ?? "")
+            NetworkLoggerMetadataKey.payload.rawValue: .string(encode(payload) ?? ""),
+            NetworkLoggerMetadataKey.createdAt: .stringConvertible(date)
         ]
     }
 
