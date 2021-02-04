@@ -9,6 +9,7 @@ public protocol BlobStoring {
     func getData(for key: String) -> Data?
     func storeData(_ data: Data?) -> String?
     func removeData(for key: String)
+    func copyContents(to url: URL) throws
 }
 
 /// Blob storage.
@@ -123,6 +124,10 @@ public final class BlobStore: BlobStoring {
     public func removeAll() {
         try? FileManager.default.removeItem(at: path)
         try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+    }
+
+    public func copyContents(to url: URL) throws {
+        try FileManager.default.copyItem(at: path, to: url)
     }
 
     // MARK: Managing URLs

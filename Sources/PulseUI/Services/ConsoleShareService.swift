@@ -25,11 +25,14 @@ public struct ConsoleShareService {
         try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true, attributes: nil)
 
         let allLogs = format(messages: try store.allMessages())
-        let allLogsUrl = tempDir.appendingPathComponent("logs-all.txt")
+        let allLogsUrl = tempDir.appendingPathComponent("logs.txt")
         try allLogs?.write(to: allLogsUrl)
 
-        let coreDataUrl = tempDir.appendingPathComponent("debug-data.sqlite")
+        let coreDataUrl = tempDir.appendingPathComponent("logs.sqlite")
         try store.container.persistentStoreCoordinator.createCopyOfStore(at: coreDataUrl)
+
+        let blobsUrl = tempDir.appendingPathComponent("logs.blobs")
+        try blobs.copyContents(to: blobsUrl)
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
@@ -37,7 +40,7 @@ public struct ConsoleShareService {
         let sharedDirUrl = tempDir.appendingPathComponent("logs-\(date)")
         try FileManager.default.createDirectory(at: sharedDirUrl, withIntermediateDirectories: true, attributes: nil)
 
-        for url in [allLogsUrl, coreDataUrl] {
+        for url in [allLogsUrl, coreDataUrl, blobsUrl] {
             try FileManager.default.moveItem(at: url, to: sharedDirUrl.appendingPathComponent(url.lastPathComponent))
         }
 

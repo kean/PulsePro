@@ -42,6 +42,13 @@ public final class MockBlobStore: BlobStoring {
     public func removeData(for key: String) {
         store[key] = nil
     }
+
+    public func copyContents(to url: URL) throws {
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+        for (key, value) in store {
+            try value.write(to: url.appendingPathComponent(key))
+        }
+    }
 }
 
 private func makeMockStore() -> LoggerMessageStore {
