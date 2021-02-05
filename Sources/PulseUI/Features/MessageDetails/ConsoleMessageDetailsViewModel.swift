@@ -29,7 +29,7 @@ final class ConsoleMessageDetailsViewModel {
         self.tags = [
             ConsoleMessageTagViewModel(
                 title: "Date",
-                value: ConsoleMessageViewModel.timeFormatter
+                value: ConsoleMessageViewModel.fullFormatter
                     .string(from: message.createdAt)
             ),
             ConsoleMessageTagViewModel(

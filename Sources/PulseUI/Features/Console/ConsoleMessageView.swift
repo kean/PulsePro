@@ -5,21 +5,31 @@ import SwiftUI
 import Pulse
 import Logging
 
+// MARK: - View
+
 struct ConsoleMessageView: View {
     let model: ConsoleMessageViewModel
 
     #if os(iOS)
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(model.title)
-                .font(.caption)
-                .foregroundColor(model.style.titleColor)
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(model.title)
+                    .font(.caption)
+                    .foregroundColor(model.style.titleColor)
+                Spacer()
+                Image(uiImage: ConsoleMessageView.shevron ?? UIImage())
+                    .foregroundColor(Color(UXColor.separator))
+                    .padding(.bottom, 2)
+            }
             Text(model.text)
-                .font(.body)
+                .font(.system(size: 16))
                 .foregroundColor(model.style.textColor)
                 .lineLimit(4)
         }.padding(.vertical, 4)
     }
+
+    private static let shevron: UIImage? = UIImage(systemName: "chevron.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .regular, scale: .default))?.withRenderingMode(.alwaysTemplate)
     #endif
 
     #if os(macOS)
@@ -61,19 +71,19 @@ struct ConsoleMessageStyle {
     )
 
     static let info = ConsoleMessageStyle(
-        titleColor: .primary,
+        titleColor: .secondary,
         textColor: .primary,
         backgroundColor: .blue
     )
 
     static let error = ConsoleMessageStyle(
-        titleColor: .orange,
+        titleColor: .secondary,
         textColor: .orange,
         backgroundColor: .orange
     )
 
     static let fatal = ConsoleMessageStyle(
-        titleColor: .red,
+        titleColor: .secondary,
         textColor: .red,
         backgroundColor: .red
     )
@@ -83,6 +93,43 @@ struct ConsoleMessageStyle {
         return style.backgroundColor.opacity(colorScheme == .dark ? 0.1 : 0.05)
     }
 }
+
+// MARK: - ViewModel
+
+struct ConsoleMessageViewModel {
+    let title: String
+    let text: String
+    let style: ConsoleMessageStyle
+
+    static let fullFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        formatter.doesRelativeDateFormatting = true
+        return formatter
+    }()
+
+    static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        return formatter
+    }()
+
+    init(title: String, text: String, style: ConsoleMessageStyle) {
+        self.title = title
+        self.text = text
+        self.style = style
+    }
+
+    init(message: MessageEntity) {
+        let time = ConsoleMessageViewModel.timeFormatter.string(from: message.createdAt)
+        self.title = "\(time) · \(message.label.capitalized)"
+        self.text = message.text
+        self.style = ConsoleMessageStyle.make(level: Logger.Level(rawValue: message.level) ?? .debug)
+    }
+}
+
+// MARK: - Preview
 
 struct ConsoleMessageView_Previews: PreviewProvider {
     static var previews: some View {
