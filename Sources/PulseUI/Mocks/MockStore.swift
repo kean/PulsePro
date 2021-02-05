@@ -105,7 +105,7 @@ private func populateStore(_ store: LoggerMessageStore, _ blobs: BlobStoring) {
     logTask(MockDataTask.login)
 
     logger(named: "application")
-        .log(level: .info, "Will navigate to Dashboard")
+        .log(level: .debug, "Will navigate to Dashboard")
 
     logTask(MockDataTask.profileFailure)
 
