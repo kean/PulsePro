@@ -16,9 +16,10 @@ final class NetworkLoggerSummary {
 
     /// Decodes the given messages to create a summary of the request.
     init(messages: [MessageEntity], blobs: BlobStoring) {
-        let messages = NetworkLoggerMessages(messages: messages)
+        let messages = messages.compactMap(NetworkLoggerMessage.init)
 
-        guard let didCompleteEvent = messages.didCompleteEvent else {
+        guard let didCompleteMessage = messages.first(where: { $0.eventType == .taskDidComplete }),
+              case let .taskDidComplete(didCompleteEvent) = didCompleteMessage.event else {
             self.isCompleted = false
 
             // TODO: populate with intermediate responses
@@ -44,44 +45,55 @@ final class NetworkLoggerSummary {
     }
 }
 
-private final class NetworkLoggerMessages {
-    private let messages: [MessageEntity]
+/// Simplifies parsing networkg logger messages.
+final class NetworkLoggerMessage {
+    let message: MessageEntity
 
-    init(messages: [MessageEntity]) {
-        self.messages = messages
-    }
+    let taskId: String
+    let taskType: NetworkLoggerTaskType
+    let eventType: NetworkLoggerEventType
+    let event: NetworkLoggerEvent
 
-    var didCompleteEvent: NetworkLoggerEvent.TaskDidComplete? {
-        guard let message = first(key: .eventType, value: NetworkLoggerEventType.taskDidComplete.rawValue) else {
+    init?(message: MessageEntity) {
+        let metadata = message.metadata
+        guard !metadata.isEmpty else {
             return nil
         }
-        return payload(NetworkLoggerEvent.TaskDidComplete.self, for: message)
-    }
-
-    private func filter(key: NetworkLoggerMetadataKey, value: String) -> [MessageEntity] {
-        messages.filter {
-            $0.metadata.contains {
-                $0.key == key.rawValue && $0.value == value
+        func value(for key: NetworkLoggerMetadataKey) -> String? {
+            metadata.first(where: { $0.key == key.rawValue })?.value
+        }
+        guard let taskId = value(for: .taskId),
+              let taskType = value(for: .taskType).flatMap(NetworkLoggerTaskType.init),
+              let eventType = value(for: .eventType).flatMap(NetworkLoggerEventType.init) else {
+            return nil
+        }
+        func decodeEvent() -> NetworkLoggerEvent? {
+            func decode<T: Decodable>(_ object: T.Type) -> T? {
+                guard let payload = value(for: .payload),
+                      let data = payload.data(using: .utf8) else {
+                    return nil
+                }
+                return try? JSONDecoder().decode(T.self, from: data)
+            }
+            switch eventType {
+            case .taskDidStart:
+                return decode(NetworkLoggerEvent.TaskDidStart.self).map(NetworkLoggerEvent.taskDidStart)
+            case .taskDidComplete:
+                return decode(NetworkLoggerEvent.TaskDidComplete.self).map(NetworkLoggerEvent.taskDidComplete)
+            case .dataTaskDidReceieveResponse:
+                return decode(NetworkLoggerEvent.DataTaskDidReceieveResponse.self).map(NetworkLoggerEvent.dataTaskDidReceieveResponse)
+            case .dataTaskDidReceiveData:
+                return decode(NetworkLoggerEvent.DataTaskDidReceiveData.self).map(NetworkLoggerEvent.dataTaskDidReceiveData)
             }
         }
-    }
-
-    private func first(key: NetworkLoggerMetadataKey, value: String) -> MessageEntity? {
-        messages.first {
-            $0.metadata.contains {
-                $0.key == key.rawValue && $0.value == value
-            }
-        }
-    }
-
-    private func payload<T: Decodable>(_ object: T.Type, for message: MessageEntity) -> T? {
-        guard let payload = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.payload.rawValue })?.value else {
+        guard let event = decodeEvent() else {
             return nil
         }
-        guard let data = payload.data(using: .utf8) else {
-            return nil
-        }
-        return try? JSONDecoder().decode(T.self, from: data)
+        self.message = message
+        self.taskId = taskId
+        self.taskType = taskType
+        self.eventType = eventType
+        self.event = event
     }
 }
 

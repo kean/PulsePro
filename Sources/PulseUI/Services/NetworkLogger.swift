@@ -19,24 +19,21 @@ private extension NetworkLoggerMetadataKey {
 }
 
 public enum NetworkLoggerEventType: String, Codable {
-    case dataTaskDidReceieveResponse
-    case dataTaskDidReceiveData
-
     case taskDidStart
     case taskDidComplete
+
+    case dataTaskDidReceieveResponse
+    case dataTaskDidReceiveData
 }
 
 public enum NetworkLoggerEvent {
+    case taskDidStart(TaskDidStart)
+    case taskDidComplete(TaskDidComplete)
+    case dataTaskDidReceieveResponse(DataTaskDidReceieveResponse)
+    case dataTaskDidReceiveData(DataTaskDidReceiveData)
+
     public struct TaskDidStart: Codable {
         public let request: NetworkLoggerRequest
-    }
-
-    public struct DataTaskDidReceieveResponse: Codable {
-        public let response: NetworkLoggerResponse
-    }
-
-    public struct DataTaskDidReceiveData: Codable {
-        public let dataCount: Int
     }
 
     public struct TaskDidComplete: Codable {
@@ -46,6 +43,14 @@ public enum NetworkLoggerEvent {
         public let requestBodyKey: String?
         public let responseBodyKey: String?
         public let metrics: NetworkLoggerMetrics?
+    }
+
+    public struct DataTaskDidReceieveResponse: Codable {
+        public let response: NetworkLoggerResponse
+    }
+
+    public struct DataTaskDidReceiveData: Codable {
+        public let dataCount: Int
     }
 }
 
@@ -187,7 +192,7 @@ public final class NetworkLoggerTransactionMetrics: Codable {
     }
 }
 
-public enum NetworkTaskType: String, Codable {
+public enum NetworkLoggerTaskType: String, Codable {
     case dataTask
     case downloadTask
     case uploadTask
@@ -340,7 +345,7 @@ public final class NetworkLogger: NSObject {
         [
             NetworkLoggerMetadataKey.taskId.rawValue: .string(context.uuid.uuidString),
             NetworkLoggerMetadataKey.eventType.rawValue: .string(eventType.rawValue),
-            NetworkLoggerMetadataKey.taskType.rawValue: .string(NetworkTaskType(task: task).rawValue),
+            NetworkLoggerMetadataKey.taskType.rawValue: .string(NetworkLoggerTaskType(task: task).rawValue),
             NetworkLoggerMetadataKey.payload.rawValue: .string(encode(payload) ?? ""),
             NetworkLoggerMetadataKey.createdAt: .stringConvertible(date)
         ]
