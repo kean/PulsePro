@@ -52,7 +52,9 @@ public struct ConsoleView: View {
         ForEach(model.messages, id: \.objectID) { message in
             NavigationLink(destination: model.makeDetailsRouter(for: message)) {
                 ConsoleMessageViewListItem(store: model.tempGetStore(), blobs: model.tempGetBlobs(), message: message, searchCriteria: self.$model.searchCriteria)
-            }.listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
+            }
+            .padding(.trailing, -30)
+            .listRowBackground(ConsoleMessageStyle.backgroundColor(for: message, colorScheme: self.colorScheme)) // The only way I made background color work with ForEach
         }
     }
 
