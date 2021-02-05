@@ -37,7 +37,7 @@ public struct ConsoleShareService {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let date = dateFormatter.string(from: Date())
-        let sharedDirUrl = tempDir.appendingPathComponent("logs-\(date)")
+        let sharedDirUrl = tempDir.appendingPathComponent("logs-\(date).pulse")
         try FileManager.default.createDirectory(at: sharedDirUrl, withIntermediateDirectories: true, attributes: nil)
 
         for url in [allLogsUrl, coreDataUrl, blobsUrl] {

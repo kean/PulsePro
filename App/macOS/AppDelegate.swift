@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         model.delegate = self
 
         if ProcessInfo.processInfo.environment["PULSE_MOCK_STORE_ENABLED"] != nil {
-            showConsole(model: ConsoleViewModel(store: .mock))
+            showConsole(model: ConsoleViewModel(store: .mock, blobs: BlobStore.mock))
         } else {
             showWelcomeView()
         }
@@ -38,14 +38,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         dialog.canChooseDirectories = false
         dialog.canCreateDirectories = false
         dialog.allowsMultipleSelection = false
-        dialog.allowedFileTypes = ["sqlite"]
+        dialog.canChooseDirectories = true
+        dialog.allowedFileTypes = ["sqlite", "pulse"]
 
         guard dialog.runModal() == NSApplication.ModalResponse.OK else {
             return // User cancelled the action
         }
 
         if let selectedUrl = dialog.url {
-            model.openDatabase(url: selectedUrl)
+            openDatabase(at: selectedUrl)
         }
     }
 
@@ -90,9 +91,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
                         return
                 }
                 DispatchQueue.main.async {
-                    self.model.openDatabase(url: url)
+                    self.openDatabase(at: url)
                 }
             }
+        }
+    }
+
+    private func openDatabase(at url: URL) {
+        do {
+            try self.model.openDatabase(url: url)
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "Failed to open Pulse store"
+            alert.informativeText = error.localizedDescription
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
         }
     }
 

@@ -26,7 +26,7 @@ public final class BlobStore: BlobStoring {
     /// Size limit in bytes. `300 Mb` by default.
     ///
     /// Changes to `sizeLimit` will take effect when the next LRU sweep is run.
-    public var sizeLimit: Int = 1024 * 1024 * 300
+    public var sizeLimit: Int? = 1024 * 1024 * 300
 
     /// When performing a sweep, the cache will remote entries until the size of
     /// the remaining items is lower than or equal to `sizeLimit * trimRatio` and
@@ -50,10 +50,12 @@ public final class BlobStore: BlobStoring {
     private var initialSweepDelay: TimeInterval = 5
 
     /// A queue which is used for disk I/O.
-    public let queue = DispatchQueue(label: "com.github.kean.pulse.blob-storage", target: .global(qos: .utility))
+    private let queue = DispatchQueue(label: "com.github.kean.pulse.blob-storage", target: .global(qos: .utility))
 
     // Returns the default blob storage.
     public static let `default` = BlobStore(name: "com.github.kean.logger")
+
+    private let isViewing: Bool
 
     /// Creates a `BlobStore` with the given name.
     /// - Parameters:
@@ -80,11 +82,18 @@ public final class BlobStore: BlobStoring {
 
     /// Creates a cache instance with a given path.
     /// The default implementation generates a filename using SHA1 hash function.
-    public init(path: URL) {
+    /// - parameter isViewing: If `true`, the store is readyonly. LRU cleanup disabled.
+    public init(path: URL, isViewing: Bool = false) {
         self.path = path
-        try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-        queue.asyncAfter(deadline: .now() + initialSweepDelay) { [weak self] in
-            self?.performAndScheduleSweep()
+        self.isViewing = isViewing
+
+        if isViewing {
+            try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+            queue.asyncAfter(deadline: .now() + initialSweepDelay) { [weak self] in
+                self?.performAndScheduleSweep()
+            }
+        } else {
+            sizeLimit = nil
         }
     }
 
@@ -97,6 +106,9 @@ public final class BlobStore: BlobStoring {
     /// Stored data in the blob storage. If the file with the same contents is
     /// already stored, returns the existing file.
     public func storeData(_ data: Data?) -> Key? {
+        guard !isViewing else {
+            return nil
+        }
         guard let data = data, !data.isEmpty else {
             return nil
         }
@@ -116,12 +128,18 @@ public final class BlobStore: BlobStoring {
     /// Removes data for the given key. The method returns instantly, the data
     /// is removed asynchronously.
     public func removeData(for key: Key) {
+        guard !isViewing else {
+            return
+        }
         try? FileManager.default.removeItem(at: url(for: key))
     }
 
     /// Removes all items. The method returns instantly, the data is removed
     /// asynchronously.
     public func removeAll() {
+        guard !isViewing else {
+            return
+        }
         try? FileManager.default.removeItem(at: path)
         try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
     }
@@ -154,13 +172,17 @@ public final class BlobStore: BlobStoring {
 
     /// Discards the least recently used items first.
     private func performSweep() {
+        guard let unwrappedSizeLimit = self.sizeLimit else {
+            return
+        }
+
         var items = contents(keys: [.contentAccessDateKey, .totalFileAllocatedSizeKey])
         guard !items.isEmpty else {
             return
         }
         var size = items.reduce(0) { $0 + ($1.meta.totalFileAllocatedSize ?? 0) }
         var count = items.count
-        let sizeLimit = Int(Double(self.sizeLimit) * trimRatio)
+        let sizeLimit = Int(Double(unwrappedSizeLimit) * trimRatio)
 
         guard size > sizeLimit else {
             return // All good, no need to perform any work.
