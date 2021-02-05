@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C1221E625CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */; };
+		0C1221E725CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */; };
 		0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
 		0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
 		0C57AD83245F0F38005B3400 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C57AD74245F0F38005B3400 /* Assets.xcassets */; };
@@ -20,8 +22,6 @@
 		0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6B245F0F38005B3400 /* AppViewModel.swift */; };
 		0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */; };
 		0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */; };
-		0C68426925C5BD3000098066 /* MockNetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68426825C5BD3000098066 /* MockNetworkLogger.swift */; };
-		0C68426A25C5BD3000098066 /* MockNetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68426825C5BD3000098066 /* MockNetworkLogger.swift */; };
 		0C98C6C725C4C08A0086A13E /* Pulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; };
 		0C98C6C825C4C08A0086A13E /* Pulse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724B245F236700CAF647 /* Pulse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0C98C6CA25C4C08C0086A13E /* PulseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB8724D245F236700CAF647 /* PulseUI.framework */; };
@@ -87,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionAssistedIntegration.swift; sourceTree = "<group>"; };
 		0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManualIntegration.swift; sourceTree = "<group>"; };
 		0C57AD4D245F0EFB005B3400 /* Pulse iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C57AD66245F0F38005B3400 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,7 +105,6 @@
 		0C57AD8C245F0F55005B3400 /* Pulse macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C57ADBF245F1411005B3400 /* NSObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 		0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWelcomeView.swift; sourceTree = "<group>"; };
-		0C68426825C5BD3000098066 /* MockNetworkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkLogger.swift; sourceTree = "<group>"; };
 		0CB87242245F236700CAF647 /* PulseUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PulseUI.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */,
+				0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */,
 			);
 			path = IntegrationsExamples;
 			sourceTree = "<group>";
@@ -164,7 +165,6 @@
 				0C25FB6725CDDC9700A895C2 /* IntegrationsExamples */,
 				0C57AD73245F0F38005B3400 /* iOS */,
 				0C57AD65245F0F38005B3400 /* macOS */,
-				0C68426725C5BD1200098066 /* Shared */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -202,14 +202,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		0C68426725C5BD1200098066 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				0C68426825C5BD3000098066 /* MockNetworkLogger.swift */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		0CB87243245F236700CAF647 /* Products */ = {
@@ -356,7 +348,7 @@
 			files = (
 				0C57AD85245F0F38005B3400 /* AppDelegate.swift in Sources */,
 				0C57AD87245F0F38005B3400 /* SceneDelegate.swift in Sources */,
-				0C68426925C5BD3000098066 /* MockNetworkLogger.swift in Sources */,
+				0C1221E625CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */,
 				0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,12 +358,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */,
+				0C1221E725CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */,
 				0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */,
 				0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */,
 				0C57ADA4245F0F91005B3400 /* AppDelegate.swift in Sources */,
 				0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */,
 				0C57ADA3245F0F8E005B3400 /* ConsoleToolbarController.swift in Sources */,
-				0C68426A25C5BD3000098066 /* MockNetworkLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

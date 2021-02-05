@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C25FBE625CE001F00A895C2 /* URLSessionProxyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FBE525CE001F00A895C2 /* URLSessionProxyDelegate.swift */; };
+		0C25FBFA25CE006D00A895C2 /* NetworkLoggerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FBF925CE006D00A895C2 /* NetworkLoggerEvent.swift */; };
 		0C6F1A9025CCDD690023A30D /* ConsoleNetworkMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F1A8F25CCDD690023A30D /* ConsoleNetworkMessageView.swift */; };
 		OBJ_100 /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-log::Logging::Product" /* Logging.framework */; };
 		OBJ_107 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_68 /* Package.swift */; };
@@ -87,6 +89,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C25FBE525CE001F00A895C2 /* URLSessionProxyDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProxyDelegate.swift; sourceTree = "<group>"; };
+		0C25FBF925CE006D00A895C2 /* NetworkLoggerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerEvent.swift; sourceTree = "<group>"; };
 		0C6F1A8F25CCDD690023A30D /* ConsoleNetworkMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleNetworkMessageView.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		OBJ_11 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
@@ -250,7 +254,9 @@
 				OBJ_45 /* ConsoleShareService.swift */,
 				OBJ_46 /* JSONPrinter.swift */,
 				OBJ_47 /* NetworkLogger.swift */,
+				0C25FBF925CE006D00A895C2 /* NetworkLoggerEvent.swift */,
 				OBJ_48 /* NetworkLoggerSummary.swift */,
+				0C25FBE525CE001F00A895C2 /* URLSessionProxyDelegate.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -286,11 +292,13 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_56 /* UXKit.swift */,
+				OBJ_49 /* SwiftUI+Extensions */,
+				OBJ_57 /* HelperViews */,
 			);
 			path = UXKit;
 			sourceTree = "<group>";
 		};
-		OBJ_57 /* Views */ = {
+		OBJ_57 /* HelperViews */ = {
 			isa = PBXGroup;
 			children = (
 				OBJ_58 /* JSONViewer.swift */,
@@ -298,7 +306,7 @@
 				OBJ_60 /* KeyValueSectionView.swift */,
 				OBJ_61 /* TimingView.swift */,
 			);
-			path = Views;
+			path = HelperViews;
 			sourceTree = "<group>";
 		};
 		OBJ_62 /* Tests */ = {
@@ -377,13 +385,11 @@
 		OBJ_8 /* PulseUI */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* Extensions */,
 				OBJ_14 /* Features */,
-				OBJ_38 /* Mocks */,
 				OBJ_41 /* Services */,
-				OBJ_49 /* SwiftUI+Extensions */,
 				OBJ_55 /* UXKit */,
-				OBJ_57 /* Views */,
+				OBJ_9 /* Extensions */,
+				OBJ_38 /* Mocks */,
 			);
 			path = PulseUI;
 			sourceTree = "<group>";
@@ -570,11 +576,13 @@
 				OBJ_142 /* JSONPrinter.swift in Sources */,
 				0C6F1A9025CCDD690023A30D /* ConsoleNetworkMessageView.swift in Sources */,
 				OBJ_143 /* NetworkLogger.swift in Sources */,
+				0C25FBFA25CE006D00A895C2 /* NetworkLoggerEvent.swift in Sources */,
 				OBJ_144 /* NetworkLoggerSummary.swift in Sources */,
 				OBJ_145 /* Border.swift in Sources */,
 				OBJ_146 /* SearchBar.swift in Sources */,
 				OBJ_147 /* ShareView.swift in Sources */,
 				OBJ_148 /* TextView.swift in Sources */,
+				0C25FBE625CE001F00A895C2 /* URLSessionProxyDelegate.swift in Sources */,
 				OBJ_149 /* Wrapped.swift in Sources */,
 				OBJ_150 /* UXKit.swift in Sources */,
 				OBJ_151 /* JSONViewer.swift in Sources */,

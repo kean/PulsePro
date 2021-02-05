@@ -95,11 +95,11 @@ private func populateStore(_ store: LoggerMessageStore, _ blobs: BlobStoring) {
 
     func logTask(_ mockTask: MockDataTask) {
         let dataTask = urlSession.dataTask(with: mockTask.request)
-        networkLogger.urlSession(urlSession, didStartTask: dataTask)
-        networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.response)
-        networkLogger.urlSession(urlSession, dataTask: dataTask, didReceive: mockTask.responseBody)
+        networkLogger.logTaskDidStart(dataTask)
+        networkLogger.logDataTask(dataTask, didReceive: mockTask.response)
+        networkLogger.logDataTask(dataTask, didReceive: mockTask.responseBody)
         networkLogger.testInjectMetrics(mockTask.metrics, for: dataTask)
-        networkLogger.urlSession(urlSession, task: dataTask, didCompleteWithError: nil)
+        networkLogger.logTask(dataTask, didCompleteWithError: nil)
     }
 
     logTask(MockDataTask.login)

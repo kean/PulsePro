@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    private var captured = [AnyObject]()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,6 +20,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         print(NSHomeDirectory())
+
+        if ProcessInfo.processInfo.environment["PULSE_ASSISTED_INTEGRATION_ENABLED"] != nil {
+            LoggingSystem.bootstrap { PersistentLogHandler(label: $0, store: .mock) }
+            let demo = URLSessionAssistedIntegration()
+            let url = URL(string: "https://developer.apple.com/tutorials/js/analytics.js")!
+            demo.loadData(with: URLRequest(url: url), didReceiveData: { _, _ in }, completion: { _ in }).resume()
+            captured.append(demo)
+        }
 
         // Create the SwiftUI view that provides the window contents.
         let model = ConsoleViewModel(store: .mock, blobs: BlobStore.mock)

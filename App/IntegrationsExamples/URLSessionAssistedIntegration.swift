@@ -8,7 +8,7 @@ import Logging
 // If you want to avoid using swizzling and proxies, just implement the following
 // URLSession delegate methods.
 
-final class URLSessionManualIntegration {
+final class URLSessionAssistedIntegration {
     private let logger: NetworkLogger
     private let delegate: SessionDelegate
     private let session: URLSession
@@ -20,15 +20,14 @@ final class URLSessionManualIntegration {
             return logger
         }()) // The blobs are stored in default store
         delegate = SessionDelegate(logger: logger)
-        session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
+        session = URLSession(configuration: .default, delegate: URLSessionProxyDelegate(logger: logger, delegate: delegate), delegateQueue: nil)
     }
 
     /// Loads data with the given request.
-    func loadData(with request: URLRequest,
-                  session: URLSession,
-                  didReceiveData: @escaping (Data, URLResponse) -> Void,
-                  completion: @escaping (Error?) -> Void) -> URLSessionDataTask {
-        delegate.loadData(with: request, session: session, didReceiveData: didReceiveData, completion: completion)
+    func loadData(with request: URLRequest, didReceiveData: @escaping (Data, URLResponse) -> Void, completion: @escaping (Error?) -> Void) -> URLSessionDataTask {
+        let task = delegate.loadData(with: request, session: session, didReceiveData: didReceiveData, completion: completion)
+        logger.logTaskDidStart(task)
+        return task
     }
 }
 
@@ -51,7 +50,6 @@ private final class SessionDelegate: NSObject, URLSessionDataDelegate {
             self.handlers[task] = handler
         }
         task.resume()
-        logger.logTaskDidStart(task)
         return task
     }
 
@@ -61,13 +59,11 @@ private final class SessionDelegate: NSObject, URLSessionDataDelegate {
                     dataTask: URLSessionDataTask,
                     didReceive response: URLResponse,
                     completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        logger.logDataTask(dataTask, didReceive: response)
         completionHandler(.allow)
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         assert(task is URLSessionDataTask)
-        logger.logTask(task, didCompleteWithError: error)
         guard let handler = handlers[task] else {
             return
         }
@@ -78,17 +74,11 @@ private final class SessionDelegate: NSObject, URLSessionDataDelegate {
     // MARK: URLSessionDataDelegate
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        logger.logDataTask(dataTask, didReceive: data)
-
         guard let handler = handlers[dataTask], let response = dataTask.response else {
             return
         }
         // Don't store data anywhere, just send it to the pipeline.
         handler.didReceiveData(data, response)
-    }
-
-    func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
-        logger.logTask(task, didFinishCollecting: metrics)
     }
 
     // MARK: Internal

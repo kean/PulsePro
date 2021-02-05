@@ -68,7 +68,7 @@ private func makeTiming(metrics: NetworkLoggerMetrics) -> [TimingRowSectionViewM
                 let section = TimingRowSectionViewModel(
                     title: "Local Cache",
                     items: [
-                        makeRow(title: "Lookup", color: .yellow, from: requestStartDate, to: responseEndDate)
+                        makeRow(title: "Lookup", color: .systemTeal, from: requestStartDate, to: responseEndDate)
                     ])
                 sections.append(section)
             }
