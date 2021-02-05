@@ -1,5 +1,15 @@
 # PulseUI 0.x
 
+## PulseUI 0.7.0
+
+*Feb 4, 2021*
+
+- Remove UserDefaults sharing from share service
+- Response and Request blobs are now stored in a dedicated BlobStore, essentially filesystem. The store has a size limit and uses LRU algorithm for cleanup. BlobStore also deduplicates the blobs, so if the app recieves the same response multiple times, only one blob is stored.
+- You can open a Pulse store on macOS be selecting a directory with a store, not just the store itself
+- Refined view for message list on iOS
+- Special messages list cells for network requests
+
 ## PulseUI 0.6.0
 
 *Feb 1, 2021*
