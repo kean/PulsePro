@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
+		0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
 		0C57AD83245F0F38005B3400 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C57AD74245F0F38005B3400 /* Assets.xcassets */; };
 		0C57AD84245F0F38005B3400 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C57AD75245F0F38005B3400 /* LaunchScreen.storyboard */; };
 		0C57AD85245F0F38005B3400 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD77245F0F38005B3400 /* AppDelegate.swift */; };
@@ -85,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManualIntegration.swift; sourceTree = "<group>"; };
 		0C57AD4D245F0EFB005B3400 /* Pulse iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C57AD66245F0F38005B3400 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C57AD6A245F0F38005B3400 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -128,6 +131,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C25FB6725CDDC9700A895C2 /* IntegrationsExamples */ = {
+			isa = PBXGroup;
+			children = (
+				0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */,
+			);
+			path = IntegrationsExamples;
+			sourceTree = "<group>";
+		};
 		0C57AD44245F0EFB005B3400 = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +161,7 @@
 		0C57AD64245F0F38005B3400 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				0C25FB6725CDDC9700A895C2 /* IntegrationsExamples */,
 				0C57AD73245F0F38005B3400 /* iOS */,
 				0C57AD65245F0F38005B3400 /* macOS */,
 				0C68426725C5BD1200098066 /* Shared */,
@@ -176,7 +188,6 @@
 		0C57AD73245F0F38005B3400 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				0C68426025C5BCFB00098066 /* Shared */,
 				0C57AD74245F0F38005B3400 /* Assets.xcassets */,
 				0C57AD75245F0F38005B3400 /* LaunchScreen.storyboard */,
 				0C57AD77245F0F38005B3400 /* AppDelegate.swift */,
@@ -191,13 +202,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		0C68426025C5BCFB00098066 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		0C68426725C5BD1200098066 /* Shared */ = {
@@ -353,6 +357,7 @@
 				0C57AD85245F0F38005B3400 /* AppDelegate.swift in Sources */,
 				0C57AD87245F0F38005B3400 /* SceneDelegate.swift in Sources */,
 				0C68426925C5BD3000098066 /* MockNetworkLogger.swift in Sources */,
+				0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +367,7 @@
 			files = (
 				0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */,
 				0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */,
+				0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */,
 				0C57ADA4245F0F91005B3400 /* AppDelegate.swift in Sources */,
 				0C57ADBE245F12A0005B3400 /* AppViewModel.swift in Sources */,
 				0C57ADA3245F0F8E005B3400 /* ConsoleToolbarController.swift in Sources */,

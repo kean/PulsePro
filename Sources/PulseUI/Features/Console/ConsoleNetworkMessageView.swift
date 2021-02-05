@@ -22,7 +22,7 @@ struct ConsoleNetworkMessageView: View {
                     .foregroundColor(.secondary)
                 Spacer()
                 Image(uiImage: ConsoleNetworkMessageView.globe ?? UIImage())
-                    .foregroundColor(Color(UXColor.blue))
+                    .foregroundColor(Color(UXColor.systemBlue))
                     .padding(.bottom, 2)
                 Image(uiImage: ConsoleNetworkMessageView.shevron ?? UIImage())
                     .foregroundColor(Color(UXColor.separator))
@@ -37,7 +37,7 @@ struct ConsoleNetworkMessageView: View {
     }
 
     private static let shevron: UIImage? = UIImage(systemName: "chevron.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .regular, scale: .default))?.withRenderingMode(.alwaysTemplate)
-    private static let globe: UIImage? = UIImage(systemName: "globe", withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .regular, scale: .default))?.withRenderingMode(.alwaysTemplate)
+    private static let globe: UIImage? = UIImage(systemName: "globe", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .regular, scale: .default))?.withRenderingMode(.alwaysTemplate)
     #endif
 
     #if os(macOS)
@@ -51,9 +51,15 @@ struct ConsoleNetworkMessageView: View {
                     .font(.system(size: 10))
                     .foregroundColor(.secondary)
                 Spacer()
-                Text("🌐")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                if #available(OSX 11.0, *) {
+                    Image(nsImage: NSImage(systemSymbolName: "globe", accessibilityDescription: nil) ?? NSImage())
+                        .font(.system(size: 10))
+                        .foregroundColor(Color(UXColor.systemBlue))
+                } else {
+                    Text("🌐")
+                        .font(.system(size: 10))
+                        .foregroundColor(.secondary)
+                }
             }
             Text(model.text)
                 .font(.system(size: 12))
