@@ -61,7 +61,7 @@ public struct ConsoleShareService {
     }
 
     func prepareMessageForSharing(_ message: MessageEntity) -> String {
-        if let taskId = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.taskId.rawValue })?.value {
+        if let taskId = NetworkLoggerMessage(message: message)?.taskId {
             return prepareNetworkMessageForSharing(taskId: taskId)
         } else {
             return message.text

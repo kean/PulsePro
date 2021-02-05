@@ -12,7 +12,7 @@ struct ConsoleMessageDetailsRouter: View {
     let message: MessageEntity
 
     var body: some View {
-        if let taskId = message.metadata.first(where: { $0.key == NetworkLoggerMetadataKey.taskId.rawValue })?.value {
+        if let taskId = NetworkLoggerMessage(message: message)?.taskId {
             NetworkInspectorView(model: .init(store: store, blobs: blobs, taskId: taskId))
         } else {
             ConsoleMessageDetailsView(model: .init(message: message))
