@@ -55,8 +55,9 @@ struct ConsoleMessageViewListItem: View {
 
 
 }
+#endif
 
-private struct ConsoleMessageViewListItemContentView: View {
+struct ConsoleMessageViewListItemContentView: View {
     let message: MessageEntity
 
     var body: some View {
@@ -67,4 +68,3 @@ private struct ConsoleMessageViewListItemContentView: View {
         }
     }
 }
-#endif

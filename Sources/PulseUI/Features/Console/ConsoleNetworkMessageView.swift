@@ -42,12 +42,21 @@ struct ConsoleNetworkMessageView: View {
     #if os(macOS)
     var body: some View {
         VStack(alignment: .leading) {
-            Text(model.title)
-                .font(.system(size: 10))
-                .foregroundColor(model.style.titleColor)
+            HStack {
+                Circle()
+                    .frame(width: 10, height: 10)
+                    .foregroundColor(model.badgeColor)
+                Text(model.title)
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary)
+                Spacer()
+                Text("🌐")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
             Text(model.text)
                 .font(.system(size: 12))
-                .foregroundColor(model.style.textColor)
+                .foregroundColor(.primary)
                 .lineLimit(4)
         }.padding(.vertical, 6)
     }
