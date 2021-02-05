@@ -19,7 +19,7 @@ struct ConsoleMessageViewListItem: View {
     @State private var isShowingShareSheet = false
 
     var body: some View {
-        ConsoleMessageView(model: .init(message: message))
+        ConsoleMessageViewListItemContentView(message: message)
             .contextMenu {
                 Button(action: {
                     self.isShowingShareSheet = true
@@ -50,6 +50,20 @@ struct ConsoleMessageViewListItem: View {
         }
         .sheet(isPresented: $isShowingShareSheet) {
             ShareView(activityItems: [ConsoleShareService(store: store, blobs: blobs).prepareMessageForSharing(message)])
+        }
+    }
+
+
+}
+
+private struct ConsoleMessageViewListItemContentView: View {
+    let message: MessageEntity
+
+    var body: some View {
+        if let networkMessage = NetworkLoggerMessage(message: message), let event = networkMessage.taskDidCompleteEvent {
+            ConsoleNetworkMessageView(model: .init(message: networkMessage, event: event))
+        } else {
+            ConsoleMessageView(model: .init(message: message))
         }
     }
 }

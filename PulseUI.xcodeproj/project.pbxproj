@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C6F1A9025CCDD690023A30D /* ConsoleNetworkMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F1A8F25CCDD690023A30D /* ConsoleNetworkMessageView.swift */; };
 		OBJ_100 /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-log::Logging::Product" /* Logging.framework */; };
 		OBJ_107 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_68 /* Package.swift */; };
 		OBJ_113 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Formatters.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C6F1A8F25CCDD690023A30D /* ConsoleNetworkMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleNetworkMessageView.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		OBJ_11 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		OBJ_12 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_16 /* ConsoleMessageView.swift */,
+				0C6F1A8F25CCDD690023A30D /* ConsoleNetworkMessageView.swift */,
 				OBJ_17 /* ConsoleMessageViewListItem.swift */,
 				OBJ_19 /* ConsoleQuickFiltersView.swift */,
 				OBJ_20 /* ConsoleSearchView.swift */,
@@ -264,7 +267,7 @@
 			path = "SwiftUI+Extensions";
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -277,7 +280,6 @@
 				OBJ_81 /* README.md */,
 				OBJ_82 /* LICENSE.txt */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_55 /* UXKit */ = {
@@ -509,7 +511,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_75 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -566,6 +568,7 @@
 				OBJ_140 /* ConsoleSearchService.swift in Sources */,
 				OBJ_141 /* ConsoleShareService.swift in Sources */,
 				OBJ_142 /* JSONPrinter.swift in Sources */,
+				0C6F1A9025CCDD690023A30D /* ConsoleNetworkMessageView.swift in Sources */,
 				OBJ_143 /* NetworkLogger.swift in Sources */,
 				OBJ_144 /* NetworkLoggerSummary.swift in Sources */,
 				OBJ_145 /* Border.swift in Sources */,

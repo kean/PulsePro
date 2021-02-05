@@ -95,6 +95,13 @@ final class NetworkLoggerMessage {
         self.eventType = eventType
         self.event = event
     }
+
+    var taskDidCompleteEvent: NetworkLoggerEvent.TaskDidComplete? {
+        switch event {
+        case let .taskDidComplete(event): return event
+        default: return nil
+        }
+    }
 }
 
 #if DEBUG
