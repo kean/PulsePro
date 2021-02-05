@@ -21,9 +21,9 @@ struct ConsoleNetworkMessageView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Spacer()
-                Text("🌐")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                Image(uiImage: ConsoleNetworkMessageView.globe ?? UIImage())
+                    .foregroundColor(Color(UXColor.blue))
+                    .padding(.bottom, 2)
                 Image(uiImage: ConsoleNetworkMessageView.shevron ?? UIImage())
                     .foregroundColor(Color(UXColor.separator))
                     .padding(.bottom, 2)
@@ -37,6 +37,7 @@ struct ConsoleNetworkMessageView: View {
     }
 
     private static let shevron: UIImage? = UIImage(systemName: "chevron.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .regular, scale: .default))?.withRenderingMode(.alwaysTemplate)
+    private static let globe: UIImage? = UIImage(systemName: "globe", withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .regular, scale: .default))?.withRenderingMode(.alwaysTemplate)
     #endif
 
     #if os(macOS)
