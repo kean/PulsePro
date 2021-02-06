@@ -2,6 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Foundation
+import Pulse
 import PulseUI
 import Logging
 import Alamofire

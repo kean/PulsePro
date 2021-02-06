@@ -15,7 +15,7 @@ final class NetworkLoggerSummary {
     private(set) var metrics: NetworkLoggerMetrics?
 
     /// Decodes the given messages to create a summary of the request.
-    init(messages: [MessageEntity], blobs: BlobStoring) {
+    init(messages: [MessageEntity], blobs: BlobStore) {
         let messages = messages.compactMap(NetworkLoggerMessage.init)
 
         guard let didCompleteMessage = messages.first(where: { $0.eventType == .taskDidComplete }),
@@ -35,7 +35,7 @@ final class NetworkLoggerSummary {
         self.metrics = didCompleteEvent.metrics
     }
 
-    convenience init(store: LoggerMessageStore, blobs: BlobStoring, taskId: String) {
+    convenience init(store: LoggerMessageStore, blobs: BlobStore, taskId: String) {
         let metrics = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         metrics.predicate = NSPredicate(format: "SUBQUERY(metadata, $entry, $entry.key == %@ AND $entry.value == %@).@count > 0", NetworkLoggerMetadataKey.taskId.rawValue, taskId)
         metrics.relationshipKeyPathsForPrefetching = ["\(\MessageEntity.metadata.self)"]
@@ -108,13 +108,13 @@ final class NetworkLoggerMessage {
 extension NetworkLoggerSummary {
     static func mock(url: URL) -> NetworkLoggerSummary {
         guard let taskId = LoggerMessageStore.mock.taskIdWithURL(url) else {
-            return NetworkLoggerSummary(messages: [], blobs: BlobStore.mock)
+            return NetworkLoggerSummary(messages: [], blobs: .mock)
         }
         return NetworkLoggerSummary.mock(taskId: taskId)
     }
 
     static func mock(taskId: String) -> NetworkLoggerSummary {
-        NetworkLoggerSummary(store: .mock, blobs: BlobStore.mock, taskId: taskId)
+        NetworkLoggerSummary(store: .mock, blobs: .mock, taskId: taskId)
     }
 }
 #endif

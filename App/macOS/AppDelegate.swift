@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppViewModelDelegate {
         model.delegate = self
 
         if ProcessInfo.processInfo.environment["PULSE_MOCK_STORE_ENABLED"] != nil {
-            showConsole(model: ConsoleViewModel(store: .mock, blobs: BlobStore.mock))
+            showConsole(model: ConsoleViewModel(messageStore: .mock, blobStore: .mock))
         } else {
             showWelcomeView()
         }

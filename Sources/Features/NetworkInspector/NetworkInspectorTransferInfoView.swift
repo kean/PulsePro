@@ -2,6 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import SwiftUI
+import Pulse
 
 // MARK: - View
 
@@ -86,7 +87,7 @@ struct NetworkInspectorTransferInfoViewModel {
     let headersBytesRecieved: String
 
     init?(metrics: NetworkLoggerMetrics) {
-        guard let metrics = metrics.transactions.last else { return nil }
+        guard let metrics = metrics.transactions.last?.details else { return nil }
 
         self.totalBytesSent = formatBytes(metrics.countOfRequestBodyBytesBeforeEncoding + metrics.countOfRequestHeaderBytesSent)
         self.bodyBytesSent = formatBytes(metrics.countOfRequestBodyBytesSent)

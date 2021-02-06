@@ -7,10 +7,10 @@ import CoreData
 
 public struct ConsoleShareService {
     private let store: LoggerMessageStore
-    private let blobs: BlobStoring
+    private let blobs: BlobStore
     private var context: NSManagedObjectContext { store.container.viewContext }
 
-    public init(store: LoggerMessageStore, blobs: BlobStoring) {
+    public init(store: LoggerMessageStore, blobs: BlobStore) {
         self.store = store
         self.blobs = blobs
     }

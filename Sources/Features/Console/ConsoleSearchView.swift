@@ -36,32 +36,6 @@ public final class ConsoleSearchView: NSView, NSTokenFieldDelegate {
                 self?.tokensUpdated()
             }
     }
-
-    #warning("TODO: remove")
-    public init(searchCriteria: Binding<ConsoleSearchCriteria>) {
-        self.searchCriteria = searchCriteria
-
-        super.init(frame: .zero)
-
-        tokenField.placeholderAttributedString = makePlaceholderString()
-        tokenField.delegate = self
-        tokenField.tokenStyle = .rounded
-
-        addSubview(tokenField)
-        tokenField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tokenField.topAnchor.constraint(equalTo: topAnchor),
-            tokenField.bottomAnchor.constraint(equalTo: bottomAnchor),
-            tokenField.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tokenField.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-
-        observer = NotificationCenter.default
-            .addObserver(forName: NSControl.textDidChangeNotification, object: tokenField, queue: nil) { [weak self] _ in
-                self?.tokensUpdated()
-            }
-    }
-
     private func makePlaceholderString() -> NSAttributedString {
         let attachment = NSTextAttachment()
         attachment.image = magnifiyingGlass

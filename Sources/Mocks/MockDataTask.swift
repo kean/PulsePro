@@ -2,6 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Foundation
+import Pulse
 
 #if DEBUG
 struct MockDataTask {
@@ -50,7 +51,6 @@ private let mockMetrics = try! JSONDecoder().decode(NetworkLoggerMetrics.self, f
     {
       "resourceFetchType": 1,
       "responseStartDate": 633801585.020091,
-      "countOfResponseBodyBytesAfterDecoding": 64979,
       "secureConnectionStartDate": 633801584.903459,
       "response": {
         "headers": {
@@ -76,7 +76,6 @@ private let mockMetrics = try! JSONDecoder().decode(NetworkLoggerMetrics.self, f
       },
       "fetchStartDate": 633801584.8037,
       "requestEndDate": 633801585.004759,
-      "countOfRequestHeaderBytesSent": 225,
       "request": {
         "allowsCellularAccess": true,
         "httpMethod": "GET",
@@ -97,29 +96,33 @@ private let mockMetrics = try! JSONDecoder().decode(NetworkLoggerMetrics.self, f
         "timeoutInterval": 60
       },
       "domainLookupStartDate": 633801584.861459,
-      "localAddress": "192.168.0.13",
-      "remoteAddress": "17.253.97.204",
       "secureConnectionEndDate": 633801585.0024589,
       "isProxyConnection": false,
-      "negotiatedTLSCipherSuite": 4865,
-      "isConstrained": false,
       "connectEndDate": 633801585.0024589,
-      "isMultipath": false,
-      "isExpensive": false,
-      "countOfRequestBodyBytesBeforeEncoding": 0,
       "networkProtocolName": "http/1.1",
-      "countOfResponseHeaderBytesReceived": 683,
-      "localPort": 58622,
-      "countOfResponseBodyBytesReceived": 22988,
       "responseEndDate": 633801585.03594,
       "isReusedConnection": false,
       "domainLookupEndDate": 633801584.883459,
       "connectStartDate": 633801584.885459,
-      "countOfRequestBodyBytesSent": 0,
-      "isCellular": false,
       "requestStartDate": 633801585.004591,
-      "negotiatedTLSProtocolVersion": 772,
-      "remotePort": 443
+      "details": {
+        "countOfResponseHeaderBytesReceived": 683,
+        "countOfRequestBodyBytesBeforeEncoding": 0,
+        "countOfResponseBodyBytesReceived": 22988,
+        "countOfRequestBodyBytesSent": 0,
+        "countOfResponseBodyBytesAfterDecoding": 64979,
+        "countOfRequestHeaderBytesSent": 225,
+        "localAddress": "192.168.0.13",
+        "remoteAddress": "17.253.97.204",
+        "localPort": 58622,
+        "remotePort": 443,
+        "isMultipath": false,
+        "isExpensive": false,
+        "isConstrained": false,
+        "isCellular": false,
+        "negotiatedTLSProtocolVersion": 772,
+        "negotiatedTLSCipherSuite": 4865
+      }
     }
   ],
   "taskInterval": {

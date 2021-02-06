@@ -35,9 +35,9 @@ final class AppViewModel: ObservableObject {
                 makeBlobsURL(forStoreURL: storeURL)
         }
 
-        let store = LoggerMessageStore(storeURL: storeURL)
-        let blobs = BlobStore(path: blobsURL, isViewing: true)
-        let model = ConsoleViewModel(store: store, blobs: blobs)
+        let messageStore = LoggerMessageStore(storeURL: storeURL)
+        let blobStore = BlobStore(path: blobsURL, isReadonly: true)
+        let model = ConsoleViewModel(messageStore: messageStore, blobStore: blobStore)
         self.delegate?.showConsole(model: model)
     }
 

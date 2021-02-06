@@ -9,7 +9,7 @@ import SwiftUI
 
 public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let store: LoggerMessageStore
-    private let blobs: BlobStoring
+    private let blobs: BlobStore
     private var controller: NSFetchedResultsController<MessageEntity>
 
     @Published public private(set) var messages: ConsoleMessages
@@ -26,9 +26,9 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
 
     private var bag = [AnyCancellable]()
 
-    public init(store: LoggerMessageStore, blobs: BlobStoring) {
-        self.store = store
-        self.blobs = blobs
+    public init(messageStore: LoggerMessageStore, blobStore: BlobStore) {
+        self.store = messageStore
+        self.blobs = blobStore
 
         let request = NSFetchRequest<MessageEntity>(entityName: "\(MessageEntity.self)")
         request.fetchBatchSize = 40
@@ -99,7 +99,7 @@ public final class ConsoleViewModel: NSObject, NSFetchedResultsControllerDelegat
         store
     }
 
-    func tempGetBlobs() -> BlobStoring {
+    func tempGetBlobs() -> BlobStore {
         blobs
     }
 }

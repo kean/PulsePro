@@ -7,10 +7,10 @@ import CoreData
 import Logging
 
 #if DEBUG
-public extension LoggerMessageStore {
+extension LoggerMessageStore {
     static let mock: LoggerMessageStore = {
         let store = makeMockStore()
-        populateStore(store, BlobStore.mock)
+        populateStore(store, .mock)
 
 //        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
 //            populateStore(store)
@@ -20,35 +20,8 @@ public extension LoggerMessageStore {
     }()
 }
 
-public extension BlobStore {
-    static let mock: BlobStoring = MockBlobStore()
-}
-
-// In-memory blob store.
-public final class MockBlobStore: BlobStoring {
-    private var store = [String: Data]()
-
-    public func getData(for key: String) -> Data? {
-        store[key]
-    }
-
-    public func storeData(_ data: Data?) -> String? {
-        guard let data = data, !data.isEmpty else { return nil }
-        let hash = data.sha256
-        store[hash] = data
-        return hash
-    }
-
-    public func removeData(for key: String) {
-        store[key] = nil
-    }
-
-    public func copyContents(to url: URL) throws {
-        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-        for (key, value) in store {
-            try value.write(to: url.appendingPathComponent(key))
-        }
-    }
+extension BlobStore {
+    static let mock: BlobStore = makeMockBlobStore()
 }
 
 private func makeMockStore() -> LoggerMessageStore {
@@ -60,6 +33,15 @@ private func makeMockStore() -> LoggerMessageStore {
     return LoggerMessageStore(storeURL: storeURL)
 }
 
+private func makeMockBlobStore() -> BlobStore {
+    let rootURL = FileManager.default.temporaryDirectory.appendingPathComponent("com.github.kean.pulse-ui-demo")
+    try? FileManager.default.removeItem(at: rootURL)
+    try? FileManager.default.createDirectory(at: rootURL, withIntermediateDirectories: true, attributes: nil)
+
+    let storeURL = rootURL.appendingPathComponent("demo-blob-store")
+    return BlobStore(path: storeURL)
+}
+
 private extension NSManagedObject {
     convenience init(using usedContext: NSManagedObjectContext) {
         let name = String(describing: type(of: self))
@@ -68,7 +50,7 @@ private extension NSManagedObject {
     }
 }
 
-private func populateStore(_ store: LoggerMessageStore, _ blobStore: BlobStoring) {
+private func populateStore(_ store: LoggerMessageStore, _ blobStore: BlobStore) {
     precondition(Thread.isMainThread)
 
     func logger(named: String) -> Logger {
@@ -98,7 +80,7 @@ private func populateStore(_ store: LoggerMessageStore, _ blobStore: BlobStoring
         networkLogger.logTaskCreated(dataTask)
         networkLogger.logDataTask(dataTask, didReceive: mockTask.response)
         networkLogger.logDataTask(dataTask, didReceive: mockTask.responseBody)
-        networkLogger.testInjectMetrics(mockTask.metrics, for: dataTask)
+        networkLogger.logTask(dataTask, didFinishCollecting: mockTask.metrics)
         networkLogger.logTask(dataTask, didCompleteWithError: nil)
     }
 

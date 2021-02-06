@@ -8,7 +8,7 @@ import Pulse
 // given the current SwiftUI navigation state
 struct ConsoleMessageDetailsRouter: View {
     let store: LoggerMessageStore
-    let blobs: BlobStoring
+    let blobs: BlobStore
     let message: MessageEntity
 
     var body: some View {

@@ -95,14 +95,14 @@ private enum NetworkInspectorTab {
 
 final class NetworkInspectorViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     private let store: LoggerMessageStore
-    private let blobs: BlobStoring
+    private let blobs: BlobStore
     private let taskId: String
     @Published private(set) var messages: [MessageEntity] = []
     private var summary: NetworkLoggerSummary
     var isCompleted: Bool { summary.isCompleted }
     private let controller: NSFetchedResultsController<MessageEntity>
 
-    init(store: LoggerMessageStore, blobs: BlobStoring, taskId: String) {
+    init(store: LoggerMessageStore, blobs: BlobStore, taskId: String) {
         self.store = store
         self.blobs = blobs
         self.taskId = taskId
@@ -172,13 +172,13 @@ struct NetworkInspectorView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                NetworkInspectorView(model: .init(store: .mock, blobs: BlobStore.mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
+                NetworkInspectorView(model: .init(store: .mock, blobs: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
             }
             .previewDisplayName("Light")
             .environment(\.colorScheme, .light)
 
             NavigationView {
-                NetworkInspectorView(model: .init(store: .mock, blobs: BlobStore.mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
+                NetworkInspectorView(model: .init(store: .mock, blobs: .mock, taskId: LoggerMessageStore.mock.taskIdWithURL(MockDataTask.login.request.url!) ?? "–"))
             }
             .previewDisplayName("Dark")
             .environment(\.colorScheme, .dark)

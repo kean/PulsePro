@@ -12,7 +12,7 @@ import UIKit
 // TODO: create a ViewModel for a share sheet
 struct ConsoleMessageViewListItem: View {
     let store: LoggerMessageStore
-    let blobs: BlobStoring
+    let blobs: BlobStore
     let message: MessageEntity
 
     @Binding var searchCriteria: ConsoleSearchCriteria
