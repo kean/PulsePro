@@ -4,7 +4,6 @@
 import Foundation
 import Pulse
 
-#if DEBUG
 struct MockDataTask {
     let request: URLRequest
     let response: URLResponse
@@ -239,4 +238,3 @@ struct MockJSON {
     }
     """.data(using: .utf8)!
 }
-#endif

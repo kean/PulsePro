@@ -6,7 +6,6 @@ import Pulse
 import CoreData
 import Logging
 
-#if DEBUG
 extension LoggerMessageStore {
     static let mock: LoggerMessageStore = {
         let store = makeMockStore()
@@ -121,4 +120,3 @@ private func populateStore(_ store: LoggerMessageStore, _ blobStore: BlobStore) 
     // Wait until everything is stored
     store.container.viewContext.performAndWait {}
 }
-#endif
