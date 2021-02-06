@@ -58,7 +58,7 @@ struct NetworkInspectorView: View {
                 if let model = model.makeResponseModel() {
                     NetworkInspectorResponseView(model: model)
                 } else {
-                    PlaceholderView(title: model.isCompleted ? "Request Pending" : "Empty")
+                    PlaceholderView(title: model.isCompleted ? "Empty" : "Request Pending")
                 }
             case .metrics:
                 if let model = model.makeMetricsModel() {

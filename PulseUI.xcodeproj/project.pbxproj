@@ -216,6 +216,7 @@
 		OBJ_27 /* NetworkInspector */ = {
 			isa = PBXGroup;
 			children = (
+				OBJ_35 /* NetworkInspectorView.swift */,
 				OBJ_28 /* NetworkInspectorHeadersView.swift */,
 				OBJ_29 /* NetworkInspectorMetricsDetailsView.swift */,
 				OBJ_30 /* NetworkInspectorMetricsView.swift */,
@@ -223,7 +224,6 @@
 				OBJ_32 /* NetworkInspectorResponseView.swift */,
 				OBJ_33 /* NetworkInspectorSummaryView.swift */,
 				OBJ_34 /* NetworkInspectorTransferInfoView.swift */,
-				OBJ_35 /* NetworkInspectorView.swift */,
 			);
 			path = NetworkInspector;
 			sourceTree = "<group>";

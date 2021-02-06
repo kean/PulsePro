@@ -21,14 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         print(NSHomeDirectory())
 
-        if ProcessInfo.processInfo.environment["PULSE_ASSISTED_INTEGRATION_ENABLED"] != nil {
-            LoggingSystem.bootstrap { PersistentLogHandler(label: $0, store: .mock) }
-            let demo = URLSessionAssistedIntegration()
-            let url = URL(string: "https://developer.apple.com/tutorials/js/analytics.js")!
-            demo.loadData(with: URLRequest(url: url), didReceiveData: { _, _ in }, completion: { _ in }).resume()
-            captured.append(demo)
-        }
-
         // Create the SwiftUI view that provides the window contents.
         let model = ConsoleViewModel(store: .mock, blobs: BlobStore.mock)
         let contentView = ConsoleView(model: model)
