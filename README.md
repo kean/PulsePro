@@ -4,6 +4,8 @@
 
 <br/>
 
+## Integration
+
 ## iOS Console
 
 Use `ConsoleView` to display messages in your iOS apps.

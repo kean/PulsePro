@@ -13,8 +13,8 @@
 		0C1221F225CE0E9300B81D7A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0C1221F125CE0E9300B81D7A /* Alamofire */; };
 		0C1221F425CE0E9C00B81D7A /* AlamofireIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */; };
 		0C1221F525CE0E9C00B81D7A /* AlamofireIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */; };
-		0C12220125CE2B5800B81D7A /* Integration.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C12220025CE2B5800B81D7A /* Integration.md */; };
-		0C12220225CE2B5800B81D7A /* Integration.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C12220025CE2B5800B81D7A /* Integration.md */; };
+		0C12220125CE2B5800B81D7A /* Logging.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C12220025CE2B5800B81D7A /* Logging.md */; };
+		0C12220225CE2B5800B81D7A /* Logging.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C12220025CE2B5800B81D7A /* Logging.md */; };
 		0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
 		0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
 		0C57AD83245F0F38005B3400 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C57AD74245F0F38005B3400 /* Assets.xcassets */; };
@@ -95,7 +95,7 @@
 /* Begin PBXFileReference section */
 		0C1221E525CE09C100B81D7A /* URLSessionAutomatedIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionAutomatedIntegration.swift; sourceTree = "<group>"; };
 		0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireIntegration.swift; sourceTree = "<group>"; };
-		0C12220025CE2B5800B81D7A /* Integration.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Integration.md; sourceTree = "<group>"; };
+		0C12220025CE2B5800B81D7A /* Logging.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Logging.md; sourceTree = "<group>"; };
 		0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManualIntegration.swift; sourceTree = "<group>"; };
 		0C57AD4D245F0EFB005B3400 /* Pulse iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C57AD66245F0F38005B3400 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 		0C1221FF25CE2B4E00B81D7A /* Docs */ = {
 			isa = PBXGroup;
 			children = (
-				0C12220025CE2B5800B81D7A /* Integration.md */,
+				0C12220025CE2B5800B81D7A /* Logging.md */,
 			);
 			path = Docs;
 			sourceTree = "<group>";
@@ -377,7 +377,7 @@
 			files = (
 				0C1221F425CE0E9C00B81D7A /* AlamofireIntegration.swift in Sources */,
 				0C57AD85245F0F38005B3400 /* AppDelegate.swift in Sources */,
-				0C12220125CE2B5800B81D7A /* Integration.md in Sources */,
+				0C12220125CE2B5800B81D7A /* Logging.md in Sources */,
 				0C57AD87245F0F38005B3400 /* SceneDelegate.swift in Sources */,
 				0C1221E625CE09C100B81D7A /* URLSessionAutomatedIntegration.swift in Sources */,
 				0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */,
@@ -390,7 +390,7 @@
 			files = (
 				0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */,
 				0C1221E725CE09C100B81D7A /* URLSessionAutomatedIntegration.swift in Sources */,
-				0C12220225CE2B5800B81D7A /* Integration.md in Sources */,
+				0C12220225CE2B5800B81D7A /* Logging.md in Sources */,
 				0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */,
 				0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */,
 				0C57ADA4245F0F91005B3400 /* AppDelegate.swift in Sources */,

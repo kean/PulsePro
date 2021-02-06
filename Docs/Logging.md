@@ -1,4 +1,4 @@
-# Integration
+# Network Requests Logging
 
 - [Network Requests Logging](#network-requests-logging)
   * [1. Logging System Bootstrap](#1-logging-system-bootstrap)
@@ -6,8 +6,6 @@
   * [2.1. Automatic Logging](#21-automatic-logging)
   * [2.2. Alamofire Integration](#22-alamofire-integration)
   * [2.3. Manual Integration](#23-manual-integration)
-
-## Network Requests Logging
 
 Pulse is designed to be as least intrusive as possible. It doesn't use swizzling, it doesn't create custom URL protocols. It does only what you ask it to without the risk of interfering with your network communications.
 
