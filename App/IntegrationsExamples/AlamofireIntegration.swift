@@ -8,9 +8,7 @@ import Alamofire
 
 enum AlamofireAssistedIntegration {
     static func demoWithEventMonitor() -> Alamofire.Session {
-        var logger = Logger(label: "network")
-        logger.logLevel = .trace
-        let networkLogger = NetworkLogger(logger: logger)
+        let networkLogger = NetworkLogger()
         return Session(eventMonitors: [NetworkLoggerEventMonitor(logger: networkLogger)])
     }
 }

@@ -12,29 +12,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    private var captured = [AnyObject]()
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         print(NSHomeDirectory())
-
-
-        #warning("TEMP")
-
-        // 1. Setup the logging system to use Pulse.PersistentLogHandler
-        LoggingSystem.bootstrap { PersistentLogHandler(label: $0, store: .mock) }
-
-        let int = URLSessionAutomatedIntegration()
-        captured.append(int)
-
-        let url = URL(string: "https://www.google.ru")!
-        _ = int.loadData(with: URLRequest(url: url), didReceiveData: { _, _ in }, completion: { _ in })
-
-
-
 
         // Create the SwiftUI view that provides the window contents.
         let model = ConsoleViewModel(store: .mock, blobs: BlobStore.mock)
