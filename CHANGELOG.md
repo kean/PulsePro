@@ -1,5 +1,15 @@
 # PulseUI 0.x
 
+## PulseUI 0.8.1
+
+*Feb 6, 2021*
+
+- Move `NetworkLogger` and other related types to `Pulse`
+- Remove mock stores from `PulseUI` public interfaces
+- Simplify project structure using Swift Package Manager local dependencies
+- Fix Release compilation
+
+
 ## PulseUI 0.8.0
 
 *Feb 5, 2021*
