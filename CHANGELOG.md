@@ -1,5 +1,13 @@
 # PulseUI 0.x
 
+## PulseUI 0.8.0
+
+*Feb 5, 2021*
+
+- `NetworkLogger` is now created with a default logger and blob store
+- Add `URLSessionProxyDelegate` to automate `URLSession` task logging
+- Add [a guide](https://github.com/kean/PulseUI/blob/0.8.0/Docs/Logging.md) on logging network events
+
 ## PulseUI 0.7.0
 
 *Feb 4, 2021*

@@ -4,14 +4,16 @@
 
 <br/>
 
-## Integration
+## Logging Network Request
+
+Pulse supports logging [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) tasks and offers a simple [Alamofire](https://github.com/Alamofire/Alamofire) integration. For more information, please follow the [dedicated guide](https://github.com/kean/PulseUI/blob/0.8.0/Docs/Logging.md).  
 
 ## iOS Console
 
 Use `ConsoleView` to display messages in your iOS apps.
 
 ```swift
-let view = ConsoleView(store: .default)
+let view = ConsoleView()
 ```
 
 > PulseUI is built almost entirely using SwiftUI. To use it in UIKit, wrap `ConsoleView` in a `UIHostingController`.

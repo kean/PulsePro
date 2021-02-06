@@ -9,7 +9,7 @@
 
 Pulse is designed to be as least intrusive as possible. It doesn't use swizzling, it doesn't create custom URL protocols. It does only what you ask it to without the risk of interfering with your network communications.
 
-### 1. Logging System Bootstrap
+## 1. Logging System Bootstrap
 
 The primary component that you will use to log network requests is `NetworkLogger` which is part of `PulseUI` framework. It's easy to setup.
 
@@ -29,7 +29,7 @@ let logger = NetworkLogger()
 
 The logs are stored in a database. The request and response bodies are deduplicated and stored in the file system. Old messages and responses are removed when the size limit is reached. For customization options, please refer to `NetworkLogger` inline documentation.
 
-### 2. Recording Network Logs
+## 2. Recording Network Logs
 
 There are multiple options for logging network requests using Pulse.
 
