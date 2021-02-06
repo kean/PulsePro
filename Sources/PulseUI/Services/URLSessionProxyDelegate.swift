@@ -53,4 +53,8 @@ public final class URLSessionProxyDelegate: NSObject, URLSessionTaskDelegate, UR
         }
         return (actualDelegate?.responds(to: aSelector) ?? false) || super.responds(to: aSelector)
     }
+
+    public override func forwardingTarget(for selector: Selector!) -> Any? {
+        interceptedSelectors.contains(selector) ? nil : actualDelegate
+    }
 }

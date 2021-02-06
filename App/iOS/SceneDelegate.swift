@@ -21,6 +21,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         print(NSHomeDirectory())
 
+
+        #warning("TEMP")
+
+        // 1. Setup the logging system to use Pulse.PersistentLogHandler
+        LoggingSystem.bootstrap { PersistentLogHandler(label: $0, store: .mock) }
+
+        let int = URLSessionAutomatedIntegration()
+        captured.append(int)
+
+        let url = URL(string: "https://www.google.ru")!
+        _ = int.loadData(with: URLRequest(url: url), didReceiveData: { _, _ in }, completion: { _ in })
+
+
+
+
         // Create the SwiftUI view that provides the window contents.
         let model = ConsoleViewModel(store: .mock, blobs: BlobStore.mock)
         let contentView = ConsoleView(model: model)

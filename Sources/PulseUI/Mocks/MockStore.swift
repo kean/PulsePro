@@ -68,7 +68,7 @@ private extension NSManagedObject {
     }
 }
 
-private func populateStore(_ store: LoggerMessageStore, _ blobs: BlobStoring) {
+private func populateStore(_ store: LoggerMessageStore, _ blobStore: BlobStoring) {
     precondition(Thread.isMainThread)
 
     func logger(named: String) -> Logger {
@@ -89,13 +89,13 @@ private func populateStore(_ store: LoggerMessageStore, _ blobs: BlobStoring) {
     logger(named: "auth")
         .log(level: .trace, "Instantiated the new login request")
 
-    let networkLogger = NetworkLogger(logger: logger(named: "network"), blobs: blobs)
+    let networkLogger = NetworkLogger(logger: logger(named: "network"), blobStore: blobStore)
 
     let urlSession = URLSession(configuration: .default)
 
     func logTask(_ mockTask: MockDataTask) {
         let dataTask = urlSession.dataTask(with: mockTask.request)
-        networkLogger.logTaskDidStart(dataTask)
+        networkLogger.logTaskCreated(dataTask)
         networkLogger.logDataTask(dataTask, didReceive: mockTask.response)
         networkLogger.logDataTask(dataTask, didReceive: mockTask.responseBody)
         networkLogger.testInjectMetrics(mockTask.metrics, for: dataTask)

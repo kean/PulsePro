@@ -3,22 +3,19 @@
 
 import Foundation
 import PulseUI
+import Pulse
 import Logging
 
 // If you want to avoid using swizzling and proxies, just implement the following
 // URLSession delegate methods.
 
-final class URLSessionAssistedIntegration {
+final class URLSessionAutomatedIntegration {
     private let logger: NetworkLogger
     private let delegate: SessionDelegate
     private let session: URLSession
 
     init() {
-        logger = NetworkLogger(logger: {
-            var logger = Logger(label: "network")
-            logger.logLevel = .trace
-            return logger
-        }()) // The blobs are stored in default store
+        logger = NetworkLogger()
         delegate = SessionDelegate(logger: logger)
         session = URLSession(configuration: .default, delegate: URLSessionProxyDelegate(logger: logger, delegate: delegate), delegateQueue: nil)
     }
@@ -26,7 +23,7 @@ final class URLSessionAssistedIntegration {
     /// Loads data with the given request.
     func loadData(with request: URLRequest, didReceiveData: @escaping (Data, URLResponse) -> Void, completion: @escaping (Error?) -> Void) -> URLSessionDataTask {
         let task = delegate.loadData(with: request, session: session, didReceiveData: didReceiveData, completion: completion)
-        logger.logTaskDidStart(task)
+        logger.logTaskCreated(task)
         return task
     }
 }

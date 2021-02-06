@@ -19,7 +19,7 @@ struct NetworkLoggerEventMonitor: EventMonitor {
     let logger: NetworkLogger
 
     func request(_ request: Request, didCreateTask task: URLSessionTask) {
-        logger.logTaskDidStart(task)
+        logger.logTaskCreated(task)
     }
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {

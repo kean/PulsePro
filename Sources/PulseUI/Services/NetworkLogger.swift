@@ -7,22 +7,34 @@ import Logging
 
 public final class NetworkLogger: NSObject {
     private let logger: Logger
-    private let blobs: BlobStoring
+    private let blobStore: BlobStoring
     private let queue = DispatchQueue(label: "com.github.kean.pulse.network-logger", target: .global(qos: .utility))
 
-    public init(logger: Logger, blobs: BlobStoring = BlobStore.default) {
+    /// - parameter logger: By default, create a Logger with "network" label and
+    /// `logLevel` set `.trace`. Assumes that the `LoggingSystem.bootstrap` is used.
+    /// - parameter blobs: By default, uses `BlobStore.default`. If you want to use
+    /// a custom blob store, make sure to pass the same store to `ConsoleView` when
+    /// instantiating it.
+    public init(logger: Logger = NetworkLogger.makeDefaultLogger(),
+                blobStore: BlobStoring = BlobStore.default) {
         self.logger = logger
-        self.blobs = blobs
+        self.blobStore = blobStore
+    }
+
+    public static func makeDefaultLogger() -> Logger {
+        var logger = Logger(label: "network")
+        logger.logLevel = .trace
+        return logger
     }
 
     // MARK: Logging
 
-    public func logTaskDidStart(_ task: URLSessionTask) {
+    public func logTaskCreated(_ task: URLSessionTask) {
         let date = Date()
-        queue.async { self._logTaskDidStart(task, date: date) }
+        queue.async { self._logTaskCreated(task, date: date) }
     }
 
-    private func _logTaskDidStart(_ task: URLSessionTask, date: Date) {
+    private func _logTaskCreated(_ task: URLSessionTask, date: Date) {
         guard let urlRequest = task.originalRequest else { return }
 
         let context = self.context(for: task)
@@ -88,8 +100,8 @@ public final class NetworkLogger: NSObject {
             request: NetworkLoggerRequest(urlRequest: urlRequest),
             response: context.response.map(NetworkLoggerResponse.init),
             error: error.map(NetworkLoggerError.init),
-            requestBodyKey: blobs.storeData(urlRequest.httpBody),
-            responseBodyKey: blobs.storeData(context.data),
+            requestBodyKey: blobStore.storeData(urlRequest.httpBody),
+            responseBodyKey: blobStore.storeData(context.data),
             metrics: context.metrics
         )
 

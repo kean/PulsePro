@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C1221E625CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */; };
-		0C1221E725CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */; };
+		0C1221E625CE09C100B81D7A /* URLSessionAutomatedIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221E525CE09C100B81D7A /* URLSessionAutomatedIntegration.swift */; };
+		0C1221E725CE09C100B81D7A /* URLSessionAutomatedIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221E525CE09C100B81D7A /* URLSessionAutomatedIntegration.swift */; };
 		0C1221F025CE0E8500B81D7A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0C1221EF25CE0E8500B81D7A /* Alamofire */; };
 		0C1221F225CE0E9300B81D7A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0C1221F125CE0E9300B81D7A /* Alamofire */; };
 		0C1221F425CE0E9C00B81D7A /* AlamofireIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */; };
 		0C1221F525CE0E9C00B81D7A /* AlamofireIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */; };
+		0C12220125CE2B5800B81D7A /* Integration.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C12220025CE2B5800B81D7A /* Integration.md */; };
+		0C12220225CE2B5800B81D7A /* Integration.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C12220025CE2B5800B81D7A /* Integration.md */; };
 		0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
 		0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */; };
 		0C57AD83245F0F38005B3400 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C57AD74245F0F38005B3400 /* Assets.xcassets */; };
@@ -91,8 +93,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionAssistedIntegration.swift; sourceTree = "<group>"; };
+		0C1221E525CE09C100B81D7A /* URLSessionAutomatedIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionAutomatedIntegration.swift; sourceTree = "<group>"; };
 		0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireIntegration.swift; sourceTree = "<group>"; };
+		0C12220025CE2B5800B81D7A /* Integration.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Integration.md; sourceTree = "<group>"; };
 		0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManualIntegration.swift; sourceTree = "<group>"; };
 		0C57AD4D245F0EFB005B3400 /* Pulse iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C57AD66245F0F38005B3400 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -138,11 +141,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C1221FF25CE2B4E00B81D7A /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				0C12220025CE2B5800B81D7A /* Integration.md */,
+			);
+			path = Docs;
+			sourceTree = "<group>";
+		};
 		0C25FB6725CDDC9700A895C2 /* IntegrationsExamples */ = {
 			isa = PBXGroup;
 			children = (
 				0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */,
-				0C1221E525CE09C100B81D7A /* URLSessionAssistedIntegration.swift */,
+				0C1221E525CE09C100B81D7A /* URLSessionAutomatedIntegration.swift */,
 				0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */,
 			);
 			path = IntegrationsExamples;
@@ -153,6 +164,7 @@
 			children = (
 				0CB87242245F236700CAF647 /* PulseUI.xcodeproj */,
 				0C57AD64245F0F38005B3400 /* App */,
+				0C1221FF25CE2B4E00B81D7A /* Docs */,
 				0C57AD4E245F0EFB005B3400 /* Products */,
 				0C57ADB2245F0FD2005B3400 /* Frameworks */,
 			);
@@ -365,8 +377,9 @@
 			files = (
 				0C1221F425CE0E9C00B81D7A /* AlamofireIntegration.swift in Sources */,
 				0C57AD85245F0F38005B3400 /* AppDelegate.swift in Sources */,
+				0C12220125CE2B5800B81D7A /* Integration.md in Sources */,
 				0C57AD87245F0F38005B3400 /* SceneDelegate.swift in Sources */,
-				0C1221E625CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */,
+				0C1221E625CE09C100B81D7A /* URLSessionAutomatedIntegration.swift in Sources */,
 				0C25FB6F25CDDCAB00A895C2 /* URLSessionManualIntegration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,7 +389,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C57ADC0245F1411005B3400 /* NSObject+Extensions.swift in Sources */,
-				0C1221E725CE09C100B81D7A /* URLSessionAssistedIntegration.swift in Sources */,
+				0C1221E725CE09C100B81D7A /* URLSessionAutomatedIntegration.swift in Sources */,
+				0C12220225CE2B5800B81D7A /* Integration.md in Sources */,
 				0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */,
 				0C25FB7F25CDFB1000A895C2 /* URLSessionManualIntegration.swift in Sources */,
 				0C57ADA4245F0F91005B3400 /* AppDelegate.swift in Sources */,
