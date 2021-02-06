@@ -8,12 +8,10 @@ import Alamofire
 
 enum AlamofireAssistedIntegration {
     static func demoWithEventMonitor() -> Alamofire.Session {
-        let logger = NetworkLogger(logger: {
-            var logger = Logger(label: "network")
-            logger.logLevel = .trace
-            return logger
-        }()) // The blobs are stored in default store
-        return Session(eventMonitors: [NetworkLoggerEventMonitor(logger: logger)])
+        var logger = Logger(label: "network")
+        logger.logLevel = .trace
+        let networkLogger = NetworkLogger(logger: logger)
+        return Session(eventMonitors: [NetworkLoggerEventMonitor(logger: networkLogger)])
     }
 }
 
