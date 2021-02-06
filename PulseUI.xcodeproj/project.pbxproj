@@ -60,7 +60,6 @@
 /* Begin PBXFileReference section */
 		0C1221E525CE09C100B81D7A /* URLSessionAutomatedIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionAutomatedIntegration.swift; sourceTree = "<group>"; };
 		0C1221F325CE0E9C00B81D7A /* AlamofireIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireIntegration.swift; sourceTree = "<group>"; };
-		0C12220025CE2B5800B81D7A /* Logging.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Logging.md; sourceTree = "<group>"; };
 		0C25FB6E25CDDCAB00A895C2 /* URLSessionManualIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManualIntegration.swift; sourceTree = "<group>"; };
 		0C323A7625CEE75D004067EA /* MockStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
 		0C323A7725CEE75D004067EA /* MockDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
@@ -105,14 +104,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C1221FF25CE2B4E00B81D7A /* Docs */ = {
-			isa = PBXGroup;
-			children = (
-				0C12220025CE2B5800B81D7A /* Logging.md */,
-			);
-			path = Docs;
-			sourceTree = "<group>";
-		};
 		0C25FB6725CDDC9700A895C2 /* IntegrationsExamples */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +136,6 @@
 			children = (
 				0C64528125CEE12600320FD5 /* PulseUI */,
 				0C57AD64245F0F38005B3400 /* App */,
-				0C1221FF25CE2B4E00B81D7A /* Docs */,
 				0C57AD4E245F0EFB005B3400 /* Products */,
 				0C57ADB2245F0FD2005B3400 /* Frameworks */,
 			);
