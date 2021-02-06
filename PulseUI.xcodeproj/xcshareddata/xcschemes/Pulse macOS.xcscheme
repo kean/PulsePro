@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "9999"
+   LastUpgradeVersion = "1140"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PulseUI::PulseUI"
-               BuildableName = "PulseUI.framework"
-               BlueprintName = "PulseUI"
+               BlueprintIdentifier = "0C57AD8B245F0F55005B3400"
+               BuildableName = "Pulse macOS.app"
+               BlueprintName = "Pulse macOS"
                ReferencedContainer = "container:PulseUI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -40,6 +40,23 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0C57AD8B245F0F55005B3400"
+            BuildableName = "Pulse macOS.app"
+            BlueprintName = "Pulse macOS"
+            ReferencedContainer = "container:PulseUI.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "PULSE_MOCK_STORE_ENABLED"
+            value = "1"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -47,6 +64,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0C57AD8B245F0F55005B3400"
+            BuildableName = "Pulse macOS.app"
+            BlueprintName = "Pulse macOS"
+            ReferencedContainer = "container:PulseUI.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
