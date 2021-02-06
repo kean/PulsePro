@@ -70,6 +70,7 @@ struct ConsoleSettingsView: View {
     }
 }
 
+#if DEBUG
 struct ConsoleSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -77,4 +78,5 @@ struct ConsoleSettingsView_Previews: PreviewProvider {
         }
     }
 }
+#endif
 #endif
