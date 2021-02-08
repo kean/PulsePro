@@ -6,22 +6,17 @@ import PackageDescription
 let package = Package(
     name: "PulseUI",
     platforms: [
-        .macOS(.v10_15),
-        .iOS(.v13),
-        .tvOS(.v13),
-        .watchOS(.v6)
+        .iOS(.v13)
     ],
     products: [
-        .library(name: "PulseUI", targets: ["PulseUITarget"]),
+        .library(name: "PulseUI", targets: ["PulseUIWrapper"]),
     ],
     dependencies: [
         .package(url: "https://github.com/kean/Pulse.git", from: "0.6.0")
     ],
     targets: [
-        .target(
-            name: "PulseUITarget",
-            dependencies: [.target(name: "PulseUIWrapper")]
-        ),
+        // Fake target to make dependencies work
+        // For more info see https://forums.swift.org/t/swiftpm-binary-target-with-sub-dependencies/40197/6
         .target(
             name: "PulseUIWrapper",
             dependencies: [.target(name: "PulseUI"), "Pulse"]
