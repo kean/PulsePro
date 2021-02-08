@@ -20,8 +20,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "PulseUI",
-            url: "https://github.com/kean/Pulse/files/5947448/PulseUI-9.0.0.zip",
-            checksum: "9d4e5e2bbb9a24f99200f6c8c89cdf770e06617ab6fd3c28a69e60b6ff8a3f13"
+            url: "https://github.com/kean/Pulse/files/5947467/PulseUI-0.9.0.zip",
+            checksum: "4696e9f408cfb6a684f604c7507bca4c7018de3eb15f1034f8e442d9ecd6c61a"
         ),
         .target(name: "BinaryDependencyWorkaround", dependencies: ["PulseUI", "Pulse"])
     ]
