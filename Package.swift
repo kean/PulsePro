@@ -9,13 +9,20 @@ let package = Package(
         .iOS(.v13)
     ],
     products: [
-        .library(name: "PulseUI", targets: ["Pulse", "PulseCore", "PulseUI"])
+        .library(name: "Pulse", targets: ["Pulse"]),
+        .library(name: "PulseCore", targets: ["PulseCore"]),
+        .library(name: "PulseUI", targets: ["PulseUI"])
+    ],
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.2.0")
     ],
     targets: [
-        .binaryTarget(
+        .target(
             name: "Pulse",
-            url: "https://github.com/kean/Pulse/files/5951687/Pulse-0.9.0.zip",
-            checksum: "cfd1a752af6037e6849be92cbb25ae7ff0d3ee885006a0481f1242a025c16100"
+            dependencies: [.product(name: "Logging", package: "swift-log"), "PulseCore"],
+            path: "Sources/Pulse"
         ),
         .binaryTarget(
             name: "PulseCore",
