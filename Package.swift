@@ -9,13 +9,23 @@ let package = Package(
         .iOS(.v13)
     ],
     products: [
-        .library(name: "PulseUI", targets: ["PulseUI"])
+        .library(name: "PulseUI", targets: ["Pulse", "PulseCore", "PulseUI"])
     ],
     targets: [
         .binaryTarget(
+            name: "Pulse",
+            url: "https://github.com/kean/Pulse/files/5951687/Pulse-0.9.0.zip",
+            checksum: "cfd1a752af6037e6849be92cbb25ae7ff0d3ee885006a0481f1242a025c16100"
+        ),
+        .binaryTarget(
+            name: "PulseCore",
+            url: "https://github.com/kean/Pulse/files/5951688/PulseCore-0.9.0.zip",
+            checksum: "5871fb4be51a16e017969f6cb0e4e65852cd8c241f43a5f965233a184576584d"
+        ),
+        .binaryTarget(
             name: "PulseUI",
-            url: "https://github.com/kean/Pulse/files/5948457/PulseUI-0.9.0.zip",
-            checksum: "3a50239dfbc620638f81fd7dba32dab3f05e823d65f7c2e3547b72f0a0c11709"
+            url: "https://github.com/kean/Pulse/files/5951689/PulseUI-0.9.0.zip",
+            checksum: "72b9bbf3355e0f306c008277bb5b7d03aa96047c81f6e2d5557994b1c3525faf"
         )
     ]
 )
