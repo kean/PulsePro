@@ -4,6 +4,10 @@
 
 <br/>
 
+## Installation
+
+PulseUI is distributed as a binary framework. To install it, add this repo (https://github.com/kean/PulseUI) as a dependency, and link `Pulse` and `PulseCore` to your project.
+
 ## iOS Console
 
 Use `ConsoleView` to display messages in your iOS apps.
