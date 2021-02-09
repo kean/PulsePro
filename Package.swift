@@ -19,7 +19,7 @@ let package = Package(
         // For more info see https://forums.swift.org/t/swiftpm-binary-target-with-sub-dependencies/40197/6
         .target(
             name: "PulseUIWrapper",
-            dependencies: [.target(name: "PulseUI"), "Pulse"]
+            dependencies: [.target(name: "PulseUI"), .product(name: "PulseCore", package: "Pulse")]
         ),
         .binaryTarget(
             name: "PulseUI",
