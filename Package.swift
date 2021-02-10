@@ -1,5 +1,4 @@
 // swift-tools-version:5.3
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -14,8 +13,6 @@ let package = Package(
         .library(name: "PulseUI", targets: ["PulseUI"])
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.2.0")
     ],
     targets: [
@@ -26,13 +23,13 @@ let package = Package(
         ),
         .binaryTarget(
             name: "PulseCore",
-            url: "https://github.com/kean/Pulse/files/5951688/PulseCore-0.9.0.zip",
-            checksum: "5871fb4be51a16e017969f6cb0e4e65852cd8c241f43a5f965233a184576584d"
+            url: "https://github.com/kean/Pulse/files/5955374/PulseCore-0.9.1.zip",
+            checksum: "d116b8cb98caa883fac0e37ff0214553af5e93270994388d9dfda9efc98a39a4"
         ),
         .binaryTarget(
             name: "PulseUI",
-            url: "https://github.com/kean/Pulse/files/5951689/PulseUI-0.9.0.zip",
-            checksum: "72b9bbf3355e0f306c008277bb5b7d03aa96047c81f6e2d5557994b1c3525faf"
+            url: "https://github.com/kean/Pulse/files/5955375/PulseUI-0.9.1.zip",
+            checksum: "10f13fd281af42d26335ef9223ebd0c948b1be1613833d167dce3a5359a0e348"
         )
     ]
 )
