@@ -10,6 +10,7 @@ public typealias NetworkLogger = PulseCore.NetworkLogger
 public typealias LoggerMessageStore = PulseCore.LoggerMessageStore
 public typealias LoggerSession = PulseCore.LoggerSession
 public typealias BlobStore = PulseCore.BlobStore
+public typealias URLSessionProxyDelegate = PulseCore.URLSessionProxyDelegate
 
 public extension NetworkLogger {
     /// - parameter logger: By default, create a Logger with "network" label and
@@ -92,7 +93,6 @@ private extension Logger.Level {
         case .warning: self = .warning
         case .error: self = .error
         case .critical: self = .critical
-        @unknown default: self = .debug
         }
     }
 }
@@ -130,7 +130,6 @@ private extension Logger.MetadataValue {
         switch value {
         case .string(let value): self = .string(value)
         case .stringConvertible(let value): self = .stringConvertible(value)
-        @unknown default: self = .string("unsupported-metadata-value")
         }
     }
 }
