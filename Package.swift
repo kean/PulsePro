@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "PulseUI",
+    name: "Pulse",
     platforms: [
         .iOS(.v13)
     ],
