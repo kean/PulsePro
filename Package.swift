@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "Pulse",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v11)
     ],
     products: [
         .library(name: "Pulse", targets: ["Pulse"]),
@@ -23,13 +23,13 @@ let package = Package(
         ),
         .binaryTarget(
             name: "PulseCore",
-            url: "https://github.com/kean/Pulse/files/5963291/PulseCore-0.9.2.zip",
-            checksum: "ea5372324773961cb48000a134caec8e42a175d174cc5eb503d5ca152ceebfe4"
+            url: "https://github.com/kean/Pulse/files/5969489/PulseCore-0.9.3.zip",
+            checksum: "c6a97cc665652b1373169cc795638b0d3e47120c60a9b9612b22f725779bb5ab"
         ),
         .binaryTarget(
             name: "PulseUI",
-            url: "https://github.com/kean/Pulse/files/5963293/PulseUI-0.9.2.zip",
-            checksum: "bdda7b5b5fa314a4035e048249b0dee557d65c161d9b2a4ddcbaf062317a5707"
+            url: "https://github.com/kean/Pulse/files/5969490/PulseUI-0.9.3.zip",
+            checksum: "e9e5991ab143efcf855d61c498955200229114a4d7e25a1e7a8e60f172f61db2"
         )
     ]
 )
