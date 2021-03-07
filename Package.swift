@@ -5,7 +5,8 @@ import PackageDescription
 let package = Package(
     name: "Pulse",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v11),
+        .macOS(.v11)
     ],
     products: [
         .library(name: "Pulse", targets: ["Pulse"]),
