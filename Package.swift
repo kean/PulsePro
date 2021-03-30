@@ -26,13 +26,13 @@ let package = Package(
         ),
         .binaryTarget(
             name: "PulseCore",
-            url: "https://github.com/kean/Pulse/files/6225487/PulseCore-0.14.0.zip",
-            checksum: "d54637750fefe5f65c4f5376d9e15524c368c595899adf994346cf69b71d55db"
+            url: "https://github.com/kean/Pulse/files/6232572/PulseCore-0.14.1.zip",
+            checksum: "2de43f9dea1844a27fd50bc1b872e024fcffa0e7846a3d42e5a1b97cc62996d0"
         ),
         .binaryTarget(
             name: "PulseUI",
-            url: "https://github.com/kean/Pulse/files/6225488/PulseUI-0.14.0.zip",
-            checksum: "77e2a1646a2d6d2e89146d67b10f8e8f18ad5773c48137681ff0d414bfe3fbac"
+            url: "https://github.com/kean/Pulse/files/6232576/PulseUI-0.14.1.zip",
+            checksum: "869b631612633985095643a6256a92ffc92fb434245905fd39577c8628cddb8b"
         )
     ]
 )
