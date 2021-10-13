@@ -1,5 +1,12 @@
 # Pulse 1.x
 
+## Pulse 1.1.1
+
+*Oct 13, 2021*
+
+- Reduce CPU and memory usage. More improvements coming in the future version. There is still a bug I'm tracking where a SwiftUI toolbar leaks memory in macOS 11.
+- Fix an issue with JQ output not reloading
+
 ## Pulse 1.1.0
 
 *Oct 9, 2021*
