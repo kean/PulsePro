@@ -1,5 +1,12 @@
 # Pulse 1.x
 
+## Pulse 1.1.2
+
+*Oct 13, 2021*
+
+- More performance improvements
+- In text mode, the text view no longer reloads automatically when the remote client is attached and the server recieves new messages
+
 ## Pulse 1.1.1
 
 *Oct 13, 2021*
