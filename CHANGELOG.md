@@ -1,5 +1,14 @@
 # Pulse 1.x
 
+## Pulse 1.2.0
+
+*Oct 17, 2021*
+
+- Fix typo on the welcome page - [#13](https://github.com/kean/PulsePro/issues/13)
+- Fix long URLs truncation mode in the network summary page - [#12](https://github.com/kean/PulsePro/issues/12)
+- Add "filename" column - [#8](https://github.com/kean/PulsePro/issues/8)
+- Show HTTP additional header fields in the Headers view
+
 ## Pulse 1.1.2
 
 *Oct 13, 2021*
