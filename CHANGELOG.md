@@ -1,14 +1,34 @@
 # Pulse 1.x
 
+## Pulse 1.3.0
+
+*20 Oct, 2021*
+
+### Features
+
+- Add "Auto-Scroll" button for remote logging that, when enabled, automatically scrolls to the bottom of the table when new messages are added. This mode is enabled by default.
+- In Text mode, new messages are now inserted automatically during remote logging. This is possible due to rewritten subsystem for managing updates from the remote clients. "Auto Scroll" is also supported in the Text mode.
+
+### Enhancements
+
+- Optimize how messages are inserted during remote logging (both in table and text views)
+- More JSON viewer optimizations (search, filtering, etc)
+
+### Fixes
+- Fix a crash when you try to collapse JSON objects in a filtered output of the JSON viewer - this option is now disabled. You can still Cmd+Click and see some of the remaining options, e.g. "Copy Object"
+- Fix an issue where a toolbar in Text Mode was not reloading when you change the options
+- Fix "Interval" field formatting; no fractional minutes anymore
+- Fix an issue with pinned messages sometimes showing with gray text color instead of white
+
 ## Pulse 1.2.1
 
-*Oct 18, 2021*
+*18 Oct, 2021*
 
 - Fix an issue with a URL hardcoded for testing on the summary page
 
 ## Pulse 1.2.0
 
-*Oct 17, 2021*
+*17 Oct, 2021*
 
 - Fix typo on the welcome page - [#13](https://github.com/kean/PulsePro/issues/13)
 - Fix long URLs truncation mode in the network summary page - [#12](https://github.com/kean/PulsePro/issues/12)
@@ -17,21 +37,21 @@
 
 ## Pulse 1.1.2
 
-*Oct 13, 2021*
+*13 Oct, 2021*
 
 - More performance improvements
 - In text mode, the text view no longer reloads automatically when the remote client is attached and the server recieves new messages
 
 ## Pulse 1.1.1
 
-*Oct 13, 2021*
+*13 Oct, 2021*
 
 - Reduce CPU and memory usage. More improvements coming in the future version. There is still a bug I'm tracking where a SwiftUI toolbar leaks memory in macOS 11.
 - Fix an issue with JQ output not reloading
 
 ## Pulse 1.1.0
 
-*Oct 9, 2021*
+*9 Oct, 2021*
 
 ### JSON Viewer Improvements
 
@@ -51,12 +71,12 @@
 
 ## Pulse 1.0.1
 
-*Oct 8, 2021*
+*8 Oct, 2021*
 
 - Fix an issue [#7](https://github.com/kean/PulsePro/issues/7) where the remote logger sometimes starts as paused
 
 ## Pulse 1.0.0
 
-*Oct 5, 2021*
+*5 Oct, 2021*
 
 Initial release
