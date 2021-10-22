@@ -1,5 +1,25 @@
 # Pulse 1.x
 
+## Pulse 1.3.1
+
+*21 Oct, 2021*
+
+This release has new performance improvements finally getting energy usage to "Low" even while inserting 100 messages per second in an existing store with 100K messages during remote logging. 
+
+### Optimizations
+
+- Optimize message insertion during remote logging
+- Optimize text rendering in Text mode
+- Optimize pins
+
+### Fixes
+
+- Fix an issue with programmatic (non-database) filters (headers and body filters) not being applied progressively during remote logging on the Network tab
+- Fix an issue where text was rendered twice when you switch to a Text mode (most strings were cached during the second run, but combining and rendering them is slow)
+- Fix a rare crash when switching between Table and Text mode
+- Fix an issue with the "Now" mode not disabling when your start jumping between search results
+- Fix an issue with messages being inserted in Text mode with "Limit to a Thousand" mode enabled even after the limit was reached
+
 ## Pulse 1.3.0
 
 *20 Oct, 2021*
