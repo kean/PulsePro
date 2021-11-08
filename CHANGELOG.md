@@ -1,8 +1,46 @@
 # Pulse 1.x
 
+## Pulse 1.4.0
+
+*Nov 8, 2021*
+
+### Navigation
+
+- You can now switch to a Network view using the main Toolbar. It has several advantages. For example, when you switch, it keeps your selection, filters, and other perferences. You can now also close the sidebar if you don't need to switch between devices.
+- Sidebar now displayes your connected devices making it easier to switch between them. Devices and their associated logs are stored persistently. With a context menu, you can open the device in a separate window, show the store in Finder, or remove the device.
+- When you open a log file (`.pulse` extension), it nows opens in a clean window with no sidebar and with a filename in the navigation title.
+- Remove status bar item. It's not needed anymore thanks to the new siderbar and the fact that "Remote Logging" is now enabled by default.
+- You can now close a defails panel
+- Add remote logger server status view in "Remote Logging" Preferences
+
+### Pins
+
+- Add "Remove All Pins" menu bar command (⌃⌥⌘P)
+- Add "Toggle Pin" menu bar command (⌘P)
+- Add "Only Pins" menu bar command (⇧⌘P). Unlike the previous dedicated "Pins" tab, it acts as a filter and can be combined with the rest of the filters.
+- Improve performance when adding/removing pins in a large dataset 
+
+### Commands
+
+- Add "Remove All Messages" command (⌘K)
+- Add "Viewers" menu with commands "Show Messages" (⌘1), "Show Text Log" (⌘2), "Show Network Requests" (⌘3)
+- "Only Errors" menu bar command is now implemented as a Toggle and is disabled when Console is not visible. Change the shortcut to (⇧⌘e)
+- Add "Reset Filters" command in "Find" (⇧⌘0)
+- Add "Start Streaming" and "Pause Streaming" commands (⇧⌘S)
+- Add "Now Mode" command (⇧⌘N)
+- Add `help` to toolbar items with info on shortcuts
+
+### Fixes
+
+- Fix an issue where afrer removing messages, time interval is displayed incorrectly until you reopen the console
+- Fix an issue where labels/domains weren't reset after deleting all messages
+- Fix an issue where the "Interval" column was calculated incorrecy after deleting all messages
+- Fix an issue with "Now" not scrolling to the bottom when you open the Console for the first time
+- Auto-hide scrollbars in text views
+
 ## Pulse 1.3.1
 
-*21 Oct, 2021*
+*Oct 21, 2021*
 
 This release has new performance improvements finally getting energy usage to "Low" even while inserting 100 messages per second in an existing store with 100K messages during remote logging. 
 
@@ -22,7 +60,7 @@ This release has new performance improvements finally getting energy usage to "L
 
 ## Pulse 1.3.0
 
-*20 Oct, 2021*
+*Oct 20, 2021*
 
 ### Features
 
@@ -48,7 +86,7 @@ This release has new performance improvements finally getting energy usage to "L
 
 ## Pulse 1.2.0
 
-*17 Oct, 2021*
+*Oct 17, 2021*
 
 - Fix typo on the welcome page - [#13](https://github.com/kean/PulsePro/issues/13)
 - Fix long URLs truncation mode in the network summary page - [#12](https://github.com/kean/PulsePro/issues/12)
@@ -57,21 +95,21 @@ This release has new performance improvements finally getting energy usage to "L
 
 ## Pulse 1.1.2
 
-*13 Oct, 2021*
+*Oct 13, 2021*
 
 - More performance improvements
 - In text mode, the text view no longer reloads automatically when the remote client is attached and the server recieves new messages
 
 ## Pulse 1.1.1
 
-*13 Oct, 2021*
+*Oct 13, 2021*
 
 - Reduce CPU and memory usage. More improvements coming in the future version. There is still a bug I'm tracking where a SwiftUI toolbar leaks memory in macOS 11.
 - Fix an issue with JQ output not reloading
 
 ## Pulse 1.1.0
 
-*9 Oct, 2021*
+*Oct 9, 2021*
 
 ### JSON Viewer Improvements
 
@@ -91,12 +129,12 @@ This release has new performance improvements finally getting energy usage to "L
 
 ## Pulse 1.0.1
 
-*8 Oct, 2021*
+*Oct 8, 2021*
 
 - Fix an issue [#7](https://github.com/kean/PulsePro/issues/7) where the remote logger sometimes starts as paused
 
 ## Pulse 1.0.0
 
-*5 Oct, 2021*
+*Oct 5, 2021*
 
 Initial release
