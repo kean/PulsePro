@@ -6,4 +6,4 @@ You can find the latest release in [Releases](https://github.com/kean/PulsePro/r
 
 If you encounter any defects or want to suggest an improvement, please open a new issue in this repo.
 
-![main-console-04-2-2](https://user-images.githubusercontent.com/1567433/136159613-c2ff4fe3-6cb8-4fe5-ad2d-cbc73bb659a0.png)
+<img width="2100" alt="08" src="https://user-images.githubusercontent.com/1567433/140942189-45ad5be6-6462-46d2-82e5-1c9a228c53a9.png">
