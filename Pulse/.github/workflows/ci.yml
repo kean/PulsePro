@@ -1,0 +1,52 @@
+name: "Pulse CI"
+
+on: 
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches: 
+      - '*'
+
+jobs:
+  ios-latest:
+    name: Unit Tests (iOS 14.2, Xcode 12.5.1)
+    runs-on: macOS-11
+    env: 
+      DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: Scripts/build.sh -d "OS=14.2,name=iPhone 11"
+  macos-latest:
+    name: Unit Tests (macOS, Xcode 12.5.1)
+    runs-on: macOS-11
+    env: 
+      DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: cd Pulse && swift build
+      - name: Discover typos
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install codespell
+          codespell --ignore-words-list="hart,inout,msdos,sur" --skip="./.build/*"
+#  tvos-latest:
+#    name: Unit Tests (tvOS 14.2, Xcode 12.5.1)
+#    runs-on: macOS-11
+#    env:
+#      DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Run Tests
+#        run: Scripts/test.sh -d "OS=14.2,name=Apple TV 4K"
+  watchos-latest:
+    name: Build (watchOS 7.1, Xcode 12.5.1)
+    runs-on: macOS-11
+    env: 
+      DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: Scripts/build.sh -d "OS=7.1,name=Apple Watch Series 6 - 40mm"
