@@ -2,7 +2,7 @@
 
 This repo is currently used for distributing Pulse Pro.
 
-You can find the latest release in [Releases](https://github.com/kean/PulsePro/releases). It's in the beta status. The builds will last for 120 days.
+You can find the latest release in [Releases](https://github.com/kean/PulsePro/releases).
 
 If you encounter any defects or want to suggest an improvement, please open a new issue in this repo.
 
