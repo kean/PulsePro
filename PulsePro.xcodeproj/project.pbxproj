@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -115,30 +115,9 @@
 		0C699BF327DE8B1100F502C3 /* NetworkLoggerSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9327DE8B1100F502C3 /* NetworkLoggerSummary.swift */; };
 		0C699BF427DE8B1100F502C3 /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9427DE8B1100F502C3 /* AppContext.swift */; };
 		0C699BF527DE8B1100F502C3 /* ShareItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9527DE8B1100F502C3 /* ShareItems.swift */; };
-		0C699BF627DE8B1100F502C3 /* LoggerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9727DE8B1100F502C3 /* LoggerSession.swift */; };
-		0C699BF727DE8B1100F502C3 /* LoggerStoreInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9827DE8B1100F502C3 /* LoggerStoreInfo.swift */; };
-		0C699BF827DE8B1100F502C3 /* BlobStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9927DE8B1100F502C3 /* BlobStore.swift */; };
-		0C699BF927DE8B1100F502C3 /* RemoteLogger-Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9B27DE8B1100F502C3 /* RemoteLogger-Helpers.swift */; };
-		0C699BFA27DE8B1100F502C3 /* RemoteLogger-Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9C27DE8B1100F502C3 /* RemoteLogger-Store.swift */; };
-		0C699BFB27DE8B1100F502C3 /* RemoteLogger-Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9D27DE8B1100F502C3 /* RemoteLogger-Protocol.swift */; };
-		0C699BFC27DE8B1100F502C3 /* RemoteLogger-Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9E27DE8B1100F502C3 /* RemoteLogger-Connection.swift */; };
-		0C699BFD27DE8B1100F502C3 /* RemoteLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9F27DE8B1100F502C3 /* RemoteLogger.swift */; };
-		0C699BFE27DE8B1100F502C3 /* NetworkLoggerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA027DE8B1100F502C3 /* NetworkLoggerEvent.swift */; };
-		0C699BFF27DE8B1100F502C3 /* URLSessionProxyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA127DE8B1100F502C3 /* URLSessionProxyDelegate.swift */; };
-		0C699C0027DE8B1100F502C3 /* LoggerStore+MOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA227DE8B1100F502C3 /* LoggerStore+MOM.swift */; };
-		0C699C0127DE8B1100F502C3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA327DE8B1100F502C3 /* Extensions.swift */; };
-		0C699C0227DE8B1100F502C3 /* URLSessionProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA427DE8B1100F502C3 /* URLSessionProxy.swift */; };
-		0C699C0327DE8B1100F502C3 /* IndexedArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA527DE8B1100F502C3 /* IndexedArchive.swift */; };
-		0C699C0427DE8B1100F502C3 /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA727DE8B1100F502C3 /* Archive.swift */; };
-		0C699C0527DE8B1100F502C3 /* Archive+Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA827DE8B1100F502C3 /* Archive+Reading.swift */; };
-		0C699C0627DE8B1100F502C3 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BA927DE8B1100F502C3 /* Entry.swift */; };
-		0C699C0727DE8B1100F502C3 /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BAA27DE8B1100F502C3 /* Data+Compression.swift */; };
-		0C699C0827DE8B1100F502C3 /* Archive+Writing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BAB27DE8B1100F502C3 /* Archive+Writing.swift */; };
-		0C699C0927DE8B1100F502C3 /* Data+Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BAC27DE8B1100F502C3 /* Data+Serialization.swift */; };
-		0C699C0A27DE8B1100F502C3 /* FileManager+ZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BAD27DE8B1100F502C3 /* FileManager+ZIP.swift */; };
-		0C699C0B27DE8B1100F502C3 /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BAE27DE8B1100F502C3 /* NetworkLogger.swift */; };
-		0C699C0C27DE8B1100F502C3 /* LoggerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699BAF27DE8B1100F502C3 /* LoggerStore.swift */; };
 		0C6E34A82701FECE00EA9254 /* NetworkInspectorResponseViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6E34A72701FECE00EA9254 /* NetworkInspectorResponseViewPro.swift */; };
+		0C7E56CB28021C5800D7A8DF /* PulseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0C7E56CA28021C5800D7A8DF /* PulseCore */; };
+		0C7E56CE28021C9800D7A8DF /* RemoteLoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E56CD28021C9800D7A8DF /* RemoteLoggerProtocol.swift */; };
 		0C82DFA826F2D41D00700C4C /* RemoteLoggerServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C82DFA726F2D41D00700C4C /* RemoteLoggerServer.swift */; };
 		0C85D60E2701428200211C4C /* RichTextViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C85D60D2701428200211C4C /* RichTextViewPro.swift */; };
 		0C97EA2D26F3940E00BFA8E3 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97EA2C26F3940E00BFA8E3 /* LoaderView.swift */; };
@@ -221,7 +200,6 @@
 		0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWelcomeView.swift; sourceTree = "<group>"; };
 		0C614B692726087E00F6978D /* ConsoleContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleContainerView.swift; sourceTree = "<group>"; };
 		0C64DC1726F4D0A1002BC061 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0C699B4027DE8B1100F502C3 /* PersistentLogHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentLogHandler.swift; sourceTree = "<group>"; };
 		0C699B4327DE8B1100F502C3 /* MockStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
 		0C699B4427DE8B1100F502C3 /* MockDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
 		0C699B4727DE8B1100F502C3 /* PinsView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinsView-macos.swift"; sourceTree = "<group>"; };
@@ -291,30 +269,9 @@
 		0C699B9327DE8B1100F502C3 /* NetworkLoggerSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerSummary.swift; sourceTree = "<group>"; };
 		0C699B9427DE8B1100F502C3 /* AppContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		0C699B9527DE8B1100F502C3 /* ShareItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareItems.swift; sourceTree = "<group>"; };
-		0C699B9727DE8B1100F502C3 /* LoggerSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerSession.swift; sourceTree = "<group>"; };
-		0C699B9827DE8B1100F502C3 /* LoggerStoreInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerStoreInfo.swift; sourceTree = "<group>"; };
-		0C699B9927DE8B1100F502C3 /* BlobStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlobStore.swift; sourceTree = "<group>"; };
-		0C699B9B27DE8B1100F502C3 /* RemoteLogger-Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemoteLogger-Helpers.swift"; sourceTree = "<group>"; };
-		0C699B9C27DE8B1100F502C3 /* RemoteLogger-Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemoteLogger-Store.swift"; sourceTree = "<group>"; };
-		0C699B9D27DE8B1100F502C3 /* RemoteLogger-Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemoteLogger-Protocol.swift"; sourceTree = "<group>"; };
-		0C699B9E27DE8B1100F502C3 /* RemoteLogger-Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemoteLogger-Connection.swift"; sourceTree = "<group>"; };
-		0C699B9F27DE8B1100F502C3 /* RemoteLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteLogger.swift; sourceTree = "<group>"; };
-		0C699BA027DE8B1100F502C3 /* NetworkLoggerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerEvent.swift; sourceTree = "<group>"; };
-		0C699BA127DE8B1100F502C3 /* URLSessionProxyDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProxyDelegate.swift; sourceTree = "<group>"; };
-		0C699BA227DE8B1100F502C3 /* LoggerStore+MOM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoggerStore+MOM.swift"; sourceTree = "<group>"; };
-		0C699BA327DE8B1100F502C3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		0C699BA427DE8B1100F502C3 /* URLSessionProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProxy.swift; sourceTree = "<group>"; };
-		0C699BA527DE8B1100F502C3 /* IndexedArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexedArchive.swift; sourceTree = "<group>"; };
-		0C699BA727DE8B1100F502C3 /* Archive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
-		0C699BA827DE8B1100F502C3 /* Archive+Reading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Archive+Reading.swift"; sourceTree = "<group>"; };
-		0C699BA927DE8B1100F502C3 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
-		0C699BAA27DE8B1100F502C3 /* Data+Compression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Compression.swift"; sourceTree = "<group>"; };
-		0C699BAB27DE8B1100F502C3 /* Archive+Writing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Archive+Writing.swift"; sourceTree = "<group>"; };
-		0C699BAC27DE8B1100F502C3 /* Data+Serialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Serialization.swift"; sourceTree = "<group>"; };
-		0C699BAD27DE8B1100F502C3 /* FileManager+ZIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+ZIP.swift"; sourceTree = "<group>"; };
-		0C699BAE27DE8B1100F502C3 /* NetworkLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLogger.swift; sourceTree = "<group>"; };
-		0C699BAF27DE8B1100F502C3 /* LoggerStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerStore.swift; sourceTree = "<group>"; };
 		0C6E34A72701FECE00EA9254 /* NetworkInspectorResponseViewPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorResponseViewPro.swift; sourceTree = "<group>"; };
+		0C7E56C928021C4600D7A8DF /* Pulse */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Pulse; sourceTree = "<group>"; };
+		0C7E56CD28021C9800D7A8DF /* RemoteLoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoggerProtocol.swift; sourceTree = "<group>"; };
 		0C82DFA726F2D41D00700C4C /* RemoteLoggerServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoggerServer.swift; sourceTree = "<group>"; };
 		0C85D60D2701428200211C4C /* RichTextViewPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewPro.swift; sourceTree = "<group>"; };
 		0C97EA2C26F3940E00BFA8E3 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
@@ -349,6 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C7E56CB28021C5800D7A8DF /* PulseCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +434,7 @@
 		0C57AD44245F0EFB005B3400 = {
 			isa = PBXGroup;
 			children = (
+				0C7E56C928021C4600D7A8DF /* Pulse */,
 				0C07EDCD25CEF648002DC091 /* README.md */,
 				0CE3DB06260FB43D00521113 /* Scripts */,
 				0C57AD64245F0F38005B3400 /* App */,
@@ -547,20 +506,10 @@
 		0C699B3E27DE8B1100F502C3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				0C699B3F27DE8B1100F502C3 /* Pulse */,
 				0C699B4127DE8B1100F502C3 /* PulseUI */,
-				0C699B9627DE8B1100F502C3 /* PulseCore */,
 			);
 			name = Sources;
 			path = Pulse/Sources;
-			sourceTree = "<group>";
-		};
-		0C699B3F27DE8B1100F502C3 /* Pulse */ = {
-			isa = PBXGroup;
-			children = (
-				0C699B4027DE8B1100F502C3 /* PersistentLogHandler.swift */,
-			);
-			path = Pulse;
 			sourceTree = "<group>";
 		};
 		0C699B4127DE8B1100F502C3 /* PulseUI */ = {
@@ -759,52 +708,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		0C699B9627DE8B1100F502C3 /* PulseCore */ = {
-			isa = PBXGroup;
-			children = (
-				0C699B9727DE8B1100F502C3 /* LoggerSession.swift */,
-				0C699B9827DE8B1100F502C3 /* LoggerStoreInfo.swift */,
-				0C699B9927DE8B1100F502C3 /* BlobStore.swift */,
-				0C699B9A27DE8B1100F502C3 /* RemoteLogger */,
-				0C699BA027DE8B1100F502C3 /* NetworkLoggerEvent.swift */,
-				0C699BA127DE8B1100F502C3 /* URLSessionProxyDelegate.swift */,
-				0C699BA227DE8B1100F502C3 /* LoggerStore+MOM.swift */,
-				0C699BA327DE8B1100F502C3 /* Extensions.swift */,
-				0C699BA427DE8B1100F502C3 /* URLSessionProxy.swift */,
-				0C699BA527DE8B1100F502C3 /* IndexedArchive.swift */,
-				0C699BA627DE8B1100F502C3 /* ZIPFoundation */,
-				0C699BAE27DE8B1100F502C3 /* NetworkLogger.swift */,
-				0C699BAF27DE8B1100F502C3 /* LoggerStore.swift */,
-			);
-			path = PulseCore;
-			sourceTree = "<group>";
-		};
-		0C699B9A27DE8B1100F502C3 /* RemoteLogger */ = {
-			isa = PBXGroup;
-			children = (
-				0C699B9B27DE8B1100F502C3 /* RemoteLogger-Helpers.swift */,
-				0C699B9C27DE8B1100F502C3 /* RemoteLogger-Store.swift */,
-				0C699B9D27DE8B1100F502C3 /* RemoteLogger-Protocol.swift */,
-				0C699B9E27DE8B1100F502C3 /* RemoteLogger-Connection.swift */,
-				0C699B9F27DE8B1100F502C3 /* RemoteLogger.swift */,
-			);
-			path = RemoteLogger;
-			sourceTree = "<group>";
-		};
-		0C699BA627DE8B1100F502C3 /* ZIPFoundation */ = {
-			isa = PBXGroup;
-			children = (
-				0C699BA727DE8B1100F502C3 /* Archive.swift */,
-				0C699BA827DE8B1100F502C3 /* Archive+Reading.swift */,
-				0C699BA927DE8B1100F502C3 /* Entry.swift */,
-				0C699BAA27DE8B1100F502C3 /* Data+Compression.swift */,
-				0C699BAB27DE8B1100F502C3 /* Archive+Writing.swift */,
-				0C699BAC27DE8B1100F502C3 /* Data+Serialization.swift */,
-				0C699BAD27DE8B1100F502C3 /* FileManager+ZIP.swift */,
-			);
-			path = ZIPFoundation;
-			sourceTree = "<group>";
-		};
 		0C82DFA626F2D41600700C4C /* RemoteLogger */ = {
 			isa = PBXGroup;
 			children = (
@@ -812,6 +715,7 @@
 				0CD8645926F8FB9C0021D549 /* RemoteLoggerClient.swift */,
 				0CFB25D82708A25F00A06026 /* RemoteLoggerClientViewModel.swift */,
 				0C32EA3826FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift */,
+				0C7E56CD28021C9800D7A8DF /* RemoteLoggerProtocol.swift */,
 			);
 			path = RemoteLogger;
 			sourceTree = "<group>";
@@ -872,6 +776,7 @@
 			);
 			name = "Pulse Pro";
 			packageProductDependencies = (
+				0C7E56CA28021C5800D7A8DF /* PulseCore */,
 			);
 			productName = "Pulse-macOS";
 			productReference = 0C57AD8C245F0F55005B3400 /* Pulse Pro.app */;
@@ -931,7 +836,6 @@
 			files = (
 				0C17B218270517CD00784EDC /* NetworkFiltersPanelPro.swift in Sources */,
 				0C699BE727DE8B1100F502C3 /* Border.swift in Sources */,
-				0C699C0927DE8B1100F502C3 /* Data+Serialization.swift in Sources */,
 				0C614B6A2726087E00F6978D /* ConsoleContainerView.swift in Sources */,
 				0C82DFA826F2D41D00700C4C /* RemoteLoggerServer.swift in Sources */,
 				0C699BE827DE8B1100F502C3 /* KeyValueSectionView.swift in Sources */,
@@ -940,17 +844,12 @@
 				0C699BED27DE8B1100F502C3 /* MultiSelectionPicker.swift in Sources */,
 				0C43687F270D312A0088AC3E /* NewJSONPrinter.swift in Sources */,
 				0C699BB227DE8B1100F502C3 /* MockDataTask.swift in Sources */,
-				0C699BF627DE8B1100F502C3 /* LoggerSession.swift in Sources */,
 				0CBD319F2721F6FF0046252D /* FetchedObjects.swift in Sources */,
-				0C699C0427DE8B1100F502C3 /* Archive.swift in Sources */,
 				0C699BC027DE8B1100F502C3 /* NetworkInspectorView.swift in Sources */,
-				0C699C0B27DE8B1100F502C3 /* NetworkLogger.swift in Sources */,
 				0C699BBD27DE8B1100F502C3 /* NetworkInspectorResponseView.swift in Sources */,
 				0C699BBC27DE8B1100F502C3 /* DocumentBrowser.swift in Sources */,
-				0C699BFE27DE8B1100F502C3 /* NetworkLoggerEvent.swift in Sources */,
 				0CD8646626F921310021D549 /* RemoteLoggerClientStatusView.swift in Sources */,
 				0CE63EAA2729D09D00BA278D /* SiderbarViewController.swift in Sources */,
-				0C699BFD27DE8B1100F502C3 /* RemoteLogger.swift in Sources */,
 				0C699BB927DE8B1100F502C3 /* ConsoleMessageDetailsView.swift in Sources */,
 				0C17B20F2705021A00784EDC /* NetworkMainViewModel.swift in Sources */,
 				0C699BB627DE8B1100F502C3 /* SettingsView-ios.swift in Sources */,
@@ -960,7 +859,6 @@
 				0CC93A5B26FF9FDA00F6C378 /* NetworkInspectorHeadersViewPro.swift in Sources */,
 				0C2F854F26FE693200962464 /* ConsoleTableViewPro.swift in Sources */,
 				0C699BE927DE8B1100F502C3 /* DatePickerButton.swift in Sources */,
-				0C699C0827DE8B1100F502C3 /* Archive+Writing.swift in Sources */,
 				0C35311B270E35FF007148FD /* JSONTextView.swift in Sources */,
 				0C699BD527DE8B1100F502C3 /* ConsoleMessageView.swift in Sources */,
 				0CEC579A27123F24001DD5C9 /* StandaloneJSONViewer.swift in Sources */,
@@ -968,7 +866,6 @@
 				0C699BDF27DE8B1100F502C3 /* KeyValueGridView.swift in Sources */,
 				0C6E34A82701FECE00EA9254 /* NetworkInspectorResponseViewPro.swift in Sources */,
 				0C699BCC27DE8B1100F502C3 /* ConsoleView-watchos.swift in Sources */,
-				0C699BFA27DE8B1100F502C3 /* RemoteLogger-Store.swift in Sources */,
 				0C699BBF27DE8B1100F502C3 /* NetworkInspectorTransferInfoView.swift in Sources */,
 				0C32EA3926FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift in Sources */,
 				0C699BF127DE8B1100F502C3 /* ConsoleSearchService.swift in Sources */,
@@ -977,7 +874,6 @@
 				0C699BB127DE8B1100F502C3 /* MockStore.swift in Sources */,
 				0C515EB126FD10C100D415F6 /* RouterView.swift in Sources */,
 				0C97EA2D26F3940E00BFA8E3 /* LoaderView.swift in Sources */,
-				0C699BFC27DE8B1100F502C3 /* RemoteLogger-Connection.swift in Sources */,
 				0CD8645F26F906180021D549 /* Helpers.swift in Sources */,
 				0C699BEC27DE8B1100F502C3 /* ContextMenus.swift in Sources */,
 				0CC93A5926FF9C6D00F6C378 /* NetworkInspectorViewPro.swift in Sources */,
@@ -993,18 +889,15 @@
 				0C43687D270D2FC80088AC3E /* JSON.swift in Sources */,
 				0C699BD627DE8B1100F502C3 /* ConsoleNetworkRequestView.swift in Sources */,
 				0C35311D270E5F6E007148FD /* JSONView.swift in Sources */,
-				0C699BF727DE8B1100F502C3 /* LoggerStoreInfo.swift in Sources */,
 				0C2F854726FE316000962464 /* ConsoleMainViewModel.swift in Sources */,
 				0CC42A5F2708B0120038C89B /* ConsoleNetworkRequestContextMenuViewPro.swift in Sources */,
 				0C23EFC827012CD700F81F0D /* LineNumbers.swift in Sources */,
 				0C699BEB27DE8B1100F502C3 /* NotList.swift in Sources */,
 				0C25ACD627068FF4000E6DD5 /* PinsService.swift in Sources */,
-				0C699C0627DE8B1100F502C3 /* Entry.swift in Sources */,
 				0C699BF427DE8B1100F502C3 /* AppContext.swift in Sources */,
 				0CC93A5626FF952000F6C378 /* MessageDetailsViewPro.swift in Sources */,
 				0C699BE427DE8B1100F502C3 /* SearchBar.swift in Sources */,
 				0C699BDE27DE8B1100F502C3 /* MainViewController.swift in Sources */,
-				0C699BFF27DE8B1100F502C3 /* URLSessionProxyDelegate.swift in Sources */,
 				0C25ACDA2707970E000E6DD5 /* TableScroller.swift in Sources */,
 				0C699BDA27DE8B1100F502C3 /* NetworkLoggerSummary+Sharing.swift in Sources */,
 				0C699BDD27DE8B1100F502C3 /* Formatters.swift in Sources */,
@@ -1013,14 +906,12 @@
 				0C699BBB27DE8B1100F502C3 /* ConsoleMessageDetailsViewModel.swift in Sources */,
 				0C699BD727DE8B1100F502C3 /* ConsoleViewModel.swift in Sources */,
 				0C699BC827DE8B1100F502C3 /* MainView-ios-tvos.swift in Sources */,
-				0C699C0C27DE8B1100F502C3 /* LoggerStore.swift in Sources */,
 				0C699BD427DE8B1100F502C3 /* ConsoleFiltersView-ios.swift in Sources */,
 				0C699BE127DE8B1100F502C3 /* PlaceholderView.swift in Sources */,
 				0C699BD827DE8B1100F502C3 /* ConsoleQuickFiltersView.swift in Sources */,
 				0C699BE227DE8B1100F502C3 /* ToastView.swift in Sources */,
 				0CF6E6392717179B00CC3B30 /* TextSearchViewModel.swift in Sources */,
 				0C25ACD82706A597000E6DD5 /* PinScrollerButton.swift in Sources */,
-				0C699C0127DE8B1100F502C3 /* Extensions.swift in Sources */,
 				0C699BD027DE8B1100F502C3 /* ConsoleMessageView-macos.swift in Sources */,
 				0C699BE027DE8B1100F502C3 /* BadgeView.swift in Sources */,
 				0C699BCE27DE8B1100F502C3 /* ConsoleView-macos.swift in Sources */,
@@ -1030,35 +921,29 @@
 				0C699BCD27DE8B1100F502C3 /* ConsoleView-tvos.swift in Sources */,
 				0CB2AD2B2706534B00DEBF29 /* Attributed.swift in Sources */,
 				0C699BEF27DE8B1100F502C3 /* JSONPrinter.swift in Sources */,
-				0C699C0527DE8B1100F502C3 /* Archive+Reading.swift in Sources */,
 				0CE31C0E2730AD46004A84EB /* Align.swift in Sources */,
 				0C699BDC27DE8B1100F502C3 /* Foundation+Extensions.swift in Sources */,
 				0CC93A5D26FFA76F00F6C378 /* KeyValueViewPro.swift in Sources */,
 				0C515EB426FD117E00D415F6 /* AppRouter.swift in Sources */,
 				0C699BEA27DE8B1100F502C3 /* PinButton.swift in Sources */,
 				0C17B2052704E37600784EDC /* NetworkListViewPro.swift in Sources */,
-				0C699BF827DE8B1100F502C3 /* BlobStore.swift in Sources */,
 				0C17B20C2704E9AE00784EDC /* ConsoleDetailsRouter.swift in Sources */,
+				0C7E56CE28021C9800D7A8DF /* RemoteLoggerProtocol.swift in Sources */,
 				0C699BBA27DE8B1100F502C3 /* ConsoleMessageDetailsRouter.swift in Sources */,
 				0C85D60E2701428200211C4C /* RichTextViewPro.swift in Sources */,
-				0C699BFB27DE8B1100F502C3 /* RemoteLogger-Protocol.swift in Sources */,
 				0CD48DD026FFEFAD00C35185 /* ConsoleSearchCriteria.swift in Sources */,
-				0C699C0A27DE8B1100F502C3 /* FileManager+ZIP.swift in Sources */,
 				0C699BC327DE8B1100F502C3 /* NetworkInspectorHeadersView.swift in Sources */,
 				0C17B21A27054EDA00784EDC /* Cache.swift in Sources */,
 				0C699BF527DE8B1100F502C3 /* ShareItems.swift in Sources */,
 				0CD8645A26F8FB9C0021D549 /* RemoteLoggerClient.swift in Sources */,
 				0C515EB926FD284100D415F6 /* SettingsView.swift in Sources */,
-				0C699C0727DE8B1100F502C3 /* Data+Compression.swift in Sources */,
 				0C32EBCF26FCB6C6000EB5E6 /* MainViewPro.swift in Sources */,
 				0C2464A625D9D6C40057A577 /* AppCommands.swift in Sources */,
 				0C43E16C273888550094E465 /* ConsoleCommandsListenerView.swift in Sources */,
-				0C699C0027DE8B1100F502C3 /* LoggerStore+MOM.swift in Sources */,
 				0C2F854526FE23E600962464 /* NotSplitView.swift in Sources */,
 				0C699BC927DE8B1100F502C3 /* ConsoleMessagesForEach.swift in Sources */,
 				0C515EB626FD215100D415F6 /* WindowAccessor.swift in Sources */,
 				0C17B2162705179B00784EDC /* FiltersForm.swift in Sources */,
-				0C699C0227DE8B1100F502C3 /* URLSessionProxy.swift in Sources */,
 				0C699BBE27DE8B1100F502C3 /* NetworkInspectorMetricsDetailsView.swift in Sources */,
 				0C17B2132705037D00784EDC /* NetworkSearchCriteria.swift in Sources */,
 				0C64DC1826F4D0A1002BC061 /* AppDelegate.swift in Sources */,
@@ -1079,9 +964,7 @@
 				0C699BF027DE8B1100F502C3 /* LoggerSync.swift in Sources */,
 				0CFB25D92708A25F00A06026 /* RemoteLoggerClientViewModel.swift in Sources */,
 				0CA35CA6272D7C7000B127E8 /* FileRouterView.swift in Sources */,
-				0C699C0327DE8B1100F502C3 /* IndexedArchive.swift in Sources */,
 				0C57ADA4245F0F91005B3400 /* App.swift in Sources */,
-				0C699BF927DE8B1100F502C3 /* RemoteLogger-Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1276,6 +1159,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0C7E56CA28021C5800D7A8DF /* PulseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PulseCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0C57AD45245F0EFB005B3400 /* Project object */;
 }
