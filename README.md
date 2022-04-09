@@ -1,6 +1,6 @@
 # Pulse Pro
 
-This repo is currently used for distributing Pulse Pro.
+Learn more about the app [here](https://kean.blog/pulse/guides/pulse-pro).
 
 You can find the latest release in [Releases](https://github.com/kean/PulsePro/releases).
 
