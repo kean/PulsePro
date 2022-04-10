@@ -37,8 +37,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     private var latestSessionId: String?
     private var cancellables = [AnyCancellable]()
     
-    private(set) var isRefreshingBasedOnFilters = false
-
     init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModel) {
         self.store = store
         self.toolbar = toolbar
@@ -97,9 +95,7 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     }
     
     private func refreshNow() {
-        isRefreshingBasedOnFilters = true
         refresh(filterTerm: filterTerm)
-        isRefreshingBasedOnFilters = false
     }
     
     func onAppear() {
