@@ -110,7 +110,6 @@
 		0C699BEE27DE8B1100F502C3 /* UXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8D27DE8B1100F502C3 /* UXKit.swift */; };
 		0C699BEF27DE8B1100F502C3 /* JSONPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8F27DE8B1100F502C3 /* JSONPrinter.swift */; };
 		0C699BF027DE8B1100F502C3 /* LoggerSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9027DE8B1100F502C3 /* LoggerSync.swift */; };
-		0C699BF127DE8B1100F502C3 /* ConsoleSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9127DE8B1100F502C3 /* ConsoleSearchService.swift */; };
 		0C699BF227DE8B1100F502C3 /* ManagedObjectTextSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9227DE8B1100F502C3 /* ManagedObjectTextSearch.swift */; };
 		0C699BF327DE8B1100F502C3 /* NetworkLoggerSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9327DE8B1100F502C3 /* NetworkLoggerSummary.swift */; };
 		0C699BF427DE8B1100F502C3 /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B9427DE8B1100F502C3 /* AppContext.swift */; };
@@ -131,12 +130,12 @@
 		0CC93A5B26FF9FDA00F6C378 /* NetworkInspectorHeadersViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC93A5A26FF9FDA00F6C378 /* NetworkInspectorHeadersViewPro.swift */; };
 		0CC93A5D26FFA76F00F6C378 /* KeyValueViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC93A5C26FFA76F00F6C378 /* KeyValueViewPro.swift */; };
 		0CD48DCE26FFD0D500C35185 /* ConsoleFiltersPanelPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD48DCD26FFD0D500C35185 /* ConsoleFiltersPanelPro.swift */; };
-		0CD48DD026FFEFAD00C35185 /* ConsoleSearchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD48DCF26FFEFAD00C35185 /* ConsoleSearchCriteria.swift */; };
 		0CD8645A26F8FB9C0021D549 /* RemoteLoggerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD8645926F8FB9C0021D549 /* RemoteLoggerClient.swift */; };
 		0CD8645F26F906180021D549 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD8645E26F906180021D549 /* Helpers.swift */; };
 		0CD8646626F921310021D549 /* RemoteLoggerClientStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD8646526F921310021D549 /* RemoteLoggerClientStatusView.swift */; };
 		0CE31C0E2730AD46004A84EB /* Align.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE31C0D2730AD46004A84EB /* Align.swift */; };
 		0CE63EAA2729D09D00BA278D /* SiderbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE63EA92729D09D00BA278D /* SiderbarViewController.swift */; };
+		0CEC19DB28026E3400F43D47 /* ConsoleSearchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC19DA28026E3400F43D47 /* ConsoleSearchCriteria.swift */; };
 		0CEC579A27123F24001DD5C9 /* StandaloneJSONViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC579927123F24001DD5C9 /* StandaloneJSONViewer.swift */; };
 		0CF6E6392717179B00CC3B30 /* TextSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6E6382717179B00CC3B30 /* TextSearchViewModel.swift */; };
 		0CF6E63B27171B4C00CC3B30 /* TextSearchToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6E63A27171B4C00CC3B30 /* TextSearchToolbar.swift */; };
@@ -264,7 +263,6 @@
 		0C699B8D27DE8B1100F502C3 /* UXKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXKit.swift; sourceTree = "<group>"; };
 		0C699B8F27DE8B1100F502C3 /* JSONPrinter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPrinter.swift; sourceTree = "<group>"; };
 		0C699B9027DE8B1100F502C3 /* LoggerSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerSync.swift; sourceTree = "<group>"; };
-		0C699B9127DE8B1100F502C3 /* ConsoleSearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleSearchService.swift; sourceTree = "<group>"; };
 		0C699B9227DE8B1100F502C3 /* ManagedObjectTextSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectTextSearch.swift; sourceTree = "<group>"; };
 		0C699B9327DE8B1100F502C3 /* NetworkLoggerSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerSummary.swift; sourceTree = "<group>"; };
 		0C699B9427DE8B1100F502C3 /* AppContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
@@ -287,13 +285,13 @@
 		0CD2A4AB25D4A2E70087E9E3 /* MockStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
 		0CD2A4AC25D4A2E70087E9E3 /* MockDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
 		0CD48DCD26FFD0D500C35185 /* ConsoleFiltersPanelPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleFiltersPanelPro.swift; sourceTree = "<group>"; };
-		0CD48DCF26FFEFAD00C35185 /* ConsoleSearchCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleSearchCriteria.swift; sourceTree = "<group>"; };
 		0CD8645926F8FB9C0021D549 /* RemoteLoggerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoggerClient.swift; sourceTree = "<group>"; };
 		0CD8645E26F906180021D549 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		0CD8646526F921310021D549 /* RemoteLoggerClientStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoggerClientStatusView.swift; sourceTree = "<group>"; };
 		0CE31C0D2730AD46004A84EB /* Align.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Align.swift; sourceTree = "<group>"; };
 		0CE3DB06260FB43D00521113 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		0CE63EA92729D09D00BA278D /* SiderbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiderbarViewController.swift; sourceTree = "<group>"; };
+		0CEC19DA28026E3400F43D47 /* ConsoleSearchCriteria.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleSearchCriteria.swift; sourceTree = "<group>"; };
 		0CEC579927123F24001DD5C9 /* StandaloneJSONViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneJSONViewer.swift; sourceTree = "<group>"; };
 		0CF6E6382717179B00CC3B30 /* TextSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchViewModel.swift; sourceTree = "<group>"; };
 		0CF6E63A27171B4C00CC3B30 /* TextSearchToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchToolbar.swift; sourceTree = "<group>"; };
@@ -368,7 +366,6 @@
 				0C17B217270517CD00784EDC /* NetworkFiltersPanelPro.swift */,
 				0C17B2152705179B00784EDC /* FiltersForm.swift */,
 				0C17B2122705037D00784EDC /* NetworkSearchCriteria.swift */,
-				0CD48DCF26FFEFAD00C35185 /* ConsoleSearchCriteria.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -538,6 +535,7 @@
 		0C699B4527DE8B1100F502C3 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0CEC19D928026E3400F43D47 /* Filters */,
 				0C699B4627DE8B1100F502C3 /* Pins */,
 				0C699B4927DE8B1100F502C3 /* Settings */,
 				0C699B4E27DE8B1100F502C3 /* MessageDetails */,
@@ -699,7 +697,6 @@
 			children = (
 				0C699B8F27DE8B1100F502C3 /* JSONPrinter.swift */,
 				0C699B9027DE8B1100F502C3 /* LoggerSync.swift */,
-				0C699B9127DE8B1100F502C3 /* ConsoleSearchService.swift */,
 				0C699B9227DE8B1100F502C3 /* ManagedObjectTextSearch.swift */,
 				0C699B9327DE8B1100F502C3 /* NetworkLoggerSummary.swift */,
 				0C699B9427DE8B1100F502C3 /* AppContext.swift */,
@@ -748,6 +745,14 @@
 				0CE31C0D2730AD46004A84EB /* Align.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		0CEC19D928026E3400F43D47 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				0CEC19DA28026E3400F43D47 /* ConsoleSearchCriteria.swift */,
+			);
+			path = Filters;
 			sourceTree = "<group>";
 		};
 		0CFF9BD725D619820069DB6A /* Resources */ = {
@@ -868,7 +873,6 @@
 				0C699BCC27DE8B1100F502C3 /* ConsoleView-watchos.swift in Sources */,
 				0C699BBF27DE8B1100F502C3 /* NetworkInspectorTransferInfoView.swift in Sources */,
 				0C32EA3926FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift in Sources */,
-				0C699BF127DE8B1100F502C3 /* ConsoleSearchService.swift in Sources */,
 				0C699BE527DE8B1100F502C3 /* RichTextView.swift in Sources */,
 				0C699BD227DE8B1100F502C3 /* ConsoleMessageListView-macos.swift in Sources */,
 				0C699BB127DE8B1100F502C3 /* MockStore.swift in Sources */,
@@ -931,7 +935,6 @@
 				0C7E56CE28021C9800D7A8DF /* RemoteLoggerProtocol.swift in Sources */,
 				0C699BBA27DE8B1100F502C3 /* ConsoleMessageDetailsRouter.swift in Sources */,
 				0C85D60E2701428200211C4C /* RichTextViewPro.swift in Sources */,
-				0CD48DD026FFEFAD00C35185 /* ConsoleSearchCriteria.swift in Sources */,
 				0C699BC327DE8B1100F502C3 /* NetworkInspectorHeadersView.swift in Sources */,
 				0C17B21A27054EDA00784EDC /* Cache.swift in Sources */,
 				0C699BF527DE8B1100F502C3 /* ShareItems.swift in Sources */,
@@ -956,6 +959,7 @@
 				0C699BB427DE8B1100F502C3 /* PinsView-ios.swift in Sources */,
 				0C515EBB26FD288500D415F6 /* Settings.swift in Sources */,
 				0C699BF227DE8B1100F502C3 /* ManagedObjectTextSearch.swift in Sources */,
+				0CEC19DB28026E3400F43D47 /* ConsoleSearchCriteria.swift in Sources */,
 				0C2F854D26FE574B00962464 /* TableViewCells.swift in Sources */,
 				0C699BE627DE8B1100F502C3 /* TimingView.swift in Sources */,
 				0C699BD127DE8B1100F502C3 /* ConsoleNetworkRequestViewModel.swift in Sources */,

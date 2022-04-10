@@ -251,7 +251,7 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
 }
 
 final class ConsoleSearchCriteriaViewModel: ObservableObject {
-    @Published var criteria: ConsoleSearchCriteriaPro = .default
+    @Published var criteria: ConsoleSearchCriteria = .default
     @Published var filters: [ConsoleSearchFilter] = []
     
     @Published private(set) var allLabels: [String] = []
