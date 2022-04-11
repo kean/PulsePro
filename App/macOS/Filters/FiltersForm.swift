@@ -25,7 +25,9 @@ struct FilterSectionHeader: View {
             Spacer()
             Button(action: reset) {
                 Image(systemName: "arrow.uturn.left")
-            }.foregroundColor(.secondary)
+            }
+            .foregroundColor(.secondary)
+            .disabled(isDefault)
             Button(action: { isEnabled.toggle() }) {
                 Image(systemName: isEnabled ? "checkmark.circle.fill" : "circle")
                     .foregroundColor(isDefault ? .secondary : .accentColor)
