@@ -59,3 +59,8 @@ extension URL {
         return map
     }
 }
+
+struct ExternalEvents {
+    /// - warning: Don't use it, it's used internally.
+    static var open: AnyView?
+}

@@ -75,3 +75,8 @@ protocol TextSearchProtocol {
 extension ManagedObjectTextSearch: TextSearchProtocol {
     var isEmpty: Bool { objects.isEmpty }
 }
+
+struct ConsoleMatch {
+    let index: Int
+    let objectID: NSManagedObjectID
+}

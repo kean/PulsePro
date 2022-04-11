@@ -279,7 +279,7 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
     // MARK: Reload
     
     func process(update: FetchedObjectsUpdate) {
-        let selectedMessageID = (selectedRow == -1 || model.count <= selectedRow) ? nil : model[selectedRow].id
+        let selectedMessageID = (selectedRow == -1 || model.count <= selectedRow) ? nil : model[selectedRow].objectID
         
         switch update {
         case .append(let range):
@@ -304,7 +304,7 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
         if let selectedObjectID = selectedMessageID {
             let range = rows(in: visibleRect)
             for index in range.lowerBound..<range.upperBound {
-                if model[index].id == selectedObjectID {
+                if model[index].objectID == selectedObjectID {
                     selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
                     break
                 }

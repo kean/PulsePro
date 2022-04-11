@@ -48,7 +48,6 @@
 		0C64DC1826F4D0A1002BC061 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C64DC1726F4D0A1002BC061 /* AppDelegate.swift */; };
 		0C699BB127DE8B1100F502C3 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B4327DE8B1100F502C3 /* MockStore.swift */; };
 		0C699BB227DE8B1100F502C3 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B4427DE8B1100F502C3 /* MockDataTask.swift */; };
-		0C699BB327DE8B1100F502C3 /* PinsView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B4727DE8B1100F502C3 /* PinsView-macos.swift */; };
 		0C699BB427DE8B1100F502C3 /* PinsView-ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B4827DE8B1100F502C3 /* PinsView-ios.swift */; };
 		0C699BB527DE8B1100F502C3 /* RemoteLoggerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B4A27DE8B1100F502C3 /* RemoteLoggerSettingsView.swift */; };
 		0C699BB627DE8B1100F502C3 /* SettingsView-ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B4B27DE8B1100F502C3 /* SettingsView-ios.swift */; };
@@ -68,19 +67,13 @@
 		0C699BC427DE8B1100F502C3 /* NetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B5D27DE8B1100F502C3 /* NetworkView.swift */; };
 		0C699BC527DE8B1100F502C3 /* ConsoleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B5F27DE8B1100F502C3 /* ConsoleConfiguration.swift */; };
 		0C699BC627DE8B1100F502C3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6027DE8B1100F502C3 /* MainViewModel.swift */; };
-		0C699BC727DE8B1100F502C3 /* MainView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6127DE8B1100F502C3 /* MainView-macos.swift */; };
 		0C699BC827DE8B1100F502C3 /* MainView-ios-tvos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6227DE8B1100F502C3 /* MainView-ios-tvos.swift */; };
 		0C699BC927DE8B1100F502C3 /* ConsoleMessagesForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6427DE8B1100F502C3 /* ConsoleMessagesForEach.swift */; };
 		0C699BCA27DE8B1100F502C3 /* ConsoleView-ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6527DE8B1100F502C3 /* ConsoleView-ios.swift */; };
-		0C699BCB27DE8B1100F502C3 /* ConsoleFiltersView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6627DE8B1100F502C3 /* ConsoleFiltersView-macos.swift */; };
 		0C699BCC27DE8B1100F502C3 /* ConsoleView-watchos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6727DE8B1100F502C3 /* ConsoleView-watchos.swift */; };
 		0C699BCD27DE8B1100F502C3 /* ConsoleView-tvos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6827DE8B1100F502C3 /* ConsoleView-tvos.swift */; };
-		0C699BCE27DE8B1100F502C3 /* ConsoleView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6927DE8B1100F502C3 /* ConsoleView-macos.swift */; };
 		0C699BCF27DE8B1100F502C3 /* ConsoleMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6A27DE8B1100F502C3 /* ConsoleMessageViewModel.swift */; };
-		0C699BD027DE8B1100F502C3 /* ConsoleMessageView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6B27DE8B1100F502C3 /* ConsoleMessageView-macos.swift */; };
 		0C699BD127DE8B1100F502C3 /* ConsoleNetworkRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6C27DE8B1100F502C3 /* ConsoleNetworkRequestViewModel.swift */; };
-		0C699BD227DE8B1100F502C3 /* ConsoleMessageListView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6D27DE8B1100F502C3 /* ConsoleMessageListView-macos.swift */; };
-		0C699BD327DE8B1100F502C3 /* ConsoleNetworkRequestView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6E27DE8B1100F502C3 /* ConsoleNetworkRequestView-macos.swift */; };
 		0C699BD427DE8B1100F502C3 /* ConsoleFiltersView-ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6F27DE8B1100F502C3 /* ConsoleFiltersView-ios.swift */; };
 		0C699BD527DE8B1100F502C3 /* ConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7027DE8B1100F502C3 /* ConsoleMessageView.swift */; };
 		0C699BD627DE8B1100F502C3 /* ConsoleNetworkRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7127DE8B1100F502C3 /* ConsoleNetworkRequestView.swift */; };
@@ -102,9 +95,7 @@
 		0C699BE627DE8B1100F502C3 /* TimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8427DE8B1100F502C3 /* TimingView.swift */; };
 		0C699BE727DE8B1100F502C3 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8527DE8B1100F502C3 /* Border.swift */; };
 		0C699BE827DE8B1100F502C3 /* KeyValueSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8627DE8B1100F502C3 /* KeyValueSectionView.swift */; };
-		0C699BE927DE8B1100F502C3 /* DatePickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8727DE8B1100F502C3 /* DatePickerButton.swift */; };
 		0C699BEA27DE8B1100F502C3 /* PinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8827DE8B1100F502C3 /* PinButton.swift */; };
-		0C699BEB27DE8B1100F502C3 /* NotList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8927DE8B1100F502C3 /* NotList.swift */; };
 		0C699BEC27DE8B1100F502C3 /* ContextMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8A27DE8B1100F502C3 /* ContextMenus.swift */; };
 		0C699BED27DE8B1100F502C3 /* MultiSelectionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8B27DE8B1100F502C3 /* MultiSelectionPicker.swift */; };
 		0C699BEE27DE8B1100F502C3 /* UXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B8D27DE8B1100F502C3 /* UXKit.swift */; };
@@ -202,7 +193,6 @@
 		0C64DC1726F4D0A1002BC061 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C699B4327DE8B1100F502C3 /* MockStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
 		0C699B4427DE8B1100F502C3 /* MockDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
-		0C699B4727DE8B1100F502C3 /* PinsView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinsView-macos.swift"; sourceTree = "<group>"; };
 		0C699B4827DE8B1100F502C3 /* PinsView-ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinsView-ios.swift"; sourceTree = "<group>"; };
 		0C699B4A27DE8B1100F502C3 /* RemoteLoggerSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteLoggerSettingsView.swift; sourceTree = "<group>"; };
 		0C699B4B27DE8B1100F502C3 /* SettingsView-ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsView-ios.swift"; sourceTree = "<group>"; };
@@ -222,19 +212,13 @@
 		0C699B5D27DE8B1100F502C3 /* NetworkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkView.swift; sourceTree = "<group>"; };
 		0C699B5F27DE8B1100F502C3 /* ConsoleConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleConfiguration.swift; sourceTree = "<group>"; };
 		0C699B6027DE8B1100F502C3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		0C699B6127DE8B1100F502C3 /* MainView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainView-macos.swift"; sourceTree = "<group>"; };
 		0C699B6227DE8B1100F502C3 /* MainView-ios-tvos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainView-ios-tvos.swift"; sourceTree = "<group>"; };
 		0C699B6427DE8B1100F502C3 /* ConsoleMessagesForEach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleMessagesForEach.swift; sourceTree = "<group>"; };
 		0C699B6527DE8B1100F502C3 /* ConsoleView-ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleView-ios.swift"; sourceTree = "<group>"; };
-		0C699B6627DE8B1100F502C3 /* ConsoleFiltersView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleFiltersView-macos.swift"; sourceTree = "<group>"; };
 		0C699B6727DE8B1100F502C3 /* ConsoleView-watchos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleView-watchos.swift"; sourceTree = "<group>"; };
 		0C699B6827DE8B1100F502C3 /* ConsoleView-tvos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleView-tvos.swift"; sourceTree = "<group>"; };
-		0C699B6927DE8B1100F502C3 /* ConsoleView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleView-macos.swift"; sourceTree = "<group>"; };
 		0C699B6A27DE8B1100F502C3 /* ConsoleMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleMessageViewModel.swift; sourceTree = "<group>"; };
-		0C699B6B27DE8B1100F502C3 /* ConsoleMessageView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleMessageView-macos.swift"; sourceTree = "<group>"; };
 		0C699B6C27DE8B1100F502C3 /* ConsoleNetworkRequestViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleNetworkRequestViewModel.swift; sourceTree = "<group>"; };
-		0C699B6D27DE8B1100F502C3 /* ConsoleMessageListView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleMessageListView-macos.swift"; sourceTree = "<group>"; };
-		0C699B6E27DE8B1100F502C3 /* ConsoleNetworkRequestView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleNetworkRequestView-macos.swift"; sourceTree = "<group>"; };
 		0C699B6F27DE8B1100F502C3 /* ConsoleFiltersView-ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleFiltersView-ios.swift"; sourceTree = "<group>"; };
 		0C699B7027DE8B1100F502C3 /* ConsoleMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleMessageView.swift; sourceTree = "<group>"; };
 		0C699B7127DE8B1100F502C3 /* ConsoleNetworkRequestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleNetworkRequestView.swift; sourceTree = "<group>"; };
@@ -256,9 +240,7 @@
 		0C699B8427DE8B1100F502C3 /* TimingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingView.swift; sourceTree = "<group>"; };
 		0C699B8527DE8B1100F502C3 /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		0C699B8627DE8B1100F502C3 /* KeyValueSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueSectionView.swift; sourceTree = "<group>"; };
-		0C699B8727DE8B1100F502C3 /* DatePickerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerButton.swift; sourceTree = "<group>"; };
 		0C699B8827DE8B1100F502C3 /* PinButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinButton.swift; sourceTree = "<group>"; };
-		0C699B8927DE8B1100F502C3 /* NotList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotList.swift; sourceTree = "<group>"; };
 		0C699B8A27DE8B1100F502C3 /* ContextMenus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextMenus.swift; sourceTree = "<group>"; };
 		0C699B8B27DE8B1100F502C3 /* MultiSelectionPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSelectionPicker.swift; sourceTree = "<group>"; };
 		0C699B8D27DE8B1100F502C3 /* UXKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXKit.swift; sourceTree = "<group>"; };
@@ -553,7 +535,6 @@
 		0C699B4627DE8B1100F502C3 /* Pins */ = {
 			isa = PBXGroup;
 			children = (
-				0C699B4727DE8B1100F502C3 /* PinsView-macos.swift */,
 				0C699B4827DE8B1100F502C3 /* PinsView-ios.swift */,
 			);
 			path = Pins;
@@ -615,7 +596,6 @@
 			children = (
 				0C699B5F27DE8B1100F502C3 /* ConsoleConfiguration.swift */,
 				0C699B6027DE8B1100F502C3 /* MainViewModel.swift */,
-				0C699B6127DE8B1100F502C3 /* MainView-macos.swift */,
 				0C699B6227DE8B1100F502C3 /* MainView-ios-tvos.swift */,
 			);
 			path = Main;
@@ -626,15 +606,10 @@
 			children = (
 				0C699B6427DE8B1100F502C3 /* ConsoleMessagesForEach.swift */,
 				0C699B6527DE8B1100F502C3 /* ConsoleView-ios.swift */,
-				0C699B6627DE8B1100F502C3 /* ConsoleFiltersView-macos.swift */,
 				0C699B6727DE8B1100F502C3 /* ConsoleView-watchos.swift */,
 				0C699B6827DE8B1100F502C3 /* ConsoleView-tvos.swift */,
-				0C699B6927DE8B1100F502C3 /* ConsoleView-macos.swift */,
 				0C699B6A27DE8B1100F502C3 /* ConsoleMessageViewModel.swift */,
-				0C699B6B27DE8B1100F502C3 /* ConsoleMessageView-macos.swift */,
 				0C699B6C27DE8B1100F502C3 /* ConsoleNetworkRequestViewModel.swift */,
-				0C699B6D27DE8B1100F502C3 /* ConsoleMessageListView-macos.swift */,
-				0C699B6E27DE8B1100F502C3 /* ConsoleNetworkRequestView-macos.swift */,
 				0C699B6F27DE8B1100F502C3 /* ConsoleFiltersView-ios.swift */,
 				0C699B7027DE8B1100F502C3 /* ConsoleMessageView.swift */,
 				0C699B7127DE8B1100F502C3 /* ConsoleNetworkRequestView.swift */,
@@ -677,9 +652,7 @@
 				0C699B8427DE8B1100F502C3 /* TimingView.swift */,
 				0C699B8527DE8B1100F502C3 /* Border.swift */,
 				0C699B8627DE8B1100F502C3 /* KeyValueSectionView.swift */,
-				0C699B8727DE8B1100F502C3 /* DatePickerButton.swift */,
 				0C699B8827DE8B1100F502C3 /* PinButton.swift */,
-				0C699B8927DE8B1100F502C3 /* NotList.swift */,
 				0C699B8A27DE8B1100F502C3 /* ContextMenus.swift */,
 				0C699B8B27DE8B1100F502C3 /* MultiSelectionPicker.swift */,
 			);
@@ -847,7 +820,6 @@
 				0C614B6A2726087E00F6978D /* ConsoleContainerView.swift in Sources */,
 				0C82DFA826F2D41D00700C4C /* RemoteLoggerServer.swift in Sources */,
 				0C699BE827DE8B1100F502C3 /* KeyValueSectionView.swift in Sources */,
-				0C699BC727DE8B1100F502C3 /* MainView-macos.swift in Sources */,
 				0C699BB727DE8B1100F502C3 /* StoreDetailsView.swift in Sources */,
 				0C699BED27DE8B1100F502C3 /* MultiSelectionPicker.swift in Sources */,
 				0C43687F270D312A0088AC3E /* NewJSONPrinter.swift in Sources */,
@@ -866,7 +838,6 @@
 				0C699BD927DE8B1100F502C3 /* SwiftUIExtensions.swift in Sources */,
 				0CC93A5B26FF9FDA00F6C378 /* NetworkInspectorHeadersViewPro.swift in Sources */,
 				0C2F854F26FE693200962464 /* ConsoleTableViewPro.swift in Sources */,
-				0C699BE927DE8B1100F502C3 /* DatePickerButton.swift in Sources */,
 				0C35311B270E35FF007148FD /* JSONTextView.swift in Sources */,
 				0C699BD527DE8B1100F502C3 /* ConsoleMessageView.swift in Sources */,
 				0CEC579A27123F24001DD5C9 /* StandaloneJSONViewer.swift in Sources */,
@@ -877,7 +848,6 @@
 				0C699BBF27DE8B1100F502C3 /* NetworkInspectorTransferInfoView.swift in Sources */,
 				0C32EA3926FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift in Sources */,
 				0C699BE527DE8B1100F502C3 /* RichTextView.swift in Sources */,
-				0C699BD227DE8B1100F502C3 /* ConsoleMessageListView-macos.swift in Sources */,
 				0C699BB127DE8B1100F502C3 /* MockStore.swift in Sources */,
 				0C515EB126FD10C100D415F6 /* RouterView.swift in Sources */,
 				0C97EA2D26F3940E00BFA8E3 /* LoaderView.swift in Sources */,
@@ -887,7 +857,6 @@
 				0C17B211270502C100784EDC /* NetworkMessagesTextSearch.swift in Sources */,
 				0C32EBD126FCB83A000EB5E6 /* MainViewModelPro.swift in Sources */,
 				0C0B2CD32738161400DB711E /* ManagedObjectsList.swift in Sources */,
-				0C699BD327DE8B1100F502C3 /* ConsoleNetworkRequestView-macos.swift in Sources */,
 				0C699BEE27DE8B1100F502C3 /* UXKit.swift in Sources */,
 				0CB9A085271FA96E00CA99F3 /* TableViewExtensions.swift in Sources */,
 				0C699BE327DE8B1100F502C3 /* ShareView.swift in Sources */,
@@ -899,7 +868,6 @@
 				0C2F854726FE316000962464 /* ConsoleMainViewModel.swift in Sources */,
 				0CC42A5F2708B0120038C89B /* ConsoleNetworkRequestContextMenuViewPro.swift in Sources */,
 				0C23EFC827012CD700F81F0D /* LineNumbers.swift in Sources */,
-				0C699BEB27DE8B1100F502C3 /* NotList.swift in Sources */,
 				0C25ACD627068FF4000E6DD5 /* PinsService.swift in Sources */,
 				0C699BF427DE8B1100F502C3 /* AppContext.swift in Sources */,
 				0CC93A5626FF952000F6C378 /* MessageDetailsViewPro.swift in Sources */,
@@ -920,9 +888,7 @@
 				0C699BE227DE8B1100F502C3 /* ToastView.swift in Sources */,
 				0CF6E6392717179B00CC3B30 /* TextSearchViewModel.swift in Sources */,
 				0C25ACD82706A597000E6DD5 /* PinScrollerButton.swift in Sources */,
-				0C699BD027DE8B1100F502C3 /* ConsoleMessageView-macos.swift in Sources */,
 				0C699BE027DE8B1100F502C3 /* BadgeView.swift in Sources */,
-				0C699BCE27DE8B1100F502C3 /* ConsoleView-macos.swift in Sources */,
 				0C699BB827DE8B1100F502C3 /* SettingsView-tvos.swift in Sources */,
 				0CF6E63B27171B4C00CC3B30 /* TextSearchToolbar.swift in Sources */,
 				0C699BB527DE8B1100F502C3 /* RemoteLoggerSettingsView.swift in Sources */,
@@ -957,8 +923,6 @@
 				0C699BC127DE8B1100F502C3 /* NetworkInspectorMetricsView.swift in Sources */,
 				0CD48DCE26FFD0D500C35185 /* ConsoleFiltersPanelPro.swift in Sources */,
 				0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */,
-				0C699BCB27DE8B1100F502C3 /* ConsoleFiltersView-macos.swift in Sources */,
-				0C699BB327DE8B1100F502C3 /* PinsView-macos.swift in Sources */,
 				0C699BCF27DE8B1100F502C3 /* ConsoleMessageViewModel.swift in Sources */,
 				0C699BB427DE8B1100F502C3 /* PinsView-ios.swift in Sources */,
 				0C515EBB26FD288500D415F6 /* Settings.swift in Sources */,
