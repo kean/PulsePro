@@ -14,7 +14,6 @@
 		0C17B20C2704E9AE00784EDC /* ConsoleDetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17B20B2704E9AE00784EDC /* ConsoleDetailsRouter.swift */; };
 		0C17B20F2705021A00784EDC /* NetworkMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17B20E2705021A00784EDC /* NetworkMainViewModel.swift */; };
 		0C17B211270502C100784EDC /* NetworkMessagesTextSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17B210270502C100784EDC /* NetworkMessagesTextSearch.swift */; };
-		0C17B2132705037D00784EDC /* NetworkSearchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17B2122705037D00784EDC /* NetworkSearchCriteria.swift */; };
 		0C17B2162705179B00784EDC /* FiltersForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17B2152705179B00784EDC /* FiltersForm.swift */; };
 		0C17B218270517CD00784EDC /* NetworkFiltersPanelPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17B217270517CD00784EDC /* NetworkFiltersPanelPro.swift */; };
 		0C17B21A27054EDA00784EDC /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17B21927054EDA00784EDC /* Cache.swift */; };
@@ -44,6 +43,8 @@
 		0C57AD9F245F0F7F005B3400 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C57AD66245F0F38005B3400 /* Assets.xcassets */; };
 		0C57ADA4245F0F91005B3400 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57AD6E245F0F38005B3400 /* App.swift */; };
 		0C57ADC2245F1441005B3400 /* AppWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */; };
+		0C60229D280C8ACA003B1E83 /* NetworkSearchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C60229C280C8ACA003B1E83 /* NetworkSearchCriteria.swift */; };
+		0C60229F280C8B0F003B1E83 /* NetworkSearchCriteriaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C60229E280C8B0F003B1E83 /* NetworkSearchCriteriaViewModel.swift */; };
 		0C614B6A2726087E00F6978D /* ConsoleContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C614B692726087E00F6978D /* ConsoleContainerView.swift */; };
 		0C64DC1826F4D0A1002BC061 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C64DC1726F4D0A1002BC061 /* AppDelegate.swift */; };
 		0C699BB127DE8B1100F502C3 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B4327DE8B1100F502C3 /* MockStore.swift */; };
@@ -155,7 +156,6 @@
 		0C17B20B2704E9AE00784EDC /* ConsoleDetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDetailsRouter.swift; sourceTree = "<group>"; };
 		0C17B20E2705021A00784EDC /* NetworkMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMainViewModel.swift; sourceTree = "<group>"; };
 		0C17B210270502C100784EDC /* NetworkMessagesTextSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMessagesTextSearch.swift; sourceTree = "<group>"; };
-		0C17B2122705037D00784EDC /* NetworkSearchCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSearchCriteria.swift; sourceTree = "<group>"; };
 		0C17B2152705179B00784EDC /* FiltersForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersForm.swift; sourceTree = "<group>"; };
 		0C17B217270517CD00784EDC /* NetworkFiltersPanelPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkFiltersPanelPro.swift; sourceTree = "<group>"; };
 		0C17B21927054EDA00784EDC /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -188,6 +188,8 @@
 		0C57AD6F245F0F38005B3400 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C57AD8C245F0F55005B3400 /* Pulse Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pulse Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C57ADC1245F1441005B3400 /* AppWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWelcomeView.swift; sourceTree = "<group>"; };
+		0C60229C280C8ACA003B1E83 /* NetworkSearchCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSearchCriteria.swift; sourceTree = "<group>"; };
+		0C60229E280C8B0F003B1E83 /* NetworkSearchCriteriaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSearchCriteriaViewModel.swift; sourceTree = "<group>"; };
 		0C614B692726087E00F6978D /* ConsoleContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleContainerView.swift; sourceTree = "<group>"; };
 		0C64DC1726F4D0A1002BC061 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C699B4327DE8B1100F502C3 /* MockStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
@@ -347,7 +349,6 @@
 				0CD48DCD26FFD0D500C35185 /* ConsoleFiltersPanelPro.swift */,
 				0C17B217270517CD00784EDC /* NetworkFiltersPanelPro.swift */,
 				0C17B2152705179B00784EDC /* FiltersForm.swift */,
-				0C17B2122705037D00784EDC /* NetworkSearchCriteria.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -724,6 +725,8 @@
 			children = (
 				0CEC19DA28026E3400F43D47 /* ConsoleSearchCriteria.swift */,
 				0CA503F0280344E30028B4B8 /* ConsoleSearchCriteriaViewModel.swift */,
+				0C60229C280C8ACA003B1E83 /* NetworkSearchCriteria.swift */,
+				0C60229E280C8B0F003B1E83 /* NetworkSearchCriteriaViewModel.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -882,6 +885,7 @@
 				0C699BE127DE8B1100F502C3 /* PlaceholderView.swift in Sources */,
 				0C699BD827DE8B1100F502C3 /* ConsoleQuickFiltersView.swift in Sources */,
 				0C699BE227DE8B1100F502C3 /* ToastView.swift in Sources */,
+				0C60229F280C8B0F003B1E83 /* NetworkSearchCriteriaViewModel.swift in Sources */,
 				0CF6E6392717179B00CC3B30 /* TextSearchViewModel.swift in Sources */,
 				0C25ACD82706A597000E6DD5 /* PinScrollerButton.swift in Sources */,
 				0C699BE027DE8B1100F502C3 /* BadgeView.swift in Sources */,
@@ -891,6 +895,7 @@
 				0C699BCD27DE8B1100F502C3 /* ConsoleView-tvos.swift in Sources */,
 				0CB2AD2B2706534B00DEBF29 /* Attributed.swift in Sources */,
 				0C699BEF27DE8B1100F502C3 /* JSONPrinter.swift in Sources */,
+				0C60229D280C8ACA003B1E83 /* NetworkSearchCriteria.swift in Sources */,
 				0CE31C0E2730AD46004A84EB /* Align.swift in Sources */,
 				0C699BDC27DE8B1100F502C3 /* Foundation+Extensions.swift in Sources */,
 				0CC93A5D26FFA76F00F6C378 /* KeyValueViewPro.swift in Sources */,
@@ -914,7 +919,6 @@
 				0C515EB626FD215100D415F6 /* WindowAccessor.swift in Sources */,
 				0C17B2162705179B00784EDC /* FiltersForm.swift in Sources */,
 				0C699BBE27DE8B1100F502C3 /* NetworkInspectorMetricsDetailsView.swift in Sources */,
-				0C17B2132705037D00784EDC /* NetworkSearchCriteria.swift in Sources */,
 				0C64DC1826F4D0A1002BC061 /* AppDelegate.swift in Sources */,
 				0C699BC127DE8B1100F502C3 /* NetworkInspectorMetricsView.swift in Sources */,
 				0CD48DCE26FFD0D500C35185 /* ConsoleFiltersPanelPro.swift in Sources */,

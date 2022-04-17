@@ -8,7 +8,7 @@ import PulseCore
 import Combine
 
 struct NetworkFiltersPanelPro: View {
-    @ObservedObject var model: NetworkFiltersViewModelPro
+    @ObservedObject var model: NetworkSearchCriteriaViewModel
 
     @AppStorage("networkFilterIsParametersExpanded") private var isParametersExpanded = true
     @AppStorage("networkFilterIsStatusCodeExpanded") private var isStatusCodeExpanded = true
