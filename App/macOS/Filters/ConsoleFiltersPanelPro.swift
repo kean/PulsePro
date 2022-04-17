@@ -129,7 +129,7 @@ struct ConsoleFiltersPanelPro: View {
 
             Filters.toggle("Start Date", isOn: $model.criteria.dates.isStartDateEnabled)
             HStack(spacing: 0) {
-                DatePicker("", selection: $model.bindingStartDate)
+                DatePicker("", selection: model.bindingStartDate)
                     .disabled(!model.criteria.dates.isStartDateEnabled)
                     .fixedSize()
                 Spacer()
@@ -137,7 +137,7 @@ struct ConsoleFiltersPanelPro: View {
 
             Filters.toggle("End Date", isOn: $model.criteria.dates.isEndDateEnabled)
             HStack(spacing: 0) {
-                DatePicker("", selection: $model.bindingEndDate)
+                DatePicker("", selection: model.bindingEndDate)
                     .disabled(!model.criteria.dates.isEndDateEnabled)
                     .fixedSize()
                 Spacer()
