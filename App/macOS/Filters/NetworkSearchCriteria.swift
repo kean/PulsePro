@@ -29,18 +29,7 @@ struct NetworkSearchCriteria: Hashable {
         static let `default` = StatusCodeFilter()
     }
     
-    struct DatesFilter: Hashable {
-        var isEnabled = true
-        
-        var isCurrentSessionOnly = false
-
-        var isStartDateEnabled = false
-        var startDate: Date?
-        var isEndDateEnabled = false
-        var endDate: Date?
-        
-        static let `default` = DatesFilter()
-    }
+    typealias DatesFilter = ConsoleSearchCriteria.DatesFilter
     
     struct HostFilter: Hashable {
         var isEnabled = true

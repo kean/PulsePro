@@ -125,18 +125,10 @@ struct NetworkFiltersPanelPro: View {
             }
             HStack {
                 Button("Recent") {
-                    var dates = model.criteria.dates
-                    dates.startDate = Date().addingTimeInterval(-1800)
-                    dates.isStartDateEnabled = true
-                    dates.isEndDateEnabled = false
-                    model.criteria.dates = dates
+                    model.criteria.dates = .recent
                 }
                 Button("Today") {
-                    var dates = model.criteria.dates
-                    dates.startDate = Calendar.current.startOfDay(for: Date())
-                    dates.isStartDateEnabled = true
-                    dates.isEndDateEnabled = false
-                    model.criteria.dates = dates
+                    model.criteria.dates = .today
                 }
                 Spacer()
             }.padding(.leading, 13)

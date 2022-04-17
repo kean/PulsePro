@@ -64,15 +64,7 @@ struct ConsoleFiltersPanelPro: View {
         DisclosureGroup(isExpanded: $isLevelsSectionExpanded, content: {
             HStack(spacing:0) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Toggle("All", isOn: Binding(get: {
-                        model.criteria.logLevels.levels.count == LoggerStore.Level.allCases.count
-                    }, set: { isOn in
-                        if isOn {
-                            model.criteria.logLevels.levels = Set(LoggerStore.Level.allCases)
-                        } else {
-                            model.criteria.logLevels.levels = Set()
-                        }
-                    }))
+                    Toggle("All", isOn: model.bindingForTogglingAllLevels)
                         .accentColor(Color.secondary)
                         .foregroundColor(Color.secondary)
                     
@@ -100,15 +92,7 @@ struct ConsoleFiltersPanelPro: View {
         VStack(alignment: .leading) {
             Spacer()
             ForEach(levels, id: \.self) { item in
-                Toggle(item.rawValue.capitalized, isOn: Binding(get: {
-                    model.criteria.logLevels.levels.contains(item)
-                }, set: { isOn in
-                    if isOn {
-                        model.criteria.logLevels.levels.insert(item)
-                    } else {
-                        model.criteria.logLevels.levels.remove(item)
-                    }
-                }))
+                Toggle(item.rawValue.capitalized, isOn: model.binding(forLevel: item))
             }
         }
     }
@@ -117,29 +101,11 @@ struct ConsoleFiltersPanelPro: View {
         DisclosureGroup(isExpanded: $isLabelsExpanded, content: {
             HStack {
                 VStack(alignment: .leading, spacing: 6) {
-                    Toggle("All", isOn: Binding(get: {
-                        model.criteria.labels.hidden.isEmpty
-                    }, set: { isOn in
-                        model.criteria.labels.focused = nil
-                        if isOn {
-                            model.criteria.labels.hidden = []
-                        } else {
-                            model.criteria.labels.hidden = Set(model.allLabels)
-                        }
-                    }))
+                    Toggle("All", isOn: model.bindingForTogglingAllLabels)
                         .accentColor(Color.secondary)
                         .foregroundColor(Color.secondary)
                     ForEach(model.allLabels, id: \.self) { item in
-                        Toggle(item.capitalized, isOn: Binding(get: {
-                            !model.criteria.labels.hidden.contains(item)
-                        }, set: { isOn in
-                            model.criteria.labels.focused = nil
-                            if isOn {
-                                model.criteria.labels.hidden.remove(item)
-                            } else {
-                                model.criteria.labels.hidden.insert(item)
-                            }
-                        }))
+                        Toggle(item.capitalized, isOn: model.binding(forLabel: item))
                     }
                 }
                 Spacer()
@@ -160,22 +126,10 @@ struct ConsoleFiltersPanelPro: View {
         DisclosureGroup(isExpanded: $isTimePeriodExpanded, content: {
             Filters.toggle("Latest Session", isOn: $model.criteria.dates.isCurrentSessionOnly)
                 .padding(.top, Filters.contentTopInset)
-                        
-            let fromBinding = Binding(get: {
-                model.criteria.dates.startDate ?? Date().addingTimeInterval(-3600)
-            }, set: { newValue in
-                model.criteria.dates.startDate = newValue
-            })
-            
-            let toBinding = Binding(get: {
-                model.criteria.dates.endDate ?? Date()
-            }, set: { newValue in
-                model.criteria.dates.endDate = newValue
-            })
-            
+
             Filters.toggle("Start Date", isOn: $model.criteria.dates.isStartDateEnabled)
             HStack(spacing: 0) {
-                DatePicker("", selection: fromBinding)
+                DatePicker("", selection: $model.bindingStartDate)
                     .disabled(!model.criteria.dates.isStartDateEnabled)
                     .fixedSize()
                 Spacer()
@@ -183,7 +137,7 @@ struct ConsoleFiltersPanelPro: View {
 
             Filters.toggle("End Date", isOn: $model.criteria.dates.isEndDateEnabled)
             HStack(spacing: 0) {
-                DatePicker("", selection: toBinding)
+                DatePicker("", selection: $model.bindingEndDate)
                     .disabled(!model.criteria.dates.isEndDateEnabled)
                     .fixedSize()
                 Spacer()
@@ -191,18 +145,10 @@ struct ConsoleFiltersPanelPro: View {
             
             HStack {
                 Button("Recent") {
-                    var dates = model.criteria.dates
-                    dates.startDate = Date().addingTimeInterval(-1800)
-                    dates.isStartDateEnabled = true
-                    dates.isEndDateEnabled = false
-                    model.criteria.dates = dates
+                    model.criteria.dates = .recent
                 }
                 Button("Today") {
-                    var dates = model.criteria.dates
-                    dates.startDate = Calendar.current.startOfDay(for: Date())
-                    dates.isStartDateEnabled = true
-                    dates.isEndDateEnabled = false
-                    model.criteria.dates = dates
+                    model.criteria.dates = .today
                 }
                 Spacer()
             }.padding(.leading, 13)
