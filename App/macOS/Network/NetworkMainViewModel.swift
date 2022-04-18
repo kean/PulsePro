@@ -232,20 +232,12 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     }
         
     // MARK: Helpers
-    
-    private var programmaticFilters: [NetworkSearchFilter]? {
-        let programmaticFilters = filters.filters.filter { $0.isProgrammatic && $0.isReady }
-        guard !programmaticFilters.isEmpty && filters.criteria.isFiltersEnabled else {
-            return nil
-        }
-        return programmaticFilters
-    }
-    
+
     private func didRefreshRequests() {
         var requests: AnyCollection<LoggerNetworkRequestEntity>
         
         // Apply filters that couldn't be done programatically
-        if let filters = programmaticFilters {
+        if let filters = filters.programmaticFilters {
             self.appliedProgrammaticFilters = filters
             let objects = controller.fetchedObjects ?? []
             requests = AnyCollection(objects.filter { evaluateProgrammaticFilters(filters, entity: $0, store: store) })
