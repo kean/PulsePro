@@ -36,6 +36,9 @@
 		0C43E16C273888550094E465 /* ConsoleCommandsListenerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C43E16B273888550094E465 /* ConsoleCommandsListenerView.swift */; };
 		0C443A73280CDA64001AA6C5 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C443A72280CDA64001AA6C5 /* Cache.swift */; };
 		0C443A75280CE44E001AA6C5 /* FetchedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C443A74280CE44E001AA6C5 /* FetchedObjects.swift */; };
+		0C443A78280CFE20001AA6C5 /* NetworkFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C443A76280CFE20001AA6C5 /* NetworkFiltersView.swift */; };
+		0C443A79280CFE20001AA6C5 /* ConsoleFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C443A77280CFE20001AA6C5 /* ConsoleFiltersView.swift */; };
+		0C443A7B280CFE31001AA6C5 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C443A7A280CFE31001AA6C5 /* Filters.swift */; };
 		0C515EB126FD10C100D415F6 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C515EB026FD10C100D415F6 /* RouterView.swift */; };
 		0C515EB426FD117E00D415F6 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C515EB326FD117E00D415F6 /* AppRouter.swift */; };
 		0C515EB626FD215100D415F6 /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C515EB526FD215100D415F6 /* WindowAccessor.swift */; };
@@ -178,6 +181,9 @@
 		0C43E16B273888550094E465 /* ConsoleCommandsListenerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleCommandsListenerView.swift; sourceTree = "<group>"; };
 		0C443A72280CDA64001AA6C5 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		0C443A74280CE44E001AA6C5 /* FetchedObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedObjects.swift; sourceTree = "<group>"; };
+		0C443A76280CFE20001AA6C5 /* NetworkFiltersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkFiltersView.swift; sourceTree = "<group>"; };
+		0C443A77280CFE20001AA6C5 /* ConsoleFiltersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleFiltersView.swift; sourceTree = "<group>"; };
+		0C443A7A280CFE31001AA6C5 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		0C515EB026FD10C100D415F6 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		0C515EB326FD117E00D415F6 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		0C515EB526FD215100D415F6 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
@@ -727,6 +733,9 @@
 				0CA503F0280344E30028B4B8 /* ConsoleSearchCriteriaViewModel.swift */,
 				0C60229C280C8ACA003B1E83 /* NetworkSearchCriteria.swift */,
 				0C60229E280C8B0F003B1E83 /* NetworkSearchCriteriaViewModel.swift */,
+				0C443A77280CFE20001AA6C5 /* ConsoleFiltersView.swift */,
+				0C443A76280CFE20001AA6C5 /* NetworkFiltersView.swift */,
+				0C443A7A280CFE31001AA6C5 /* Filters.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -822,8 +831,10 @@
 				0C82DFA826F2D41D00700C4C /* RemoteLoggerServer.swift in Sources */,
 				0C699BE827DE8B1100F502C3 /* KeyValueSectionView.swift in Sources */,
 				0C699BB727DE8B1100F502C3 /* StoreDetailsView.swift in Sources */,
+				0C443A78280CFE20001AA6C5 /* NetworkFiltersView.swift in Sources */,
 				0C699BED27DE8B1100F502C3 /* MultiSelectionPicker.swift in Sources */,
 				0C43687F270D312A0088AC3E /* NewJSONPrinter.swift in Sources */,
+				0C443A79280CFE20001AA6C5 /* ConsoleFiltersView.swift in Sources */,
 				0C699BB227DE8B1100F502C3 /* MockDataTask.swift in Sources */,
 				0C699BC027DE8B1100F502C3 /* NetworkInspectorView.swift in Sources */,
 				0C699BBD27DE8B1100F502C3 /* NetworkInspectorResponseView.swift in Sources */,
@@ -834,6 +845,7 @@
 				0C17B20F2705021A00784EDC /* NetworkMainViewModel.swift in Sources */,
 				0C699BB627DE8B1100F502C3 /* SettingsView-ios.swift in Sources */,
 				0C699BC427DE8B1100F502C3 /* NetworkView.swift in Sources */,
+				0C443A7B280CFE31001AA6C5 /* Filters.swift in Sources */,
 				0C172F972700C61700A179A7 /* ConsoleStoryView.swift in Sources */,
 				0C699BD927DE8B1100F502C3 /* SwiftUIExtensions.swift in Sources */,
 				0CC93A5B26FF9FDA00F6C378 /* NetworkInspectorHeadersViewPro.swift in Sources */,

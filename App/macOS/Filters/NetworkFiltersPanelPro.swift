@@ -184,31 +184,8 @@ struct NetworkFiltersPanelPro: View {
     private var contentTypeGroup: some View {
         DisclosureGroup(isExpanded: $isContentTypeGroupExpanded, content: {
             VStack(spacing: 6) {
-                Picker("", selection: $model.criteria.contentType.contentType) {
-                    Section {
-                        Text("Any").tag(ContentType.any)
-                        Text("JSON").tag(ContentType.json)
-                        Text("Plain Text").tag(ContentType.plain)
-                    }
-                    Section {
-                        Text("HTML").tag(ContentType.html)
-                        Text("CSS").tag(ContentType.css)
-                        Text("CSV").tag(ContentType.csv)
-                        Text("JS").tag(ContentType.javascript)
-                        Text("XML").tag(ContentType.xml)
-                        Text("PDF").tag(ContentType.pdf)
-                    }
-                    Section {
-                        Text("Image").tag(ContentType.anyImage)
-                        Text("JPEG").tag(ContentType.jpeg)
-                        Text("PNG").tag(ContentType.png)
-                        Text("GIF").tag(ContentType.gif)
-                        Text("WebP").tag(ContentType.webp)
-                    }
-                    Section {
-                        Text("Video").tag(ContentType.anyVideo)
-                    }
-                }
+                Filters.contentTypesPicker(selection: $model.criteria.contentType.contentType)
+                    .labelsHidden()
             }.padding(.top, Filters.contentTopInset)
         }, label: {
             FilterSectionHeader(
@@ -295,26 +272,6 @@ private struct CustomFilterView: View {
                 Text("Regex").tag(NetworkSearchFilter.Match.regex)
             }
         }.frame(width: 120)
-    }
-}
-
-private struct DurationPicker: View {
-    let title: String
-    @Binding var value: DurationFilterPoint
-    
-    var body: some View {
-        HStack {
-            Text(title + ":")
-                .foregroundColor(.secondary)
-                .frame(width: 42, alignment: .trailing)
-            TextField("", text: $value.value)
-            Picker("", selection: $value.unit) {
-                Text("min").tag(DurationFilterPoint.Unit.minutes)
-                Text("sec").tag(DurationFilterPoint.Unit.seconds)
-                Text("ms").tag(DurationFilterPoint.Unit.milliseconds)
-            }
-            .fixedSize()
-        }
     }
 }
 

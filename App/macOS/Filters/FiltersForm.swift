@@ -37,7 +37,7 @@ struct FilterSectionHeader: View {
     }
 }
 
-struct Filters {
+extension Filters {
     static let formSpacing: CGFloat = 16
     static let formPadding = EdgeInsets(top: 6, leading: 8, bottom: 6, trailing: 6)
     static let contentTopInset: CGFloat = 8
