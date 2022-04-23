@@ -14,7 +14,7 @@ struct MessageDetailsViewPro: View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
                 if let badge = model.badge {
-                    BadgeView(model: BadgeViewModel(title: badge.title, color: badge.color.opacity(colorScheme == .light ? 0.25 : 0.5)))
+                    BadgeView(viewModel: BadgeViewModel(title: badge.title, color: badge.color.opacity(colorScheme == .light ? 0.25 : 0.5)))
                 }
                 Spacer()
                 if let onClose = onClose {
@@ -44,7 +44,7 @@ struct MessageDetailsViewPro: View {
 struct MessageDetailsViewPro_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MessageDetailsViewPro(model: .init(context: .init(store: .mock), message: try! LoggerStore.mock.allMessages()[0]))
+            MessageDetailsViewPro(model: .init(store: .mock, message: try! LoggerStore.mock.allMessages()[0]))
                 .previewLayout(.fixed(width: 600, height: 400))
         }
     }

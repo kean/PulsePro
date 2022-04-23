@@ -24,10 +24,7 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     // Text search (not the same as filter)
     @Published var searchTerm: String = ""
 
-    // TODO: get DI right, this is a quick workaround to fix @EnvironmentObject crashes
-    var context: AppContext { .init(store: store) }
-
-    private let store: LoggerStore
+    private(set) var store: LoggerStore
     private let controller: NSFetchedResultsController<LoggerNetworkRequestEntity>
     private var latestSessionId: String?
     private var isFirstRefresh = true

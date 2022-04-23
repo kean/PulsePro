@@ -14,7 +14,8 @@ final class RemoteLoggerClientViewModel: ObservableObject {
     private var cancellables: [AnyCancellable] = []
     
     init(client: RemoteLoggerClient?) {
-        self.client = client
+//        self.client = client
+        self.client = RemoteLoggerClient.mock()
         
         if let client = client {
             client.objectWillChange.sink { [weak self] in

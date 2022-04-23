@@ -355,7 +355,7 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
         let cellView = view(atColumn: column, row: row, makeIfNecessary: false)
         let stringValue = (cellView as? PlainTableCell)?.stringValue
         
-        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, store: main.context.store, pins: main.pins)
+        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, store: main.store, pins: main.pins)
         let view = ConsoleNetworkRequestContextMenuViewPro(model: menuModel)
         let menu = view.menu(for: event)
         

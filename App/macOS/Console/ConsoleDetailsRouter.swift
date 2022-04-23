@@ -9,28 +9,28 @@ import SwiftUI
 
 final class ConsoleDetailsPanelViewModel: ObservableObject {
     @Published var selectedEntity: LoggerMessageEntity?
-    private let context: AppContext
+    private let store: LoggerStore
 
-    init(context: AppContext) {
-        self.context = context
+    init(store: LoggerStore) {
+        self.store = store
     }
 
     func makeDetailsRouter(for message: LoggerMessageEntity, onClose: (() -> Void)?) -> ConsoleMessageDetailsRouterPro {
-        ConsoleMessageDetailsRouterPro(context: context, message: message, onClose: onClose)
+        ConsoleMessageDetailsRouterPro(store: store, message: message, onClose: onClose)
     }
 }
 
 struct ConsoleMessageDetailsRouterPro: View {
-    let context: AppContext
+    let store: LoggerStore
     let message: LoggerMessageEntity
     let onClose: (() -> Void)?
 
     var body: some View {
         if let request = message.request {
-            NetworkInspectorViewPro(model: .init(message: message, request: request, context: context), onClose: onClose)
+            NetworkInspectorViewPro(model: .init(message: message, request: request, store: store), onClose: onClose)
                 .id(message.objectID)
         } else {
-            MessageDetailsViewPro(model: .init(context: context, message: message), onClose: onClose)
+            MessageDetailsViewPro(model: .init(store: store, message: message), onClose: onClose)
                 .id(message.objectID)
         }
     }

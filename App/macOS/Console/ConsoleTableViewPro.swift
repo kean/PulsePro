@@ -380,7 +380,7 @@ private final class ConsoleTableView: NSTableView, NSMenuDelegate {
         
         var menu: NSMenu?
         if let request = message.request {
-            let model = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, store: main.context.store, pins: main.pins)
+            let model = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, store: main.store, pins: main.pins)
             let view = ConsoleNetworkRequestContextMenuViewPro(model: model)
             menu = view.menu(for: event)
             

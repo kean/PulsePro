@@ -80,7 +80,7 @@ struct NetworkInspectorViewPro: View {
     private var selectedTabView: some View {
         switch selectedTab {
         case .summary:
-            NetworkInspectorSummaryView(model: model.makeSummaryModel())
+            NetworkInspectorSummaryView(viewModel: model.makeSummaryModel())
         case .headers:
             NetworkInspectorHeadersViewPro(model: model.makeHeadersModel())
         case .request:
@@ -97,7 +97,7 @@ struct NetworkInspectorViewPro: View {
             }
         case .metrics:
             if let model = model.makeMetricsModel() {
-                NetworkInspectorMetricsView(model: model)
+                NetworkInspectorMetricsView(viewModel: model)
             } else {
                 makePlaceholder
             }
@@ -142,15 +142,15 @@ final class NetworkInspectorViewModelPro: ObservableObject {
     let message: LoggerMessageEntity
     let request: LoggerNetworkRequestEntity
     private let objectId: NSManagedObjectID
-    let context: AppContext // TODO: make it private
+    let store: LoggerStore // TODO: make it private
     private let summary: NetworkLoggerSummary
 
-    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, context: AppContext) {
+    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, store: LoggerStore) {
         self.objectId = message.objectID
         self.message = message
         self.request = request
-        self.context = context
-        self.summary = NetworkLoggerSummary(request: request, store: context.store)
+        self.store = store
+        self.summary = NetworkLoggerSummary(request: request, store: store)
 
         if let url = request.url.flatMap(URL.init(string:)) {
             if let httpMethod = request.httpMethod {
@@ -186,7 +186,7 @@ final class NetworkInspectorViewModelPro: ObservableObject {
     }
     
     func makecURLRepresentation() -> NSAttributedString {
-        let string = NetworkLoggerSummary(request: request, store: context.store).cURLDescription()
+        let string = NetworkLoggerSummary(request: request, store: store).cURLDescription()
         let fontSize = AppSettings.shared.cURLFontSize
         return NSAttributedString(string: string, attributes: [
             .font:  UXFont.monospacedSystemFont(ofSize: CGFloat(fontSize), weight: .regular),
@@ -200,7 +200,7 @@ final class NetworkInspectorViewModelPro: ObservableObject {
 struct NetworkInspectorViewPro_Previews: PreviewProvider {
     static var previews: some View {
             let messsage = try! LoggerStore.mock.allMessages()[7]
-        return NetworkInspectorViewPro(model: .init(message: messsage, request: messsage.request!, context: .init(store: .mock)))
+        return NetworkInspectorViewPro(model: .init(message: messsage, request: messsage.request!, store: .mock))
                 .previewLayout(.fixed(width: 600, height: 400))
     }
 }

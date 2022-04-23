@@ -317,10 +317,13 @@ final class ConsoleContainerViewModel: ObservableObject {
     private var cancellables: [AnyCancellable] = []
     
     init(store: LoggerStore, name: String? = nil, client: RemoteLoggerClient?) {
+        let store = LoggerStore.mock
         self.store = store
         self.name = name
+
+        print(try! store.allMessages())
         
-        self.details = ConsoleDetailsPanelViewModel(context: .init(store: store))
+        self.details = ConsoleDetailsPanelViewModel(store: store)
         self.console = ConsoleMainViewModel(store: store, toolbar: toolbar, details: details, mode: mode)
         self.network = NetworkMainViewModel(store: store, toolbar: toolbar, details: details)
         self.remote = RemoteLoggerClientViewModel(client: client)

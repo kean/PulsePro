@@ -29,16 +29,15 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
 
     private(set) var earliestMessage: LoggerMessageEntity?
     
-    // TODO: get DI right, this is a quick workaround to fix @EnvironmentObject crashes
-    var context: AppContext { .init(store: store) }
-
-    private let store: LoggerStore
+    private(set) var store: LoggerStore
     private let controller: NSFetchedResultsController<LoggerMessageEntity>
     private var latestSessionId: String?
     private var cancellables = [AnyCancellable]()
     
     init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModel) {
+        let store = LoggerStore.mock
         self.store = store
+        print(try! store.allMessages())
         self.toolbar = toolbar
         self.details = details
         self.mode = mode

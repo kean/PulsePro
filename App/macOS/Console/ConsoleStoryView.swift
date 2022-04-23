@@ -427,7 +427,7 @@ extension ConsoleStoryViewModel {
         attributes[.link] = makeToggleInfoURL(for: model.id)
         text.append("✶", attributes)
         
-        if options.isNetworkExpanded, let data = request.responseBodyKey.flatMap(self.main.context.store.getData(forKey:)) {
+        if options.isNetworkExpanded, let data = request.responseBodyKey.flatMap(self.main.store.getData(forKey:)) {
             if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                 let renderer = AttributedStringJSONRenderer(fontSize: options.fontSize, lineHeight: Constants.ResponseViewer.lineHeight(for: Int(options.fontSize)))
                 let printer = JSONPrinter(renderer: renderer)
@@ -479,7 +479,7 @@ private let dateFormatter: DateFormatter = {
 struct ConsoleStoryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConsoleStoryView(model: .init(store: .mock, toolbar: .init(), details: .init(context: .init(store: .mock)), mode: .init()))
+            ConsoleStoryView(model: .init(store: .mock, toolbar: .init(), details: .init(store: .mock), mode: .init()))
                 .previewLayout(.fixed(width: 700, height: 1200))
             //            ConsoleStoryView(model: .init(store: .mock))
             //                .background(Color.white)

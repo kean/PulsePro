@@ -46,7 +46,7 @@ struct NetworkInspectorResponseViewPro: View {
         ScrollView {
             VStack(spacing: 16) {
                 HStack {
-                    KeyValueSectionView(model: KeyValueSectionViewModel(title: "Image", color: .pink, items: [
+                    KeyValueSectionView(viewModel: KeyValueSectionViewModel(title: "Image", color: .pink, items: [
                         ("Width", "\(image.cgImage?.width ?? 0) px"),
                         ("Height", "\(image.cgImage?.height ?? 0) px")
                     ]))
