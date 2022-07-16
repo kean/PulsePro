@@ -167,14 +167,17 @@ final class RemoteLoggerServer: RemoteLoggerConnectionDelegate, ObservableObject
             let request = try JSONDecoder().decode(RemoteLogger.PacketClientHello.self, from: packet.body)
             pulseLog("Device wans to connect: \(request.deviceInfo.name)")
             self.clientDidConnect(connection: connection, request: request)
-        case .storeMessage:
-            let message = try JSONDecoder().decode(LoggerStoreEvent.Message.self, from: packet.body)
-            client?.process(event: .createMessage(message))
-        case .storeRequest:
-            let message = try RemoteLogger.PacketNetworkMessage.decode(packet.body)
-            client?.process(event: .networkMessageCompleted(message))
         case .ping:
             client?.didReceivePing()
+        case .storeEventMessageStored:
+            let message = try JSONDecoder().decode(LoggerStoreEvent.MessageCreated.self, from: packet.body)
+            client?.process(event: .messageStored(message))
+        case .storeEventNetworkTaskCreated:
+            #warning("TODO: implement")
+            break
+        case .storeEventNetworkTaskCompleted:
+            let message = try RemoteLogger.PacketNetworkMessage.decode(packet.body)
+            client?.process(event: .networkTaskCompleted(message))
         default:
             assertionFailure("A packet with an invalid code received from the server: \(packet.code.description)")
         }
