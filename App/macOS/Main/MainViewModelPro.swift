@@ -27,7 +27,7 @@ final class MainViewModelPro: ObservableObject {
     }
     
     func open(client: RemoteLoggerClient) {
-        self.details.model = ConsoleContainerViewModel(store: .mock, client: client)
+        self.details.model = ConsoleContainerViewModel(store: client.store, client: client)
         self.connect(to: client)
     }
 

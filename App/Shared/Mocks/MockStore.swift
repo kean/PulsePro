@@ -9,7 +9,6 @@ import CoreData
 extension LoggerStore {
     static let mock: LoggerStore = {
         let store = makeMockStore()
-        print("here-2")
         for _ in 0..<1 {
             populateStore(store)
         }

@@ -35,9 +35,7 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     private var cancellables = [AnyCancellable]()
     
     init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModel) {
-        let store = LoggerStore.mock
         self.store = store
-        print(try! store.allMessages())
         self.toolbar = toolbar
         self.details = details
         self.mode = mode

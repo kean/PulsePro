@@ -52,7 +52,7 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
         let filename = info.id.raw.data(using: .utf8)?.sha256 ?? info.id.raw
         let storeURL = logsURL
             .appendingFilename(filename).appendingPathExtension("pulse")
-        self.store = .mock
+        self.store = try LoggerStore(storeURL: storeURL, options: [.create])
         
         pingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self]_ in
             self?.connection?.send(code: .ping)
