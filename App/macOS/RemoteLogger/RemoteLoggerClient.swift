@@ -120,12 +120,8 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
         store.removeAll()
     }
         
-    func store(message: LoggerStore.Message) {
-        RemoteLogger.store(message, into: store)
-    }
-    
-    func store(message: LoggerStore.NetworkMessage) {
-        RemoteLogger.store(message, into: store)
+    func process(event: LoggerStoreEvent) {
+        RemoteLogger.process(event, store: store)
     }
     
     private func scheduleAutomaticDisconnect() {

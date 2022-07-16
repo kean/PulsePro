@@ -168,11 +168,11 @@ final class RemoteLoggerServer: RemoteLoggerConnectionDelegate, ObservableObject
             pulseLog("Device wans to connect: \(request.deviceInfo.name)")
             self.clientDidConnect(connection: connection, request: request)
         case .storeMessage:
-            let message = try JSONDecoder().decode(LoggerStore.Message.self, from: packet.body)
-            client?.store(message: message)
+            let message = try JSONDecoder().decode(LoggerStoreEvent.Message.self, from: packet.body)
+            client?.process(event: .createMessage(message))
         case .storeRequest:
             let message = try RemoteLogger.PacketNetworkMessage.decode(packet.body)
-            client?.store(message: message)
+            client?.process(event: .networkMessageCompleted(message))
         case .ping:
             client?.didReceivePing()
         default:
