@@ -46,7 +46,7 @@ struct NetworkListViewPro: NSViewRepresentable {
             
             func makePlainCell(text: String) -> PlainTableCell {
                 let cell = PlainTableCell.make(in: tableView)
-                cell.display(text, color: color(for: LoggerNetworkRequestEntity.State(rawValue: request.requestState) == .failure))
+                cell.display(text, color: color(for: request.state == .success))
                 return cell
             }
             
@@ -60,9 +60,12 @@ struct NetworkListViewPro: NSViewRepresentable {
                 cell.text = "\(row + 1)"
                 cell.isPinned = main.pins.pinnedRequestIds.contains(request.objectID)
                 return cell
-            case .dateAndTime: return makePlainCell(text: dateAndTimeFormatter.string(from: request.createdAt))
-            case .date: return makePlainCell(text: dateFormatter.string(from: request.createdAt))
-            case .time: return makePlainCell(text: timeFormatter.string(from: request.createdAt))
+            case .dateAndTime:
+                return makePlainCell(text: dateAndTimeFormatter.string(from: request.createdAt))
+            case .date:
+                return makePlainCell(text: dateFormatter.string(from: request.createdAt))
+            case .time:
+                return makePlainCell(text: timeFormatter.string(from: request.createdAt))
             case .interval:
                 let first = main.earliestMessage ?? list[0]
                 var interval = request.createdAt.timeIntervalSince1970 - first.createdAt.timeIntervalSince1970
@@ -72,17 +75,27 @@ struct NetworkListViewPro: NSViewRepresentable {
                     interval = list.isCreatedAtAscending ? interval : (interval >= 0.001 ? -interval : interval)
                     return makePlainCell(text: "\(stringPrecise(from: interval))")
                 }
-            case .url: return makePlainCell(text: request.url ?? "–")
-            case .host: return makePlainCell(text: request.host ?? "–")
-            case .method: return makePlainCell(text: request.httpMethod ?? "–")
-            case .statusCode: return makePlainCell(text: request.statusCode == 0 ? "–" : "\(request.statusCode)")
-            case .duration: return makePlainCell(text: DurationFormatter.string(from: request.duration))
-            case .uncompressedRequestSize: return makePlainCell(text: ByteCountFormatter.string(fromByteCount: request.details.requestBodySize, countStyle: .file))
-            case .uncompressedResponseSize: return makePlainCell(text: ByteCountFormatter.string(fromByteCount: request.details.responseBodySize, countStyle: .file))
-            case .error: return makePlainCell(text: request.errorCode != 0 ? "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))" : "–")
+            case .url:
+                return makePlainCell(text: request.url ?? "–")
+            case .host:
+                return makePlainCell(text: request.host ?? "–")
+            case .method:
+                return makePlainCell(text: request.httpMethod ?? "–")
+            case .statusCode:
+                return makePlainCell(text: request.statusCode == 0 ? "–" : "\(request.statusCode)")
+            case .duration:
+                return makePlainCell(text: DurationFormatter.string(from: request.duration))
+            case .uncompressedRequestSize:
+                let sizeText = ByteCountFormatter.string(fromByteCount: request.requestBodySize, countStyle: .file)
+                return makePlainCell(text: sizeText)
+            case .uncompressedResponseSize:
+                let sizeText = ByteCountFormatter.string(fromByteCount: request.responseBodySize, countStyle: .file)
+                return makePlainCell(text: request.isFromCache ? sizeText + " (cache)" : sizeText)
+            case .error:
+                return makePlainCell(text: request.errorCode != 0 ? "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))" : "–")
             case .statusIcon:
                 let cell = BadgeTableCell.make(in: tableView)
-                switch LoggerNetworkRequestEntity.State(rawValue: request.requestState) ?? .success {
+                switch request.state {
                 case .pending: cell.color = .systemYellow
                 case .success: cell.color = .systemGreen
                 case .failure: cell.color = .systemRed
@@ -496,9 +509,9 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
         case .duration:
             return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.duration, ascending: false)
         case .uncompressedRequestSize:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.details.requestBodySize, ascending: false)
+            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.requestBodySize, ascending: false)
         case .uncompressedResponseSize:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.details.responseBodySize, ascending: false)
+            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.responseBodySize, ascending: false)
         case .error:
             return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.errorCode, ascending: false)
         case .statusIcon:

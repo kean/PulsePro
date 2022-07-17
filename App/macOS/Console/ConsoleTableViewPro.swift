@@ -85,7 +85,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
             case .status:
                 guard let request = message.request else { return nil }
                 let cell = BadgeTableCell.make(in: tableView)
-                switch LoggerNetworkRequestEntity.State(rawValue: request.requestState) ?? .success {
+                switch request.state {
                 case .pending: cell.color = .systemYellow
                 case .success: cell.color = .systemGreen
                 case .failure: cell.color = .systemRed

@@ -59,13 +59,28 @@ final class MainViewDetailsViewModel: ObservableObject {
     func open(url: URL) {
         do {
             let store = try LoggerStore(storeURL: url)
+            if let version = store.info.flatMap({ Version($0.storeVersion) }), version < Version(2, 0, 0) {
+                showAlert(error: UnsupportedStoreVersion(errorDescription: "The store was created by one of the earlier versions of Pulse and some information might be displayed incorrectly."))
+            }
             self.model = ConsoleContainerViewModel(store: store, name: url.lastPathComponent, client: nil)
             NSDocumentController.shared.noteNewRecentDocumentURL(url)
         } catch {
-            #warning("TODO: add error handling")
-//            alert = AlertViewModel(title: "Failed to open Pulse document", message: error.localizedDescription)
+            showAlert(error: error)
         }
     }
+}
+
+private func showAlert(error: Error) {
+    let alert = NSAlert(error: error)
+    if let keyWindow = NSApplication.shared.keyWindow {
+        alert.beginSheetModal(for: keyWindow) { _ in }
+    } else {
+        alert.runModal()
+    }
+}
+
+private struct UnsupportedStoreVersion: Error, LocalizedError {
+    var errorDescription: String?
 }
 
 private final class RemoteClientRAAI {

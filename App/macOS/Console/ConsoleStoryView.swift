@@ -385,7 +385,7 @@ extension ConsoleStoryViewModel {
         let text = NSMutableAttributedString()
         
         // Title
-        let state = LoggerNetworkRequestEntity.State(rawValue: request.requestState) ?? .success
+        let state = request.state
         let time = ConsoleMessageViewModel.timeFormatter.string(from: message.createdAt)
         var prefix: String
         switch state {
