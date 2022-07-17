@@ -83,11 +83,13 @@ struct ConsoleTableViewPro: NSViewRepresentable {
             case .level: return makePlainCell(text: message.level)
             case .label: return makePlainCell(text: message.label)
             case .status:
-                guard let request = message.request else {
-                    return nil
-                }
+                guard let request = message.request else { return nil }
                 let cell = BadgeTableCell.make(in: tableView)
-                cell.color = request.isSuccess ? NSColor.systemGreen : NSColor.systemRed
+                switch LoggerNetworkRequestEntity.State(rawValue: request.requestState) ?? .success {
+                case .pending: cell.color = .systemYellow
+                case .success: cell.color = .systemGreen
+                case .failure: cell.color = .systemRed
+                }
                 return cell
             case .message: return makePlainCell(text: message.text)
             case .file: return makePlainCell(text: message.file)

@@ -82,7 +82,7 @@ struct NetworkInspectorViewPro: View {
         case .summary:
             NetworkInspectorSummaryView(viewModel: model.makeSummaryModel())
         case .headers:
-            NetworkInspectorHeadersViewPro(model: model.makeHeadersModel())
+            NetworkInspectorHeadersViewPro(viewModel: model.makeHeadersModel())
         case .request:
             if let model = model.makeRequestBodyViewModel() {
                 NetworkInspectorResponseViewPro(model: model)

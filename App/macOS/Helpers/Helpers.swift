@@ -28,21 +28,6 @@ func stringPrecise(from timeInterval: TimeInterval) -> String {
     }
 }
 
-extension LoggerNetworkRequestEntity {
-    var isSuccess: Bool {
-        guard let state = State(rawValue: requestState) else {
-            if errorCode != 0 {
-                return false
-            } else if statusCode != 0, !(200..<400).contains(statusCode) {
-                return false
-            } else {
-                return true
-            }
-        }
-        return state == .success
-    }
-}
-
 func descriptionForStatusCode(_ statusCode: Int) -> String {
     switch statusCode {
     case 200: return "200 (OK)"

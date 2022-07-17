@@ -385,17 +385,26 @@ extension ConsoleStoryViewModel {
         let text = NSMutableAttributedString()
         
         // Title
-        let isSuccess = request.isSuccess
-        
+        let state = LoggerNetworkRequestEntity.State(rawValue: request.requestState) ?? .success
         let time = ConsoleMessageViewModel.timeFormatter.string(from: message.createdAt)
-        
-        let prefix: String
-        if request.statusCode != 0 {
+        var prefix: String
+        switch state {
+        case .pending:
+            prefix = "PENDING"
+            if request.totalUnitCount > 0 {
+                func format(_ bytes: Int64) -> String {
+                    ByteCountFormatter.string(fromByteCount: bytes, countStyle: .file)
+                }
+                prefix += " · \(format(request.completedUnitCount)) / \(format(request.totalUnitCount))"
+            }
+        case .success:
             prefix = StatusCodeFormatter.string(for: Int(request.statusCode))
-        } else if request.errorCode != 0 {
-            prefix = "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))"
-        } else {
-            prefix = "Success"
+        case .failure:
+            if request.errorCode != 0 {
+                prefix = "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))"
+            } else {
+                prefix = StatusCodeFormatter.string(for: Int(request.statusCode))
+            }
         }
         
         var title = "\(prefix)"
@@ -411,7 +420,11 @@ extension ConsoleStoryViewModel {
             }
         }
         text.append(title + " ", helpers.titleAttributes)
-        text.append(isSuccess ? "🟢" : "🔴", helpers.titleAttributes)
+        switch state {
+        case .pending: text.append("🟡", helpers.titleAttributes)
+        case .success: text.append("🟢", helpers.titleAttributes)
+        case .failure: text.append("🔴", helpers.titleAttributes)
+        }
 
         text.append(options.isCompactMode ? " " : "\n", helpers.titleAttributes)
 

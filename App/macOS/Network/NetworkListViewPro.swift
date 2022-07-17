@@ -46,7 +46,7 @@ struct NetworkListViewPro: NSViewRepresentable {
             
             func makePlainCell(text: String) -> PlainTableCell {
                 let cell = PlainTableCell.make(in: tableView)
-                cell.display(text, color: color(for: request.isSuccess))
+                cell.display(text, color: color(for: LoggerNetworkRequestEntity.State(rawValue: request.requestState) == .failure))
                 return cell
             }
             
@@ -82,7 +82,11 @@ struct NetworkListViewPro: NSViewRepresentable {
             case .error: return makePlainCell(text: request.errorCode != 0 ? "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))" : "–")
             case .statusIcon:
                 let cell = BadgeTableCell.make(in: tableView)
-                cell.color = request.isSuccess ? NSColor.systemGreen : NSColor.systemRed
+                switch LoggerNetworkRequestEntity.State(rawValue: request.requestState) ?? .success {
+                case .pending: cell.color = .systemYellow
+                case .success: cell.color = .systemGreen
+                case .failure: cell.color = .systemRed
+                }
                 return cell
             }
         }
