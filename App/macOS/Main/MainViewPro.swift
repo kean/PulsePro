@@ -7,48 +7,6 @@ import CoreData
 import PulseCore
 import Combine
 
-var isSelfDestructNeeded: Bool {
-    #warning("TODO: remove when not needed")
-    return Date() > Date(timeIntervalSince1970: 1646779235)
-}
-
-func printNextTimeInterval() {
-    let ti = Calendar.current.date(byAdding: .init(day: 365), to: Date())?.timeIntervalSince1970
-    print(ti)
-}
-
-struct SelfDestructView: View {
-    let isTrial: Bool
-    
-    var body: some View {
-        VStack(spacing: 30) {
-            Image(systemName: "flame")
-                .font(.system(size: 120))
-                .foregroundColor(.secondary)
-            VStack(alignment: .center, spacing: 20) {
-                Text("This build self-destructed")
-                    .font(.title)
-                
-                if !isTrial {
-                    Text("This is an early preview of the Pulse Pro app. It expired after 365 days in production. Please install a new build.")
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: 300)
-                    Button("Get Build") {
-                        NSWorkspace.shared.open(URL(string: "https://github.com/kean/PulsePro")!)
-                    }
-                } else {
-                    Text("The 30 day trial period has expired.")
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: 300)
-                }
-            }
-        }
-        .frame(width: 500, height: 400)
-    }
-}
-
 struct MainViewPro: View {
     @StateObject private var model = MainViewModelPro()
     @StateObject private var commands = CommandsRegistryWrapper()
@@ -70,12 +28,8 @@ struct MainViewPro: View {
     }
     
     var body: some View {
-        if isTrialExpired {
-            SelfDestructView(isTrial: true)
-        } else {
-            contents
-                .background(MainViewWindowAccessor(model: model, commands: commands.commands))
-        }
+        contents
+            .background(MainViewWindowAccessor(model: model, commands: commands.commands))
     }
     
     @ViewBuilder
