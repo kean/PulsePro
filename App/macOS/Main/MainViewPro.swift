@@ -8,41 +8,41 @@ import PulseCore
 import Combine
 
 struct MainViewPro: View {
-    @StateObject private var model = MainViewModelPro()
+    @StateObject private var viewModel = MainViewModelPro()
     @StateObject private var commands = CommandsRegistryWrapper()
     private let hasSiderbar: Bool
 
     init() {
         self.hasSiderbar = true
-        _model = StateObject(wrappedValue: MainViewModelPro())
+        _viewModel = StateObject(wrappedValue: MainViewModelPro())
     }
     
     init(store: LoggerStore) {
         self.hasSiderbar = false
-        _model = StateObject(wrappedValue: MainViewModelPro(store: store))
+        _viewModel = StateObject(wrappedValue: MainViewModelPro(store: store))
     }
     
     init(client: RemoteLoggerClient) {
         self.hasSiderbar = false
-        _model = StateObject(wrappedValue: MainViewModelPro(client: client))
+        _viewModel = StateObject(wrappedValue: MainViewModelPro(client: client))
     }
     
     var body: some View {
         contents
-            .background(MainViewWindowAccessor(model: model, commands: commands.commands))
+            .background(MainViewWindowAccessor(model: viewModel, commands: commands.commands))
     }
     
     @ViewBuilder
     private var contents: some View {
         if hasSiderbar {
             NavigationView {
-                SidebarView(model: model)
+                SidebarView(viewModel: viewModel)
                     .environmentObject(commands)
-                MainViewRouter(details: model.details)
+                MainViewRouter(details: viewModel.details)
                     .environmentObject(commands)
             }
         } else {
-            MainViewRouter(details: model.details)
+            MainViewRouter(details: viewModel.details)
                 .environmentObject(commands)
         }
     }
@@ -79,7 +79,7 @@ private struct MainViewRouter: View {
     
     var body: some View {
         if let model = details.model {
-            ConsoleContainerView(model: model)
+            ConsoleContainerView(viewModel: model)
                 .id(ObjectIdentifier(model))
         } else {
             AppWelcomeView(buttonOpenDocumentTapped: openDocument, openDocument: details.open)
@@ -88,14 +88,14 @@ private struct MainViewRouter: View {
 }
 
 private struct SidebarView: View {
-    private var model: MainViewModelPro
+    private var viewModel: MainViewModelPro
 
-    init(model: MainViewModelPro) {
-        self.model = model
+    init(viewModel: MainViewModelPro) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
-        SiderbarViewPro(model: model, remote: .shared)
+        SiderbarViewPro(model: viewModel, remote: .shared)
             .frame(minWidth: 150)
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.status) {

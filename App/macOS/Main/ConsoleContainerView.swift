@@ -8,21 +8,21 @@ import PulseCore
 import Combine
 
 struct ConsoleContainerView: View {
-    let model: ConsoleContainerViewModel
+    let viewModel: ConsoleContainerViewModel
     
     var body: some View {
-        InnerConsoleContainerView(model: model, toolbar: model.toolbar, details: model.details)
-            .navigationTitle(model.name ?? "Console")
-            .background(ConsoleWindowAccessors(model: model.toolbar))
+        InnerConsoleContainerView(viewModel: viewModel, toolbar: viewModel.toolbar, details: viewModel.details)
+            .navigationTitle(viewModel.name ?? "Console")
+            .background(ConsoleWindowAccessors(model: viewModel.toolbar))
             .toolbar {
                 ToolbarItemGroup(placement: .navigation) {
-                    ConsoleToolbarModePickerView(model: model.mode)
+                    ConsoleToolbarModePickerView(model: viewModel.mode)
                 }
                 ToolbarItemGroup(placement: .principal) {
-                    if let client = model.remote.client {
+                    if let client = viewModel.remote.client {
                         RemoteLoggerClientStatusView(client: client)
                         RemoteLoggerTooglePlayButton(client: client)
-                        ConsoleNowView(model: model.toolbar)
+                        ConsoleNowView(model: viewModel.toolbar)
                         Button(action: client.clear, label: {
                             Label("Clear", systemImage: "trash")
                         }).help("Remove All Messages (⌘K)")
@@ -32,17 +32,17 @@ struct ConsoleContainerView: View {
                     Spacer()
                 }
                 ToolbarItemGroup(placement: .automatic) {
-                    ConsoleToolbarSearchBar(model: model)
-                    ConsoleToolbarToggleOnlyErrorsButton(model: model.toolbar)
-                    ConsoleToolbarToggleFiltersButton(model: model.toolbar)
-                    ConsoleToolbarToggleVerticalView(model: model.toolbar)
+                    ConsoleToolbarSearchBar(model: viewModel)
+                    ConsoleToolbarToggleOnlyErrorsButton(model: viewModel.toolbar)
+                    ConsoleToolbarToggleFiltersButton(model: viewModel.toolbar)
+                    ConsoleToolbarToggleVerticalView(model: viewModel.toolbar)
                 }
             }
     }
 }
 
 private struct InnerConsoleContainerView: View {
-    let model: ConsoleContainerViewModel
+    let viewModel: ConsoleContainerViewModel
     @ObservedObject var toolbar: ConsoleToolbarViewModel
     @ObservedObject var details: ConsoleDetailsPanelViewModel
     
@@ -54,7 +54,7 @@ private struct InnerConsoleContainerView: View {
                 filterPanel
             }
         }
-        .background(ConsoleCommandsListenerView(model: model))
+        .background(ConsoleCommandsListenerView(model: viewModel))
     }
     
     @ViewBuilder
@@ -62,7 +62,7 @@ private struct InnerConsoleContainerView: View {
         if !toolbar.isFiltersPaneHidden {
             HStack(spacing: 0) {
                 ExDivider()
-                ConsoleContainerFiltersPanel(model: model)
+                ConsoleContainerFiltersPanel(viewModel: viewModel)
             }
         }
     }
@@ -70,9 +70,9 @@ private struct InnerConsoleContainerView: View {
     @ViewBuilder
     private var mainPanel: some View {
         NotSplitView(
-            ConsoleContainerMainPanel(model: model)
+            ConsoleContainerMainPanel(model: viewModel)
                 .frame(minWidth: 400, idealWidth: 800, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center),
-            ConsoleContainerDetailsPanel(model: model.details)
+            ConsoleContainerDetailsPanel(model: viewModel.details)
                 .frame(minWidth: 430, idealWidth: 800, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center),
             isPanelTwoCollaped: details.selectedEntity == nil,
             isVertical: toolbar.isVertical
@@ -81,21 +81,21 @@ private struct InnerConsoleContainerView: View {
 }
 
 private struct ConsoleContainerFiltersPanel: View {
-    let model: ConsoleContainerViewModel
+    let viewModel: ConsoleContainerViewModel
     @ObservedObject var mode: ConsoleModePickerViewModel
     
-    init(model: ConsoleContainerViewModel) {
-        self.model = model
-        self.mode = model.mode
+    init(viewModel: ConsoleContainerViewModel) {
+        self.viewModel = viewModel
+        self.mode = viewModel.mode
     }
     
     var body: some View {
         switch mode.mode {
         case .list, .text:
-            ConsoleFiltersPanelPro(model: model.console.filters)
+            ConsoleFiltersView(viewModel: viewModel.console.filters)
                 .frame(width: 200)
         case .network:
-            NetworkFiltersPanelPro(model: model.network.filters)
+            NetworkFiltersView(viewModel: viewModel.network.filters)
                 .frame(width: 200)
         }
     }
