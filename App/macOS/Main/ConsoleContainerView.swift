@@ -16,13 +16,13 @@ struct ConsoleContainerView: View {
             .background(ConsoleWindowAccessors(model: viewModel.toolbar))
             .toolbar {
                 ToolbarItemGroup(placement: .navigation) {
-                    ConsoleToolbarModePickerView(model: viewModel.mode)
+                    ConsoleToolbarModePickerView(viewModel: viewModel.mode)
                 }
                 ToolbarItemGroup(placement: .principal) {
                     if let client = viewModel.remote.client {
                         RemoteLoggerClientStatusView(client: client)
                         RemoteLoggerTooglePlayButton(client: client)
-                        ConsoleNowView(model: viewModel.toolbar)
+                        ConsoleNowView(viewModel: viewModel.toolbar)
                         Button(action: client.clear, label: {
                             Label("Clear", systemImage: "trash")
                         }).help("Remove All Messages (⌘K)")
@@ -33,9 +33,9 @@ struct ConsoleContainerView: View {
                 }
                 ToolbarItemGroup(placement: .automatic) {
                     ConsoleToolbarSearchBar(model: viewModel)
-                    ConsoleToolbarToggleOnlyErrorsButton(model: viewModel.toolbar)
-                    ConsoleToolbarToggleFiltersButton(model: viewModel.toolbar)
-                    ConsoleToolbarToggleVerticalView(model: viewModel.toolbar)
+                    ConsoleToolbarToggleOnlyErrorsButton(viewModel: viewModel.toolbar)
+                    ConsoleToolbarToggleFiltersButton(viewModel: viewModel.toolbar)
+                    ConsoleToolbarToggleVerticalView(viewModel: viewModel.toolbar)
                 }
             }
     }
@@ -226,75 +226,15 @@ private struct ConsoleToolbarSearchBar: View {
     }
 }
 
-private struct ExDivider: View {
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
-    
-    var color: Color {
-        colorScheme == .dark ? .black : .separator
-    }
-    var width: CGFloat = 1
-    var body: some View {
-        Rectangle()
-            .fill(color)
-            .frame(width: width)
-            .edgesIgnoringSafeArea(.vertical)
-    }
-}
-
-// MARK: - Toolbar
-
-private struct ConsoleNowView: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
-    var body: some View {
-        Button(action: { model.isNowEnabled.toggle() }) {
-            Image(systemName: model.isNowEnabled ? "clock.fill" : "clock")
-                .foregroundColor(model.isNowEnabled ? Color.accentColor : Color.secondary)
-        }.help("Automatically Scroll to Recent Messages (⇧⌘N)")
-    }
-}
-
-private struct ConsoleToolbarToggleFiltersButton: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
-    var body: some View {
-        Button(action: { model.isFiltersPaneHidden.toggle() }, label: {
-            Image(systemName: model.isFiltersPaneHidden ? "line.horizontal.3.decrease.circle" : "line.horizontal.3.decrease.circle.fill")
-        }).foregroundColor(model.isFiltersPaneHidden ? .secondary : .accentColor)
-            .help("Toggle Filters Panel (⌥⌘F)")
-    }
-}
-
-private struct ConsoleToolbarToggleOnlyErrorsButton: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
-    var body: some View {
-        Button(action: { model.isOnlyErrors.toggle() }) {
-            Image(systemName: model.isOnlyErrors ? "exclamationmark.octagon.fill" : "exclamationmark.octagon")
-        }.foregroundColor(model.isOnlyErrors ? .accentColor : .secondary)
-            .help("Toggle Show Only Errors (⇧⌘E)")
-    }
-}
-
 private struct ConsoleToolbarModePickerView: View {
-    @ObservedObject var model: ConsoleModePickerViewModel
-    
+    @ObservedObject var viewModel: ConsoleModePickerViewModel
+
     var body: some View {
-        Picker("Mode", selection: $model.mode) {
+        Picker("Mode", selection: $viewModel.mode) {
             Label("as List", systemImage: "list.dash").tag(ConsoleViewMode.list)
             Label("as Text", systemImage: "doc.plaintext").tag(ConsoleViewMode.text)
             Label("as Network", systemImage: "network").tag(ConsoleViewMode.network)
         }.pickerStyle(InlinePickerStyle())
-    }
-}
-
-private struct ConsoleToolbarToggleVerticalView: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
-    var body: some View {
-        Button(action: { model.isVertical.toggle() }, label: {
-            Image(systemName: model.isVertical ? "square.split.2x1" : "square.split.1x2")
-        }).help(model.isVertical ? "Switch to Horizontal Layout" : "Switch to Vertical Layout")
     }
 }
 

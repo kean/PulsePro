@@ -243,17 +243,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     }
 }
 
-final class ConsoleToolbarViewModel: ObservableObject {
-    @Published var isFiltersPaneHidden = true
-    @AppStorage("console-view-is-vertical") var isVertical = true {
-        didSet { objectWillChange.send() }
-    }
-    @Published var isOnlyErrors = false
-    @Published var isOnlyPins = false
-    @Published var isSearchBarActive = false
-    @Published var isNowEnabled = true
-}
-
 final class ConsoleSearchBarViewModel: ObservableObject {
     @Published var text: String = ""
 }

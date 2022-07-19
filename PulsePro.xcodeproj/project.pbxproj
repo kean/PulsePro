@@ -26,6 +26,8 @@
 		0C32D56328862FFC00C0EC87 /* NetworkFiltersView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32D56028862FFC00C0EC87 /* NetworkFiltersView-macos.swift */; };
 		0C32D56428862FFC00C0EC87 /* Filters-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32D56128862FFC00C0EC87 /* Filters-macos.swift */; };
 		0C32D56528862FFC00C0EC87 /* ConsoleFiltersView-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32D56228862FFC00C0EC87 /* ConsoleFiltersView-macos.swift */; };
+		0C32D5672886333300C0EC87 /* ExDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32D5662886333300C0EC87 /* ExDivider.swift */; };
+		0C32D56928863FDB00C0EC87 /* ConsoleToolbar-macos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32D56828863FDB00C0EC87 /* ConsoleToolbar-macos.swift */; };
 		0C32EA3926FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32EA3826FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift */; };
 		0C32EBCF26FCB6C6000EB5E6 /* MainViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32EBCE26FCB6C6000EB5E6 /* MainViewPro.swift */; };
 		0C32EBD126FCB83A000EB5E6 /* MainViewModelPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C32EBD026FCB83A000EB5E6 /* MainViewModelPro.swift */; };
@@ -80,7 +82,6 @@
 		0C699BD127DE8B1100F502C3 /* ConsoleNetworkRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B6C27DE8B1100F502C3 /* ConsoleNetworkRequestViewModel.swift */; };
 		0C699BD527DE8B1100F502C3 /* ConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7027DE8B1100F502C3 /* ConsoleMessageView.swift */; };
 		0C699BD627DE8B1100F502C3 /* ConsoleNetworkRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7127DE8B1100F502C3 /* ConsoleNetworkRequestView.swift */; };
-		0C699BD727DE8B1100F502C3 /* ConsoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7227DE8B1100F502C3 /* ConsoleViewModel.swift */; };
 		0C699BD927DE8B1100F502C3 /* SwiftUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7527DE8B1100F502C3 /* SwiftUIExtensions.swift */; };
 		0C699BDA27DE8B1100F502C3 /* NetworkLoggerSummary+Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7627DE8B1100F502C3 /* NetworkLoggerSummary+Sharing.swift */; };
 		0C699BDB27DE8B1100F502C3 /* URLRequest+cURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C699B7727DE8B1100F502C3 /* URLRequest+cURL.swift */; };
@@ -167,6 +168,8 @@
 		0C32D56028862FFC00C0EC87 /* NetworkFiltersView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkFiltersView-macos.swift"; sourceTree = "<group>"; };
 		0C32D56128862FFC00C0EC87 /* Filters-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Filters-macos.swift"; sourceTree = "<group>"; };
 		0C32D56228862FFC00C0EC87 /* ConsoleFiltersView-macos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConsoleFiltersView-macos.swift"; sourceTree = "<group>"; };
+		0C32D5662886333300C0EC87 /* ExDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExDivider.swift; sourceTree = "<group>"; };
+		0C32D56828863FDB00C0EC87 /* ConsoleToolbar-macos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConsoleToolbar-macos.swift"; sourceTree = "<group>"; };
 		0C32EA3826FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoggerViewModel.swift; sourceTree = "<group>"; };
 		0C32EBCE26FCB6C6000EB5E6 /* MainViewPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPro.swift; sourceTree = "<group>"; };
 		0C32EBD026FCB83A000EB5E6 /* MainViewModelPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelPro.swift; sourceTree = "<group>"; };
@@ -599,6 +602,7 @@
 				0C699B7027DE8B1100F502C3 /* ConsoleMessageView.swift */,
 				0C699B7127DE8B1100F502C3 /* ConsoleNetworkRequestView.swift */,
 				0C699B7227DE8B1100F502C3 /* ConsoleViewModel.swift */,
+				0C32D56828863FDB00C0EC87 /* ConsoleToolbar-macos.swift */,
 			);
 			path = Console;
 			sourceTree = "<group>";
@@ -638,6 +642,7 @@
 				0C699B8627DE8B1100F502C3 /* KeyValueSectionView.swift */,
 				0C699B8827DE8B1100F502C3 /* PinButton.swift */,
 				0C699B8A27DE8B1100F502C3 /* ContextMenus.swift */,
+				0C32D5662886333300C0EC87 /* ExDivider.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -837,6 +842,7 @@
 				0C6E34A82701FECE00EA9254 /* NetworkInspectorResponseViewPro.swift in Sources */,
 				0C699BCC27DE8B1100F502C3 /* ConsoleView-watchos.swift in Sources */,
 				0C443A73280CDA64001AA6C5 /* Cache.swift in Sources */,
+				0C32D56928863FDB00C0EC87 /* ConsoleToolbar-macos.swift in Sources */,
 				0C699BBF27DE8B1100F502C3 /* NetworkInspectorTransferInfoView.swift in Sources */,
 				0C32EA3926FBCF5C000EB5E6 /* RemoteLoggerViewModel.swift in Sources */,
 				0C699BE527DE8B1100F502C3 /* RichTextView.swift in Sources */,
@@ -871,7 +877,6 @@
 				0CA503F1280344E30028B4B8 /* ConsoleSearchCriteriaViewModel.swift in Sources */,
 				0C699BCA27DE8B1100F502C3 /* ConsoleView-ios.swift in Sources */,
 				0C699BBB27DE8B1100F502C3 /* ConsoleMessageDetailsViewModel.swift in Sources */,
-				0C699BD727DE8B1100F502C3 /* ConsoleViewModel.swift in Sources */,
 				0C699BC827DE8B1100F502C3 /* MainView-ios-tvos.swift in Sources */,
 				0C699BE127DE8B1100F502C3 /* PlaceholderView.swift in Sources */,
 				0C699BE227DE8B1100F502C3 /* ToastView.swift in Sources */,
@@ -892,6 +897,7 @@
 				0C515EB426FD117E00D415F6 /* AppRouter.swift in Sources */,
 				0C699BEA27DE8B1100F502C3 /* PinButton.swift in Sources */,
 				0C17B2052704E37600784EDC /* NetworkListViewPro.swift in Sources */,
+				0C32D5672886333300C0EC87 /* ExDivider.swift in Sources */,
 				0C17B20C2704E9AE00784EDC /* ConsoleDetailsRouter.swift in Sources */,
 				0C7E56CE28021C9800D7A8DF /* RemoteLoggerProtocol.swift in Sources */,
 				0C699BBA27DE8B1100F502C3 /* ConsoleMessageDetailsRouter.swift in Sources */,
