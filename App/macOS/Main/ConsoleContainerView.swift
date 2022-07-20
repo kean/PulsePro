@@ -13,7 +13,7 @@ struct ConsoleContainerView: View {
     var body: some View {
         InnerConsoleContainerView(viewModel: viewModel, toolbar: viewModel.toolbar, details: viewModel.details)
             .navigationTitle(viewModel.name ?? "Console")
-            .background(ConsoleWindowAccessors(model: viewModel.toolbar))
+            .background(ConsoleWindowAccessors(viewModel: viewModel.toolbar))
             .toolbar {
                 ToolbarItemGroup(placement: .navigation) {
                     ConsoleToolbarModePickerView(viewModel: viewModel.mode)
@@ -32,7 +32,7 @@ struct ConsoleContainerView: View {
                     Spacer()
                 }
                 ToolbarItemGroup(placement: .automatic) {
-                    ConsoleToolbarSearchBar(model: viewModel)
+                    ConsoleToolbarSearchBar(viewModel: viewModel)
                     ConsoleToolbarToggleOnlyErrorsButton(viewModel: viewModel.toolbar)
                     ConsoleToolbarToggleFiltersButton(viewModel: viewModel.toolbar)
                     ConsoleToolbarToggleVerticalView(viewModel: viewModel.toolbar)
@@ -191,36 +191,36 @@ enum ConsoleViewMode {
 // MARK: - Helpers
 
 private struct ConsoleWindowAccessors: View {
-    let model: ConsoleToolbarViewModel
+    let viewModel: ConsoleToolbarViewModel
     @State private var window: NSWindow?
     
-    #warning("TODO: rework how sohrtcuts are triggered")
+    #warning("TODO: rework how shortcuts are triggered")
     var body: some View {
         EmptyView()
             .background(WindowAccessor(window: $window))
             .onReceive(CommandsRegistry.shared.onToggleFilters) {
-                if window?.isKeyWindow ?? false { model.isFiltersPaneHidden.toggle() }
+                if window?.isKeyWindow ?? false { viewModel.isFiltersPaneHidden.toggle() }
             }
     }
 }
 
 private struct ConsoleToolbarSearchBar: View {
-    let model: ConsoleMainViewModel
+    let viewModel: ConsoleMainViewModel
     @ObservedObject var toolbar: ConsoleToolbarViewModel
     @ObservedObject var mode: ConsoleModePickerViewModel
     @ObservedObject var searchBar: ConsoleSearchBarViewModel
-    
-    init(model: ConsoleContainerViewModel) {
-        self.model = model.console
-        self.toolbar = model.toolbar
-        self.mode = model.mode
-        self.searchBar = model.searchBar
+
+    init(viewModel: ConsoleContainerViewModel) {
+        self.viewModel = viewModel.console
+        self.toolbar = viewModel.toolbar
+        self.mode = viewModel.mode
+        self.searchBar = viewModel.searchBar
     }
-    
+
     var body: some View {
         SearchBar(title: mode.mode == .list ? "Search" : "Filter", text: $searchBar.text, onFind: CommandsRegistry.shared.onFind, onEditingChanged: { isEditing in
             toolbar.isSearchBarActive = isEditing
-        }, onReturn: model.search.nextMatch)
+        }, onReturn: viewModel.search.nextMatch)
             .frame(width: toolbar.isSearchBarActive ? 200 : 95)
             .help("Search (⌘F)")
     }
