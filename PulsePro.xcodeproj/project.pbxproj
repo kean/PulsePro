@@ -115,6 +115,7 @@
 		0CACED302888295E00BFCA2D /* NotSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CACED2F2888295E00BFCA2D /* NotSplitView.swift */; };
 		0CB2AD2B2706534B00DEBF29 /* Attributed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB2AD2A2706534B00DEBF29 /* Attributed.swift */; };
 		0CB9A085271FA96E00CA99F3 /* TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9A084271FA96E00CA99F3 /* TableViewExtensions.swift */; };
+		0CBDE2B72888C2C20067FE2D /* ConsoleMessageMetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBDE2B62888C2C20067FE2D /* ConsoleMessageMetadataView.swift */; };
 		0CC42A5F2708B0120038C89B /* ConsoleNetworkRequestContextMenuViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC42A5E2708B0120038C89B /* ConsoleNetworkRequestContextMenuViewPro.swift */; };
 		0CC93A5626FF952000F6C378 /* MessageDetailsViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC93A5526FF952000F6C378 /* MessageDetailsViewPro.swift */; };
 		0CC93A5926FF9C6D00F6C378 /* NetworkInspectorViewPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC93A5826FF9C6D00F6C378 /* NetworkInspectorViewPro.swift */; };
@@ -260,6 +261,7 @@
 		0CACED2F2888295E00BFCA2D /* NotSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSplitView.swift; sourceTree = "<group>"; };
 		0CB2AD2A2706534B00DEBF29 /* Attributed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attributed.swift; sourceTree = "<group>"; };
 		0CB9A084271FA96E00CA99F3 /* TableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExtensions.swift; sourceTree = "<group>"; };
+		0CBDE2B62888C2C20067FE2D /* ConsoleMessageMetadataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleMessageMetadataView.swift; sourceTree = "<group>"; };
 		0CC42A5E2708B0120038C89B /* ConsoleNetworkRequestContextMenuViewPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleNetworkRequestContextMenuViewPro.swift; sourceTree = "<group>"; };
 		0CC93A5526FF952000F6C378 /* MessageDetailsViewPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewPro.swift; sourceTree = "<group>"; };
 		0CC93A5826FF9C6D00F6C378 /* NetworkInspectorViewPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInspectorViewPro.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				0C699B4F27DE8B1100F502C3 /* ConsoleMessageDetailsView.swift */,
 				0C699B5027DE8B1100F502C3 /* ConsoleMessageDetailsRouter.swift */,
 				0C699B5127DE8B1100F502C3 /* ConsoleMessageDetailsViewModel.swift */,
+				0CBDE2B62888C2C20067FE2D /* ConsoleMessageMetadataView.swift */,
 			);
 			path = MessageDetails;
 			sourceTree = "<group>";
@@ -811,6 +814,7 @@
 				0C82DFA826F2D41D00700C4C /* RemoteLoggerServer.swift in Sources */,
 				0C699BE827DE8B1100F502C3 /* KeyValueSectionView.swift in Sources */,
 				0C699BB727DE8B1100F502C3 /* StoreDetailsView.swift in Sources */,
+				0CBDE2B72888C2C20067FE2D /* ConsoleMessageMetadataView.swift in Sources */,
 				0C43687F270D312A0088AC3E /* NewJSONPrinter.swift in Sources */,
 				0C699BB227DE8B1100F502C3 /* MockDataTask.swift in Sources */,
 				0C699BC027DE8B1100F502C3 /* NetworkInspectorView.swift in Sources */,
