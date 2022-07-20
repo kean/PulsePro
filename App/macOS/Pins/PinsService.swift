@@ -130,7 +130,7 @@ final class PinsService: ObservableObject {
             try data.write(to: pinsStoreURL)
             isDirty = false
         } catch {
-            NSLog("Failed to save pins: \(error)")
+            // This should never happen
         }
     }
 }

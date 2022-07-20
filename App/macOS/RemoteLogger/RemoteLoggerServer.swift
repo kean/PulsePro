@@ -263,7 +263,7 @@ private extension NWListener.State {
 }
 
 func pulseLog(_ message: @autoclosure () -> String) {
-#if DEBUG
+#if DEBUG && PULSE_DEBUG_LOG_ENABLED
     NSLog(message())
 #endif
 }
