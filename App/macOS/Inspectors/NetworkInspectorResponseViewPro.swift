@@ -8,21 +8,21 @@ import PulseCore
 import Combine
 
 struct NetworkInspectorResponseViewPro: View {
-    @ObservedObject var model: NetworkInspectorResponseViewModelPro
+    @ObservedObject var viewModel: NetworkInspectorResponseViewModelPro
     @State private var isSpinnerHidden = true
 
     var body: some View {
         content
-            .onReceive(model.$isLoading.debounce(for: 0.33, scheduler: RunLoop.main, options: nil).removeDuplicates()) {
+            .onReceive(viewModel.$isLoading.debounce(for: 0.33, scheduler: RunLoop.main, options: nil).removeDuplicates()) {
             self.isSpinnerHidden = !$0
         }
     }
     
     @ViewBuilder var content: some View {
-        if let data = model.displayedData {
+        if let data = viewModel.displayedData {
             switch data {
-            case .json(let model):
-                makeJSONViewer(model: model)
+            case .json(let viewModel):
+                makeJSONViewer(viewModel: viewModel)
             case .image(let image):
                 makeImageViewer(image: image)
             case .text(let text):
@@ -37,8 +37,8 @@ struct NetworkInspectorResponseViewPro: View {
     }
 
     @ViewBuilder
-    private func makeJSONViewer(model: JSONViewModel) -> some View {
-        JSONView(model: model)
+    private func makeJSONViewer(viewModel: JSONViewModel) -> some View {
+        JSONView(viewModel: viewModel)
     }
     
     @ViewBuilder
@@ -65,7 +65,7 @@ struct NetworkInspectorResponseViewPro: View {
     
     @ViewBuilder
     private func makePlainTextView(text: NSAttributedString) -> some View {
-        RichTextViewPro(model: .init(string: text), content: .response)
+        RichTextViewPro(viewModel: .init(string: text), content: .response)
     }
 }
 
@@ -118,19 +118,19 @@ final class NetworkInspectorResponseViewModelPro: ObservableObject {
 struct NetworkInspectorResponseViewPro_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NetworkInspectorResponseViewPro(model: mockModel)
+            NetworkInspectorResponseViewPro(viewModel: mockModel)
                 .previewDisplayName("Light")
                 .environment(\.colorScheme, .light)
 
-            NetworkInspectorResponseViewPro(model: .init(data: mockImage))
+            NetworkInspectorResponseViewPro(viewModel: .init(data: mockImage))
                 .previewDisplayName("Image")
                 .environment(\.colorScheme, .light)
 
-            NetworkInspectorResponseViewPro(model: .init(data: mockHTML))
+            NetworkInspectorResponseViewPro(viewModel: .init(data: mockHTML))
                 .previewDisplayName("HTML")
                 .environment(\.colorScheme, .light)
 
-            NetworkInspectorResponseViewPro(model: mockModel)
+            NetworkInspectorResponseViewPro(viewModel: mockModel)
                 .previewDisplayName("Dark")
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .dark)

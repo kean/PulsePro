@@ -16,7 +16,7 @@ enum RichTextViewContentType {
 }
 
 struct RichTextViewPro: View {
-    @ObservedObject private var model: RichTextViewModelPro
+    @ObservedObject private var viewModel: RichTextViewModelPro
     var isAutomaticLinkDetectionEnabled = true
     var hasVerticalScroller = false
     let isSearchBarHidden: Bool
@@ -26,7 +26,7 @@ struct RichTextViewPro: View {
     let rulerWidth: CGFloat?
     let onTerminalTapped: (() -> Void)?
     
-    init(model: RichTextViewModelPro,
+    init(viewModel: RichTextViewModelPro,
          isAutomaticLinkDetectionEnabled: Bool = true,
          hasVerticalScroller: Bool = true,
          isSearchBarHidden: Bool = false,
@@ -34,7 +34,7 @@ struct RichTextViewPro: View {
          onLinkClicked: @escaping (URL) -> Bool = { _ in false },
          rulerWidth: CGFloat? = nil,
          onTerminalTapped: (() -> Void)? = nil) {
-        self.model = model
+        self.viewModel = viewModel
         self.isAutomaticLinkDetectionEnabled = isAutomaticLinkDetectionEnabled
         self.hasVerticalScroller = hasVerticalScroller
         self.isSearchBarHidden = isSearchBarHidden
@@ -48,7 +48,7 @@ struct RichTextViewPro: View {
         VStack(spacing: 0) {
             ZStack {
             WrappedTextView(
-                model: model,
+                viewModel: viewModel,
                 isAutomaticLinkDetectionEnabled: isAutomaticLinkDetectionEnabled,
                 hasVerticalScroller: hasVerticalScroller,
                 content: content,
@@ -57,8 +57,8 @@ struct RichTextViewPro: View {
                 rulerWidth: rulerWidth,
                 onCommand: onCommand(_:)
             ).frame(maxWidth: .infinity, maxHeight: .infinity)
-                if !model.isResetFocusButtonHidden {
-                    Button(action: { model.textDelegate?.resetFocus() }) {
+                if !viewModel.isResetFocusButtonHidden {
+                    Button(action: { viewModel.textDelegate?.resetFocus() }) {
                         Image(systemName: "xmark.circle.fill")
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -68,7 +68,7 @@ struct RichTextViewPro: View {
             }
             if !isSearchBarHidden {
                 Divider()
-                SearchToobar(model: model, onFind: onFind, content: content, onTerminalTapped: onTerminalTapped, onCommand: onCommand(_:))
+                SearchToobar(viewModel: viewModel, onFind: onFind, content: content, onTerminalTapped: onTerminalTapped, onCommand: onCommand(_:))
             }
         }
     }
@@ -93,7 +93,7 @@ struct RichTextViewPro: View {
 }
 
 private struct WrappedTextView: NSViewRepresentable {
-    let model: RichTextViewModelPro
+    let viewModel: RichTextViewModelPro
     let isAutomaticLinkDetectionEnabled: Bool
     var hasVerticalScroller: Bool
     let content: RichTextViewContentType
@@ -137,7 +137,7 @@ private struct WrappedTextView: NSViewRepresentable {
         scrollView.drawsBackground = false
         scrollView.autohidesScrollers = true
         let textView = scrollView.documentView as! JSONTextView
-        textView.textDelegate = model.textDelegate
+        textView.textDelegate = viewModel.textDelegate
         textView.textContainer?.replaceLayoutManager(JSONLayoutManager())
         configureTextView(textView, isAutomaticLinkDetectionEnabled, content: content)
         textView.isAutomaticSpellingCorrectionEnabled = false
@@ -161,12 +161,12 @@ private struct WrappedTextView: NSViewRepresentable {
             commands.isCommandHandled = true
         }.store(in: &context.coordinator.cancellables)
         
-        NotificationCenter.default.publisher(for: NSScrollView.didLiveScrollNotification, object: scrollView).sink { [weak model] _ in
-            model?.didLiveScroll?()
+        NotificationCenter.default.publisher(for: NSScrollView.didLiveScrollNotification, object: scrollView).sink { [weak viewModel] _ in
+            viewModel?.didLiveScroll?()
         }.store(in: &context.coordinator.cancellables)
                
-        model.textView = textView
-        textView.attributedText = model.sourceText
+        viewModel.textView = textView
+        textView.attributedText = viewModel.sourceText
         return scrollView
     }
     
@@ -274,7 +274,7 @@ private struct TempWorkaround {
 }
 
 private struct SearchToobar: View {
-    @ObservedObject var model: RichTextViewModelPro
+    @ObservedObject var viewModel: RichTextViewModelPro
     @State private var isEditing: Bool = false
     @State private var isEditingFilter: Bool = false
 
@@ -302,17 +302,17 @@ private struct SearchToobar: View {
     var body: some View {
         HStack {
             HStack(spacing: 5) {
-                SearchBar(title: "Search", text: $model.searchTerm, onFind: onFind, onEditingChanged: { isEditing in
+                SearchBar(title: "Search", text: $viewModel.searchTerm, onFind: onFind, onEditingChanged: { isEditing in
                     withAnimation {
                         self.isEditing = isEditing
                     }
                     if isEditing {
-                        model.isSearching = isEditing
+                        viewModel.isSearching = isEditing
                     }
-                }, onReturn: model.nextMatch)
+                }, onReturn: viewModel.nextMatch)
                     .frame(width: isEditing ? 120 : 90)
                 
-                StringSearchOptionsMenu(options: $model.options, isKindNeeded: false)
+                StringSearchOptionsMenu(options: $viewModel.options, isKindNeeded: false)
                     .menuStyle(BorderlessButtonMenuStyle(showsMenuIndicator: false))
                     .fixedSize()
                     .padding(.trailing, 2)
@@ -320,35 +320,35 @@ private struct SearchToobar: View {
             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.separator, lineWidth: 1))
             
             HStack(spacing: 5) {
-                SearchBar(title: "Filter", text: $model.filterTerm, imageName: "line.horizontal.3.decrease.circle", onEditingChanged: { isEditing in
+                SearchBar(title: "Filter", text: $viewModel.filterTerm, imageName: "line.horizontal.3.decrease.circle", onEditingChanged: { isEditing in
                     withAnimation {
                         self.isEditingFilter = isEditing
                     }
                     if isEditing {
-                        model.isSearching = isEditing
+                        viewModel.isSearching = isEditing
                     }
-                }, onReturn: model.nextMatch)
+                }, onReturn: viewModel.nextMatch)
                     .frame(width: isEditingFilter ? 120 : 80)
                 
-                StringSearchOptionsMenu(options: $model.filterOptions, isKindNeeded: false)
+                StringSearchOptionsMenu(options: $viewModel.filterOptions, isKindNeeded: false)
                     .menuStyle(BorderlessButtonMenuStyle(showsMenuIndicator: false))
                     .fixedSize()
                     .padding(.trailing, 2)
             }
             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.separator, lineWidth: 1))
             
-            if !model.matches.isEmpty {
-                Text(model.matches.isEmpty ? "0/0" : "\(model.selectedMatchIndex+1)/\(model.matches.count)")
+            if !viewModel.matches.isEmpty {
+                Text(viewModel.matches.isEmpty ? "0/0" : "\(viewModel.selectedMatchIndex+1)/\(viewModel.matches.count)")
                     .lineLimit(1)
                     .font(Font.body.monospacedDigit())
                     .foregroundColor(.secondary)
                 
                 
                 HStack(spacing: 2) {
-                    Button(action: model.previousMatch) {
+                    Button(action: viewModel.previousMatch) {
                         Image(systemName: "chevron.left")
                     }
-                    Button(action: model.nextMatch) {
+                    Button(action: viewModel.nextMatch) {
                         Image(systemName: "chevron.right")
                     }
                 }
@@ -357,9 +357,9 @@ private struct SearchToobar: View {
             
             Spacer()
             
-            if model.isJSON {
-                Button(action: model.toggleExpanded) {
-                    Image(systemName: model.isJSONExpanded ? "arrow.down.forward.and.arrow.up.backward" : "arrow.up.backward.and.arrow.down.forward")
+            if viewModel.isJSON {
+                Button(action: viewModel.toggleExpanded) {
+                    Image(systemName: viewModel.isJSONExpanded ? "arrow.down.forward.and.arrow.up.backward" : "arrow.up.backward.and.arrow.down.forward")
                 }.buttonStyle(PlainButtonStyle())
                     .foregroundColor(.secondary)
             }
@@ -644,7 +644,7 @@ private extension RichTextViewPro {
         let renderer = AttributedStringJSONRenderer(fontSize: CGFloat(fontSize), lineHeight: Constants.ResponseViewer.lineHeight(for: fontSize))
         let printer = JSONPrinter(renderer: renderer)
         printer.render(json: json)
-        self.init(model: .init(string: renderer.make()), content: .response)
+        self.init(viewModel: .init(string: renderer.make()), content: .response)
     }
 }
 

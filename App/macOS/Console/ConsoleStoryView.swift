@@ -38,32 +38,32 @@ import Foundation
 import ObjectiveC
 
 struct ConsoleStoryView: View {
-    @StateObject private var model: ConsoleStoryViewModel
+    @StateObject private var viewModel: ConsoleStoryViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
-    init(model: ConsoleMainViewModel) {
-        _model = StateObject(wrappedValue: ConsoleStoryViewModel(model: model))
+    init(viewModel: ConsoleMainViewModel) {
+        _viewModel = StateObject(wrappedValue: ConsoleStoryViewModel(main: viewModel))
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            ConsoleStoryOptionsView(model: model)
+            ConsoleStoryOptionsView(viewModel: viewModel)
             Divider()
             RichTextViewPro(
-                model: model.text,
+                viewModel: viewModel.text,
                 content: .story,
-                onLinkClicked: model.onLinkClicked,
+                onLinkClicked: viewModel.onLinkClicked,
                 rulerWidth: 27
             )
-                .id(ObjectIdentifier(model.text)) // TODO: fix this
+                .id(ObjectIdentifier(viewModel.text)) // TODO: fix this
                 .background(colorScheme == .dark ? Color(NSColor(red: 30/255.0, green: 30/255.0, blue: 30/255.0, alpha: 1)) : .clear)
         }
-        .onAppear(perform: model.onAppear)
+        .onAppear(perform: viewModel.onAppear)
     }
 }
 
 private struct ConsoleStoryOptionsView: View {
-    @ObservedObject var model: ConsoleStoryViewModel
+    @ObservedObject var viewModel: ConsoleStoryViewModel
     
     var body: some View {
         HStack {
@@ -90,8 +90,8 @@ final class ConsoleStoryViewModel: NSObject, ObservableObject {
     private var options: Options
     private var helpers: TextRenderingHelpers
             
-    init(model: ConsoleMainViewModel) {
-        self.main = model
+    init(main: ConsoleMainViewModel) {
+        self.main = main
         self.options = ConsoleStoryViewModel.makeOptions()
         self.helpers = TextRenderingHelpers(options: options)
         
@@ -492,11 +492,8 @@ private let dateFormatter: DateFormatter = {
 struct ConsoleStoryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConsoleStoryView(model: .init(store: .mock, toolbar: .init(), details: .init(store: .mock), mode: .init()))
+            ConsoleStoryView(viewModel: .init(store: .mock, toolbar: .init(), details: .init(store: .mock), mode: .init()))
                 .previewLayout(.fixed(width: 700, height: 1200))
-            //            ConsoleStoryView(model: .init(store: .mock))
-            //                .background(Color.white)
-            //                .environment(\.colorScheme, .light)
         }
     }
 }

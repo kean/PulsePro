@@ -48,7 +48,7 @@ private struct NetworkTabView: View {
 @available(iOS 13.0, tvOS 14.0, watchOS 7.0, *)
 struct NetworkInspectorViewPro: View {
     // Make sure all tabs are updated live
-    @ObservedObject var model: NetworkInspectorViewModelPro
+    @ObservedObject var viewModel: NetworkInspectorViewModelPro
     @State private var selectedTab: NetworkInspectorTabPro = .response
     @Environment(\.colorScheme) private var colorScheme
     var onClose: (() -> Void)?
@@ -80,29 +80,29 @@ struct NetworkInspectorViewPro: View {
     private var selectedTabView: some View {
         switch selectedTab {
         case .summary:
-            NetworkInspectorSummaryView(viewModel: model.makeSummaryModel())
+            NetworkInspectorSummaryView(viewModel: viewModel.makeSummaryModel())
         case .headers:
-            NetworkInspectorHeadersViewPro(viewModel: model.makeHeadersModel())
+            NetworkInspectorHeadersViewPro(viewModel: viewModel.makeHeadersModel())
         case .request:
-            if let model = model.makeRequestBodyViewModel() {
-                NetworkInspectorResponseViewPro(model: model)
+            if let viewModel = viewModel.makeRequestBodyViewModel() {
+                NetworkInspectorResponseViewPro(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
         case .response:
-            if let model = model.makeResponseBodyViewModel() {
-                NetworkInspectorResponseViewPro(model: model)
+            if let viewModel = viewModel.makeResponseBodyViewModel() {
+                NetworkInspectorResponseViewPro(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
         case .metrics:
-            if let model = model.makeMetricsModel() {
-                NetworkInspectorMetricsView(viewModel: model)
+            if let viewModel = viewModel.makeMetricsModel() {
+                NetworkInspectorMetricsView(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
         case .curl:
-            RichTextViewPro(model: .init(string: model.makecURLRepresentation()), content: .curl)
+            RichTextViewPro(viewModel: .init(string: viewModel.makecURLRepresentation()), content: .curl)
         }
     }
 
@@ -200,7 +200,7 @@ final class NetworkInspectorViewModelPro: ObservableObject {
 struct NetworkInspectorViewPro_Previews: PreviewProvider {
     static var previews: some View {
             let messsage = try! LoggerStore.mock.allMessages()[7]
-        return NetworkInspectorViewPro(model: .init(message: messsage, request: messsage.request!, store: .mock))
+        return NetworkInspectorViewPro(viewModel: .init(message: messsage, request: messsage.request!, store: .mock))
                 .previewLayout(.fixed(width: 600, height: 400))
     }
 }

@@ -8,18 +8,18 @@ import SwiftUI
 import Combine
 
 struct RouterView: View {
-    @StateObject var model = RouterViewModel()
+    @StateObject var viewModel = RouterViewModel()
         
     var body: some View {
         contents
-            .onOpenURL(perform: model.open(url:))
+            .onOpenURL(perform: viewModel.open(url:))
     }
     
     @ViewBuilder
     private var contents: some View {
-        if let client = self.model.client {
+        if let client = self.viewModel.client {
             MainViewPro(client: client)
-        } else if let detailsView = model.detailsView {
+        } else if let detailsView = viewModel.detailsView {
             detailsView
         } else {
             PlaceholderView(imageName: "exclamationmark.circle.fill", title: "Something went wrong", subtitle: nil)

@@ -13,9 +13,9 @@ struct ConsoleTableViewPro: NSViewRepresentable {
     @ObservedObject var list: ManagedObjectsList<LoggerMessageEntity>
     private let main: ConsoleMainViewModel
     
-    init(model: ConsoleMainViewModel) {
-        self.main = model
-        self.list = model.list
+    init(viewModel: ConsoleMainViewModel) {
+        self.main = viewModel
+        self.list = viewModel.list
     }
     
     final class Coordinator: NSObject, NSTableViewDelegate, NSTableViewDataSource {

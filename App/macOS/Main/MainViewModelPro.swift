@@ -14,12 +14,12 @@ final class MainViewModelPro: ObservableObject {
 
     init(client: RemoteLoggerClient) {
         let name = client.info.deviceInfo.name + (client.preferredSuffix ?? "")
-        self.details.model = ConsoleContainerViewModel(store: client.store, name: name, client: client)
+        self.details.viewModel = ConsoleContainerViewModel(store: client.store, name: name, client: client)
         self.connect(to: client)
     }
     
     init(store: LoggerStore) {
-        self.details.model = ConsoleContainerViewModel(store: store, name:  store.storeURL.lastPathComponent, client: nil)
+        self.details.viewModel = ConsoleContainerViewModel(store: store, name:  store.storeURL.lastPathComponent, client: nil)
     }
     
     init() {
@@ -27,7 +27,7 @@ final class MainViewModelPro: ObservableObject {
     }
     
     func open(client: RemoteLoggerClient) {
-        self.details.model = ConsoleContainerViewModel(store: client.store, client: client)
+        self.details.viewModel = ConsoleContainerViewModel(store: client.store, client: client)
         self.connect(to: client)
     }
 
@@ -54,7 +54,7 @@ final class MainViewModelPro: ObservableObject {
 }
 
 final class MainViewDetailsViewModel: ObservableObject {
-    @Published var model: ConsoleContainerViewModel?
+    @Published var viewModel: ConsoleContainerViewModel?
     
     func open(url: URL) {
         do {
@@ -62,7 +62,7 @@ final class MainViewDetailsViewModel: ObservableObject {
             if let version = store.info.flatMap({ Version($0.storeVersion) }), version < Version(2, 0, 0) {
                 showAlert(error: UnsupportedStoreVersion(errorDescription: "The store was created by one of the earlier versions of Pulse and some information might be displayed incorrectly."))
             }
-            self.model = ConsoleContainerViewModel(store: store, name: url.lastPathComponent, client: nil)
+            self.viewModel = ConsoleContainerViewModel(store: store, name: url.lastPathComponent, client: nil)
             NSDocumentController.shared.noteNewRecentDocumentURL(url)
         } catch {
             showAlert(error: error)

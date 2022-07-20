@@ -78,9 +78,9 @@ private struct MainViewRouter: View {
     @ObservedObject var details: MainViewDetailsViewModel
     
     var body: some View {
-        if let model = details.model {
-            ConsoleContainerView(viewModel: model)
-                .id(ObjectIdentifier(model))
+        if let viewModel = details.viewModel {
+            ConsoleContainerView(viewModel: viewModel)
+                .id(ObjectIdentifier(viewModel))
         } else {
             AppWelcomeView(buttonOpenDocumentTapped: openDocument, openDocument: details.open)
         }
@@ -95,7 +95,7 @@ private struct SidebarView: View {
     }
 
     var body: some View {
-        SiderbarViewPro(model: viewModel, remote: .shared)
+        SiderbarViewPro(viewModel: viewModel, remote: .shared)
             .frame(minWidth: 150)
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.status) {

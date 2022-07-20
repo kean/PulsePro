@@ -6,14 +6,14 @@ import SwiftUI
 import PulseCore
 
 struct MessageDetailsViewPro: View {
-    let model: ConsoleMessageDetailsViewModel
+    let viewModel: ConsoleMessageDetailsViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     var onClose: (() -> Void)?
     
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
-                if let badge = model.badge {
+                if let badge = viewModel.badge {
                     BadgeView(viewModel: BadgeViewModel(title: badge.title, color: badge.color.opacity(colorScheme == .light ? 0.25 : 0.5)))
                 }
                 Spacer()
@@ -32,7 +32,7 @@ struct MessageDetailsViewPro: View {
     }
 
     private var textView: some View {
-        RichTextViewPro(model: .init(string: NSAttributedString(string: model.text, attributes: [
+        RichTextViewPro(viewModel: .init(string: NSAttributedString(string: viewModel.text, attributes: [
             .foregroundColor: NSColor.labelColor,
             .font: NSFont.systemFont(ofSize: CGFloat(AppSettings.shared.messageFontSize)),
             .paragraphStyle: NSParagraphStyle.make(lineHeight: Constants.ResponseViewer.lineHeight(for: AppSettings.shared.messageFontSize))
@@ -44,7 +44,7 @@ struct MessageDetailsViewPro: View {
 struct MessageDetailsViewPro_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MessageDetailsViewPro(model: .init(store: .mock, message: try! LoggerStore.mock.allMessages()[0]))
+            MessageDetailsViewPro(viewModel: .init(store: .mock, message: try! LoggerStore.mock.allMessages()[0]))
                 .previewLayout(.fixed(width: 600, height: 400))
         }
     }

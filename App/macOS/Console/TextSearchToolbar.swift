@@ -10,28 +10,28 @@ import Foundation
 import SwiftUI
 
 struct TextSearchToolbar: View {
-    @ObservedObject var model: TextSearchViewModel
+    @ObservedObject var viewModel: TextSearchViewModel
     
     var body: some View {
         HStack {
             Spacer()
-            Text(model.matches.isEmpty ?  "Found: 0" : "Found: \(model.selectedMatchIndex+1)/\(model.matches.count)")
+            Text(viewModel.matches.isEmpty ?  "Found: 0" : "Found: \(viewModel.selectedMatchIndex+1)/\(viewModel.matches.count)")
                 .font(Font.body.monospacedDigit())
                 .foregroundColor(.secondary)
                 .padding(.trailing, 6)
             HStack(spacing: 6) {
-                Button(action: model.previousMatch) {
+                Button(action: viewModel.previousMatch) {
                     Image(systemName: "chevron.left")
                 }
                 .buttonStyle(PlainButtonStyle())
-                .disabled(model.matches.isEmpty)
-                Button(action: model.nextMatch) {
+                .disabled(viewModel.matches.isEmpty)
+                Button(action: viewModel.nextMatch) {
                     Image(systemName: "chevron.right")
                 }
                 .buttonStyle(PlainButtonStyle())
-                .disabled(model.matches.isEmpty)
+                .disabled(viewModel.matches.isEmpty)
             }
-            StringSearchOptionsMenu(options: $model.searchOptions)
+            StringSearchOptionsMenu(options: $viewModel.searchOptions)
                 .menuStyle(BorderlessButtonMenuStyle())
                 .fixedSize()
                 .padding(.trailing, 6)

@@ -27,10 +27,10 @@ struct ConsoleMessageDetailsRouterPro: View {
 
     var body: some View {
         if let request = message.request {
-            NetworkInspectorViewPro(model: .init(message: message, request: request, store: store), onClose: onClose)
+            NetworkInspectorViewPro(viewModel: .init(message: message, request: request, store: store), onClose: onClose)
                 .id(message.objectID)
         } else {
-            MessageDetailsViewPro(model: .init(store: store, message: message), onClose: onClose)
+            MessageDetailsViewPro(viewModel: .init(store: store, message: message), onClose: onClose)
                 .id(message.objectID)
         }
     }

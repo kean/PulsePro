@@ -70,9 +70,9 @@ private struct InnerConsoleContainerView: View {
     @ViewBuilder
     private var mainPanel: some View {
         NotSplitView(
-            ConsoleContainerMainPanel(model: viewModel)
+            ConsoleContainerMainPanel(viewModel: viewModel)
                 .frame(minWidth: 400, idealWidth: 800, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center),
-            ConsoleContainerDetailsPanel(model: viewModel.details)
+            ConsoleContainerDetailsPanel(viewModel: viewModel.details)
                 .frame(minWidth: 430, idealWidth: 800, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center),
             isPanelTwoCollaped: details.selectedEntity == nil,
             isVertical: toolbar.isVertical
@@ -102,35 +102,35 @@ private struct ConsoleContainerFiltersPanel: View {
 }
 
 private struct ConsoleContainerMainPanel: View {
-    let model: ConsoleContainerViewModel
+    let viewModel: ConsoleContainerViewModel
     @ObservedObject var mode: ConsoleModePickerViewModel
     
-    init(model: ConsoleContainerViewModel) {
-        self.model = model
-        self.mode = model.mode
+    init(viewModel: ConsoleContainerViewModel) {
+        self.viewModel = viewModel
+        self.mode = viewModel.mode
     }
     
     var body: some View {
         switch mode.mode {
         case .list:
             VStack(spacing: 0) {
-                ConsoleTableViewPro(model: model.console)
+                ConsoleTableViewPro(viewModel: viewModel.console)
                 if mode.mode == .list {
-                    TextSearchToolbarWrapper(toolbar: model.toolbar, search: model.console.search)
+                    TextSearchToolbarWrapper(toolbar: viewModel.toolbar, search: viewModel.console.search)
                 }
             }
-            .onAppear(perform: model.console.onAppear)
-            .background(NavigationTitleUpdater(list: model.console.list))
+            .onAppear(perform: viewModel.console.onAppear)
+            .background(NavigationTitleUpdater(list: viewModel.console.list))
         case .text:
-            ConsoleStoryView(model: model.console)
-                .background(NavigationTitleUpdater(list: model.console.list))
+            ConsoleStoryView(viewModel: viewModel.console)
+                .background(NavigationTitleUpdater(list: viewModel.console.list))
         case .network:
             VStack(spacing: 0) {
-                NetworkListViewPro(list: model.network.list, main: model.network)
-                TextSearchToolbarWrapper(toolbar: model.toolbar, search: model.network.search)
+                NetworkListViewPro(list: viewModel.network.list, main: viewModel.network)
+                TextSearchToolbarWrapper(toolbar: viewModel.toolbar, search: viewModel.network.search)
             }
-            .onAppear(perform: model.network.onAppear)
-            .background(NetworkNavigationTitleUpdater(list: model.network.list))
+            .onAppear(perform: viewModel.network.onAppear)
+            .background(NetworkNavigationTitleUpdater(list: viewModel.network.list))
         }
     }
 }
@@ -142,7 +142,7 @@ private struct TextSearchToolbarWrapper: View {
     var body: some View {
         if toolbar.isSearchBarActive || !search.matches.isEmpty {
             Divider()
-            TextSearchToolbar(model: search)
+            TextSearchToolbar(viewModel: search)
         }
     }
 }
@@ -166,11 +166,11 @@ private struct NetworkNavigationTitleUpdater: View {
 }
 
 struct ConsoleContainerDetailsPanel: View {
-    @ObservedObject var model: ConsoleDetailsPanelViewModel
+    @ObservedObject var viewModel: ConsoleDetailsPanelViewModel
 
     var body: some View {
-        if let selectedEntity = model.selectedEntity {
-            model.makeDetailsRouter(for: selectedEntity, onClose: { model.selectedEntity = nil })
+        if let selectedEntity = viewModel.selectedEntity {
+            viewModel.makeDetailsRouter(for: selectedEntity, onClose: { viewModel.selectedEntity = nil })
         } else {
             Text("No Selection")
                 .font(.title)

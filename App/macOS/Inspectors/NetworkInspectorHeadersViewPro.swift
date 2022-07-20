@@ -27,7 +27,7 @@ struct NetworkInspectorHeadersViewPro: View {
     }
     
     var body: some View {
-        RichTextViewPro(model: textViewModel, isAutomaticLinkDetectionEnabled: false, content: .headers)
+        RichTextViewPro(viewModel: textViewModel, isAutomaticLinkDetectionEnabled: false, content: .headers)
     }
 
     private var text: NSAttributedString {
