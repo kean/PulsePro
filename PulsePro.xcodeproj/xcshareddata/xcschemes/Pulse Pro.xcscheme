@@ -56,13 +56,6 @@
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "PULSE_MOCK_STORE_ENABLED"
-            value = "1"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
