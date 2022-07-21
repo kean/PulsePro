@@ -21,7 +21,8 @@ struct NetworkInspectorHeadersViewPro: View {
 
     var items: [KeyValueSectionViewModel] {
         [
-            viewModel.requestHeaders,
+            viewModel.requestHeadersOriginal,
+            viewModel.requestHeadersCurrent,
             viewModel.responseHeaders
         ].compactMap { $0 }
     }
