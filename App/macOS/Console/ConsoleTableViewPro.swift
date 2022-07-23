@@ -144,7 +144,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
     }
 
     func makeNSView(context: Context) -> NSScrollView {
-        let tableView = ConsoleTableView()
+        let tableView = _ConsoleTableViewPro()
         tableView.model = list
         tableView.main = main
 
@@ -177,7 +177,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
             case .index: menuItemTitle = "Index"
             default: menuItemTitle = column.title
             }
-            let menuItem = NSMenuItem(title: menuItemTitle, action: #selector(ConsoleTableView.toggleColumn(_:)), keyEquivalent: "")
+            let menuItem = NSMenuItem(title: menuItemTitle, action: #selector(_ConsoleTableViewPro.toggleColumn(_:)), keyEquivalent: "")
             menuItem.target = tableView
             menuItem.state = visibleColumns.contains(item) ? .on : .off
             menuItem.representedObject = column
@@ -193,7 +193,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
         
         menu.addItem(NSMenuItem.separator())
         
-        let resetMenuItem = NSMenuItem(title: "Reset", action: #selector(ConsoleTableView.resetColumns(_:)), keyEquivalent: "")
+        let resetMenuItem = NSMenuItem(title: "Reset", action: #selector(_ConsoleTableViewPro.resetColumns(_:)), keyEquivalent: "")
         resetMenuItem.target = tableView
         menu.addItem(resetMenuItem)
         
@@ -273,7 +273,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
 }
 
 // All these tricks ensure dynamic context menu work.
-private final class ConsoleTableView: NSTableView, NSMenuDelegate {
+private final class _ConsoleTableViewPro: NSTableView, NSMenuDelegate {
     var main: ConsoleMainViewModel!
     var model: ManagedObjectsList<LoggerMessageEntity>!
     

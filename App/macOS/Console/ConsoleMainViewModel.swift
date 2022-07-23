@@ -13,7 +13,7 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     let filters = ConsoleSearchCriteriaViewModel()
     let search: TextSearchViewModel
     let toolbar: ConsoleToolbarViewModel
-    let mode: ConsoleModePickerViewModel
+    let mode: ConsoleModePickerViewModelPro
     
     private let textSearch = ManagedObjectTextSearch<LoggerMessageEntity> { $0.text }
     
@@ -34,7 +34,7 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     private var latestSessionId: String?
     private var cancellables = [AnyCancellable]()
     
-    init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModel) {
+    init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModelPro) {
         self.store = store
         self.toolbar = toolbar
         self.details = details
@@ -243,10 +243,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     }
 }
 
-final class ConsoleSearchBarViewModel: ObservableObject {
-    @Published var text: String = ""
-}
-
-final class ConsoleModePickerViewModel: ObservableObject {
+final class ConsoleModePickerViewModelPro: ObservableObject {
     @Published var mode: ConsoleViewMode = .list
 }

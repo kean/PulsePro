@@ -82,7 +82,7 @@ private struct InnerConsoleContainerView: View {
 
 private struct ConsoleContainerFiltersPanel: View {
     let viewModel: ConsoleContainerViewModel
-    @ObservedObject var mode: ConsoleModePickerViewModel
+    @ObservedObject var mode: ConsoleModePickerViewModelPro
     
     init(viewModel: ConsoleContainerViewModel) {
         self.viewModel = viewModel
@@ -103,7 +103,7 @@ private struct ConsoleContainerFiltersPanel: View {
 
 private struct ConsoleContainerMainPanel: View {
     let viewModel: ConsoleContainerViewModel
-    @ObservedObject var mode: ConsoleModePickerViewModel
+    @ObservedObject var mode: ConsoleModePickerViewModelPro
     
     init(viewModel: ConsoleContainerViewModel) {
         self.viewModel = viewModel
@@ -207,7 +207,7 @@ private struct ConsoleWindowAccessors: View {
 private struct ConsoleToolbarSearchBar: View {
     let viewModel: ConsoleMainViewModel
     @ObservedObject var toolbar: ConsoleToolbarViewModel
-    @ObservedObject var mode: ConsoleModePickerViewModel
+    @ObservedObject var mode: ConsoleModePickerViewModelPro
     @ObservedObject var searchBar: ConsoleSearchBarViewModel
 
     init(viewModel: ConsoleContainerViewModel) {
@@ -227,7 +227,7 @@ private struct ConsoleToolbarSearchBar: View {
 }
 
 private struct ConsoleToolbarModePickerView: View {
-    @ObservedObject var viewModel: ConsoleModePickerViewModel
+    @ObservedObject var viewModel: ConsoleModePickerViewModelPro
 
     var body: some View {
         Picker("Mode", selection: $viewModel.mode) {
@@ -245,7 +245,7 @@ final class ConsoleContainerViewModel: ObservableObject {
     let network: NetworkMainViewModel
     let remote: RemoteLoggerClientViewModel
     
-    let mode = ConsoleModePickerViewModel()
+    let mode = ConsoleModePickerViewModelPro()
     let toolbar = ConsoleToolbarViewModel()
     let searchBar = ConsoleSearchBarViewModel()
     let details: ConsoleDetailsPanelViewModel

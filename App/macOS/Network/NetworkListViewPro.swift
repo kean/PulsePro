@@ -86,10 +86,10 @@ struct NetworkListViewPro: NSViewRepresentable {
             case .duration:
                 return makePlainCell(text: DurationFormatter.string(from: request.duration))
             case .uncompressedRequestSize:
-                let sizeText = ByteCountFormatter.string(fromByteCount: request.requestBodySize, countStyle: .file)
+                let sizeText = request.requestBodySize >= 0 ? ByteCountFormatter.string(fromByteCount: request.requestBodySize, countStyle: .file) : "–"
                 return makePlainCell(text: sizeText)
             case .uncompressedResponseSize:
-                let sizeText = ByteCountFormatter.string(fromByteCount: request.responseBodySize, countStyle: .file)
+                let sizeText = request.responseBodySize >= 0 ? ByteCountFormatter.string(fromByteCount: request.responseBodySize, countStyle: .file) : "–"
                 return makePlainCell(text: request.isFromCache ? sizeText + " (cache)" : sizeText)
             case .error:
                 return makePlainCell(text: request.errorCode != 0 ? "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))" : "–")

@@ -35,7 +35,7 @@ struct PulseApp: App {
         .handlesExternalEvents(matching: [AppRouter.scheme])
         
         Settings {
-            SettingsView()
+            SettingsViewPro()
         }
     }
 }
