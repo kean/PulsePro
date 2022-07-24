@@ -93,10 +93,10 @@ private struct ConsoleContainerFiltersPanel: View {
         switch mode.mode {
         case .list, .text:
             ConsoleFiltersView(viewModel: viewModel.console.filters)
-                .frame(width: 200)
+                .frame(width: Filters.preferredWidth)
         case .network:
             NetworkFiltersView(viewModel: viewModel.network.filters)
-                .frame(width: 200)
+                .frame(width: Filters.preferredWidth)
         }
     }
 }
