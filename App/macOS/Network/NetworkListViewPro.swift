@@ -79,6 +79,8 @@ struct NetworkListViewPro: NSViewRepresentable {
                 return makePlainCell(text: request.url ?? "–")
             case .host:
                 return makePlainCell(text: request.host ?? "–")
+            case .taskType:
+                return makePlainCell(text: request.taskType?.rawValue ?? "–")
             case .method:
                 return makePlainCell(text: request.httpMethod ?? "–")
             case .statusCode:
@@ -427,6 +429,7 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
     case method = "method"
     case url = "url"
     case host = "host"
+    case taskType = "taskType"
     case statusCode = "statusCode"
     case duration = "duration"
     case uncompressedRequestSize = "uncompressedRequestSize"
@@ -448,6 +451,7 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
         case .method: return "Method"
         case .url: return "URL"
         case .host: return "Host"
+        case .taskType: return "Task"
         case .statusCode: return "Code"
         case .duration: return "Duration"
         case .uncompressedRequestSize: return "Request Size"
@@ -467,7 +471,8 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
         case .method: return 34
         case .url: return 230
         case .host: return 100
-        case .statusCode: return 30
+        case .taskType: return 60
+        case .statusCode: return 32
         case .duration: return 60
         case .uncompressedRequestSize: return 70
         case .uncompressedResponseSize: return 70
@@ -486,6 +491,7 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
         case .method: return 40
         case .url: return 40
         case .host: return 40
+        case .taskType: return 40
         case .statusCode: return preferredWidth
         case .duration: return preferredWidth
         case .uncompressedRequestSize: return 40
@@ -502,6 +508,8 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
             return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.url, ascending: false)
         case .host:
             return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.host, ascending: false)
+        case .taskType:
+            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.rawTaskType, ascending: false)
         case .method:
             return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.httpMethod, ascending: false)
         case .statusCode:
