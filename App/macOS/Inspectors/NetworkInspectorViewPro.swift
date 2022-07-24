@@ -49,7 +49,7 @@ private struct NetworkTabView: View {
 struct NetworkInspectorViewPro: View {
     // Make sure all tabs are updated live
     @ObservedObject var viewModel: NetworkInspectorViewModelPro
-    @State private var selectedTab: NetworkInspectorTabPro = .response
+    @AppStorage("networkInspectorSelectedTab") private var selectedTab: NetworkInspectorTabPro = .response
     @Environment(\.colorScheme) private var colorScheme
     var onClose: (() -> Void)?
 
@@ -112,7 +112,7 @@ struct NetworkInspectorViewPro: View {
     }
 }
 
-private enum NetworkInspectorTabPro: Identifiable {
+private enum NetworkInspectorTabPro: String, Identifiable {
     case summary
     case headers
     case request
