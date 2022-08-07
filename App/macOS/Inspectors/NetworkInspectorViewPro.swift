@@ -85,13 +85,13 @@ struct NetworkInspectorViewPro: View {
             NetworkInspectorHeadersViewPro(viewModel: viewModel.makeHeadersModel())
         case .request:
             if let viewModel = viewModel.makeRequestBodyViewModel() {
-                NetworkInspectorResponseViewPro(viewModel: viewModel)
+                FileViewerPro(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
         case .response:
             if let viewModel = viewModel.makeResponseBodyViewModel() {
-                NetworkInspectorResponseViewPro(viewModel: viewModel)
+                FileViewerPro(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
@@ -136,21 +136,16 @@ private enum NetworkInspectorTabPro: String, Identifiable {
 
 // MARK: - ViewModel
 
-@available(iOS 13.0, tvOS 14.0, watchOS 7.0, *)
 final class NetworkInspectorViewModelPro: ObservableObject {
     private(set) var title: String = ""
     let message: LoggerMessageEntity
-    let request: LoggerNetworkRequestEntity
     private let objectId: NSManagedObjectID
-    let store: LoggerStore // TODO: make it private
-    private let summary: NetworkLoggerSummary
+    let request: LoggerNetworkRequestEntity
 
-    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, store: LoggerStore) {
+    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity) {
         self.objectId = message.objectID
         self.message = message
         self.request = request
-        self.store = store
-        self.summary = NetworkLoggerSummary(request: request, store: store)
 
         if let url = request.url.flatMap(URL.init(string:)) {
             if let httpMethod = request.httpMethod {
@@ -164,29 +159,29 @@ final class NetworkInspectorViewModelPro: ObservableObject {
     // MARK: - Tabs
 
     func makeSummaryModel() -> NetworkInspectorSummaryViewModel {
-        NetworkInspectorSummaryViewModel(summary: summary)
+        NetworkInspectorSummaryViewModel(request: request)
     }
 
     func makeHeadersModel() -> NetworkInspectorHeaderViewModel {
-        NetworkInspectorHeaderViewModel(summary: summary)
+        NetworkInspectorHeaderViewModel(request: request)
     }
 
-    func makeRequestBodyViewModel() -> NetworkInspectorResponseViewModelPro? {
-        guard let requestBody = summary.requestBody, !requestBody.isEmpty else { return nil }
-        return NetworkInspectorResponseViewModelPro(data: requestBody)
+    func makeRequestBodyViewModel() -> FileViewModelPro? {
+        guard let requestBody = request.requestBody?.data, !requestBody.isEmpty else { return nil }
+        return FileViewModelPro(data: requestBody)
     }
 
-    func makeResponseBodyViewModel() -> NetworkInspectorResponseViewModelPro? {
-        guard let responseBody = summary.responseBody, !responseBody.isEmpty else { return nil }
-        return NetworkInspectorResponseViewModelPro(data: responseBody)
+    func makeResponseBodyViewModel() -> FileViewModelPro? {
+        guard let responseBody = request.responseBody?.data, !responseBody.isEmpty else { return nil }
+        return FileViewModelPro(data: responseBody)
     }
 
     func makeMetricsModel() -> NetworkInspectorMetricsViewModel? {
-        summary.metrics.map(NetworkInspectorMetricsViewModel.init)
+        request.details?.metrics.map(NetworkInspectorMetricsViewModel.init)
     }
     
     func makecURLRepresentation() -> NSAttributedString {
-        let string = NetworkLoggerSummary(request: request, store: store).cURLDescription()
+        let string = request.cURLDescription()
         let fontSize = AppSettings.shared.cURLFontSize
         return NSAttributedString(string: string, attributes: [
             .font:  UXFont.monospacedSystemFont(ofSize: CGFloat(fontSize), weight: .regular),
@@ -200,7 +195,7 @@ final class NetworkInspectorViewModelPro: ObservableObject {
 struct NetworkInspectorViewPro_Previews: PreviewProvider {
     static var previews: some View {
             let messsage = try! LoggerStore.mock.allMessages()[7]
-        return NetworkInspectorViewPro(viewModel: .init(message: messsage, request: messsage.request!, store: .mock))
+        return NetworkInspectorViewPro(viewModel: .init(message: messsage, request: messsage.request!))
                 .previewLayout(.fixed(width: 600, height: 400))
     }
 }

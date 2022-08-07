@@ -391,12 +391,6 @@ extension ConsoleStoryViewModel {
         switch state {
         case .pending:
             prefix = "PENDING"
-            if request.totalUnitCount > 0 {
-                func format(_ bytes: Int64) -> String {
-                    ByteCountFormatter.string(fromByteCount: bytes, countStyle: .file)
-                }
-                prefix += " · \(format(request.completedUnitCount)) / \(format(request.totalUnitCount))"
-            }
         case .success:
             prefix = StatusCodeFormatter.string(for: Int(request.statusCode))
         case .failure:
@@ -440,11 +434,12 @@ extension ConsoleStoryViewModel {
         attributes[.link] = makeToggleInfoURL(for: model.id)
         text.append("✶", attributes)
         
-        if options.isNetworkExpanded, let data = request.responseBodyKey.flatMap(self.main.store.getData(forKey:)) {
+        if options.isNetworkExpanded, let data = request.responseBody?.data {
             if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                 let renderer = AttributedStringJSONRenderer(fontSize: options.fontSize, lineHeight: Constants.ResponseViewer.lineHeight(for: Int(options.fontSize)))
                 let printer = JSONPrinter(renderer: renderer)
-                printer.render(json: json)
+                #warning("TODO: pass error")
+                printer.render(json: json, error: nil)
                 text.append("\n")
                 text.append(renderer.make())
             } else if let string = String(data: data, encoding: .utf8) {
@@ -492,7 +487,7 @@ private let dateFormatter: DateFormatter = {
 struct ConsoleStoryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConsoleStoryView(viewModel: .init(store: .mock, toolbar: .init(), details: .init(store: .mock), mode: .init()))
+            ConsoleStoryView(viewModel: .init(store: .mock, toolbar: .init(), details: .init(), mode: .init()))
                 .previewLayout(.fixed(width: 700, height: 1200))
         }
     }

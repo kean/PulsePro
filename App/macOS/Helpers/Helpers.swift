@@ -80,7 +80,7 @@ extension URL {
 extension NSPersistentStoreCoordinator {
     func createCopyOfStore(at url: URL) throws {
         guard let sourceStore = persistentStores.first else {
-            throw LoggerStoreError.unknownError // Should never happen
+            throw LoggerStore.Error.unknownError // Should never happen
         }
 
         let backupCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
@@ -120,7 +120,7 @@ extension NSManagedObjectContext {
         performAndWait {
             result = Result { try closure() }
         }
-        guard let unwrappedResult = result else { throw LoggerStoreError.unknownError }
+        guard let unwrappedResult = result else { throw LoggerStore.Error.unknownError }
         return try unwrappedResult.get()
     }
 }

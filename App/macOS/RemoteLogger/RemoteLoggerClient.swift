@@ -23,8 +23,8 @@ struct RemoteLoggerClientId: Hashable, Codable {
 final class RemoteLoggerClient: ObservableObject, Identifiable {
     var id: RemoteLoggerClientId { info.id }
     var deviceId: UUID { info.deviceId }
-    var deviceInfo: LoggerStoreInfo.DeviceInfo { info.deviceInfo }
-    var appInfo: LoggerStoreInfo.AppInfo { info.appInfo }
+    var deviceInfo: LoggerStore.Info.DeviceInfo { info.deviceInfo }
+    var appInfo: LoggerStore.Info.AppInfo { info.appInfo }
     
     let info: RemoteLoggerClientInfo
     let store: LoggerStore
@@ -120,7 +120,7 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
         store.removeAll()
     }
         
-    func process(event: LoggerStoreEvent) {
+    func process(event: LoggerStore.Event) {
         RemoteLogger.process(event, store: store)
     }
     
@@ -139,8 +139,8 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
 final class RemoteLoggerClientInfo: Codable {
     let id: RemoteLoggerClientId
     var deviceId: UUID
-    let deviceInfo: LoggerStoreInfo.DeviceInfo
-    let appInfo: LoggerStoreInfo.AppInfo
+    let deviceInfo: LoggerStore.Info.DeviceInfo
+    let appInfo: LoggerStore.Info.AppInfo
     
     init(info: RemoteLogger.PacketClientHello) {
         self.id = RemoteLoggerClientId(request: info)

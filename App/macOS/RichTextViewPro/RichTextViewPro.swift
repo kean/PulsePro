@@ -643,7 +643,8 @@ private extension RichTextViewPro {
         let fontSize = AppSettings.shared.viewerFontSize
         let renderer = AttributedStringJSONRenderer(fontSize: CGFloat(fontSize), lineHeight: Constants.ResponseViewer.lineHeight(for: fontSize))
         let printer = JSONPrinter(renderer: renderer)
-        printer.render(json: json)
+        #warning("TODO: pass error")
+        printer.render(json: json, error: nil)
         self.init(viewModel: .init(string: renderer.make()), content: .response)
     }
 }

@@ -26,7 +26,7 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
 
     private(set) var store: LoggerStore
     private let controller: NSFetchedResultsController<LoggerNetworkRequestEntity>
-    private var latestSessionId: String?
+    private var latestSessionId: UUID?
     private var isFirstRefresh = true
     private var cancellables = [AnyCancellable]()
     private var appliedProgrammaticFilters: [NetworkSearchFilter] = []
@@ -124,7 +124,7 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
 
     private func refreshNow() {
         // Get sessionId
-        let sessionId = store === LoggerStore.default ? LoggerSession.current.id.uuidString : latestSessionId
+        let sessionId = store === LoggerStore.shared ? LoggerStore.Session.current.id : latestSessionId
         
         // Search messages
         NetworkSearchCriteria.update(request: controller.fetchRequest, filterTerm: "", criteria: filters.criteria, filters: filters.filters, isOnlyErrors: toolbar.isOnlyErrors, sessionId: sessionId)

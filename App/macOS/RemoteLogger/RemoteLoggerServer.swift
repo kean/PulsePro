@@ -170,13 +170,13 @@ final class RemoteLoggerServer: RemoteLoggerConnectionDelegate, ObservableObject
         case .ping:
             client?.didReceivePing()
         case .storeEventMessageStored:
-            let event = try JSONDecoder().decode(LoggerStoreEvent.MessageCreated.self, from: packet.body)
+            let event = try JSONDecoder().decode(LoggerStore.Event.MessageCreated.self, from: packet.body)
             client?.process(event: .messageStored(event))
         case .storeEventNetworkTaskCreated:
-            let event = try JSONDecoder().decode(LoggerStoreEvent.NetworkTaskCreated.self, from: packet.body)
+            let event = try JSONDecoder().decode(LoggerStore.Event.NetworkTaskCreated.self, from: packet.body)
             client?.process(event: .networkTaskCreated(event))
         case .storeEventNetworkTaskProgressUpdated:
-            let event = try JSONDecoder().decode(LoggerStoreEvent.NetworkTaskProgressUpdated.self, from: packet.body)
+            let event = try JSONDecoder().decode(LoggerStore.Event.NetworkTaskProgressUpdated.self, from: packet.body)
             client?.process(event: .networkTaskProgressUpdated(event))
         case .storeEventNetworkTaskCompleted:
             let message = try RemoteLogger.PacketNetworkMessage.decode(packet.body)

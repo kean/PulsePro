@@ -80,7 +80,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
                     interval = list.isCreatedAtAscending ? interval : (interval >= 0.001 ? -interval : interval)
                     return makePlainCell(text: "\(stringPrecise(from: interval))")
                 }
-            case .level: return makePlainCell(text: message.level)
+            case .level: return makePlainCell(text: LoggerStore.Level(rawValue: message.level)?.name ?? "–")
             case .label: return makePlainCell(text: message.label)
             case .status:
                 guard let request = message.request else { return nil }
@@ -93,7 +93,6 @@ struct ConsoleTableViewPro: NSViewRepresentable {
                 return cell
             case .message: return makePlainCell(text: message.text)
             case .file: return makePlainCell(text: message.file)
-            case .filename: return makePlainCell(text: message.filename)
             case .function: return makePlainCell(text: message.function)
             }
         }
@@ -166,7 +165,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
                 column.minWidth = minWidth
             }
             column.isHidden = !visibleColumns.contains(item)
-            if let sortDescriptor = item.sortDescriptorProtot {
+            if let sortDescriptor = item.sortDescriptorPrototype {
                 column.sortDescriptorPrototype = sortDescriptor
             }
             tableView.addTableColumn(column)
@@ -382,7 +381,7 @@ private final class _ConsoleTableViewPro: NSTableView, NSMenuDelegate {
         
         var menu: NSMenu?
         if let request = message.request {
-            let model = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, store: main.store, pins: main.pins)
+            let model = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, pins: main.pins)
             let view = ConsoleNetworkRequestContextMenuViewPro(model: model)
             menu = view.menu(for: event)
             
@@ -527,7 +526,6 @@ enum ConsoleColumn: String, Hashable, CaseIterable {
     case label = "label"
     case message = "message"
     case file = "file"
-    case filename = "filename"
     case function = "function"
     
     static let defaultSelection: [ConsoleColumn] = [
@@ -546,7 +544,6 @@ enum ConsoleColumn: String, Hashable, CaseIterable {
         case .label: return "Label"
         case .message: return "Message"
         case .file: return "File"
-        case .filename: return "Filename"
         case .function: return "Function"
         }
     }
@@ -562,8 +559,7 @@ enum ConsoleColumn: String, Hashable, CaseIterable {
         case .level: return 46
         case .label: return 68
         case .message: return 320
-        case .file: return 136
-        case .filename: return 136
+        case .file: return 80
         case .function: return 136
         }
     }
@@ -580,29 +576,27 @@ enum ConsoleColumn: String, Hashable, CaseIterable {
         case .label: return 40
         case .message: return 100
         case .file: return 50
-        case .filename: return 50
         case .function: return 50
         }
     }
     
-    var sortDescriptorProtot: NSSortDescriptor? {
+    var sortDescriptorPrototype: NSSortDescriptor? {
         switch self {
         case .dateAndTime, .date, .time, .interval:
             return NSSortDescriptor(keyPath: \LoggerMessageEntity.createdAt, ascending: false)
         case .level:
-            return NSSortDescriptor(keyPath: \LoggerMessageEntity.levelOrder, ascending: false)
+            return NSSortDescriptor(keyPath: \LoggerMessageEntity.level, ascending: false)
         case .label:
             return NSSortDescriptor(keyPath: \LoggerMessageEntity.label, ascending: true)
         case .message:
             return NSSortDescriptor(keyPath: \LoggerMessageEntity.text, ascending: true)
         case .file:
             return NSSortDescriptor(keyPath: \LoggerMessageEntity.file, ascending: true)
-        case .filename:
-            return NSSortDescriptor(keyPath: \LoggerMessageEntity.filename, ascending: true)
         case .function:
             return NSSortDescriptor(keyPath: \LoggerMessageEntity.function, ascending: true)
         case .status:
-            return NSSortDescriptor(keyPath: \LoggerMessageEntity.requestState, ascending: true)
+            // Yes, line doubles as requestState because it's unused for network requests
+            return NSSortDescriptor(keyPath: \LoggerMessageEntity.line, ascending: true)
         case .index: return nil
         }
     }

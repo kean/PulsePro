@@ -80,7 +80,7 @@ struct NetworkListViewPro: NSViewRepresentable {
             case .host:
                 return makePlainCell(text: request.host ?? "–")
             case .taskType:
-                return makePlainCell(text: request.taskType?.rawValue ?? "–")
+                return makePlainCell(text: shortName(for: request.taskType ?? .dataTask))
             case .method:
                 return makePlainCell(text: request.httpMethod ?? "–")
             case .statusCode:
@@ -374,7 +374,7 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
         let cellView = view(atColumn: column, row: row, makeIfNecessary: false)
         let stringValue = (cellView as? PlainTableCell)?.stringValue
         
-        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, store: main.store, pins: main.pins)
+        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, pins: main.pins)
         let view = ConsoleNetworkRequestContextMenuViewPro(model: menuModel)
         let menu = view.menu(for: event)
         
@@ -531,5 +531,15 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
 
     var identifier: NSUserInterfaceItemIdentifier {
         NSUserInterfaceItemIdentifier(rawValue: rawValue)
+    }
+}
+
+private func shortName(for taskType: NetworkLogger.TaskType) -> String {
+    switch taskType {
+    case .dataTask: return "data"
+    case .downloadTask: return "download"
+    case .uploadTask: return "upload"
+    case .streamTask: return "stream"
+    case .webSocketTask: return "webSocket"
     }
 }

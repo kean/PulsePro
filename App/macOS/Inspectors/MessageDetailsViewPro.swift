@@ -61,7 +61,7 @@ struct MessageDetailsViewPro: View {
 struct MessageDetailsViewPro_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MessageDetailsViewPro(viewModel: .init(store: .mock, message: try! LoggerStore.mock.allMessages()[0]))
+            MessageDetailsViewPro(viewModel: .init(message: try! LoggerStore.mock.allMessages()[0]))
                 .previewLayout(.fixed(width: 600, height: 400))
         }
     }

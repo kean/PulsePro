@@ -15,13 +15,11 @@ import PulseCore
 final class ConsoleNetworkRequestContextMenuViewModelPro {
     private let message: LoggerMessageEntity
     private let request: LoggerNetworkRequestEntity
-    private let store: LoggerStore
     private let pins: PinsService
     
-    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, store: LoggerStore, pins: PinsService) {
+    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, pins: PinsService) {
         self.message = message
         self.request = request
-        self.store = store
         self.pins = pins
     }
 
@@ -38,14 +36,12 @@ final class ConsoleNetworkRequestContextMenuViewModelPro {
     // MARK: Context Menu
 
     var containsResponseData: Bool {
-        request.responseBodyKey != nil
+        request.responseBodySize > 0
     }
 
     // WARNING: This call is relatively expensive.
     var responseString: String? {
-        request.responseBodyKey
-            .flatMap(store.getData)
-            .flatMap { String(data: $0, encoding: .utf8) }
+        request.responseBody?.data.flatMap { String(data: $0, encoding: .utf8) }
     }
 
     var url: String? {
@@ -57,7 +53,7 @@ final class ConsoleNetworkRequestContextMenuViewModelPro {
     }
 
     var cURLDescription: String {
-        NetworkLoggerSummary(request: request, store: store).cURLDescription()
+        request.cURLDescription()
     }
 }
 

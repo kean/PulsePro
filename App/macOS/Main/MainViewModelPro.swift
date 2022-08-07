@@ -59,9 +59,6 @@ final class MainViewDetailsViewModel: ObservableObject {
     func open(url: URL) {
         do {
             let store = try LoggerStore(storeURL: url)
-            if let version = store.info.flatMap({ Version($0.storeVersion) }), version < Version(2, 0, 0) {
-                showAlert(error: UnsupportedStoreVersion(errorDescription: "The store was created by one of the earlier versions of Pulse and some information might be displayed incorrectly."))
-            }
             self.viewModel = ConsoleContainerViewModel(store: store, name: url.lastPathComponent, client: nil)
             NSDocumentController.shared.noteNewRecentDocumentURL(url)
         } catch {

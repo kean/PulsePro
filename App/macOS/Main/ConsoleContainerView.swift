@@ -260,7 +260,7 @@ final class ConsoleContainerViewModel: ObservableObject {
         self.store = store
         self.name = name
 
-        self.details = ConsoleDetailsPanelViewModel(store: store)
+        self.details = ConsoleDetailsPanelViewModel()
         self.console = ConsoleMainViewModel(store: store, toolbar: toolbar, details: details, mode: mode)
         self.network = NetworkMainViewModel(store: store, toolbar: toolbar, details: details)
         self.remote = RemoteLoggerClientViewModel(client: client)
@@ -289,5 +289,20 @@ final class ConsoleContainerViewModel: ObservableObject {
         case .network: network.searchTerm = text
         case .text: console.filterTerm = text
         }
+    }
+}
+
+private struct ExDivider: View {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+
+    var color: Color {
+        colorScheme == .dark ? .black : .separator
+    }
+    var width: CGFloat = 1
+    var body: some View {
+        Rectangle()
+            .fill(color)
+            .frame(width: width)
+            .edgesIgnoringSafeArea(.vertical)
     }
 }

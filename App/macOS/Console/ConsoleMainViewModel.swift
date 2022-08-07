@@ -31,7 +31,7 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     
     private(set) var store: LoggerStore
     private let controller: NSFetchedResultsController<LoggerMessageEntity>
-    private var latestSessionId: String?
+    private var latestSessionId: UUID?
     private var cancellables = [AnyCancellable]()
     
     init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModelPro) {
@@ -133,10 +133,10 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
 
     private func refresh(filterTerm: String) {
         // Get sessionId
-        let sessionId = store === LoggerStore.default ? LoggerSession.current.id.uuidString : latestSessionId
+        let sessionId = store === LoggerStore.shared ? LoggerStore.Session.current.id : latestSessionId
 
         // Search messages
-        ConsoleSearchCriteria.update(request: controller.fetchRequest, filterTerm: filterTerm, criteria: filters.criteria, filters: filters.filters, sessionId: sessionId, isOnlyErrors: toolbar.isOnlyErrors)
+        ConsoleSearchCriteria.update(request: controller.fetchRequest, filterTerm: filterTerm, criteria: filters.criteria, filters: filters.filters, sessionId: sessionId, isOnlyErrors: toolbar.isOnlyErrors, isOnlyNetwork: false)
         try? controller.performFetch()
         
         if latestSessionId == nil {
