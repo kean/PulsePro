@@ -98,7 +98,7 @@ private struct SidebarView: View {
         SiderbarViewPro(viewModel: viewModel, remote: .shared)
             .frame(minWidth: 150)
             .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.status) {
+                ToolbarItem(placement: ToolbarItemPlacement.navigation) {
                     Button(action: toggleSidebar) {
                         Label("Back", systemImage: "sidebar.left")
                     }
