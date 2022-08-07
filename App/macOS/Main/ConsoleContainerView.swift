@@ -226,15 +226,15 @@ private struct ConsoleToolbarSearchBar: View {
     }
 }
 
-private struct ConsoleToolbarModePickerView: View {
+struct ConsoleToolbarModePickerView: View {
     @ObservedObject var viewModel: ConsoleModePickerViewModelPro
 
     var body: some View {
         Picker("Mode", selection: $viewModel.mode) {
-            Label("as List", systemImage: "list.dash").tag(ConsoleViewMode.list)
-            Label("as Text", systemImage: "doc.plaintext").tag(ConsoleViewMode.text)
-            Label("as Network", systemImage: "network").tag(ConsoleViewMode.network)
-        }.pickerStyle(InlinePickerStyle())
+            Image(systemName: "list.dash").tag(ConsoleViewMode.list)
+            Image(systemName: "doc.plaintext").tag(ConsoleViewMode.text)
+            Image(systemName: "network").tag(ConsoleViewMode.network)
+        }.pickerStyle(.inline)
     }
 }
 

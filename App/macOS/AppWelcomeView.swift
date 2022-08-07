@@ -24,11 +24,7 @@ struct AppWelcomeView: View {
         .navigationSubtitle("Welcome")
         .toolbar {
             ToolbarItemGroup(placement: .navigation) {
-                Picker("Mode", selection: .constant(ConsoleViewMode.list)) {
-                    Label("as List", systemImage: "list.dash").tag(ConsoleViewMode.list)
-                    Label("as Text", systemImage: "doc.plaintext").tag(ConsoleViewMode.text)
-                    Label("as Network", systemImage: "network").tag(ConsoleViewMode.network)
-                }.pickerStyle(InlinePickerStyle()).disabled(true)
+                ConsoleToolbarModePickerView(viewModel: .init()).disabled(true)
             }
             ToolbarItem {
                 Spacer()
