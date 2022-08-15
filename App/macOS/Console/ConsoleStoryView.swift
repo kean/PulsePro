@@ -351,7 +351,7 @@ extension ConsoleStoryViewModel {
         
         // Title second part (regular)
         var titleSecondPart = options.isCompactMode ? "" : "\(message.level) · "
-        titleSecondPart.append("\(message.label)")
+        titleSecondPart.append("\(message.label.name)")
         titleSecondPart.append(options.isCompactMode ? " " : "\n")
         text.append(titleSecondPart, helpers.titleAttributes)
         
