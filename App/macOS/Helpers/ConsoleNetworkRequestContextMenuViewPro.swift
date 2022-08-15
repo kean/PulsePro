@@ -10,50 +10,50 @@ import Foundation
 import CoreData
 import Combine
 import AppKit
-import PulseCore
+import Pulse
 
 final class ConsoleNetworkRequestContextMenuViewModelPro {
     private let message: LoggerMessageEntity
-    private let request: LoggerNetworkRequestEntity
+    private let task: NetworkTaskEntity
     private let pins: PinsService
     
-    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, pins: PinsService) {
+    init(message: LoggerMessageEntity, task: NetworkTaskEntity, pins: PinsService) {
         self.message = message
-        self.request = request
+        self.task = task
         self.pins = pins
     }
 
     // MARK: Pins
 
     var isPinned: Bool {
-        pins.isPinned(request)
+        pins.isPinned(task)
     }
 
     func togglePin() {
-        pins.togglePin(for: request)
+        pins.togglePin(for: task)
     }
 
     // MARK: Context Menu
 
     var containsResponseData: Bool {
-        request.responseBodySize > 0
+        task.responseBodySize > 0
     }
 
     // WARNING: This call is relatively expensive.
     var responseString: String? {
-        request.responseBody?.data.flatMap { String(data: $0, encoding: .utf8) }
+        task.responseBody?.data.flatMap { String(data: $0, encoding: .utf8) }
     }
 
     var url: String? {
-        request.url
+        task.url
     }
 
     var host: String? {
-        request.host
+        task.host?.value
     }
 
     var cURLDescription: String {
-        request.cURLDescription()
+        task.cURLDescription()
     }
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 
 final class TextSearchViewModel: ObservableObject {
     @Published var searchOptions = StringSearchOptions()

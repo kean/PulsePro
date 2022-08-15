@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import CoreData
 import AppKit
-import PulseCore
+import Pulse
 import SwiftUI
 
 final class TableScroller: NSScroller {

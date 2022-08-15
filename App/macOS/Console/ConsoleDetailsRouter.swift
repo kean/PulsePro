@@ -3,7 +3,7 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import SwiftUI
 
@@ -20,8 +20,8 @@ struct ConsoleMessageDetailsRouterPro: View {
     let onClose: (() -> Void)?
 
     var body: some View {
-        if let request = message.request {
-            NetworkInspectorViewPro(viewModel: .init(message: message, request: request), onClose: onClose)
+        if let task = message.task {
+            NetworkInspectorViewPro(viewModel: .init(message: message, task: task), onClose: onClose)
                 .id(message.objectID)
         } else {
             MessageDetailsViewPro(viewModel: .init(message: message), onClose: onClose)

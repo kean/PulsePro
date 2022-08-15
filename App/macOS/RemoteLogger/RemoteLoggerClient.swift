@@ -2,7 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Cocoa
-import PulseCore
+import Pulse
 import SwiftUI
 import Combine
 import Network
@@ -52,7 +52,9 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
         let filename = info.id.raw.data(using: .utf8)?.sha256 ?? info.id.raw
         let storeURL = logsURL
             .appendingFilename(filename).appendingPathExtension("pulse")
-        self.store = try LoggerStore(storeURL: storeURL, options: [.create])
+        var configuration = LoggerStore.Configuration()
+        configuration.saveInterval = .milliseconds(100)
+        self.store = try LoggerStore(storeURL: storeURL, options: [.create], configuration: configuration)
         
         pingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self]_ in
             self?.connection?.send(code: .ping)

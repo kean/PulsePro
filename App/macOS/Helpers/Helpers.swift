@@ -3,7 +3,7 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
-import PulseCore
+import Pulse
 import CoreData
 
 extension URL {
@@ -15,17 +15,22 @@ extension URL {
 }
 
 func stringPrecise(from timeInterval: TimeInterval) -> String {
+    let isNegative = timeInterval < 0
+    let timeInterval = abs(timeInterval)
+
     let ti = Int(timeInterval)
     let ms = Int((timeInterval.truncatingRemainder(dividingBy: 1)) * 1000)
     let seconds = ti % 60
     let minutes = (ti / 60) % 60
     let hours = (ti / 3600)
-    
+
+    let output: String
     if hours >= 1 {
-        return String(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours,minutes,seconds,ms)
+        output = String(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours, minutes, seconds, ms)
     } else {
-        return String(format: "%0.2d:%0.2d.%0.3d",minutes,seconds,ms)
+        output = String(format: "%0.2d:%0.2d.%0.3d", minutes, seconds, ms)
     }
+    return (isNegative ? "–" : "") + output
 }
 
 func descriptionForStatusCode(_ statusCode: Int) -> String {

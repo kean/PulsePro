@@ -3,7 +3,7 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
-import PulseCore
+import Pulse
 import CommonCrypto
 import Combine
 import CoreData
@@ -58,14 +58,14 @@ final class PinsService: ObservableObject {
         pinnedMessageIds.contains(message.objectID)
     }
 
-    func isPinned(_ request: LoggerNetworkRequestEntity) -> Bool {
-        pinnedRequestIds.contains(request.objectID)
+    func isPinned(_ task: NetworkTaskEntity) -> Bool {
+        pinnedRequestIds.contains(task.objectID)
     }
 
     func togglePin(for message: LoggerMessageEntity) {
         _togglePin(for: message)
-        if let request = message.request {
-            _togglePin(for: request)
+        if let task = message.task {
+            _togglePin(for: task)
         }
     }
 
@@ -76,16 +76,16 @@ final class PinsService: ObservableObject {
         isDirty = true
     }
 
-    func togglePin(for request: LoggerNetworkRequestEntity) {
-        _togglePin(for: request)
-        if let message = request.message {
+    func togglePin(for task: NetworkTaskEntity) {
+        _togglePin(for: task)
+        if let message = task.message {
             _togglePin(for: message)
         }
     }
 
-    private func _togglePin(for request: LoggerNetworkRequestEntity) {
-        if pinnedRequestIds.remove(request.objectID) == nil {
-            pinnedRequestIds.insert(request.objectID)
+    private func _togglePin(for task: NetworkTaskEntity) {
+        if pinnedRequestIds.remove(task.objectID) == nil {
+            pinnedRequestIds.insert(task.objectID)
         }
         isDirty = true
     }

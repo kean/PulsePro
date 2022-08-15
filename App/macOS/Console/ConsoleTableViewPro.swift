@@ -4,7 +4,7 @@
 
 
 import SwiftUI
-import PulseCore
+import Pulse
 import CoreData
 import Combine
 import AppKit
@@ -72,7 +72,7 @@ struct ConsoleTableViewPro: NSViewRepresentable {
             case .date: return makePlainCell(text: dateFormatter.string(from: message.createdAt))
             case .time: return makePlainCell(text: timeFormatter.string(from: message.createdAt))
             case .interval:
-                let first = main.earliestMessage ?? list[0]
+                let first = list[0]
                 var interval = message.createdAt.timeIntervalSince1970 - first.createdAt.timeIntervalSince1970
                 if interval > (3600 * 24) {
                     return makePlainCell(text: "1+ day")
@@ -81,11 +81,11 @@ struct ConsoleTableViewPro: NSViewRepresentable {
                     return makePlainCell(text: "\(stringPrecise(from: interval))")
                 }
             case .level: return makePlainCell(text: LoggerStore.Level(rawValue: message.level)?.name ?? "–")
-            case .label: return makePlainCell(text: message.label)
+            case .label: return makePlainCell(text: message.label.name)
             case .status:
-                guard let request = message.request else { return nil }
+                guard let task = message.task else { return nil }
                 let cell = BadgeTableCell.make(in: tableView)
-                switch request.state {
+                switch task.state {
                 case .pending: cell.color = .systemYellow
                 case .success: cell.color = .systemGreen
                 case .failure: cell.color = .systemRed
@@ -380,8 +380,8 @@ private final class _ConsoleTableViewPro: NSTableView, NSMenuDelegate {
         let message = model[row]
         
         var menu: NSMenu?
-        if let request = message.request {
-            let model = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, pins: main.pins)
+        if let task = message.task {
+            let model = ConsoleNetworkRequestContextMenuViewModelPro(message: message, task: task, pins: main.pins)
             let view = ConsoleNetworkRequestContextMenuViewPro(model: model)
             menu = view.menu(for: event)
             

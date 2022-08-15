@@ -3,21 +3,19 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import SwiftUI
 
 final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
 
-    let list = ManagedObjectsList<LoggerNetworkRequestEntity>()
+    let list = ManagedObjectsList<NetworkTaskEntity>()
     let details: ConsoleDetailsPanelViewModel
-    let filters = NetworkSearchCriteriaViewModel()
+    let filters: NetworkSearchCriteriaViewModel
     let search: TextSearchViewModel
     let toolbar: ConsoleToolbarViewModel
     #warning("TODO: reimplement what text is used and don't pull related message")
-    private let textSearch = ManagedObjectTextSearch<LoggerNetworkRequestEntity> { $0.message?.text ?? "" }
-    
-    private(set) var earliestMessage: LoggerNetworkRequestEntity?
+    private let textSearch = ManagedObjectTextSearch<NetworkTaskEntity> { $0.message?.text ?? "" }
     
     let pins: PinsService
 
@@ -25,7 +23,7 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     @Published var searchTerm: String = ""
 
     private(set) var store: LoggerStore
-    private let controller: NSFetchedResultsController<LoggerNetworkRequestEntity>
+    private let controller: NSFetchedResultsController<NetworkTaskEntity>
     private var latestSessionId: UUID?
     private var isFirstRefresh = true
     private var cancellables = [AnyCancellable]()
@@ -35,12 +33,13 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         self.store = store
         self.toolbar = toolbar
         self.details = details
+        self.filters = NetworkSearchCriteriaViewModel(store: store)
 
-        let request = NSFetchRequest<LoggerNetworkRequestEntity>(entityName: "\(LoggerNetworkRequestEntity.self)")
+        let request = NSFetchRequest<NetworkTaskEntity>(entityName: "\(NetworkTaskEntity.self)")
         request.fetchBatchSize = 250
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.createdAt, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \NetworkTaskEntity.createdAt, ascending: true)]
 
-        self.controller = NSFetchedResultsController<LoggerNetworkRequestEntity>(fetchRequest: request, managedObjectContext: store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.controller = NSFetchedResultsController<NetworkTaskEntity>(fetchRequest: request, managedObjectContext: store.container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
 
         self.pins = PinsService.service(for: store)
         self.search = TextSearchViewModel(textSearch: textSearch)
@@ -68,10 +67,6 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         Publishers.CombineLatest($searchTerm.throttle(for: 0.33, scheduler: RunLoop.main, latest: true), search.$searchOptions).dropFirst().sink { [weak self] searchTerm, searchOptions in
             self?.search.refresh(searchTerm: searchTerm, searchOptions: searchOptions)
         }.store(in: &cancellables)
-
-        store.backgroundContext.perform {
-            self.getAllDomains()
-        }
     }
     
     func onAppear() {
@@ -81,9 +76,9 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         }
         
         var isSelectionFound = false
-        if let request = details.selectedEntity?.request {
+        if let task = details.selectedEntity?.task {
             let objects = FetchedObjects(controller: controller)
-            if let index = objects.firstIndex(where: { $0.objectID == request.objectID }) {
+            if let index = objects.firstIndex(where: { $0.objectID == task.objectID }) {
                 isSelectionFound = true
                 selectAndScroll(to: index)
             }
@@ -92,29 +87,7 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
             details.selectedEntity = nil
         }
     }
-    
-    private func getAllDomains() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(LoggerNetworkRequestEntity.self)")
 
-        // Required! Unless you set the resultType to NSDictionaryResultType, distinct can't work.
-        // All objects in the backing store are implicitly distinct, but two dictionaries can be duplicates.
-        // Since you only want distinct names, only ask for the 'name' property.
-        fetchRequest.resultType = .dictionaryResultType
-        fetchRequest.propertiesToFetch = ["host"]
-        fetchRequest.returnsDistinctResults = true
-
-        // Now it should yield an NSArray of distinct values in dictionaries.
-        let map = (try? store.backgroundContext.fetch(fetchRequest)) ?? []
-        let values = (map as? [[String: String]])?.compactMap { $0["host"] }
-        let set = Set(values ?? [])
-
-        DispatchQueue.main.async {
-            self.filters.setInitialDomains(set)
-        }
-    }
-    
-    #warning("on remove all clear allDomains")
-    
     func setSortDescriptor(_ sortDescriptors: [NSSortDescriptor]) {
         controller.fetchRequest.sortDescriptors = sortDescriptors
         refreshNow()
@@ -129,7 +102,7 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         // Search messages
         NetworkSearchCriteria.update(request: controller.fetchRequest, filterTerm: "", criteria: filters.criteria, filters: filters.filters, isOnlyErrors: toolbar.isOnlyErrors, sessionId: sessionId)
         try? controller.performFetch()
-        self.didRefreshRequests()
+        self.didRefreshTasks()
         
         if latestSessionId == nil {
             latestSessionId = list.first?.session
@@ -179,9 +152,6 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            if let entity = anObject as? LoggerNetworkRequestEntity {
-                filters.didInsertEntity(entity)
-            }
             if let newIndexPath = newIndexPath, newIndexPath.item >= countBeforeChange {
                 if let appendRange = appendRange {
                     self.appendRange = min(appendRange.lowerBound, newIndexPath.item)..<max(appendRange.upperBound, (newIndexPath.item + 1))
@@ -203,26 +173,22 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
             if toolbar.isOnlyPins {
                 // This is a new message, it can't possibly be pinned
             } else if !appliedProgrammaticFilters.isEmpty {
-                var appendedRequests: [LoggerNetworkRequestEntity] = []
+                var appendedTasks: [NetworkTaskEntity] = []
                 for index in appendRange {
-                    appendedRequests.append(self.controller.object(at: IndexPath(item: index, section: 0)))
+                    appendedTasks.append(self.controller.object(at: IndexPath(item: index, section: 0)))
                 }
-                let filteredRequests = appendedRequests.filter { evaluateProgrammaticFilters(appliedProgrammaticFilters, entity: $0, store: store) }
-                if !filteredRequests.isEmpty {
+                let filteredTasks = appendedTasks.filter { evaluateProgrammaticFilters(appliedProgrammaticFilters, entity: $0, store: store) }
+                if !filteredTasks.isEmpty {
                     let currentCount = list.count
                     let shiftedRange = (appendRange.lowerBound - currentCount)..<(appendRange.upperBound - currentCount)
-                    let allRequests = Array(list) + filteredRequests
+                    let allRequests = Array(list) + filteredTasks
                     list.update(.append(range: shiftedRange), AnyCollection(allRequests))
                 }
             } else {
                 list.update(.append(range: appendRange), AnyCollection(requests))
             }
         } else {
-            didRefreshRequests()
-        }
-        if list.isEmpty {
-            earliestMessage = nil
-            filters.setInitialDomains([])
+            didRefreshTasks()
         }
         #warning("TODO: insert instead of refresh + update searched?")
         textSearch.replace(requests)
@@ -230,26 +196,23 @@ final class NetworkMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         
     // MARK: Helpers
 
-    private func didRefreshRequests() {
-        var requests: AnyCollection<LoggerNetworkRequestEntity>
+    private func didRefreshTasks() {
+        var tasks: AnyCollection<NetworkTaskEntity>
         
         // Apply filters that couldn't be done programatically
         if let filters = filters.programmaticFilters {
             self.appliedProgrammaticFilters = filters
             let objects = controller.fetchedObjects ?? []
-            requests = AnyCollection(objects.filter { evaluateProgrammaticFilters(filters, entity: $0, store: store) })
+            tasks = AnyCollection(objects.filter { evaluateProgrammaticFilters(filters, entity: $0, store: store) })
         } else {
-            requests = AnyCollection(FetchedObjects(controller: controller))
+            tasks = AnyCollection(FetchedObjects(controller: controller))
         }
         
         if toolbar.isOnlyPins {
-            requests = AnyCollection(requests.filter(pins.isPinned))
+            tasks = AnyCollection(tasks.filter(pins.isPinned))
         }
         
-        list.update(.reload, requests)
-        if earliestMessage == nil {
-            earliestMessage = requests.first
-        }
-        textSearch.replace(requests)
+        list.update(.reload, tasks)
+        textSearch.replace(tasks)
     }
 }

@@ -4,7 +4,7 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
 struct ConsoleContainerView: View {
@@ -157,7 +157,7 @@ private struct NavigationTitleUpdater: View {
 }
 
 private struct NetworkNavigationTitleUpdater: View {
-    @ObservedObject var list: ManagedObjectsList<LoggerNetworkRequestEntity>
+    @ObservedObject var list: ManagedObjectsList<NetworkTaskEntity>
     
     var body: some View {
         EmptyView()

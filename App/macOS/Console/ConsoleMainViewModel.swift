@@ -3,14 +3,14 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import SwiftUI
 
 final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     let list = ManagedObjectsList<LoggerMessageEntity>()
     let details: ConsoleDetailsPanelViewModel
-    let filters = ConsoleSearchCriteriaViewModel()
+    let filters: ConsoleSearchCriteriaViewModel
     let search: TextSearchViewModel
     let toolbar: ConsoleToolbarViewModel
     let mode: ConsoleModePickerViewModelPro
@@ -27,8 +27,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         
     @AppStorage("consoleTableShowErrorsInScroller") var isShowingErrorsInScroller = false
 
-    private(set) var earliestMessage: LoggerMessageEntity?
-    
     private(set) var store: LoggerStore
     private let controller: NSFetchedResultsController<LoggerMessageEntity>
     private var latestSessionId: UUID?
@@ -39,6 +37,7 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         self.toolbar = toolbar
         self.details = details
         self.mode = mode
+        self.filters = ConsoleSearchCriteriaViewModel(store: store)
 
         self.pins = PinsService.service(for: store)
         
@@ -80,10 +79,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         Publishers.CombineLatest($searchTerm.throttle(for: 0.33, scheduler: RunLoop.main, latest: true), search.$searchOptions).dropFirst().sink { [weak self] searchTerm, searchOptions in
             self?.search.refresh(searchTerm: searchTerm, searchOptions: searchOptions)
         }.store(in: &cancellables)
-
-        store.backgroundContext.perform {
-            self.getAllLabels()
-        }
     }
 
     func setSortDescriptor(_ sortDescriptors: [NSSortDescriptor]) {
@@ -106,26 +101,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         }
         if !isSelectionFound {
             details.selectedEntity = nil
-        }
-    }
-    
-    private func getAllLabels() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(LoggerMessageEntity.self)")
-
-        // Required! Unless you set the resultType to NSDictionaryResultType, distinct can't work.
-        // All objects in the backing store are implicitly distinct, but two dictionaries can be duplicates.
-        // Since you only want distinct names, only ask for the 'name' property.
-        fetchRequest.resultType = .dictionaryResultType
-        fetchRequest.propertiesToFetch = ["label"]
-        fetchRequest.returnsDistinctResults = true
-
-        // Now it should yield an NSArray of distinct values in dictionaries.
-        let map = (try? store.backgroundContext.fetch(fetchRequest)) ?? []
-        let values = (map as? [[String: String]])?.compactMap { $0["label"] }
-        let set = Set(values ?? [])
-
-        DispatchQueue.main.async {
-            self.filters.setInitialLabels(set)
         }
     }
 
@@ -188,9 +163,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            if let entity = anObject as? LoggerMessageEntity {
-                filters.didInsertEntity(entity)
-            }
             if let newIndexPath = newIndexPath, newIndexPath.item >= countBeforeChange {
                 if let appendRange = appendRange {
                     self.appendRange = min(appendRange.lowerBound, newIndexPath.item)..<max(appendRange.upperBound, (newIndexPath.item + 1))
@@ -216,10 +188,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         } else {
             didRefreshMessages()
         }
-        if list.isEmpty {
-            earliestMessage = nil
-            filters.setInitialLabels([])
-        }
         #warning("TODO: insert instead of refresh + update searched?")
         textSearch.replace(list)
     }
@@ -233,10 +201,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
             messages = AnyCollection(objects.filter(pins.isPinned))
         } else {
             messages = AnyCollection(FetchedObjects(controller: controller))
-        }
-        
-        if earliestMessage == nil {
-            earliestMessage = list.first
         }
         list.update(.reload, messages)
         textSearch.replace(list)

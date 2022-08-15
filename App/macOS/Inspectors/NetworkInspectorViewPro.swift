@@ -4,7 +4,7 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
 // MARK: - View
@@ -140,15 +140,15 @@ final class NetworkInspectorViewModelPro: ObservableObject {
     private(set) var title: String = ""
     let message: LoggerMessageEntity
     private let objectId: NSManagedObjectID
-    let request: LoggerNetworkRequestEntity
+    let task: NetworkTaskEntity
 
-    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity) {
+    init(message: LoggerMessageEntity, task: NetworkTaskEntity) {
         self.objectId = message.objectID
         self.message = message
-        self.request = request
+        self.task = task
 
-        if let url = request.url.flatMap(URL.init(string:)) {
-            if let httpMethod = request.httpMethod {
+        if let url = task.url.flatMap(URL.init(string:)) {
+            if let httpMethod = task.httpMethod {
                 self.title = "\(httpMethod) /\(url.lastPathComponent)"
             } else {
                 self.title = "/" + url.lastPathComponent
@@ -159,29 +159,29 @@ final class NetworkInspectorViewModelPro: ObservableObject {
     // MARK: - Tabs
 
     func makeSummaryModel() -> NetworkInspectorSummaryViewModel {
-        NetworkInspectorSummaryViewModel(request: request)
+        NetworkInspectorSummaryViewModel(task: task)
     }
 
     func makeHeadersModel() -> NetworkInspectorHeaderViewModel {
-        NetworkInspectorHeaderViewModel(request: request)
+        NetworkInspectorHeaderViewModel(task: task)
     }
 
     func makeRequestBodyViewModel() -> FileViewModelPro? {
-        guard let requestBody = request.requestBody?.data, !requestBody.isEmpty else { return nil }
+        guard let requestBody = task.requestBody?.data, !requestBody.isEmpty else { return nil }
         return FileViewModelPro(data: requestBody)
     }
 
     func makeResponseBodyViewModel() -> FileViewModelPro? {
-        guard let responseBody = request.responseBody?.data, !responseBody.isEmpty else { return nil }
+        guard let responseBody = task.responseBody?.data, !responseBody.isEmpty else { return nil }
         return FileViewModelPro(data: responseBody)
     }
 
     func makeMetricsModel() -> NetworkInspectorMetricsViewModel? {
-        request.details?.metrics.map(NetworkInspectorMetricsViewModel.init)
+        NetworkInspectorMetricsViewModel(task: task)
     }
     
     func makecURLRepresentation() -> NSAttributedString {
-        let string = request.cURLDescription()
+        let string = task.cURLDescription()
         let fontSize = AppSettings.shared.cURLFontSize
         return NSAttributedString(string: string, attributes: [
             .font:  UXFont.monospacedSystemFont(ofSize: CGFloat(fontSize), weight: .regular),
@@ -195,7 +195,7 @@ final class NetworkInspectorViewModelPro: ObservableObject {
 struct NetworkInspectorViewPro_Previews: PreviewProvider {
     static var previews: some View {
             let messsage = try! LoggerStore.mock.allMessages()[7]
-        return NetworkInspectorViewPro(viewModel: .init(message: messsage, request: messsage.request!))
+        return NetworkInspectorViewPro(viewModel: .init(message: messsage, task: messsage.task!))
                 .previewLayout(.fixed(width: 600, height: 400))
     }
 }

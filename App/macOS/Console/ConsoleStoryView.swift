@@ -4,7 +4,7 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import WebKit
 
@@ -319,13 +319,13 @@ extension ConsoleStoryViewModel {
     }
     
     private func getInterval(for message: LoggerMessageEntity) -> TimeInterval {
-        guard let first = main.earliestMessage ?? main.list.first else { return 0 }
+        guard let first = main.list.first else { return 0 }
         return message.createdAt.timeIntervalSince1970 - first.createdAt.timeIntervalSince1970
     }
     
     private func makeText(for message: LoggerMessageEntity, index: Int, options: Options, helpers: TextRenderingHelpers) -> NSAttributedString {
-        if let request = message.request {
-            return makeText(for: message, request: request, index: index, options: options, helpers: helpers)
+        if let task = message.task {
+            return makeText(for: message, task: task, index: index, options: options, helpers: helpers)
         }
         
         let model = getMessageModel(for: message, at: index)
@@ -375,7 +375,7 @@ extension ConsoleStoryViewModel {
         return text
     }
     
-    private func makeText(for message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, index: Int, options: Options, helpers: TextRenderingHelpers) -> NSAttributedString {
+    private func makeText(for message: LoggerMessageEntity, task: NetworkTaskEntity, index: Int, options: Options, helpers: TextRenderingHelpers) -> NSAttributedString {
         let model = getMessageModel(for: message, at: index)
         if !model.isDirty {
             return model.text
@@ -385,25 +385,25 @@ extension ConsoleStoryViewModel {
         let text = NSMutableAttributedString()
         
         // Title
-        let state = request.state
+        let state = task.state
         let time = ConsoleMessageViewModel.timeFormatter.string(from: message.createdAt)
         var prefix: String
         switch state {
         case .pending:
             prefix = "PENDING"
         case .success:
-            prefix = StatusCodeFormatter.string(for: Int(request.statusCode))
+            prefix = StatusCodeFormatter.string(for: Int(task.statusCode))
         case .failure:
-            if request.errorCode != 0 {
-                prefix = "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))"
+            if task.errorCode != 0 {
+                prefix = "\(task.errorCode) (\(descriptionForURLErrorCode(Int(task.errorCode))))"
             } else {
-                prefix = StatusCodeFormatter.string(for: Int(request.statusCode))
+                prefix = StatusCodeFormatter.string(for: Int(task.statusCode))
             }
         }
         
         var title = "\(prefix)"
-        if request.duration > 0 {
-            title += " · \(DurationFormatter.string(from: request.duration))"
+        if task.duration > 0 {
+            title += " · \(DurationFormatter.string(from: task.duration))"
         }
         
         text.append("\(time) · ", helpers.digitalAttributes)
@@ -425,8 +425,8 @@ extension ConsoleStoryViewModel {
         // Text
         let level = LoggerStore.Level(rawValue: message.level) ?? .debug
         let textAttributes = helpers.textAttributes[level]!
-        let method = request.httpMethod ?? "GET"
-        let messageText = method + " " + (request.url ?? "–")
+        let method = task.httpMethod ?? "GET"
+        let messageText = method + " " + (task.url ?? "–")
 
         text.append(messageText + " ", textAttributes)
         
@@ -434,7 +434,7 @@ extension ConsoleStoryViewModel {
         attributes[.link] = makeToggleInfoURL(for: model.id)
         text.append("✶", attributes)
         
-        if options.isNetworkExpanded, let data = request.responseBody?.data {
+        if options.isNetworkExpanded, let data = task.responseBody?.data {
             if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                 let renderer = AttributedStringJSONRenderer(fontSize: options.fontSize, lineHeight: Constants.ResponseViewer.lineHeight(for: Int(options.fontSize)))
                 let printer = JSONPrinter(renderer: renderer)

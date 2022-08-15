@@ -4,7 +4,7 @@
 
 import Foundation
 import Network
-import PulseCore
+import Pulse
 
 @available(iOS 14.0, tvOS 14.0, *)
 extension RemoteLogger {

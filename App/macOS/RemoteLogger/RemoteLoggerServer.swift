@@ -2,7 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Cocoa
-import PulseCore
+import Pulse
 import SwiftUI
 import Combine
 import Network

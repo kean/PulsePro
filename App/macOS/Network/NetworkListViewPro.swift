@@ -4,17 +4,17 @@
 
 
 import SwiftUI
-import PulseCore
+import Pulse
 import CoreData
 import Combine
 import AppKit
 
 struct NetworkListViewPro: NSViewRepresentable {
-    @ObservedObject var list: ManagedObjectsList<LoggerNetworkRequestEntity>
+    @ObservedObject var list: ManagedObjectsList<NetworkTaskEntity>
     let main: NetworkMainViewModel
     
     final class Coordinator: NSObject, NSTableViewDelegate, NSTableViewDataSource {
-        private let list: ManagedObjectsList<LoggerNetworkRequestEntity>
+        private let list: ManagedObjectsList<NetworkTaskEntity>
         private let main: NetworkMainViewModel
         
         var cancellables: [AnyCancellable] = []
@@ -67,7 +67,7 @@ struct NetworkListViewPro: NSViewRepresentable {
             case .time:
                 return makePlainCell(text: timeFormatter.string(from: request.createdAt))
             case .interval:
-                let first = main.earliestMessage ?? list[0]
+                let first = list[0]
                 var interval = request.createdAt.timeIntervalSince1970 - first.createdAt.timeIntervalSince1970
                 if interval > (3600 * 24) {
                     return makePlainCell(text: "—")
@@ -78,9 +78,9 @@ struct NetworkListViewPro: NSViewRepresentable {
             case .url:
                 return makePlainCell(text: request.url ?? "–")
             case .host:
-                return makePlainCell(text: request.host ?? "–")
+                return makePlainCell(text: request.host?.value ?? "–")
             case .taskType:
-                return makePlainCell(text: shortName(for: request.taskType ?? .dataTask))
+                return makePlainCell(text: shortName(for: request.type ?? .dataTask))
             case .method:
                 return makePlainCell(text: request.httpMethod ?? "–")
             case .statusCode:
@@ -267,7 +267,7 @@ struct NetworkListViewPro: NSViewRepresentable {
 // All these tricks ensure dynamic context menu work.
 private final class NetworkTableView: NSTableView, NSMenuDelegate {
     var main: NetworkMainViewModel!
-    var model: ManagedObjectsList<LoggerNetworkRequestEntity> { main.list }
+    var model: ManagedObjectsList<NetworkTaskEntity> { main.list }
     
     @objc func toggleColumn(_ menu: NSMenuItem) {
         let column = menu.representedObject as! NSTableColumn
@@ -365,8 +365,8 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
         let column = column(at: convert(event.locationInWindow, from: nil))
         guard row >= 0 && column >= 0 else { return nil }
         
-        let request = model[row]
-        guard let message = request.message else {
+        let task = model[row]
+        guard let message = task.message else {
             assertionFailure() // Should never happen
             return nil
         }
@@ -374,7 +374,7 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
         let cellView = view(atColumn: column, row: row, makeIfNecessary: false)
         let stringValue = (cellView as? PlainTableCell)?.stringValue
         
-        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, pins: main.pins)
+        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, task: task, pins: main.pins)
         let view = ConsoleNetworkRequestContextMenuViewPro(model: menuModel)
         let menu = view.menu(for: event)
         
@@ -503,27 +503,27 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
     var sortDescriptorProtot: NSSortDescriptor? {
         switch self {
         case .dateAndTime, .date, .time, .interval:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.createdAt, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.createdAt, ascending: false)
         case .url:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.url, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.url, ascending: false)
         case .host:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.host, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.host, ascending: false)
         case .taskType:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.rawTaskType, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.taskType, ascending: false)
         case .method:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.httpMethod, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.httpMethod, ascending: false)
         case .statusCode:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.statusCode, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.statusCode, ascending: false)
         case .duration:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.duration, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.duration, ascending: false)
         case .uncompressedRequestSize:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.requestBodySize, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.requestBodySize, ascending: false)
         case .uncompressedResponseSize:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.responseBodySize, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.responseBodySize, ascending: false)
         case .error:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.errorCode, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.errorCode, ascending: false)
         case .statusIcon:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.requestState, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.requestState, ascending: false)
         case .index:
             return nil
         }
