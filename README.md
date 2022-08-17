@@ -1,6 +1,6 @@
 # Pulse Pro
 
-Learn more about the app [here](https://kean.blog/pulse/guides/pulse-pro).
+Learn more about the app [here](https://kean.blog/pulse/pro).
 
 You can find the latest release in [Releases](https://github.com/kean/PulsePro/releases).
 
