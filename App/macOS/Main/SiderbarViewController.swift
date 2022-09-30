@@ -101,6 +101,8 @@ final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTa
     // MARK: DoubleClick
     
     @objc private func tableViewDoubleClick() {
+        guard items.indices.contains(tableView.clickedRow) else { return }
+
         switch items[tableView.clickedRow] {
         case is SectionHeaderModel:
             return
