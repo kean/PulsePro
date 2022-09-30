@@ -4,14 +4,14 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import Network
 
 private let totalWidth: CGFloat = 540
 private let totalPadding: CGFloat = 32
 
-struct SettingsView: View {
+struct SettingsViewPro: View {
     private enum Tabs: Hashable {
         case general, remote
     }

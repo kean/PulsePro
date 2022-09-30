@@ -3,25 +3,25 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import Cocoa
-import PulseCore
+import Pulse
 import SwiftUI
 import Combine
 
 struct FileRouterView: View {
-    @StateObject var model = FileRouterViewModel()
+    @StateObject var viewModel = FileRouterViewModel()
 
     var body: some View {
         contents
-            .onOpenURL(perform: model.open)
+            .onOpenURL(perform: viewModel.open)
     }
 
     @ViewBuilder
     private var contents: some View {
-        if let store = model.selectedStore {
+        if let store = viewModel.selectedStore {
             MainViewPro(store: store)
-        } else if let (data, url) = model.selectedJsonData {
-            StandaloneJSONViewer(model: .init(data: data, url: url))
-        } else if let alert = model.alert {
+        } else if let (data, url) = viewModel.selectedJsonData {
+            StandaloneJSONViewer(viewModel: .init(data: data, url: url))
+        } else if let alert = viewModel.alert {
             PlaceholderView(imageName: "exclamationmark.circle.fill", title: alert.title, subtitle: alert.message)
         } else {
             PlaceholderView(imageName: "exclamationmark.circle.fill", title: "Failed to open store", subtitle: nil)

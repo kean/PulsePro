@@ -4,91 +4,45 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
-var isSelfDestructNeeded: Bool {
-    #warning("TODO: remove when not needed")
-    return Date() > Date(timeIntervalSince1970: 1646779235)
-}
-
-func printNextTimeInterval() {
-    let ti = Calendar.current.date(byAdding: .init(day: 365), to: Date())?.timeIntervalSince1970
-    print(ti)
-}
-
-struct SelfDestructView: View {
-    let isTrial: Bool
-    
-    var body: some View {
-        VStack(spacing: 30) {
-            Image(systemName: "flame")
-                .font(.system(size: 120))
-                .foregroundColor(.secondary)
-            VStack(alignment: .center, spacing: 20) {
-                Text("This build self-destructed")
-                    .font(.title)
-                
-                if !isTrial {
-                    Text("This is an early preview of the Pulse Pro app. It expired after 365 days in production. Please install a new build.")
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: 300)
-                    Button("Get Build") {
-                        NSWorkspace.shared.open(URL(string: "https://github.com/kean/PulsePro")!)
-                    }
-                } else {
-                    Text("The 30 day trial period has expired.")
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: 300)
-                }
-            }
-        }
-        .frame(width: 500, height: 400)
-    }
-}
-
 struct MainViewPro: View {
-    @StateObject private var model = MainViewModelPro()
+    @StateObject private var viewModel = MainViewModelPro()
     @StateObject private var commands = CommandsRegistryWrapper()
     private let hasSiderbar: Bool
 
     init() {
         self.hasSiderbar = true
-        _model = StateObject(wrappedValue: MainViewModelPro())
+        _viewModel = StateObject(wrappedValue: MainViewModelPro())
     }
     
     init(store: LoggerStore) {
         self.hasSiderbar = false
-        _model = StateObject(wrappedValue: MainViewModelPro(store: store))
+        _viewModel = StateObject(wrappedValue: MainViewModelPro(store: store))
     }
     
     init(client: RemoteLoggerClient) {
         self.hasSiderbar = false
-        _model = StateObject(wrappedValue: MainViewModelPro(client: client))
+        _viewModel = StateObject(wrappedValue: MainViewModelPro(client: client))
     }
     
     var body: some View {
-        if isTrialExpired {
-            SelfDestructView(isTrial: true)
-        } else {
-            contents
-                .background(MainViewWindowAccessor(model: model, commands: commands.commands))
-        }
+        contents
+            .background(MainViewWindowAccessor(model: viewModel, commands: commands.commands))
     }
     
     @ViewBuilder
     private var contents: some View {
         if hasSiderbar {
             NavigationView {
-                SidebarView(model: model)
+                SidebarView(viewModel: viewModel)
                     .environmentObject(commands)
-                MainViewRouter(details: model.details)
+                MainViewRouter(details: viewModel.details)
                     .environmentObject(commands)
             }
         } else {
-            MainViewRouter(details: model.details)
+            MainViewRouter(details: viewModel.details)
                 .environmentObject(commands)
         }
     }
@@ -124,9 +78,9 @@ private struct MainViewRouter: View {
     @ObservedObject var details: MainViewDetailsViewModel
     
     var body: some View {
-        if let model = details.model {
-            ConsoleContainerView(model: model)
-                .id(ObjectIdentifier(model))
+        if let viewModel = details.viewModel {
+            ConsoleContainerView(viewModel: viewModel)
+                .id(ObjectIdentifier(viewModel))
         } else {
             AppWelcomeView(buttonOpenDocumentTapped: openDocument, openDocument: details.open)
         }
@@ -134,17 +88,17 @@ private struct MainViewRouter: View {
 }
 
 private struct SidebarView: View {
-    private var model: MainViewModelPro
+    private var viewModel: MainViewModelPro
 
-    init(model: MainViewModelPro) {
-        self.model = model
+    init(viewModel: MainViewModelPro) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
-        SiderbarViewPro(model: model, remote: .shared)
+        SiderbarViewPro(viewModel: viewModel, remote: .shared)
             .frame(minWidth: 150)
             .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.status) {
+                ToolbarItem(placement: ToolbarItemPlacement.navigation) {
                     Button(action: toggleSidebar) {
                         Label("Back", systemImage: "sidebar.left")
                     }

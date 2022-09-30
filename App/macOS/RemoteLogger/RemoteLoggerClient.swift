@@ -2,7 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Cocoa
-import PulseCore
+import Pulse
 import SwiftUI
 import Combine
 import Network
@@ -23,8 +23,8 @@ struct RemoteLoggerClientId: Hashable, Codable {
 final class RemoteLoggerClient: ObservableObject, Identifiable {
     var id: RemoteLoggerClientId { info.id }
     var deviceId: UUID { info.deviceId }
-    var deviceInfo: LoggerStoreInfo.DeviceInfo { info.deviceInfo }
-    var appInfo: LoggerStoreInfo.AppInfo { info.appInfo }
+    var deviceInfo: LoggerStore.Info.DeviceInfo { info.deviceInfo }
+    var appInfo: LoggerStore.Info.AppInfo { info.appInfo }
     
     let info: RemoteLoggerClientInfo
     let store: LoggerStore
@@ -52,7 +52,9 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
         let filename = info.id.raw.data(using: .utf8)?.sha256 ?? info.id.raw
         let storeURL = logsURL
             .appendingFilename(filename).appendingPathExtension("pulse")
-        self.store = try LoggerStore(storeURL: storeURL, options: [.create])
+        var configuration = LoggerStore.Configuration()
+        configuration.saveInterval = .milliseconds(100)
+        self.store = try LoggerStore(storeURL: storeURL, options: [.create], configuration: configuration)
         
         pingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self]_ in
             self?.connection?.send(code: .ping)
@@ -120,12 +122,8 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
         store.removeAll()
     }
         
-    func store(message: LoggerStore.Message) {
-        RemoteLogger.store(message, into: store)
-    }
-    
-    func store(message: LoggerStore.NetworkMessage) {
-        RemoteLogger.store(message, into: store)
+    func process(event: LoggerStore.Event) {
+        RemoteLogger.process(event, store: store)
     }
     
     private func scheduleAutomaticDisconnect() {
@@ -143,8 +141,8 @@ final class RemoteLoggerClient: ObservableObject, Identifiable {
 final class RemoteLoggerClientInfo: Codable {
     let id: RemoteLoggerClientId
     var deviceId: UUID
-    let deviceInfo: LoggerStoreInfo.DeviceInfo
-    let appInfo: LoggerStoreInfo.AppInfo
+    let deviceInfo: LoggerStore.Info.DeviceInfo
+    let appInfo: LoggerStore.Info.AppInfo
     
     init(info: RemoteLogger.PacketClientHello) {
         self.id = RemoteLoggerClientId(request: info)

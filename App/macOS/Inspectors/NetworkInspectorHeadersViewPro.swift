@@ -3,22 +3,32 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import SwiftUI
-import PulseCore
+import Pulse
 
-// MARK: - View
-@available(iOS 13.0, tvOS 14.0, watchOS 6, *)
 struct NetworkInspectorHeadersViewPro: View {
-    @ObservedObject var model: NetworkInspectorHeaderViewModel
+    @ObservedObject var viewModel: NetworkInspectorHeaderViewModel
+    @ObservedObject var textViewModel: RichTextViewModelPro
+
+    init(viewModel: NetworkInspectorHeaderViewModel) {
+        self.viewModel = viewModel
+        self.textViewModel = RichTextViewModelPro(string: .init())
+        self.refresh()
+    }
+
+    private func refresh() {
+        self.textViewModel.display(text: text)
+    }
 
     var items: [KeyValueSectionViewModel] {
         [
-            model.requestHeaders,
-            model.responseHeaders
+            viewModel.requestHeadersOriginal,
+            viewModel.requestHeadersCurrent,
+            viewModel.responseHeaders
         ].compactMap { $0 }
     }
     
     var body: some View {
-        RichTextViewPro(model: .init(string: text), isAutomaticLinkDetectionEnabled: false, content: .headers)
+        RichTextViewPro(viewModel: textViewModel, isAutomaticLinkDetectionEnabled: false, content: .headers)
     }
 
     private var text: NSAttributedString {

@@ -1,14 +1,14 @@
 import Foundation
-import PulseCore
+import Pulse
 import CoreData
 
 final class NetworkMessagesTextSearch {
-    private var requests: [LoggerNetworkRequestEntity] = []
+    private var tasks: [NetworkTaskEntity] = []
     private var searchIndex: [(NSManagedObjectID, String)]?
     private let lock = NSLock()
 
-    func replace(_ requests: [LoggerNetworkRequestEntity]) {
-        self.requests = requests
+    func replace(_ tasks: [NetworkTaskEntity]) {
+        self.tasks = tasks
         self.searchIndex = nil
     }
 
@@ -44,7 +44,7 @@ final class NetworkMessagesTextSearch {
         if let searchIndex = self.searchIndex {
             return searchIndex
         }
-        let searchIndex = requests.map { ($0.objectID, $0.message?.text ?? "") }
+        let searchIndex = tasks.map { ($0.objectID, $0.message?.text ?? "") }
         self.searchIndex = searchIndex
         return searchIndex
     }

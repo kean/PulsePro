@@ -4,17 +4,17 @@
 
 
 import SwiftUI
-import PulseCore
+import Pulse
 import CoreData
 import Combine
 import AppKit
 
 struct NetworkListViewPro: NSViewRepresentable {
-    @ObservedObject var list: ManagedObjectsList<LoggerNetworkRequestEntity>
+    @ObservedObject var list: ManagedObjectsList<NetworkTaskEntity>
     let main: NetworkMainViewModel
     
     final class Coordinator: NSObject, NSTableViewDelegate, NSTableViewDataSource {
-        private let list: ManagedObjectsList<LoggerNetworkRequestEntity>
+        private let list: ManagedObjectsList<NetworkTaskEntity>
         private let main: NetworkMainViewModel
         
         var cancellables: [AnyCancellable] = []
@@ -46,7 +46,7 @@ struct NetworkListViewPro: NSViewRepresentable {
             
             func makePlainCell(text: String) -> PlainTableCell {
                 let cell = PlainTableCell.make(in: tableView)
-                cell.display(text, color: color(for: request.isSuccess))
+                cell.display(text, color: color(for: request.state == .success))
                 return cell
             }
             
@@ -60,11 +60,14 @@ struct NetworkListViewPro: NSViewRepresentable {
                 cell.text = "\(row + 1)"
                 cell.isPinned = main.pins.pinnedRequestIds.contains(request.objectID)
                 return cell
-            case .dateAndTime: return makePlainCell(text: dateAndTimeFormatter.string(from: request.createdAt))
-            case .date: return makePlainCell(text: dateFormatter.string(from: request.createdAt))
-            case .time: return makePlainCell(text: timeFormatter.string(from: request.createdAt))
+            case .dateAndTime:
+                return makePlainCell(text: dateAndTimeFormatter.string(from: request.createdAt))
+            case .date:
+                return makePlainCell(text: dateFormatter.string(from: request.createdAt))
+            case .time:
+                return makePlainCell(text: timeFormatter.string(from: request.createdAt))
             case .interval:
-                let first = main.earliestMessage ?? list[0]
+                let first = list[0]
                 var interval = request.createdAt.timeIntervalSince1970 - first.createdAt.timeIntervalSince1970
                 if interval > (3600 * 24) {
                     return makePlainCell(text: "—")
@@ -72,17 +75,33 @@ struct NetworkListViewPro: NSViewRepresentable {
                     interval = list.isCreatedAtAscending ? interval : (interval >= 0.001 ? -interval : interval)
                     return makePlainCell(text: "\(stringPrecise(from: interval))")
                 }
-            case .url: return makePlainCell(text: request.url ?? "–")
-            case .host: return makePlainCell(text: request.host ?? "–")
-            case .method: return makePlainCell(text: request.httpMethod ?? "–")
-            case .statusCode: return makePlainCell(text: request.statusCode == 0 ? "–" : "\(request.statusCode)")
-            case .duration: return makePlainCell(text: DurationFormatter.string(from: request.duration))
-            case .uncompressedRequestSize: return makePlainCell(text: ByteCountFormatter.string(fromByteCount: request.details.requestBodySize, countStyle: .file))
-            case .uncompressedResponseSize: return makePlainCell(text: ByteCountFormatter.string(fromByteCount: request.details.responseBodySize, countStyle: .file))
-            case .error: return makePlainCell(text: request.errorCode != 0 ? "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))" : "–")
+            case .url:
+                return makePlainCell(text: request.url ?? "–")
+            case .host:
+                return makePlainCell(text: request.host?.value ?? "–")
+            case .taskType:
+                return makePlainCell(text: shortName(for: request.type ?? .dataTask))
+            case .method:
+                return makePlainCell(text: request.httpMethod ?? "–")
+            case .statusCode:
+                return makePlainCell(text: request.statusCode == 0 ? "–" : "\(request.statusCode)")
+            case .duration:
+                return makePlainCell(text: DurationFormatter.string(from: request.duration))
+            case .uncompressedRequestSize:
+                let sizeText = request.requestBodySize >= 0 ? ByteCountFormatter.string(fromByteCount: request.requestBodySize, countStyle: .file) : "–"
+                return makePlainCell(text: sizeText)
+            case .uncompressedResponseSize:
+                let sizeText = request.responseBodySize >= 0 ? ByteCountFormatter.string(fromByteCount: request.responseBodySize, countStyle: .file) : "–"
+                return makePlainCell(text: request.isFromCache ? sizeText + " (cache)" : sizeText)
+            case .error:
+                return makePlainCell(text: request.errorCode != 0 ? "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))" : "–")
             case .statusIcon:
                 let cell = BadgeTableCell.make(in: tableView)
-                cell.color = request.isSuccess ? NSColor.systemGreen : NSColor.systemRed
+                switch request.state {
+                case .pending: cell.color = .systemYellow
+                case .success: cell.color = .systemGreen
+                case .failure: cell.color = .systemRed
+                }
                 return cell
             }
         }
@@ -248,7 +267,7 @@ struct NetworkListViewPro: NSViewRepresentable {
 // All these tricks ensure dynamic context menu work.
 private final class NetworkTableView: NSTableView, NSMenuDelegate {
     var main: NetworkMainViewModel!
-    var model: ManagedObjectsList<LoggerNetworkRequestEntity> { main.list }
+    var model: ManagedObjectsList<NetworkTaskEntity> { main.list }
     
     @objc func toggleColumn(_ menu: NSMenuItem) {
         let column = menu.representedObject as! NSTableColumn
@@ -346,8 +365,8 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
         let column = column(at: convert(event.locationInWindow, from: nil))
         guard row >= 0 && column >= 0 else { return nil }
         
-        let request = model[row]
-        guard let message = request.message else {
+        let task = model[row]
+        guard let message = task.message else {
             assertionFailure() // Should never happen
             return nil
         }
@@ -355,7 +374,7 @@ private final class NetworkTableView: NSTableView, NSMenuDelegate {
         let cellView = view(atColumn: column, row: row, makeIfNecessary: false)
         let stringValue = (cellView as? PlainTableCell)?.stringValue
         
-        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, request: request, store: main.store, pins: main.pins)
+        let menuModel = ConsoleNetworkRequestContextMenuViewModelPro(message: message, task: task, pins: main.pins)
         let view = ConsoleNetworkRequestContextMenuViewPro(model: menuModel)
         let menu = view.menu(for: event)
         
@@ -410,6 +429,7 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
     case method = "method"
     case url = "url"
     case host = "host"
+    case taskType = "taskType"
     case statusCode = "statusCode"
     case duration = "duration"
     case uncompressedRequestSize = "uncompressedRequestSize"
@@ -431,6 +451,7 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
         case .method: return "Method"
         case .url: return "URL"
         case .host: return "Host"
+        case .taskType: return "Task"
         case .statusCode: return "Code"
         case .duration: return "Duration"
         case .uncompressedRequestSize: return "Request Size"
@@ -450,7 +471,8 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
         case .method: return 34
         case .url: return 230
         case .host: return 100
-        case .statusCode: return 30
+        case .taskType: return 60
+        case .statusCode: return 32
         case .duration: return 60
         case .uncompressedRequestSize: return 70
         case .uncompressedResponseSize: return 70
@@ -469,6 +491,7 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
         case .method: return 40
         case .url: return 40
         case .host: return 40
+        case .taskType: return 40
         case .statusCode: return preferredWidth
         case .duration: return preferredWidth
         case .uncompressedRequestSize: return 40
@@ -480,25 +503,27 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
     var sortDescriptorProtot: NSSortDescriptor? {
         switch self {
         case .dateAndTime, .date, .time, .interval:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.createdAt, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.createdAt, ascending: false)
         case .url:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.url, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.url, ascending: false)
         case .host:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.host, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.host, ascending: false)
+        case .taskType:
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.taskType, ascending: false)
         case .method:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.httpMethod, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.httpMethod, ascending: false)
         case .statusCode:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.statusCode, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.statusCode, ascending: false)
         case .duration:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.duration, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.duration, ascending: false)
         case .uncompressedRequestSize:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.details.requestBodySize, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.requestBodySize, ascending: false)
         case .uncompressedResponseSize:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.details.responseBodySize, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.responseBodySize, ascending: false)
         case .error:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.errorCode, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.errorCode, ascending: false)
         case .statusIcon:
-            return NSSortDescriptor(keyPath: \LoggerNetworkRequestEntity.requestState, ascending: false)
+            return NSSortDescriptor(keyPath: \NetworkTaskEntity.requestState, ascending: false)
         case .index:
             return nil
         }
@@ -506,5 +531,15 @@ enum NetworkListColumn: String, Hashable, CaseIterable {
 
     var identifier: NSUserInterfaceItemIdentifier {
         NSUserInterfaceItemIdentifier(rawValue: rawValue)
+    }
+}
+
+private func shortName(for taskType: NetworkLogger.TaskType) -> String {
+    switch taskType {
+    case .dataTask: return "data"
+    case .downloadTask: return "download"
+    case .uploadTask: return "upload"
+    case .streamTask: return "stream"
+    case .webSocketTask: return "webSocket"
     }
 }

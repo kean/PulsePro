@@ -3,17 +3,17 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import SwiftUI
 
 final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
     let list = ManagedObjectsList<LoggerMessageEntity>()
     let details: ConsoleDetailsPanelViewModel
-    let filters = ConsoleSearchCriteriaViewModel()
+    let filters: ConsoleSearchCriteriaViewModel
     let search: TextSearchViewModel
     let toolbar: ConsoleToolbarViewModel
-    let mode: ConsoleModePickerViewModel
+    let mode: ConsoleModePickerViewModelPro
     
     private let textSearch = ManagedObjectTextSearch<LoggerMessageEntity> { $0.text }
     
@@ -27,18 +27,17 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         
     @AppStorage("consoleTableShowErrorsInScroller") var isShowingErrorsInScroller = false
 
-    private(set) var earliestMessage: LoggerMessageEntity?
-    
     private(set) var store: LoggerStore
     private let controller: NSFetchedResultsController<LoggerMessageEntity>
-    private var latestSessionId: String?
+    private var latestSessionId: UUID?
     private var cancellables = [AnyCancellable]()
     
-    init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModel) {
+    init(store: LoggerStore, toolbar: ConsoleToolbarViewModel, details: ConsoleDetailsPanelViewModel, mode: ConsoleModePickerViewModelPro) {
         self.store = store
         self.toolbar = toolbar
         self.details = details
         self.mode = mode
+        self.filters = ConsoleSearchCriteriaViewModel(store: store)
 
         self.pins = PinsService.service(for: store)
         
@@ -80,10 +79,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         Publishers.CombineLatest($searchTerm.throttle(for: 0.33, scheduler: RunLoop.main, latest: true), search.$searchOptions).dropFirst().sink { [weak self] searchTerm, searchOptions in
             self?.search.refresh(searchTerm: searchTerm, searchOptions: searchOptions)
         }.store(in: &cancellables)
-
-        store.backgroundContext.perform {
-            self.getAllLabels()
-        }
     }
 
     func setSortDescriptor(_ sortDescriptors: [NSSortDescriptor]) {
@@ -108,35 +103,15 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
             details.selectedEntity = nil
         }
     }
-    
-    private func getAllLabels() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(LoggerMessageEntity.self)")
-
-        // Required! Unless you set the resultType to NSDictionaryResultType, distinct can't work.
-        // All objects in the backing store are implicitly distinct, but two dictionaries can be duplicates.
-        // Since you only want distinct names, only ask for the 'name' property.
-        fetchRequest.resultType = .dictionaryResultType
-        fetchRequest.propertiesToFetch = ["label"]
-        fetchRequest.returnsDistinctResults = true
-
-        // Now it should yield an NSArray of distinct values in dictionaries.
-        let map = (try? store.backgroundContext.fetch(fetchRequest)) ?? []
-        let values = (map as? [[String: String]])?.compactMap { $0["label"] }
-        let set = Set(values ?? [])
-
-        DispatchQueue.main.async {
-            self.filters.setInitialLabels(set)
-        }
-    }
 
     // MARK: Refresh
 
     private func refresh(filterTerm: String) {
         // Get sessionId
-        let sessionId = store === LoggerStore.default ? LoggerSession.current.id.uuidString : latestSessionId
+        let sessionId = store === LoggerStore.shared ? LoggerStore.Session.current.id : latestSessionId
 
         // Search messages
-        ConsoleSearchCriteria.update(request: controller.fetchRequest, filterTerm: filterTerm, criteria: filters.criteria, filters: filters.filters, sessionId: sessionId, isOnlyErrors: toolbar.isOnlyErrors)
+        ConsoleSearchCriteria.update(request: controller.fetchRequest, filterTerm: filterTerm, criteria: filters.criteria, filters: filters.filters, sessionId: sessionId, isOnlyErrors: toolbar.isOnlyErrors, isOnlyNetwork: false)
         try? controller.performFetch()
         
         if latestSessionId == nil {
@@ -188,9 +163,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            if let entity = anObject as? LoggerMessageEntity {
-                filters.didInsertEntity(entity)
-            }
             if let newIndexPath = newIndexPath, newIndexPath.item >= countBeforeChange {
                 if let appendRange = appendRange {
                     self.appendRange = min(appendRange.lowerBound, newIndexPath.item)..<max(appendRange.upperBound, (newIndexPath.item + 1))
@@ -216,10 +188,6 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         } else {
             didRefreshMessages()
         }
-        if list.isEmpty {
-            earliestMessage = nil
-            filters.setInitialLabels([])
-        }
         #warning("TODO: insert instead of refresh + update searched?")
         textSearch.replace(list)
     }
@@ -234,30 +202,11 @@ final class ConsoleMainViewModel: NSObject, NSFetchedResultsControllerDelegate, 
         } else {
             messages = AnyCollection(FetchedObjects(controller: controller))
         }
-        
-        if earliestMessage == nil {
-            earliestMessage = list.first
-        }
         list.update(.reload, messages)
         textSearch.replace(list)
     }
 }
 
-final class ConsoleToolbarViewModel: ObservableObject {
-    @Published var isFiltersPaneHidden = true
-    @AppStorage("console-view-is-vertical") var isVertical = true {
-        didSet { objectWillChange.send() }
-    }
-    @Published var isOnlyErrors = false
-    @Published var isOnlyPins = false
-    @Published var isSearchBarActive = false
-    @Published var isNowEnabled = true
-}
-
-final class ConsoleSearchBarViewModel: ObservableObject {
-    @Published var text: String = ""
-}
-
-final class ConsoleModePickerViewModel: ObservableObject {
+final class ConsoleModePickerViewModelPro: ObservableObject {
     @Published var mode: ConsoleViewMode = .list
 }

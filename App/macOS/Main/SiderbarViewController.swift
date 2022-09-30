@@ -12,12 +12,12 @@ import SwiftUI
 import Combine
 
 struct SiderbarViewPro: NSViewControllerRepresentable {
-    let model: MainViewModelPro
+    let viewModel: MainViewModelPro
     var remote: RemoteLoggerViewModel
     
     func makeNSViewController(context: Context) -> SidebarViewController {
         let vc = SidebarViewController()
-        vc.model = model
+        vc.viewModel = viewModel
         vc.remote = remote
         return vc
     }
@@ -28,7 +28,7 @@ struct SiderbarViewPro: NSViewControllerRepresentable {
 }
 
 final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, SidebarTableViewDelegate {
-    var model: MainViewModelPro!
+    var viewModel: MainViewModelPro!
     var remote: RemoteLoggerViewModel!
     
     private let tableView = SiderbarTableView()
@@ -84,13 +84,13 @@ final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTa
         
         tableView.reloadData()
         
-        if let selectedClient = model.details.model?.remote.client {
+        if let selectedClient = viewModel.details.viewModel?.remote.client {
             if let index = items.firstIndex(where: { ($0 as? RemoteLoggerClient)?
                 .id == selectedClient.id }) {
                 tableView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
             } else {
-                if model.details.model?.remote.client != nil {
-                    model.details.model = nil
+                if viewModel.details.viewModel?.remote.client != nil {
+                    viewModel.details.viewModel = nil
                 } else {
                     // Important! Existing store was open
                 }
@@ -101,6 +101,8 @@ final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTa
     // MARK: DoubleClick
     
     @objc private func tableViewDoubleClick() {
+        guard items.indices.contains(tableView.clickedRow) else { return }
+
         switch items[tableView.clickedRow] {
         case is SectionHeaderModel:
             return
@@ -122,8 +124,8 @@ final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTa
         case is SectionHeaderModel:
             break
         case let client as RemoteLoggerClient:
-            if model.details.model?.remote.client?.id != client.id {
-                model.open(client: client)
+            if viewModel.details.viewModel?.remote.client?.id != client.id {
+                viewModel.open(client: client)
             }
         default:
             fatalError()
@@ -168,7 +170,8 @@ final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTa
     // MARK: - SiderbarTableViewDelegate
     
     func getClient(at index: Int) -> RemoteLoggerClient? {
-        items[index] as? RemoteLoggerClient
+        guard items.indices.contains(index) else { return nil }
+        return items[index] as? RemoteLoggerClient
     }
 }
 

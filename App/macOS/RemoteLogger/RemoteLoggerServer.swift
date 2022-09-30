@@ -2,7 +2,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception.
 
 import Cocoa
-import PulseCore
+import Pulse
 import SwiftUI
 import Combine
 import Network
@@ -167,14 +167,20 @@ final class RemoteLoggerServer: RemoteLoggerConnectionDelegate, ObservableObject
             let request = try JSONDecoder().decode(RemoteLogger.PacketClientHello.self, from: packet.body)
             pulseLog("Device wans to connect: \(request.deviceInfo.name)")
             self.clientDidConnect(connection: connection, request: request)
-        case .storeMessage:
-            let message = try JSONDecoder().decode(LoggerStore.Message.self, from: packet.body)
-            client?.store(message: message)
-        case .storeRequest:
-            let message = try RemoteLogger.PacketNetworkMessage.decode(packet.body)
-            client?.store(message: message)
         case .ping:
             client?.didReceivePing()
+        case .storeEventMessageStored:
+            let event = try JSONDecoder().decode(LoggerStore.Event.MessageCreated.self, from: packet.body)
+            client?.process(event: .messageStored(event))
+        case .storeEventNetworkTaskCreated:
+            let event = try JSONDecoder().decode(LoggerStore.Event.NetworkTaskCreated.self, from: packet.body)
+            client?.process(event: .networkTaskCreated(event))
+        case .storeEventNetworkTaskProgressUpdated:
+            let event = try JSONDecoder().decode(LoggerStore.Event.NetworkTaskProgressUpdated.self, from: packet.body)
+            client?.process(event: .networkTaskProgressUpdated(event))
+        case .storeEventNetworkTaskCompleted:
+            let message = try RemoteLogger.PacketNetworkMessage.decode(packet.body)
+            client?.process(event: .networkTaskCompleted(message))
         default:
             assertionFailure("A packet with an invalid code received from the server: \(packet.code.description)")
         }
@@ -257,7 +263,7 @@ private extension NWListener.State {
 }
 
 func pulseLog(_ message: @autoclosure () -> String) {
-#if DEBUG
+#if DEBUG && PULSE_DEBUG_LOG_ENABLED
     NSLog(message())
 #endif
 }

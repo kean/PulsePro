@@ -4,7 +4,7 @@
 
 import Foundation
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
 /// Controlling and reloading the table view (list). Can also be used to observe

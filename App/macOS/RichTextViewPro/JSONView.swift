@@ -4,17 +4,17 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
 struct JSONView: View {
-    @ObservedObject var model: JSONViewModel
+    @ObservedObject var viewModel: JSONViewModel
     @State private var isSpinnerHidden = true
     @AppStorage("jqVertical") private var isJQVertical = true
     
     var body: some View {
         makeJSONViewer()
-            .onReceive(model.$jqProcessing.debounce(for: 0.33, scheduler: RunLoop.main, options: nil).removeDuplicates()) {
+            .onReceive(viewModel.$jqProcessing.debounce(for: 0.33, scheduler: RunLoop.main, options: nil).removeDuplicates()) {
                 self.isSpinnerHidden = !$0
             }
     }
@@ -24,14 +24,14 @@ struct JSONView: View {
         if isJQVertical {
             VSplitView {
                 makeJSONMainView()
-                if !model.isJQHidden {
+                if !viewModel.isJQHidden {
                     jqView
                 }
             }
         } else {
             HSplitView {
                 makeJSONMainView()
-                if !model.isJQHidden {
+                if !viewModel.isJQHidden {
                     jqView
                 }
             }
@@ -41,9 +41,9 @@ struct JSONView: View {
     @ViewBuilder
     private func makeJSONMainView() -> some View {
         RichTextViewPro(
-            model: model.textModel,
+            viewModel: viewModel.textModel,
             content: .response,
-            onTerminalTapped: { model.isJQHidden.toggle() }
+            onTerminalTapped: { viewModel.isJQHidden.toggle() }
         )
             .frame(minWidth: 200, idealWidth: 500, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center)
     }
@@ -52,10 +52,10 @@ struct JSONView: View {
     var jqView: some View {
         VStack(spacing: 0) {
             Divider()
-            RichTextViewPro(model: model.jqOutput, isSearchBarHidden: true, content: .response)
+            RichTextViewPro(viewModel: viewModel.jqOutput, isSearchBarHidden: true, content: .response)
             Divider()
             HStack {
-                TextField("Expression", text: $model.jqExpression)
+                TextField("Expression", text: $viewModel.jqExpression)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(minWidth: 80, idealWidth: 320, maxWidth: 320)
                 if !isSpinnerHidden {
@@ -105,7 +105,7 @@ struct JSONView: View {
     
     @ViewBuilder
     private func makePlainTextView(text: NSAttributedString) -> some View {
-        RichTextViewPro(model: .init(string: text), content: .response)
+        RichTextViewPro(viewModel: .init(string: text), content: .response)
             .frame(minWidth: 200, idealWidth: 500, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center)
     }
 }
@@ -116,11 +116,11 @@ struct JSONView: View {
 struct JSONView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            JSONView(model: mockModel)
+            JSONView(viewModel: mockModel)
                 .previewDisplayName("Light")
                 .environment(\.colorScheme, .light)
 
-            JSONView(model: mockModel)
+            JSONView(viewModel: mockModel)
                 .previewDisplayName("Dark")
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .dark)

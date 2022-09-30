@@ -4,7 +4,7 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import WebKit
 
@@ -38,32 +38,32 @@ import Foundation
 import ObjectiveC
 
 struct ConsoleStoryView: View {
-    @StateObject private var model: ConsoleStoryViewModel
+    @StateObject private var viewModel: ConsoleStoryViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
-    init(model: ConsoleMainViewModel) {
-        _model = StateObject(wrappedValue: ConsoleStoryViewModel(model: model))
+    init(viewModel: ConsoleMainViewModel) {
+        _viewModel = StateObject(wrappedValue: ConsoleStoryViewModel(main: viewModel))
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            ConsoleStoryOptionsView(model: model)
+            ConsoleStoryOptionsView(viewModel: viewModel)
             Divider()
             RichTextViewPro(
-                model: model.text,
+                viewModel: viewModel.text,
                 content: .story,
-                onLinkClicked: model.onLinkClicked,
+                onLinkClicked: viewModel.onLinkClicked,
                 rulerWidth: 27
             )
-                .id(ObjectIdentifier(model.text)) // TODO: fix this
+                .id(ObjectIdentifier(viewModel.text)) // TODO: fix this
                 .background(colorScheme == .dark ? Color(NSColor(red: 30/255.0, green: 30/255.0, blue: 30/255.0, alpha: 1)) : .clear)
         }
-        .onAppear(perform: model.onAppear)
+        .onAppear(perform: viewModel.onAppear)
     }
 }
 
 private struct ConsoleStoryOptionsView: View {
-    @ObservedObject var model: ConsoleStoryViewModel
+    @ObservedObject var viewModel: ConsoleStoryViewModel
     
     var body: some View {
         HStack {
@@ -90,8 +90,8 @@ final class ConsoleStoryViewModel: NSObject, ObservableObject {
     private var options: Options
     private var helpers: TextRenderingHelpers
             
-    init(model: ConsoleMainViewModel) {
-        self.main = model
+    init(main: ConsoleMainViewModel) {
+        self.main = main
         self.options = ConsoleStoryViewModel.makeOptions()
         self.helpers = TextRenderingHelpers(options: options)
         
@@ -319,13 +319,13 @@ extension ConsoleStoryViewModel {
     }
     
     private func getInterval(for message: LoggerMessageEntity) -> TimeInterval {
-        guard let first = main.earliestMessage ?? main.list.first else { return 0 }
+        guard let first = main.list.first else { return 0 }
         return message.createdAt.timeIntervalSince1970 - first.createdAt.timeIntervalSince1970
     }
     
     private func makeText(for message: LoggerMessageEntity, index: Int, options: Options, helpers: TextRenderingHelpers) -> NSAttributedString {
-        if let request = message.request {
-            return makeText(for: message, request: request, index: index, options: options, helpers: helpers)
+        if let task = message.task {
+            return makeText(for: message, task: task, index: index, options: options, helpers: helpers)
         }
         
         let model = getMessageModel(for: message, at: index)
@@ -351,7 +351,7 @@ extension ConsoleStoryViewModel {
         
         // Title second part (regular)
         var titleSecondPart = options.isCompactMode ? "" : "\(message.level) · "
-        titleSecondPart.append("\(message.label)")
+        titleSecondPart.append("\(message.label.name)")
         titleSecondPart.append(options.isCompactMode ? " " : "\n")
         text.append(titleSecondPart, helpers.titleAttributes)
         
@@ -375,7 +375,7 @@ extension ConsoleStoryViewModel {
         return text
     }
     
-    private func makeText(for message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, index: Int, options: Options, helpers: TextRenderingHelpers) -> NSAttributedString {
+    private func makeText(for message: LoggerMessageEntity, task: NetworkTaskEntity, index: Int, options: Options, helpers: TextRenderingHelpers) -> NSAttributedString {
         let model = getMessageModel(for: message, at: index)
         if !model.isDirty {
             return model.text
@@ -385,22 +385,25 @@ extension ConsoleStoryViewModel {
         let text = NSMutableAttributedString()
         
         // Title
-        let isSuccess = request.isSuccess
-        
+        let state = task.state
         let time = ConsoleMessageViewModel.timeFormatter.string(from: message.createdAt)
-        
-        let prefix: String
-        if request.statusCode != 0 {
-            prefix = StatusCodeFormatter.string(for: Int(request.statusCode))
-        } else if request.errorCode != 0 {
-            prefix = "\(request.errorCode) (\(descriptionForURLErrorCode(Int(request.errorCode))))"
-        } else {
-            prefix = "Success"
+        var prefix: String
+        switch state {
+        case .pending:
+            prefix = "PENDING"
+        case .success:
+            prefix = StatusCodeFormatter.string(for: Int(task.statusCode))
+        case .failure:
+            if task.errorCode != 0 {
+                prefix = "\(task.errorCode) (\(descriptionForURLErrorCode(Int(task.errorCode))))"
+            } else {
+                prefix = StatusCodeFormatter.string(for: Int(task.statusCode))
+            }
         }
         
         var title = "\(prefix)"
-        if request.duration > 0 {
-            title += " · \(DurationFormatter.string(from: request.duration))"
+        if task.duration > 0 {
+            title += " · \(DurationFormatter.string(from: task.duration))"
         }
         
         text.append("\(time) · ", helpers.digitalAttributes)
@@ -411,15 +414,19 @@ extension ConsoleStoryViewModel {
             }
         }
         text.append(title + " ", helpers.titleAttributes)
-        text.append(isSuccess ? "🟢" : "🔴", helpers.titleAttributes)
+        switch state {
+        case .pending: text.append("🟡", helpers.titleAttributes)
+        case .success: text.append("🟢", helpers.titleAttributes)
+        case .failure: text.append("🔴", helpers.titleAttributes)
+        }
 
         text.append(options.isCompactMode ? " " : "\n", helpers.titleAttributes)
 
         // Text
         let level = LoggerStore.Level(rawValue: message.level) ?? .debug
         let textAttributes = helpers.textAttributes[level]!
-        let method = request.httpMethod ?? "GET"
-        let messageText = method + " " + (request.url ?? "–")
+        let method = task.httpMethod ?? "GET"
+        let messageText = method + " " + (task.url ?? "–")
 
         text.append(messageText + " ", textAttributes)
         
@@ -427,11 +434,12 @@ extension ConsoleStoryViewModel {
         attributes[.link] = makeToggleInfoURL(for: model.id)
         text.append("✶", attributes)
         
-        if options.isNetworkExpanded, let data = request.responseBodyKey.flatMap(self.main.store.getData(forKey:)) {
+        if options.isNetworkExpanded, let data = task.responseBody?.data {
             if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                 let renderer = AttributedStringJSONRenderer(fontSize: options.fontSize, lineHeight: Constants.ResponseViewer.lineHeight(for: Int(options.fontSize)))
                 let printer = JSONPrinter(renderer: renderer)
-                printer.render(json: json)
+                #warning("TODO: pass error")
+                printer.render(json: json, error: nil)
                 text.append("\n")
                 text.append(renderer.make())
             } else if let string = String(data: data, encoding: .utf8) {
@@ -479,11 +487,8 @@ private let dateFormatter: DateFormatter = {
 struct ConsoleStoryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConsoleStoryView(model: .init(store: .mock, toolbar: .init(), details: .init(store: .mock), mode: .init()))
+            ConsoleStoryView(viewModel: .init(store: .mock, toolbar: .init(), details: .init(), mode: .init()))
                 .previewLayout(.fixed(width: 700, height: 1200))
-            //            ConsoleStoryView(model: .init(store: .mock))
-            //                .background(Color.white)
-            //                .environment(\.colorScheme, .light)
         }
     }
 }

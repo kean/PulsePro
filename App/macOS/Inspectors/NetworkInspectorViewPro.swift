@@ -4,7 +4,7 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
 // MARK: - View
@@ -48,8 +48,8 @@ private struct NetworkTabView: View {
 @available(iOS 13.0, tvOS 14.0, watchOS 7.0, *)
 struct NetworkInspectorViewPro: View {
     // Make sure all tabs are updated live
-    @ObservedObject var model: NetworkInspectorViewModelPro
-    @State private var selectedTab: NetworkInspectorTabPro = .response
+    @ObservedObject var viewModel: NetworkInspectorViewModelPro
+    @AppStorage("networkInspectorSelectedTab") private var selectedTab: NetworkInspectorTabPro = .response
     @Environment(\.colorScheme) private var colorScheme
     var onClose: (() -> Void)?
 
@@ -80,29 +80,29 @@ struct NetworkInspectorViewPro: View {
     private var selectedTabView: some View {
         switch selectedTab {
         case .summary:
-            NetworkInspectorSummaryView(viewModel: model.makeSummaryModel())
+            NetworkInspectorSummaryView(viewModel: viewModel.makeSummaryModel())
         case .headers:
-            NetworkInspectorHeadersViewPro(model: model.makeHeadersModel())
+            NetworkInspectorHeadersViewPro(viewModel: viewModel.makeHeadersModel())
         case .request:
-            if let model = model.makeRequestBodyViewModel() {
-                NetworkInspectorResponseViewPro(model: model)
+            if let viewModel = viewModel.makeRequestBodyViewModel() {
+                FileViewerPro(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
         case .response:
-            if let model = model.makeResponseBodyViewModel() {
-                NetworkInspectorResponseViewPro(model: model)
+            if let viewModel = viewModel.makeResponseBodyViewModel() {
+                FileViewerPro(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
         case .metrics:
-            if let model = model.makeMetricsModel() {
-                NetworkInspectorMetricsView(viewModel: model)
+            if let viewModel = viewModel.makeMetricsModel() {
+                NetworkInspectorMetricsView(viewModel: viewModel)
             } else {
                 makePlaceholder
             }
         case .curl:
-            RichTextViewPro(model: .init(string: model.makecURLRepresentation()), content: .curl)
+            RichTextViewPro(viewModel: .init(string: viewModel.makecURLRepresentation()), content: .curl)
         }
     }
 
@@ -112,7 +112,7 @@ struct NetworkInspectorViewPro: View {
     }
 }
 
-private enum NetworkInspectorTabPro: Identifiable {
+private enum NetworkInspectorTabPro: String, Identifiable {
     case summary
     case headers
     case request
@@ -136,24 +136,19 @@ private enum NetworkInspectorTabPro: Identifiable {
 
 // MARK: - ViewModel
 
-@available(iOS 13.0, tvOS 14.0, watchOS 7.0, *)
 final class NetworkInspectorViewModelPro: ObservableObject {
     private(set) var title: String = ""
     let message: LoggerMessageEntity
-    let request: LoggerNetworkRequestEntity
     private let objectId: NSManagedObjectID
-    let store: LoggerStore // TODO: make it private
-    private let summary: NetworkLoggerSummary
+    let task: NetworkTaskEntity
 
-    init(message: LoggerMessageEntity, request: LoggerNetworkRequestEntity, store: LoggerStore) {
+    init(message: LoggerMessageEntity, task: NetworkTaskEntity) {
         self.objectId = message.objectID
         self.message = message
-        self.request = request
-        self.store = store
-        self.summary = NetworkLoggerSummary(request: request, store: store)
+        self.task = task
 
-        if let url = request.url.flatMap(URL.init(string:)) {
-            if let httpMethod = request.httpMethod {
+        if let url = task.url.flatMap(URL.init(string:)) {
+            if let httpMethod = task.httpMethod {
                 self.title = "\(httpMethod) /\(url.lastPathComponent)"
             } else {
                 self.title = "/" + url.lastPathComponent
@@ -164,29 +159,29 @@ final class NetworkInspectorViewModelPro: ObservableObject {
     // MARK: - Tabs
 
     func makeSummaryModel() -> NetworkInspectorSummaryViewModel {
-        NetworkInspectorSummaryViewModel(summary: summary)
+        NetworkInspectorSummaryViewModel(task: task)
     }
 
     func makeHeadersModel() -> NetworkInspectorHeaderViewModel {
-        NetworkInspectorHeaderViewModel(summary: summary)
+        NetworkInspectorHeaderViewModel(task: task)
     }
 
-    func makeRequestBodyViewModel() -> NetworkInspectorResponseViewModelPro? {
-        guard let requestBody = summary.requestBody, !requestBody.isEmpty else { return nil }
-        return NetworkInspectorResponseViewModelPro(data: requestBody)
+    func makeRequestBodyViewModel() -> FileViewModelPro? {
+        guard let requestBody = task.requestBody?.data, !requestBody.isEmpty else { return nil }
+        return FileViewModelPro(data: requestBody)
     }
 
-    func makeResponseBodyViewModel() -> NetworkInspectorResponseViewModelPro? {
-        guard let responseBody = summary.responseBody, !responseBody.isEmpty else { return nil }
-        return NetworkInspectorResponseViewModelPro(data: responseBody)
+    func makeResponseBodyViewModel() -> FileViewModelPro? {
+        guard let responseBody = task.responseBody?.data, !responseBody.isEmpty else { return nil }
+        return FileViewModelPro(data: responseBody)
     }
 
     func makeMetricsModel() -> NetworkInspectorMetricsViewModel? {
-        summary.metrics.map(NetworkInspectorMetricsViewModel.init)
+        NetworkInspectorMetricsViewModel(task: task)
     }
     
     func makecURLRepresentation() -> NSAttributedString {
-        let string = NetworkLoggerSummary(request: request, store: store).cURLDescription()
+        let string = task.cURLDescription()
         let fontSize = AppSettings.shared.cURLFontSize
         return NSAttributedString(string: string, attributes: [
             .font:  UXFont.monospacedSystemFont(ofSize: CGFloat(fontSize), weight: .regular),
@@ -200,7 +195,7 @@ final class NetworkInspectorViewModelPro: ObservableObject {
 struct NetworkInspectorViewPro_Previews: PreviewProvider {
     static var previews: some View {
             let messsage = try! LoggerStore.mock.allMessages()[7]
-        return NetworkInspectorViewPro(model: .init(message: messsage, request: messsage.request!, store: .mock))
+        return NetworkInspectorViewPro(viewModel: .init(message: messsage, task: messsage.task!))
                 .previewLayout(.fixed(width: 600, height: 400))
     }
 }

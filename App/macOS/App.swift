@@ -3,7 +3,7 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import Cocoa
-import PulseCore
+import Pulse
 import SwiftUI
 import Combine
 
@@ -35,7 +35,7 @@ struct PulseApp: App {
         .handlesExternalEvents(matching: [AppRouter.scheme])
         
         Settings {
-            SettingsView()
+            SettingsViewPro()
         }
     }
 }

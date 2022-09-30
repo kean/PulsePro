@@ -4,7 +4,7 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
 final class MainViewModelPro: ObservableObject {
@@ -14,12 +14,12 @@ final class MainViewModelPro: ObservableObject {
 
     init(client: RemoteLoggerClient) {
         let name = client.info.deviceInfo.name + (client.preferredSuffix ?? "")
-        self.details.model = ConsoleContainerViewModel(store: client.store, name: name, client: client)
+        self.details.viewModel = ConsoleContainerViewModel(store: client.store, name: name, client: client)
         self.connect(to: client)
     }
     
     init(store: LoggerStore) {
-        self.details.model = ConsoleContainerViewModel(store: store, name:  store.storeURL.lastPathComponent, client: nil)
+        self.details.viewModel = ConsoleContainerViewModel(store: store, name:  store.storeURL.lastPathComponent, client: nil)
     }
     
     init() {
@@ -27,7 +27,7 @@ final class MainViewModelPro: ObservableObject {
     }
     
     func open(client: RemoteLoggerClient) {
-        self.details.model = ConsoleContainerViewModel(store: client.store, client: client)
+        self.details.viewModel = ConsoleContainerViewModel(store: client.store, client: client)
         self.connect(to: client)
     }
 
@@ -54,18 +54,30 @@ final class MainViewModelPro: ObservableObject {
 }
 
 final class MainViewDetailsViewModel: ObservableObject {
-    @Published var model: ConsoleContainerViewModel?
+    @Published var viewModel: ConsoleContainerViewModel?
     
     func open(url: URL) {
         do {
             let store = try LoggerStore(storeURL: url)
-            self.model = ConsoleContainerViewModel(store: store, name: url.lastPathComponent, client: nil)
+            self.viewModel = ConsoleContainerViewModel(store: store, name: url.lastPathComponent, client: nil)
             NSDocumentController.shared.noteNewRecentDocumentURL(url)
         } catch {
-            #warning("TODO: add error handling")
-//            alert = AlertViewModel(title: "Failed to open Pulse document", message: error.localizedDescription)
+            showAlert(error: error)
         }
     }
+}
+
+private func showAlert(error: Error) {
+    let alert = NSAlert(error: error)
+    if let keyWindow = NSApplication.shared.keyWindow {
+        alert.beginSheetModal(for: keyWindow) { _ in }
+    } else {
+        alert.runModal()
+    }
+}
+
+private struct UnsupportedStoreVersion: Error, LocalizedError {
+    var errorDescription: String?
 }
 
 private final class RemoteClientRAAI {

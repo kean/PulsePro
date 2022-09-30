@@ -3,34 +3,28 @@
 // Copyright (c) 2020–2022 Alexander Grebenyuk (github.com/kean).
 
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 import SwiftUI
 
 final class ConsoleDetailsPanelViewModel: ObservableObject {
     @Published var selectedEntity: LoggerMessageEntity?
-    private let store: LoggerStore
-
-    init(store: LoggerStore) {
-        self.store = store
-    }
 
     func makeDetailsRouter(for message: LoggerMessageEntity, onClose: (() -> Void)?) -> ConsoleMessageDetailsRouterPro {
-        ConsoleMessageDetailsRouterPro(store: store, message: message, onClose: onClose)
+        ConsoleMessageDetailsRouterPro(message: message, onClose: onClose)
     }
 }
 
 struct ConsoleMessageDetailsRouterPro: View {
-    let store: LoggerStore
     let message: LoggerMessageEntity
     let onClose: (() -> Void)?
 
     var body: some View {
-        if let request = message.request {
-            NetworkInspectorViewPro(model: .init(message: message, request: request, store: store), onClose: onClose)
+        if let task = message.task {
+            NetworkInspectorViewPro(viewModel: .init(message: message, task: task), onClose: onClose)
                 .id(message.objectID)
         } else {
-            MessageDetailsViewPro(model: .init(store: store, message: message), onClose: onClose)
+            MessageDetailsViewPro(viewModel: .init(message: message), onClose: onClose)
                 .id(message.objectID)
         }
     }

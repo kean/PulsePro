@@ -4,25 +4,25 @@
 
 import SwiftUI
 import CoreData
-import PulseCore
+import Pulse
 import Combine
 
 struct ConsoleContainerView: View {
-    let model: ConsoleContainerViewModel
+    let viewModel: ConsoleContainerViewModel
     
     var body: some View {
-        InnerConsoleContainerView(model: model, toolbar: model.toolbar, details: model.details)
-            .navigationTitle(model.name ?? "Console")
-            .background(ConsoleWindowAccessors(model: model.toolbar))
+        InnerConsoleContainerView(viewModel: viewModel, toolbar: viewModel.toolbar, details: viewModel.details)
+            .navigationTitle(viewModel.name ?? "Console")
+            .background(ConsoleWindowAccessors(viewModel: viewModel.toolbar))
             .toolbar {
                 ToolbarItemGroup(placement: .navigation) {
-                    ConsoleToolbarModePickerView(model: model.mode)
+                    ConsoleToolbarModePickerView(viewModel: viewModel.mode)
                 }
                 ToolbarItemGroup(placement: .principal) {
-                    if let client = model.remote.client {
+                    if let client = viewModel.remote.client {
                         RemoteLoggerClientStatusView(client: client)
                         RemoteLoggerTooglePlayButton(client: client)
-                        ConsoleNowView(model: model.toolbar)
+                        ConsoleNowView(viewModel: viewModel.toolbar)
                         Button(action: client.clear, label: {
                             Label("Clear", systemImage: "trash")
                         }).help("Remove All Messages (⌘K)")
@@ -32,17 +32,17 @@ struct ConsoleContainerView: View {
                     Spacer()
                 }
                 ToolbarItemGroup(placement: .automatic) {
-                    ConsoleToolbarSearchBar(model: model)
-                    ConsoleToolbarToggleOnlyErrorsButton(model: model.toolbar)
-                    ConsoleToolbarToggleFiltersButton(model: model.toolbar)
-                    ConsoleToolbarToggleVerticalView(model: model.toolbar)
+                    ConsoleToolbarSearchBar(viewModel: viewModel)
+                    ConsoleToolbarToggleOnlyErrorsButton(viewModel: viewModel.toolbar)
+                    ConsoleToolbarToggleFiltersButton(viewModel: viewModel.toolbar)
+                    ConsoleToolbarToggleVerticalView(viewModel: viewModel.toolbar)
                 }
             }
     }
 }
 
 private struct InnerConsoleContainerView: View {
-    let model: ConsoleContainerViewModel
+    let viewModel: ConsoleContainerViewModel
     @ObservedObject var toolbar: ConsoleToolbarViewModel
     @ObservedObject var details: ConsoleDetailsPanelViewModel
     
@@ -54,7 +54,7 @@ private struct InnerConsoleContainerView: View {
                 filterPanel
             }
         }
-        .background(ConsoleCommandsListenerView(model: model))
+        .background(ConsoleCommandsListenerView(model: viewModel))
     }
     
     @ViewBuilder
@@ -62,7 +62,7 @@ private struct InnerConsoleContainerView: View {
         if !toolbar.isFiltersPaneHidden {
             HStack(spacing: 0) {
                 ExDivider()
-                ConsoleContainerFiltersPanel(model: model)
+                ConsoleContainerFiltersPanel(viewModel: viewModel)
             }
         }
     }
@@ -70,9 +70,9 @@ private struct InnerConsoleContainerView: View {
     @ViewBuilder
     private var mainPanel: some View {
         NotSplitView(
-            ConsoleContainerMainPanel(model: model)
+            ConsoleContainerMainPanel(viewModel: viewModel)
                 .frame(minWidth: 400, idealWidth: 800, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center),
-            ConsoleContainerDetailsPanel(model: model.details)
+            ConsoleContainerDetailsPanel(viewModel: viewModel.details)
                 .frame(minWidth: 430, idealWidth: 800, maxWidth: .infinity, minHeight: 120, idealHeight: 480, maxHeight: .infinity, alignment: .center),
             isPanelTwoCollaped: details.selectedEntity == nil,
             isVertical: toolbar.isVertical
@@ -81,56 +81,56 @@ private struct InnerConsoleContainerView: View {
 }
 
 private struct ConsoleContainerFiltersPanel: View {
-    let model: ConsoleContainerViewModel
-    @ObservedObject var mode: ConsoleModePickerViewModel
+    let viewModel: ConsoleContainerViewModel
+    @ObservedObject var mode: ConsoleModePickerViewModelPro
     
-    init(model: ConsoleContainerViewModel) {
-        self.model = model
-        self.mode = model.mode
+    init(viewModel: ConsoleContainerViewModel) {
+        self.viewModel = viewModel
+        self.mode = viewModel.mode
     }
     
     var body: some View {
         switch mode.mode {
         case .list, .text:
-            ConsoleFiltersPanelPro(model: model.console.filters)
-                .frame(width: 200)
+            ConsoleFiltersView(viewModel: viewModel.console.filters)
+                .frame(width: Filters.preferredWidth)
         case .network:
-            NetworkFiltersPanelPro(model: model.network.filters)
-                .frame(width: 200)
+            NetworkFiltersView(viewModel: viewModel.network.filters)
+                .frame(width: Filters.preferredWidth)
         }
     }
 }
 
 private struct ConsoleContainerMainPanel: View {
-    let model: ConsoleContainerViewModel
-    @ObservedObject var mode: ConsoleModePickerViewModel
+    let viewModel: ConsoleContainerViewModel
+    @ObservedObject var mode: ConsoleModePickerViewModelPro
     
-    init(model: ConsoleContainerViewModel) {
-        self.model = model
-        self.mode = model.mode
+    init(viewModel: ConsoleContainerViewModel) {
+        self.viewModel = viewModel
+        self.mode = viewModel.mode
     }
     
     var body: some View {
         switch mode.mode {
         case .list:
             VStack(spacing: 0) {
-                ConsoleTableViewPro(model: model.console)
+                ConsoleTableViewPro(viewModel: viewModel.console)
                 if mode.mode == .list {
-                    TextSearchToolbarWrapper(toolbar: model.toolbar, search: model.console.search)
+                    TextSearchToolbarWrapper(toolbar: viewModel.toolbar, search: viewModel.console.search)
                 }
             }
-            .onAppear(perform: model.console.onAppear)
-            .background(NavigationTitleUpdater(list: model.console.list))
+            .onAppear(perform: viewModel.console.onAppear)
+            .background(NavigationTitleUpdater(list: viewModel.console.list))
         case .text:
-            ConsoleStoryView(model: model.console)
-                .background(NavigationTitleUpdater(list: model.console.list))
+            ConsoleStoryView(viewModel: viewModel.console)
+                .background(NavigationTitleUpdater(list: viewModel.console.list))
         case .network:
             VStack(spacing: 0) {
-                NetworkListViewPro(list: model.network.list, main: model.network)
-                TextSearchToolbarWrapper(toolbar: model.toolbar, search: model.network.search)
+                NetworkListViewPro(list: viewModel.network.list, main: viewModel.network)
+                TextSearchToolbarWrapper(toolbar: viewModel.toolbar, search: viewModel.network.search)
             }
-            .onAppear(perform: model.network.onAppear)
-            .background(NetworkNavigationTitleUpdater(list: model.network.list))
+            .onAppear(perform: viewModel.network.onAppear)
+            .background(NetworkNavigationTitleUpdater(list: viewModel.network.list))
         }
     }
 }
@@ -142,7 +142,7 @@ private struct TextSearchToolbarWrapper: View {
     var body: some View {
         if toolbar.isSearchBarActive || !search.matches.isEmpty {
             Divider()
-            TextSearchToolbar(model: search)
+            TextSearchToolbar(viewModel: search)
         }
     }
 }
@@ -157,7 +157,7 @@ private struct NavigationTitleUpdater: View {
 }
 
 private struct NetworkNavigationTitleUpdater: View {
-    @ObservedObject var list: ManagedObjectsList<LoggerNetworkRequestEntity>
+    @ObservedObject var list: ManagedObjectsList<NetworkTaskEntity>
     
     var body: some View {
         EmptyView()
@@ -166,11 +166,11 @@ private struct NetworkNavigationTitleUpdater: View {
 }
 
 struct ConsoleContainerDetailsPanel: View {
-    @ObservedObject var model: ConsoleDetailsPanelViewModel
+    @ObservedObject var viewModel: ConsoleDetailsPanelViewModel
 
     var body: some View {
-        if let selectedEntity = model.selectedEntity {
-            model.makeDetailsRouter(for: selectedEntity, onClose: { model.selectedEntity = nil })
+        if let selectedEntity = viewModel.selectedEntity {
+            viewModel.makeDetailsRouter(for: selectedEntity, onClose: { viewModel.selectedEntity = nil })
         } else {
             Text("No Selection")
                 .font(.title)
@@ -191,110 +191,50 @@ enum ConsoleViewMode {
 // MARK: - Helpers
 
 private struct ConsoleWindowAccessors: View {
-    let model: ConsoleToolbarViewModel
+    let viewModel: ConsoleToolbarViewModel
     @State private var window: NSWindow?
     
-    #warning("TODO: rework how sohrtcuts are triggered")
+    #warning("TODO: rework how shortcuts are triggered")
     var body: some View {
         EmptyView()
             .background(WindowAccessor(window: $window))
             .onReceive(CommandsRegistry.shared.onToggleFilters) {
-                if window?.isKeyWindow ?? false { model.isFiltersPaneHidden.toggle() }
+                if window?.isKeyWindow ?? false { viewModel.isFiltersPaneHidden.toggle() }
             }
     }
 }
 
 private struct ConsoleToolbarSearchBar: View {
-    let model: ConsoleMainViewModel
+    let viewModel: ConsoleMainViewModel
     @ObservedObject var toolbar: ConsoleToolbarViewModel
-    @ObservedObject var mode: ConsoleModePickerViewModel
+    @ObservedObject var mode: ConsoleModePickerViewModelPro
     @ObservedObject var searchBar: ConsoleSearchBarViewModel
-    
-    init(model: ConsoleContainerViewModel) {
-        self.model = model.console
-        self.toolbar = model.toolbar
-        self.mode = model.mode
-        self.searchBar = model.searchBar
+
+    init(viewModel: ConsoleContainerViewModel) {
+        self.viewModel = viewModel.console
+        self.toolbar = viewModel.toolbar
+        self.mode = viewModel.mode
+        self.searchBar = viewModel.searchBar
     }
-    
+
     var body: some View {
         SearchBar(title: mode.mode == .list ? "Search" : "Filter", text: $searchBar.text, onFind: CommandsRegistry.shared.onFind, onEditingChanged: { isEditing in
             toolbar.isSearchBarActive = isEditing
-        }, onReturn: model.search.nextMatch)
+        }, onReturn: viewModel.search.nextMatch)
             .frame(width: toolbar.isSearchBarActive ? 200 : 95)
             .help("Search (⌘F)")
     }
 }
 
-private struct ExDivider: View {
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
-    
-    var color: Color {
-        colorScheme == .dark ? .black : .separator
-    }
-    var width: CGFloat = 1
-    var body: some View {
-        Rectangle()
-            .fill(color)
-            .frame(width: width)
-            .edgesIgnoringSafeArea(.vertical)
-    }
-}
+struct ConsoleToolbarModePickerView: View {
+    @ObservedObject var viewModel: ConsoleModePickerViewModelPro
 
-// MARK: - Toolbar
-
-private struct ConsoleNowView: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
     var body: some View {
-        Button(action: { model.isNowEnabled.toggle() }) {
-            Image(systemName: model.isNowEnabled ? "clock.fill" : "clock")
-                .foregroundColor(model.isNowEnabled ? Color.accentColor : Color.secondary)
-        }.help("Automatically Scroll to Recent Messages (⇧⌘N)")
-    }
-}
-
-private struct ConsoleToolbarToggleFiltersButton: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
-    var body: some View {
-        Button(action: { model.isFiltersPaneHidden.toggle() }, label: {
-            Image(systemName: model.isFiltersPaneHidden ? "line.horizontal.3.decrease.circle" : "line.horizontal.3.decrease.circle.fill")
-        }).foregroundColor(model.isFiltersPaneHidden ? .secondary : .accentColor)
-            .help("Toggle Filters Panel (⌥⌘F)")
-    }
-}
-
-private struct ConsoleToolbarToggleOnlyErrorsButton: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
-    var body: some View {
-        Button(action: { model.isOnlyErrors.toggle() }) {
-            Image(systemName: model.isOnlyErrors ? "exclamationmark.octagon.fill" : "exclamationmark.octagon")
-        }.foregroundColor(model.isOnlyErrors ? .accentColor : .secondary)
-            .help("Toggle Show Only Errors (⇧⌘E)")
-    }
-}
-
-private struct ConsoleToolbarModePickerView: View {
-    @ObservedObject var model: ConsoleModePickerViewModel
-    
-    var body: some View {
-        Picker("Mode", selection: $model.mode) {
-            Label("as List", systemImage: "list.dash").tag(ConsoleViewMode.list)
-            Label("as Text", systemImage: "doc.plaintext").tag(ConsoleViewMode.text)
-            Label("as Network", systemImage: "network").tag(ConsoleViewMode.network)
-        }.pickerStyle(InlinePickerStyle())
-    }
-}
-
-private struct ConsoleToolbarToggleVerticalView: View {
-    @ObservedObject var model: ConsoleToolbarViewModel
-    
-    var body: some View {
-        Button(action: { model.isVertical.toggle() }, label: {
-            Image(systemName: model.isVertical ? "square.split.2x1" : "square.split.1x2")
-        }).help(model.isVertical ? "Switch to Horizontal Layout" : "Switch to Vertical Layout")
+        Picker("Mode", selection: $viewModel.mode) {
+            Image(systemName: "list.dash").tag(ConsoleViewMode.list)
+            Image(systemName: "doc.plaintext").tag(ConsoleViewMode.text)
+            Image(systemName: "network").tag(ConsoleViewMode.network)
+        }.pickerStyle(.inline)
     }
 }
 
@@ -305,7 +245,7 @@ final class ConsoleContainerViewModel: ObservableObject {
     let network: NetworkMainViewModel
     let remote: RemoteLoggerClientViewModel
     
-    let mode = ConsoleModePickerViewModel()
+    let mode = ConsoleModePickerViewModelPro()
     let toolbar = ConsoleToolbarViewModel()
     let searchBar = ConsoleSearchBarViewModel()
     let details: ConsoleDetailsPanelViewModel
@@ -320,7 +260,7 @@ final class ConsoleContainerViewModel: ObservableObject {
         self.store = store
         self.name = name
 
-        self.details = ConsoleDetailsPanelViewModel(store: store)
+        self.details = ConsoleDetailsPanelViewModel()
         self.console = ConsoleMainViewModel(store: store, toolbar: toolbar, details: details, mode: mode)
         self.network = NetworkMainViewModel(store: store, toolbar: toolbar, details: details)
         self.remote = RemoteLoggerClientViewModel(client: client)
@@ -349,5 +289,20 @@ final class ConsoleContainerViewModel: ObservableObject {
         case .network: network.searchTerm = text
         case .text: console.filterTerm = text
         }
+    }
+}
+
+private struct ExDivider: View {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+
+    var color: Color {
+        colorScheme == .dark ? .black : .separator
+    }
+    var width: CGFloat = 1
+    var body: some View {
+        Rectangle()
+            .fill(color)
+            .frame(width: width)
+            .edgesIgnoringSafeArea(.vertical)
     }
 }
