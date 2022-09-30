@@ -168,7 +168,8 @@ final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTa
     // MARK: - SiderbarTableViewDelegate
     
     func getClient(at index: Int) -> RemoteLoggerClient? {
-        items[index] as? RemoteLoggerClient
+        guard items.indices.contains(index) else { return nil }
+        return items[index] as? RemoteLoggerClient
     }
 }
 
