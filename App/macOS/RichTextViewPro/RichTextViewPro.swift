@@ -467,7 +467,6 @@ final class RichTextViewModelPro: ObservableObject {
     }
     
     private func didChangeOriginalText() {
-        jsonTextCachedCharacterArray = nil
         cachedSplitLines = nil
         refresh()
         refreshLineNumbers()
@@ -530,7 +529,6 @@ final class RichTextViewModelPro: ObservableObject {
             textView?.attributedText = output
             isShowingFilteredResults = true
             refreshLineNumbers()
-            jsonTextCachedCharacterArray = nil
         } else {
             if isShowingFilteredResults {
                 textView?.attributedText = NSMutableAttributedString(attributedString: sourceText)

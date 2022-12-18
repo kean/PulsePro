@@ -90,7 +90,7 @@ final class JSONTextView: NSTextView {
         let substring = textStorage!.attributedSubstring(from: NSRange(location: index, length: 1))
         return (index, substring)
     }
-        
+
     private func removeCurrentHighlight() {
         if let highlightedNode = highlightedNode {
             highlightedNode.items.forEach(removeHighlight)
@@ -138,7 +138,7 @@ final class JSONTextView: NSTextView {
             }
         }
     }
-        
+
     // MARK: Menu
     
     func makeMenu(_ menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
@@ -149,7 +149,7 @@ final class JSONTextView: NSTextView {
         let menu = NSMenu()
         
         let isObject = context.node is JSONObjectNode
-    
+
         let copyObjectItem = NSMenuItem(title: "Copy \(isObject ? "Object" : "Array")", action: #selector(buttonCopyNodeClicked(_:)), keyEquivalent: "")
         copyObjectItem.image = NSImage(systemSymbolName: "doc.on.doc", accessibilityDescription: nil)
         copyObjectItem.representedObject = context
@@ -176,7 +176,7 @@ final class JSONTextView: NSTextView {
             focusItem.target = self
             menu.addItem(focusItem)
         }
-    
+
         let point = convert(event.locationInWindow, from: nil)
         menu.popUp(positioning: nil, at: point, in: superview)
     }
@@ -246,35 +246,29 @@ final class JSONTextView: NSTextView {
         
         return findCharater(matchingCharacter, in: string, for: node, startingIndex: index, isForward: isForward)
     }
-    
-    private func findCharater(_ character: String, in string: NSAttributedString, for node: JSONContainerNode, startingIndex: Int, isForward: Bool) -> (Int, NSAttributedString) {
-        var index = startingIndex
-        
-        var s: [Character]
-        if let cache = jsonTextCachedCharacterArray, cache.1 == string, cache.2 == string.length {
-            s = cache.0
-        } else {
-            s = Array(string.string)
-            jsonTextCachedCharacterArray = (s, string, string.length)
-        }
-        
-        let ch = Character(character)
+
+    private func findCharater(_ character: String, in attributedString: NSAttributedString, for node: JSONContainerNode, startingIndex: Int, isForward: Bool) -> (Int, NSAttributedString) {
+        let string = attributedString.string
+        var index = string.index(string.startIndex, offsetBy: startingIndex)
+        let character = Character(character)
         while true {
-            index += (isForward ? 1 : -1)
-            guard s[index] == ch else {
+            index = isForward ? string.index(after: index) : string.index(before: index)
+            guard index >= string.startIndex && index <= string.endIndex else {
+                fatalError("Failed to find matching opening/closing node")
+            }
+            guard string[index] == character else {
                 continue
             }
-            let substring = string.attributedSubstring(from: NSRange(location: index, length: 1))
-            if substring.string == character,
-               let matchingNode = substring.attribute(.node, at: 0, effectiveRange: nil) as? JSONContainerNode,
-               matchingNode === node {
-                return (index, substring)
+            // Convert back from Swift.String to NSString range
+            let range = NSRange(index..<string.index(after: index), in: string)
+            let substring = attributedString.attributedSubstring(from: range)
+            assert(substring.string == String(character))
+            if let matchingNode = substring.attribute(.node, at: 0, effectiveRange: nil) as? JSONContainerNode, matchingNode === node {
+                return (range.location, substring)
             }
         }
     }
 }
-
-var jsonTextCachedCharacterArray: ([Character], NSAttributedString, Int)?
 
 final class JSONLayoutManager: NSLayoutManager {
     override func drawUnderline(forGlyphRange glyphRange: NSRange,
