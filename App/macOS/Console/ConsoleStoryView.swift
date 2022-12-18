@@ -8,35 +8,6 @@ import Pulse
 import Combine
 import WebKit
 
-//
-//  LineNumberRulerView.swift
-//  LineNumber
-//
-//  Copyright (c) 2015 Yichi Zhang. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a
-//  copy of this software and associated documentation files (the "Software"),
-//  to deal in the Software without restriction, including without limitation
-//  the rights to use, copy, modify, merge, publish, distribute, sublicense,
-//  and/or sell copies of the Software, and to permit persons to whom the
-//  Software is furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-//  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-//  DEALINGS IN THE SOFTWARE.
-//
-
-import AppKit
-import Foundation
-import ObjectiveC
-
 struct ConsoleStoryView: View {
     @StateObject private var viewModel: ConsoleStoryViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -383,7 +354,7 @@ extension ConsoleStoryViewModel {
         model.isDirty = false
         
         let text = NSMutableAttributedString()
-        
+
         // Title
         let state = task.state
         let time = ConsoleMessageViewModel.timeFormatter.string(from: message.createdAt)
@@ -400,6 +371,14 @@ extension ConsoleStoryViewModel {
                 prefix = StatusCodeFormatter.string(for: Int(task.statusCode))
             }
         }
+
+        let tintColor: NSColor = {
+            switch state {
+            case .pending: return .systemYellow
+            case .success: return .systemGreen
+            case .failure: return Palette.red
+            }
+        }()
         
         var title = "\(prefix)"
         if task.duration > 0 {
@@ -413,13 +392,12 @@ extension ConsoleStoryViewModel {
                 text.append("\(stringPrecise(from: interval)) · ", helpers.digitalAttributes)
             }
         }
-        text.append(title + " ", helpers.titleAttributes)
-        switch state {
-        case .pending: text.append("🟡", helpers.titleAttributes)
-        case .success: text.append("🟢", helpers.titleAttributes)
-        case .failure: text.append("🔴", helpers.titleAttributes)
-        }
-
+        text.append(title + " ", {
+            var attributes = helpers.titleAttributes
+            attributes[.foregroundColor] = tintColor
+            return attributes
+        }())
+//        text.append(title + " ", helpers.titleAttributes)
         text.append(options.isCompactMode ? " " : "\n", helpers.titleAttributes)
 
         // Text
@@ -428,12 +406,15 @@ extension ConsoleStoryViewModel {
         let method = task.httpMethod ?? "GET"
         let messageText = method + " " + (task.url ?? "–")
 
-        text.append(messageText + " ", textAttributes)
-        
-        var attributes = helpers.infoIconAttributes
-        attributes[.link] = makeToggleInfoURL(for: model.id)
-        text.append("✶", attributes)
-        
+        text.append(messageText + " ", {
+            var attributes = textAttributes
+            attributes[.link] = makeToggleInfoURL(for: model.id)
+            attributes[.underlineColor] = NSColor.systemBlue
+            attributes[.underlineStyle] = NSUnderlineStyle.single.rawValue
+            attributes[.foregroundColor] = NSColor.systemBlue
+            return attributes
+        }())
+
         if options.isNetworkExpanded, let data = task.responseBody?.data {
             if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                 let renderer = AttributedStringJSONRenderer(fontSize: options.fontSize, lineHeight: Constants.ResponseViewer.lineHeight(for: Int(options.fontSize)))
